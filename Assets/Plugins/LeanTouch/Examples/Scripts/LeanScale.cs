@@ -36,6 +36,11 @@ namespace Lean.Touch
     [Tooltip("The maximum scale value on all axes")]
     public Vector3 ScaleMax;
 
+    private Vector3 _anchor;
+		
+    [Header("Offset")] 
+    [SerializeField] private Vector3 _offset;
+    
 #if UNITY_EDITOR
     protected virtual void Reset()
     {
@@ -49,6 +54,8 @@ namespace Lean.Touch
       {
         RequiredSelectable = GetComponent<LeanSelectable>();
       }
+      
+      _anchor = transform.position;
     }
 
     protected virtual void Update()
@@ -60,6 +67,10 @@ namespace Lean.Touch
       // Calculate pinch scale, and make sure it's valid
       var pinchScale = LeanGesture.GetPinchScale(fingers, WheelSensitivity);
 
+      var newScale = transform.localScale * pinchScale;
+      
+      if(newScale.x < ScaleMin.x || newScale.x > ScaleMax.x) return; 
+      
       if (pinchScale > 0.0f)
       {
         // Perform the translation if this is a relative scale
@@ -117,17 +128,14 @@ namespace Lean.Touch
         screenPosition.x = screenCenter.x + (screenPosition.x - screenCenter.x) * pinchScale;
         screenPosition.y = screenCenter.y + (screenPosition.y - screenCenter.y) * pinchScale;
 
-//        var scaleCoefficient = transform.localScale.x / .3f;
-//        
-//        // Convert back to world space and clamp
-//        var pos = camera.ScreenToWorldPoint(screenPosition);
-//        pos.x = Mathf.Clamp(pos.x, .284f * scaleCoefficient, .841f * scaleCoefficient);
-//        pos.z = Mathf.Clamp(pos.z, -1.05f * scaleCoefficient, -.435f * scaleCoefficient);
-//        pos.y = .00268f;
+        var scale = transform.localScale.x / .3f;
 
+        var pos = camera.ScreenToWorldPoint(screenPosition);
+        pos.x = Mathf.Clamp(pos.x, (_anchor.x - _offset.x) * scale, (_anchor.x + _offset.x) * scale);
+        pos.y = _anchor.y;
+        pos.z = Mathf.Clamp(pos.z, (_anchor.z - _offset.z) * scale, (_anchor.z + _offset.z) * scale);
 
-        // Convert back to world space
-        transform.position = camera.ScreenToWorldPoint(screenPosition);
+        transform.position = pos;
       }
     }
 
