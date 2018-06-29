@@ -2,17 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimationInterraction : InterractibleObject {
+namespace ua.org.gdg.devfest
+{
 
-	private Animator _animator;
-	
-	void Awake()
+	public class AnimationInterraction : InterractibleObject
 	{
-		_animator = GetComponent<Animator>();
-	}
 
-	public override void Interract()
-	{
-		_animator.enabled = !_animator.enabled;
+		private Animator _animator;
+
+		void Awake()
+		{
+			_animator = GetComponent<Animator>();
+		}
+
+		public override void Interract()
+		{
+			_animator.enabled = !_animator.enabled;
+		}
 	}
 }

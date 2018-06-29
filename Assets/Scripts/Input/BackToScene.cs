@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class BackToScene : MonoBehaviour
+namespace ua.org.gdg.devfest
 {
-	public string SceneToGoBackTo = "Menu";
-	
-	// Update is called once per frame
-	void Update ()
+	public class BackToScene : MonoBehaviour
 	{
-		if (Input.GetKeyDown(KeyCode.Escape)) SceneManager.LoadScene(SceneToGoBackTo);
+		public string SceneToGoBackTo = "Menu";
+
+		// Update is called once per frame
+		void Update()
+		{
+			if (Input.GetKeyDown(KeyCode.Escape)) SceneManager.LoadScene(SceneToGoBackTo);
+		}
 	}
 }

@@ -4,20 +4,23 @@ using UnityEngine;
 using UnityEngine.Experimental.UIElements;
 using UnityEngine.SceneManagement;
 
-public class SceneNavigationButton : MonoBehaviour
+namespace ua.org.gdg.devfest
 {
-	private UnityEngine.UI.Button _menuButton;
-	public string SceneToGoTo = "Menu";
-	
-	// Use this for initialization
-	void Awake ()
+	public class SceneNavigationButton : MonoBehaviour
 	{
-		_menuButton = GetComponent<UnityEngine.UI.Button>();
-		_menuButton.onClick.AddListener(GoToScene);
-	}
+		private UnityEngine.UI.Button _menuButton;
+		public string SceneToGoTo = "Menu";
 
-	void GoToScene()
-	{
-		SceneManager.LoadScene(SceneToGoTo);
+		// Use this for initialization
+		void Awake()
+		{
+			_menuButton = GetComponent<UnityEngine.UI.Button>();
+			_menuButton.onClick.AddListener(GoToScene);
+		}
+
+		void GoToScene()
+		{
+			SceneManager.LoadScene(SceneToGoTo);
+		}
 	}
 }

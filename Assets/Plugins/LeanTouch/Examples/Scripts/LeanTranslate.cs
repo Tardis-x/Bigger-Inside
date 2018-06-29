@@ -19,6 +19,11 @@ namespace Lean.Touch
 
 		[Tooltip("The camera the translation will be calculated using (None = MainCamera)")]
 		public Camera Camera;
+		
+		private Vector3 _anchor;
+		
+		[Header("Offset")] 
+		[SerializeField] private Vector3 _offset;
 
 #if UNITY_EDITOR
 		protected virtual void Reset()
@@ -33,6 +38,7 @@ namespace Lean.Touch
 			{
 				RequiredSelectable = GetComponent<LeanSelectable>();
 			}
+			_anchor = transform.position;
 		}
 
 		protected virtual void Update()
@@ -83,9 +89,15 @@ namespace Lean.Touch
 
 				// Add the deltaPosition
 				screenPoint += (Vector3)screenDelta;
+				
+ 			  var scale = transform.localScale.x / .3f;
 
-				// Convert back to world space
-				transform.position = camera.ScreenToWorldPoint(screenPoint);
+				var pos = camera.ScreenToWorldPoint(screenPoint);
+				pos.x = Mathf.Clamp(pos.x, (_anchor.x - _offset.x) * scale, (_anchor.x + _offset.x) * scale);
+				pos.y = _anchor.y;
+				pos.z = Mathf.Clamp(pos.z, (_anchor.z - _offset.z) * scale, (_anchor.z + _offset.z) * scale);
+
+				transform.position = pos;
 			}
 		}
 	}

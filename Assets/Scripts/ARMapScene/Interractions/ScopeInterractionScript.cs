@@ -5,43 +5,42 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScopeInterractionScript : MonoBehaviour
+namespace ua.org.gdg.devfest
 {
-	[SerializeField]
-	private RectTransform _scope; //coordinates of focus scope
-	[SerializeField]
-	private float _interractionTime; //time needed to interract with object in focus
-	[SerializeField]
-	private Image _scopeProgerssBar;
-	
-	// Update is called once per frame
-	void Update ()
+	public class ScopeInterractionScript : MonoBehaviour
 	{
-		Debug.Log("Interraction script started");
-		float timeFocused = 0f; //time of focusing on current obj
-		
-		
-		var ray = Camera.main.ScreenPointToRay(_scope.position); //cast ray from scope
-		RaycastHit hit = new RaycastHit();
-	
-		if (Physics.Raycast(ray, out hit)) //if hit
-		{
-			Debug.Log("Object hit");
-			InterractibleObject obj = hit.transform.gameObject.GetComponent<InterractibleObject>(); //get interraction
-			
-			if (obj != null) //if obj is interractible
-			{
-				Debug.Log("Interraction started");
-				timeFocused += Time.deltaTime; //start counting focus time
-				_scopeProgerssBar.fillAmount = timeFocused / _interractionTime;
-				
-				if(timeFocused >= _interractionTime) obj.Interract(); //if focused long enough - interract
-				
-				return;// else - leave
-			}
+		[SerializeField] private RectTransform _scope; //coordinates of focus scope
+		[SerializeField] private float _interractionTime; //time needed to interract with object in focus
+		[SerializeField] private Image _scopeProgerssBar;
 
-			timeFocused = 0f;// if lost focus - start counting again
+		// Update is called once per frame
+		void Update()
+		{
+			Debug.Log("Interraction script started");
+			float timeFocused = 0f; //time of focusing on current obj
+
+
+			var ray = Camera.main.ScreenPointToRay(_scope.position); //cast ray from scope
+			RaycastHit hit = new RaycastHit();
+
+			if (Physics.Raycast(ray, out hit)) //if hit
+			{
+				Debug.Log("Object hit");
+				InterractibleObject obj = hit.transform.gameObject.GetComponent<InterractibleObject>(); //get interraction
+
+				if (obj != null) //if obj is interractible
+				{
+					Debug.Log("Interraction started");
+					timeFocused += Time.deltaTime; //start counting focus time
+					_scopeProgerssBar.fillAmount = timeFocused / _interractionTime;
+
+					if (timeFocused >= _interractionTime) obj.Interract(); //if focused long enough - interract
+
+					return; // else - leave
+				}
+
+				timeFocused = 0f; // if lost focus - start counting again
+			}
 		}
 	}
-	
 }

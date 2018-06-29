@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 
-public abstract class InterractibleObject : MonoBehaviour
+namespace ua.org.gdg.devfest
 {
-    public abstract void Interract();
+    public abstract class InterractibleObject : MonoBehaviour
+    {
+        public abstract void Interract();
+    }
 }
