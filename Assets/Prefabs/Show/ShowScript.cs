@@ -12,7 +12,8 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     [Header("Value References")]
-    [SerializeField] private Text _timeText;
+    [SerializeField] private Text _startTimeText;
+    [SerializeField] private Text _endTimeText;
     [SerializeField] private Text _nameText;
 
     //---------------------------------------------------------------------
@@ -24,11 +25,12 @@ namespace ua.org.gdg.devfest
       return Instantiate(GetComponent<RectTransform>());
     }
 
-    public RectTransform GetInstance(string time, string name)
+    public RectTransform GetInstance(string startTime, string endTime, string name)
     {
       ShowScript instance = Instantiate(this);
       instance.SetName(name);
-      instance.SetTime(time);
+      instance.SetStartTime(startTime);
+      instance.SetEndTime(endTime);
       return instance.GetComponent<RectTransform>();
     }
     
@@ -36,9 +38,14 @@ namespace ua.org.gdg.devfest
     // Internal
     //---------------------------------------------------------------------
     
-    private void SetTime(string timeText)
+    private void SetStartTime(string startTimeText)
     {
-      _timeText.text = timeText;
+      _startTimeText.text = startTimeText;
+    }
+    
+    private void SetEndTime(string endTimeText)
+    {
+      _endTimeText.text = endTimeText;
     }
 
     private void SetName(string nameText)

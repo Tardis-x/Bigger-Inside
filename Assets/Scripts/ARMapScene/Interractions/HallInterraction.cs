@@ -42,10 +42,17 @@ namespace ua.org.gdg.devfest
 			_listScript.Enable();
 			
 			_content = new List<RectTransform>();
+
+			TimeSpan now = DateTime.Now.TimeOfDay;
+			TimeSpan inAnHour = DateTime.Now.AddHours(1).TimeOfDay;
+
+			string startTime = "Start: " + now.Hours + ":" + now.Minutes;
+			string endTime = "End: " + inAnHour.Hours + ":" + inAnHour.Minutes;
+			string date = DateTime.Now.Month + "/" + DateTime.Now.Day + "/" + DateTime.Now.Year;
 			
-			for (int i = 0; i < 15; i++)
+			for (int i = 0; i < 40; i++)
 			{
-				RectTransform show = _showScript.GetInstance(DateTime.Now.ToString(), name);
+				RectTransform show = _showScript.GetInstance(startTime, endTime, date);
         _content.Add(show);
 			}
 			

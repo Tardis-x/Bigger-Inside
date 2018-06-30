@@ -11,12 +11,13 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     // Editor
     //---------------------------------------------------------------------
-    
+
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
 
     private RectTransform _contentContainer;
+    private float _contentWidth;
 
     //---------------------------------------------------------------------
     // Messages
@@ -38,7 +39,7 @@ namespace ua.org.gdg.devfest
     {
       Hide();
     }
-    
+
     //---------------------------------------------------------------------
     // Public
     //---------------------------------------------------------------------
@@ -55,11 +56,11 @@ namespace ua.org.gdg.devfest
         item.SetParent(_contentContainer, false);
       }
     }
-    
+
     public void ClearContent()
     {
       var items = _contentContainer.GetComponentsInChildren<RectTransform>().Where(x => x.parent == _contentContainer);
-      
+
       foreach (var item in items)
       {
         Destroy(item.gameObject);

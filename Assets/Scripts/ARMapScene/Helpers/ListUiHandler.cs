@@ -51,7 +51,7 @@ namespace ua.org.gdg.devfest
 
 		private void AddItemButtonOnClick()
 		{
-			_listScript.AddContentItem(_showScript.GetInstance(_itemTime, _itemName));
+			//_listScript.AddContentItem(_showScript.GetInstance(_itemTime, _itemName));
 		}
 
 		private void ClearListButtonOnClick()
