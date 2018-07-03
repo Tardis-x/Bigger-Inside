@@ -21,6 +21,7 @@ namespace ua.org.gdg.devfest
 
     private bool _fingerMoved;
     private ScrollableListScript _listScript;
+    private InterractibleObject _lastInterracted;
 
     //---------------------------------------------------------------------
     // Messages
@@ -63,6 +64,8 @@ namespace ua.org.gdg.devfest
 
             if (obj != null) //if obj is interractible
             {
+              if(_lastInterracted != null) _lastInterracted.Disable();
+              _lastInterracted = obj;
               Debug.Log("Interraction started");
               obj.Interract(); 
             }
@@ -71,9 +74,12 @@ namespace ua.org.gdg.devfest
 
         _uiLayer = ~_uiLayer;
         
+        // If ray casts not on list
         if (!Physics.Raycast(ray, _uiLayer))
         {
+          // Hide list and clear it
           _listScript.Disable();
+          if(_lastInterracted != null) _lastInterracted.Disable();
         }
       }
     }

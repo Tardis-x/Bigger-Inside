@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,6 +19,11 @@ namespace ua.org.gdg.devfest
 		public override void Interract()
 		{
 			_animator.enabled = !_animator.enabled;
+		}
+
+		public override void Disable()
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
