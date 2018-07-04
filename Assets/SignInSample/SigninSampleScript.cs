@@ -13,82 +13,128 @@
 //  See the License for the specific language governing permissions and
 //  limitations
 
-namespace SignInSample {
+namespace SignInSample
+{
   using System;
   using System.Collections.Generic;
   using System.Threading.Tasks;
   using Google;
   using UnityEngine;
   using UnityEngine.UI;
+  using Firebase.Auth;
 
-  public class SigninSampleScript : MonoBehaviour {
-
+  public class SigninSampleScript : MonoBehaviour
+  {
     public Text statusText;
 
     public string webClientId = "634686754515-vtkaddac36pof0anm089grndrqckh4q2.apps.googleusercontent.com";
 
     private GoogleSignInConfiguration configuration;
+    private FirebaseAuth _auth;
+    private FirebaseUser _user;
 
     // Defer the configuration creation until Awake so the web Client ID
     // Can be set via the property inspector in the Editor.
-    void Awake() {
-      configuration = new GoogleSignInConfiguration {
-            WebClientId = webClientId,
-            RequestIdToken = true
+    void Awake()
+    {
+      configuration = new GoogleSignInConfiguration
+      {
+        WebClientId = webClientId,
+        RequestIdToken = true
       };
+
+      _auth = FirebaseAuth.DefaultInstance;
     }
 
-    public void OnSignIn() {
+    public void OnSignIn()
+    {
       GoogleSignIn.Configuration = configuration;
       GoogleSignIn.Configuration.UseGameSignIn = false;
       GoogleSignIn.Configuration.RequestIdToken = true;
-      AddStatusText("Calling SignIn");
 
+      AddStatusText("Calling SignIn");
       GoogleSignIn.DefaultInstance.SignIn().ContinueWith(
         OnAuthenticationFinished);
     }
 
-    public void OnSignOut() {
+
+    public void OnSignOut()
+    {
       AddStatusText("Calling SignOut");
       GoogleSignIn.DefaultInstance.SignOut();
     }
 
-    public void OnDisconnect() {
+    public void OnDisconnect()
+    {
       AddStatusText("Calling Disconnect");
       GoogleSignIn.DefaultInstance.Disconnect();
     }
 
-    internal void OnAuthenticationFinished(Task<GoogleSignInUser> task) {
-      if (task.IsFaulted) {
+    internal void OnAuthenticationFinished(Task<GoogleSignInUser> task)
+    {
+      if (task.IsFaulted)
+      {
         using (IEnumerator<System.Exception> enumerator =
-                task.Exception.InnerExceptions.GetEnumerator()) {
-          if (enumerator.MoveNext()) {
+          task.Exception.InnerExceptions.GetEnumerator())
+        {
+          if (enumerator.MoveNext())
+          {
             GoogleSignIn.SignInException error =
-                    (GoogleSignIn.SignInException)enumerator.Current;
+              (GoogleSignIn.SignInException) enumerator.Current;
             AddStatusText("Got Error: " + error.Status + " " + error.Message);
-          } else {
+          }
+          else
+          {
             AddStatusText("Got Unexpected Exception?!?" + task.Exception);
           }
         }
-      } else if(task.IsCanceled) {
+      }
+      else if (task.IsCanceled)
+      {
         AddStatusText("Canceled");
-      } else  {
+      }
+      else
+      {
         AddStatusText("Welcome: " + task.Result.DisplayName + "!");
+
+        TaskCompletionSource<FirebaseUser> signInCompleted = new TaskCompletionSource<FirebaseUser>();
+
+        Credential credential =
+          Firebase.Auth.GoogleAuthProvider.GetCredential(((Task<GoogleSignInUser>) task).Result.IdToken, null);
+        _auth.SignInWithCredentialAsync(credential).ContinueWith(authTask =>
+        {
+          if (authTask.IsCanceled)
+          {
+            signInCompleted.SetCanceled();
+          }
+          else if (authTask.IsFaulted)
+          {
+            signInCompleted.SetException(authTask.Exception);
+          }
+          else
+          {
+            signInCompleted.SetResult(((Task<FirebaseUser>) authTask).Result);
+            _user = authTask.Result;
+            AddStatusText("Firebase user: " + authTask.Result.DisplayName);
+          }
+        });
       }
     }
 
-    public void OnSignInSilently() {
+    public void OnSignInSilently()
+    {
       GoogleSignIn.Configuration = configuration;
       GoogleSignIn.Configuration.UseGameSignIn = false;
       GoogleSignIn.Configuration.RequestIdToken = true;
       AddStatusText("Calling SignIn Silently");
 
       GoogleSignIn.DefaultInstance.SignInSilently()
-            .ContinueWith(OnAuthenticationFinished);
+        .ContinueWith(OnAuthenticationFinished);
     }
 
 
-    public void OnGamesSignIn() {
+    public void OnGamesSignIn()
+    {
       GoogleSignIn.Configuration = configuration;
       GoogleSignIn.Configuration.UseGameSignIn = true;
       GoogleSignIn.Configuration.RequestIdToken = false;
@@ -100,15 +146,21 @@ namespace SignInSample {
     }
 
     private List<string> messages = new List<string>();
-    void AddStatusText(string text) {
-      if (messages.Count == 5) {
+
+    void AddStatusText(string text)
+    {
+      if (messages.Count == 5)
+      {
         messages.RemoveAt(0);
       }
+
       messages.Add(text);
       string txt = "";
-      foreach (string s in messages) {
+      foreach (string s in messages)
+      {
         txt += "\n" + s;
       }
+
       statusText.text = txt;
     }
   }
