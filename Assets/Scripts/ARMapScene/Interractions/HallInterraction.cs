@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ProBuilder2.Common;
 using UnityEngine;
 using UnityEngine.UI;
+using Firebase.Auth;
 
 namespace ua.org.gdg.devfest
 {
@@ -25,7 +26,7 @@ namespace ua.org.gdg.devfest
 		private ScrollableListScript _listScript;
 		private List<RectTransform> _content;
 		private ShowScript _showScript;
-		
+		private FirebaseUser _user;
 		
 		//---------------------------------------------------------------------
 		// Messages
@@ -35,6 +36,7 @@ namespace ua.org.gdg.devfest
 		{
 			_listScript = _schedule.GetComponent<ScrollableListScript>();
 			_showScript = _show.GetComponent<ShowScript>();
+			_user = FirebaseAuth.DefaultInstance.CurrentUser;
 		}
 		
 		//---------------------------------------------------------------------
@@ -59,7 +61,7 @@ namespace ua.org.gdg.devfest
 			
 			for (int i = 0; i < 40; i++)
 			{
-				RectTransform show = _showScript.GetInstance(startTime, endTime, date);
+				RectTransform show = _showScript.GetInstance(startTime, endTime, _user.DisplayName);
         _content.Add(show);
 			}
 			

@@ -13,7 +13,9 @@
 //  See the License for the specific language governing permissions and
 //  limitations
 
-namespace SignInSample
+using UnityEngine.SceneManagement;
+
+namespace ua.org.gdg.devfest
 {
   using System;
   using System.Collections.Generic;
@@ -116,6 +118,8 @@ namespace SignInSample
             signInCompleted.SetResult(((Task<FirebaseUser>) authTask).Result);
             _user = authTask.Result;
             AddStatusText("Firebase user: " + authTask.Result.DisplayName);
+            
+            SceneManager.LoadScene("MenuScene");
           }
         });
       }
