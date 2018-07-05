@@ -19,7 +19,7 @@ Scenes:
 
 	- Menu Scene (alpha design):
 		- AR Map button
-		- ÄËß ÒÀÐÀÑÀ button 
+		- Для Тараса button :) 
 		- Spare button
 		- SignOut button
 
