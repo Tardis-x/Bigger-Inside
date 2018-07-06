@@ -17,18 +17,14 @@ using UnityEngine.SceneManagement;
 
 namespace ua.org.gdg.devfest
 {
-  using System;
   using System.Collections.Generic;
   using System.Threading.Tasks;
   using Google;
   using UnityEngine;
-  using UnityEngine.UI;
   using Firebase.Auth;
 
   public class SigninSampleScript : MonoBehaviour
   {
-    public Text statusText;
-
     public string webClientId = "634686754515-vtkaddac36pof0anm089grndrqckh4q2.apps.googleusercontent.com";
 
     private GoogleSignInConfiguration configuration;
@@ -164,8 +160,6 @@ namespace ua.org.gdg.devfest
       {
         txt += "\n" + s;
       }
-
-      statusText.text = txt;
     }
   }
 }
