@@ -101,8 +101,7 @@ namespace ua.org.gdg.devfest
 
         TaskCompletionSource<FirebaseUser> signInCompleted = new TaskCompletionSource<FirebaseUser>();
 
-        Credential credential =
-          Firebase.Auth.GoogleAuthProvider.GetCredential(((Task<GoogleSignInUser>) task).Result.IdToken, null);
+        Credential credential = GoogleAuthProvider.GetCredential(task.Result.IdToken, null);
         _auth.SignInWithCredentialAsync(credential).ContinueWith(authTask =>
         {
           if (authTask.IsCanceled)
@@ -115,11 +114,12 @@ namespace ua.org.gdg.devfest
           }
           else
           {
-            signInCompleted.SetResult(((Task<FirebaseUser>) authTask).Result);
+            signInCompleted.SetResult(authTask.Result);
             _user = authTask.Result;
             AddStatusText("Firebase user: " + authTask.Result.DisplayName);
+           
             
-            SceneManager.LoadScene("MenuScene");
+            SceneManager.LoadScene("RestInvestigationScene");
           }
         });
       }
