@@ -17,61 +17,54 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     [SerializeField] private Text _responseText;
+    [SerializeField] private ScrollableListScript _listScript;
+    [SerializeField] private ShowScript _showScript;
 
+    //---------------------------------------------------------------------
+    // Public
+    //---------------------------------------------------------------------
+    
     public void Request()
     {
-      string scheduleUrl =
-        "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/schedule";
-
-      WWW scheduleRequest = new WWW(scheduleUrl);
-      StartCoroutine(OnResponse(scheduleRequest));
+      WWW scheduleRequest = new WWW(SCHEDULE_URL);
+      WWW sessionRequest = new WWW(SESSIONS_URL);
+      
+      WaitForSeconds w;
+      while (!scheduleRequest.isDone || !sessionRequest.isDone)
+        w = new WaitForSeconds(0.1f);
+      
+      JsonSchedule jSchedule = JsonConvert.DeserializeObject<JsonSchedule>(scheduleRequest.text);
+      Schedule sch = FirestoreHelper.ParseSchedule(jSchedule);
+      SessionTable st = JsonConvert.DeserializeObject<SessionTable>(sessionRequest.text);
+      Dictionary<int, string> items = FirestoreHelper.ParseSessions(st);
+      
+      _listScript.AddContent(FirestoreHelper.ComposeScheduleForHall(Hall.Conference, 0, sch, items, _showScript));
+      _listScript.Show();
     }
 
+    //---------------------------------------------------------------------
+    // Internal
+    //---------------------------------------------------------------------
+
+    private const string SCHEDULE_URL =
+      "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/schedule";
+    
+    private const string SESSIONS_URL = 
+      "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/sessions?pageSize=40";
+    
     private IEnumerator OnResponse(WWW req)
     {
       yield return req;
 
       JsonSchedule jSchedule = JsonConvert.DeserializeObject<JsonSchedule>(req.text);
       Schedule sch = FirestoreHelper.ParseSchedule(jSchedule);
-      var expoItems = sch.Days[0].Timeslots.Select(x => x.Sessions.Where(s => s.Hall == Hall.Expo));
       
-      foreach (var sessions in expoItems)
-      {
-        foreach (var s in sessions)
-        {
-          RequestItemName(s.Items[0]);
-        }
-      }
-      
-      //RequestItemName(sch.Days[0].Timeslots[7].Sessions[0].Items[0]);
-      // AddStatusText("S");
     } 
-    
-    private void RequestItemName(int item)
-         {
-           string sessionUrl =
-             "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/sessions/"
-             + item;
-           WWW sessionRequest = new WWW(sessionUrl);
-           StartCoroutine(OnSessionResponse(sessionRequest));
-         }
-    
-    private IEnumerator OnSessionResponse(WWW req)
-    {
-      yield return req;
-
-      string item = JsonConvert.DeserializeObject<JsonSession>(req.text).fields.title.stringValue;
-      AddStatusText(item);
-    }
 
     private List<string> messages = new List<string>();
 
     private void AddStatusText(string text)
     {
-//      if (messages.Count == 5)
-//      {
-//        messages.RemoveAt(0);
-//      }
 
       messages.Add(text);
       string txt = "";
@@ -83,9 +76,5 @@ namespace ua.org.gdg.devfest
 
       _responseText.text = txt;
     }
-
-
-
-
   }
 }

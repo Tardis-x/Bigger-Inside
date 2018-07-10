@@ -4,8 +4,8 @@ using System.Collections.Generic;
 namespace ua.org.gdg.devfest
 {
   [Serializable]
-  public class JsonSchedule
+  public class SessionTable
   {
-    public List<JsonDocument> documents;
+    public List<JsonSession> documents;
   }
 }

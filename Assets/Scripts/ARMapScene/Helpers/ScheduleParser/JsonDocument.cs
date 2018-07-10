@@ -3,7 +3,7 @@
 namespace ua.org.gdg.devfest
 {
   [Serializable]
-  public class JsonScheduleDay
+  public class JsonDocument
   {
     public string name;
     public ScheduleDayFields fields;

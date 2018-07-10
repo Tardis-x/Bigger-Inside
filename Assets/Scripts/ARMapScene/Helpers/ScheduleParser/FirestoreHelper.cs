@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace ua.org.gdg.devfest
 {
@@ -41,6 +44,36 @@ namespace ua.org.gdg.devfest
       }
 
       return sch;
+    }
+    
+    public static Dictionary<int, string> ParseSessions(SessionTable st)
+    {
+      Dictionary<int, string> result = new Dictionary<int, string>();
+      
+      foreach (var s in st.documents)
+      {
+//        SessionItem item = new SessionItem();
+//        item.Title = s.fields.title.stringValue;
+//        item.Name = Convert.ToInt32(s.name.Split('/').Last());
+        result.Add(Convert.ToInt32(s.name.Split('/').Last()), s.fields.title.stringValue);
+      }
+
+      return result;
+    }
+
+    public static List<RectTransform> ComposeScheduleForHall(Hall h, int day, Schedule sch,
+      Dictionary<int, string> sessions, ShowScript ss)
+    {
+      var sList = sch.Days[day].Timeslots.SelectMany(x => x.Sessions).Where(s => s.Hall == h).ToList();
+      var result = new List<RectTransform>();
+
+      for (int i = 0; i < sList.Count; i++)
+      {
+        result.Add(ss.GetInstance(sch.Days[day].Timeslots[i].StartTime,
+          sch.Days[day].Timeslots[i].EndTime, sessions[sList[i].Items[0]]));
+      }
+
+      return result;
     }
   }
 }
