@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace ua.org.gdg.devfest
 {
-  public class ShowScript : MonoBehaviour
+  public class SpeechScript : MonoBehaviour
   {
     //---------------------------------------------------------------------
     // Editor
@@ -27,7 +27,7 @@ namespace ua.org.gdg.devfest
 
     public RectTransform GetInstance(string startTime, string endTime, string name)
     {
-      ShowScript instance = Instantiate(this);
+      SpeechScript instance = Instantiate(this);
       instance.SetName(name);
       instance.SetStartTime(startTime);
       instance.SetEndTime(endTime);

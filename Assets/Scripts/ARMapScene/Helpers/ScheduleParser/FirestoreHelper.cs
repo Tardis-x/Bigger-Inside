@@ -16,7 +16,7 @@ namespace ua.org.gdg.devfest
         ScheduleDay newDay = new ScheduleDay();
         newDay.Date = day.fields.date.stringValue;
         newDay.DateReadable = day.fields.dateReadable.stringValue;
-
+        
         foreach (var timeslot in day.fields.timeslots.arrayValue.values)
         {
           Timeslot ts = new Timeslot();
@@ -62,7 +62,7 @@ namespace ua.org.gdg.devfest
     }
 
     public static List<RectTransform> ComposeScheduleForHall(Hall h, int day, Schedule sch,
-      Dictionary<int, string> sessions, ShowScript ss)
+      Dictionary<int, string> sessions, SpeechScript ss)
     {
       var sList = sch.Days[day].Timeslots.SelectMany(x => x.Sessions).Where(s => s.Hall == h).ToList();
       var result = new List<RectTransform>();

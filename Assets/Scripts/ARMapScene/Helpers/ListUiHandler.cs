@@ -29,7 +29,7 @@ namespace ua.org.gdg.devfest
 		//---------------------------------------------------------------------
 
 		private ScrollableListScript _listScript;
-		private ShowScript _showScript;
+		private SpeechScript _speechScript;
 
 		//---------------------------------------------------------------------
 		// Messages
@@ -38,7 +38,7 @@ namespace ua.org.gdg.devfest
 		private void Awake()
 		{
 			_listScript = _scrollableList.GetComponent<ScrollableListScript>();
-			_showScript = _item.GetComponent<ShowScript>();
+			_speechScript = _item.GetComponent<SpeechScript>();
 			_addItemButton.onClick.AddListener(AddItemButtonOnClick);
 			_clearListButton.onClick.AddListener(ClearListButtonOnClick);
 			_hideListButton.onClick.AddListener(HideListButtonOnClick);

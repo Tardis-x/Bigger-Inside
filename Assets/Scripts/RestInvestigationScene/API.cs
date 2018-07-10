@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using Firebase.Auth;
 using Newtonsoft.Json;
 using UnityEngine.Experimental.PlayerLoop;
+using UnityEngine.Networking.NetworkSystem;
 
 namespace ua.org.gdg.devfest
 {
@@ -16,30 +17,44 @@ namespace ua.org.gdg.devfest
     // Editor
     //---------------------------------------------------------------------
 
-    [SerializeField] private Text _responseText;
     [SerializeField] private ScrollableListScript _listScript;
-    [SerializeField] private ShowScript _showScript;
+    [SerializeField] private SpeechScript _speechScript;
+
+    //---------------------------------------------------------------------
+    // Messages
+    //---------------------------------------------------------------------
+
+    private void Awake()
+    {
+      WWW scheduleRequest = new WWW(SCHEDULE_URL);
+      WWW sessionRequest = new WWW(SESSIONS_URL);
+
+      StartCoroutine(OnScheduleResponse(scheduleRequest));
+      StartCoroutine(OnSessionResponse(sessionRequest));
+    }
 
     //---------------------------------------------------------------------
     // Public
     //---------------------------------------------------------------------
-    
-    public void Request()
+
+    public void OnClick()
     {
-      WWW scheduleRequest = new WWW(SCHEDULE_URL);
-      WWW sessionRequest = new WWW(SESSIONS_URL);
-      
-      WaitForSeconds w;
-      while (!scheduleRequest.isDone || !sessionRequest.isDone)
-        w = new WaitForSeconds(0.1f);
-      
-      JsonSchedule jSchedule = JsonConvert.DeserializeObject<JsonSchedule>(scheduleRequest.text);
-      Schedule sch = FirestoreHelper.ParseSchedule(jSchedule);
-      SessionTable st = JsonConvert.DeserializeObject<SessionTable>(sessionRequest.text);
-      Dictionary<int, string> items = FirestoreHelper.ParseSessions(st);
-      
-      _listScript.AddContent(FirestoreHelper.ComposeScheduleForHall(Hall.Conference, 0, sch, items, _showScript));
-      _listScript.Show();
+      Request(Hall.Expo, 0);
+    }
+
+    public void Request(Hall hall, int day)
+    {
+//      WaitForSeconds w;
+//      while (!scheduleRequest.isDone || !sessionRequest.isDone)
+//        w = new WaitForSeconds(0.1f);
+//      
+//      JsonSchedule jSchedule = JsonConvert.DeserializeObject<JsonSchedule>(scheduleRequest.text);
+//      Schedule sch = FirestoreHelper.ParseSchedule(jSchedule);
+//      SessionTable st = JsonConvert.DeserializeObject<SessionTable>(sessionRequest.text);
+//      Dictionary<int, string> items = FirestoreHelper.ParseSessions(st);
+
+      _listScript.AddContent(FirestoreHelper.ComposeScheduleForHall(hall, day, _schedule, _items, _speechScript));
+      //_listScript.Show();
     }
 
     //---------------------------------------------------------------------
@@ -48,24 +63,33 @@ namespace ua.org.gdg.devfest
 
     private const string SCHEDULE_URL =
       "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/schedule";
-    
-    private const string SESSIONS_URL = 
+
+    private const string SESSIONS_URL =
       "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/sessions?pageSize=40";
-    
-    private IEnumerator OnResponse(WWW req)
+
+    private Schedule _schedule;
+    private Dictionary<int, string> _items;
+
+    private IEnumerator OnScheduleResponse(WWW req)
     {
       yield return req;
 
       JsonSchedule jSchedule = JsonConvert.DeserializeObject<JsonSchedule>(req.text);
-      Schedule sch = FirestoreHelper.ParseSchedule(jSchedule);
-      
-    } 
+      _schedule = FirestoreHelper.ParseSchedule(jSchedule);
+    }
+
+    private IEnumerator OnSessionResponse(WWW req)
+    {
+      yield return req;
+
+      SessionTable st = JsonConvert.DeserializeObject<SessionTable>(req.text);
+      _items = FirestoreHelper.ParseSessions(st);
+    }
 
     private List<string> messages = new List<string>();
 
     private void AddStatusText(string text)
     {
-
       messages.Add(text);
       string txt = "";
 
@@ -73,8 +97,6 @@ namespace ua.org.gdg.devfest
       {
         txt += "\n" + s;
       }
-
-      _responseText.text = txt;
     }
   }
 }

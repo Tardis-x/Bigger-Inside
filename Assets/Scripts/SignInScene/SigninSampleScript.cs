@@ -119,7 +119,7 @@ namespace ua.org.gdg.devfest
             AddStatusText("Firebase user: " + authTask.Result.DisplayName);
            
             
-            SceneManager.LoadScene("RestInvestigationScene");
+            SceneManager.LoadScene("MenuScene");
           }
         });
       }

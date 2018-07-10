@@ -18,6 +18,8 @@ namespace ua.org.gdg.devfest
 		[SerializeField] private Renderer _highlightRenderer;
 		[SerializeField] private Texture _defaultTexture;
 		[SerializeField] private Texture _selectedTexture;
+		[SerializeField] private Hall _hall;
+		[SerializeField] private API _api;
 		
 		//---------------------------------------------------------------------
 		// Internal
@@ -25,8 +27,9 @@ namespace ua.org.gdg.devfest
 
 		private ScrollableListScript _listScript;
 		private List<RectTransform> _content;
-		private ShowScript _showScript;
+		private SpeechScript _speechScript;
 		private FirebaseUser _user;
+		
 		
 		//---------------------------------------------------------------------
 		// Messages
@@ -35,7 +38,7 @@ namespace ua.org.gdg.devfest
 		private void Start()
 		{
 			_listScript = _schedule.GetComponent<ScrollableListScript>();
-			_showScript = _show.GetComponent<ShowScript>();
+			_speechScript = _show.GetComponent<SpeechScript>();
 			_user = FirebaseAuth.DefaultInstance.CurrentUser;
 		}
 		
@@ -48,25 +51,29 @@ namespace ua.org.gdg.devfest
 			// Show schedule
 			_listScript.Enable();
 			
-			// Init content
-			_content = new List<RectTransform>();
+			_api.Request(_hall, 0);
 			
-			// Start/end time (tmp)
-			TimeSpan now = DateTime.Now.TimeOfDay;
-			TimeSpan inAnHour = DateTime.Now.AddHours(1).TimeOfDay;
-
-			string startTime = "Start: " + now.Hours + ":" + now.Minutes;
-			string endTime = "End: " + inAnHour.Hours + ":" + inAnHour.Minutes;
-			string date = DateTime.Now.Month + "/" + DateTime.Now.Day + "/" + DateTime.Now.Year;
-			
-			for (int i = 0; i < 40; i++)
-			{
-				RectTransform show = _showScript.GetInstance(startTime, endTime, _user.DisplayName);
-        _content.Add(show);
-			}
-			
-			// Add content to list
-			_listScript.AddContent(_content);
+//			// Init content
+//			_content = new List<RectTransform>();
+//			
+//			// Start/end time (tmp)
+//			TimeSpan now = DateTime.Now.TimeOfDay;
+//			TimeSpan inAnHour = DateTime.Now.AddHours(1).TimeOfDay;
+//
+//			string startTime = "Start: " + now.Hours + ":" + now.Minutes;
+//			string endTime = "End: " + inAnHour.Hours + ":" + inAnHour.Minutes;
+//			string date = DateTime.Now.Month + "/" + DateTime.Now.Day + "/" + DateTime.Now.Year;
+//			
+//			for (int i = 0; i < 40; i++)
+//			{
+//				RectTransform show = _showScript.GetInstance(startTime, endTime, _user.DisplayName);
+//        _content.Add(show);
+//			}
+//			
+//			
+//			
+//			// Add content to list
+//			_listScript.AddContent(_content);
 			
 			// Set highlighter color to selected
 			_highlightRenderer.material.mainTexture = _selectedTexture;
@@ -75,6 +82,7 @@ namespace ua.org.gdg.devfest
 		public override void Disable()
 		{
 			_highlightRenderer.material.mainTexture = _defaultTexture;
+			//_listScript.Disable();
 		}
 	}
 }
