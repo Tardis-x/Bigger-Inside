@@ -58,7 +58,8 @@ namespace ua.org.gdg.devfest
     private const string SESSIONS_URL =
       "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/sessions?pageSize=40";
     
-    
+    private const string SPEAKERS_URL =
+      "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/speakers";
 
     private Schedule _schedule;
     private List<SessionItem> _items;

@@ -12,11 +12,13 @@ namespace ua.org.gdg.devfest
     // Editor
     //---------------------------------------------------------------------
 
-    [Header("Value References")] [SerializeField]
-    private Text _startTimeText;
-
+    [Header("Value References")] 
+    [SerializeField] private Text _startTimeText;
     [SerializeField] private Text _endTimeText;
+    [SerializeField] private Text _startTimeHoursText;
+    [SerializeField] private Text _startTimeMinutesText;
     [SerializeField] private Text _nameText;
+    [SerializeField] private Text _tagText;
     [SerializeField] private Image _tagImage;
 
     //---------------------------------------------------------------------
@@ -34,7 +36,7 @@ namespace ua.org.gdg.devfest
       instance.SetName(name);
       instance.SetStartTime(startTime);
       instance.SetEndTime(endTime);
-      instance.SetTagImageColor(tag);
+      instance.SetTag(tag);
       return instance.GetComponent<RectTransform>();
     }
 
@@ -52,6 +54,8 @@ namespace ua.org.gdg.devfest
     private void SetStartTime(string startTimeText)
     {
       _startTimeText.text = startTimeText;
+      _startTimeHoursText.text = startTimeText.Split(':')[0];
+      _startTimeMinutesText.text = startTimeText.Split(':')[1];
     }
 
     private void SetEndTime(string endTimeText)
@@ -64,6 +68,17 @@ namespace ua.org.gdg.devfest
       _nameText.text = nameText;
     }
 
+    private void SetTag(string tag)
+    {
+      SetTagText(tag);
+      SetTagImageColor(tag);
+    }
+    
+    private void SetTagText(string tag)
+    {
+      _tagText.text = tag;
+    }
+    
     private void SetTagImageColor(string tag)
     {
       Color newColor;

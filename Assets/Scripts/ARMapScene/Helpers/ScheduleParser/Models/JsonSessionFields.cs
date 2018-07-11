@@ -9,5 +9,6 @@ namespace ua.org.gdg.devfest
   {
     public StringValue title;
     public JsonTag tags;
+    public JsonTag speakers;
   }
 }

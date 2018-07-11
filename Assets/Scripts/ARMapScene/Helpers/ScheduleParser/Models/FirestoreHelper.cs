@@ -56,15 +56,25 @@ namespace ua.org.gdg.devfest
         item.Title = s.fields.title.stringValue;
         item.Name = Convert.ToInt32(s.name.Split('/').Last());
         
-        try
+//        try
+//        {
+//          item.Tag = s.fields.tags.arrayValue.values.First().stringValue;
+//        }
+//        catch(NullReferenceException)
+//        {
+//          item.Tag = "General";
+//        }
+
+          item.Tag = s.fields.tags == null? "General" : s.fields.tags.arrayValue.values.First().stringValue;
+
+        if (s.fields.speakers != null)
         {
-          item.Tag = s.fields.tags.arrayValue.values.First().stringValue;
+          foreach (var speaker in s.fields.speakers.arrayValue.values)
+          {
+            item.Speakers.Add(speaker.stringValue);
+          }
         }
-        catch(NullReferenceException)
-        {
-          item.Tag = "General";
-        }
-        
+
         result.Add(item);
       }
 
