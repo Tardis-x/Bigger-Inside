@@ -3,9 +3,9 @@
 namespace ua.org.gdg.devfest
 {
   [Serializable]
-  public class JsonSession
+  public class JsonSpeaker
   {
     public string name;
-    public JsonSessionFields fields;
+    public JsonSpeakerFields fields;
   }
 }

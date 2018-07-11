@@ -55,17 +55,7 @@ namespace ua.org.gdg.devfest
         SessionItem item = new SessionItem();
         item.Title = s.fields.title.stringValue;
         item.Name = Convert.ToInt32(s.name.Split('/').Last());
-        
-//        try
-//        {
-//          item.Tag = s.fields.tags.arrayValue.values.First().stringValue;
-//        }
-//        catch(NullReferenceException)
-//        {
-//          item.Tag = "General";
-//        }
-
-          item.Tag = s.fields.tags == null? "General" : s.fields.tags.arrayValue.values.First().stringValue;
+        item.Tag = s.fields.tags == null? "General" : s.fields.tags.arrayValue.values.First().stringValue;
 
         if (s.fields.speakers != null)
         {
@@ -81,8 +71,26 @@ namespace ua.org.gdg.devfest
       return result;
     }
 
+    public static Dictionary<string, Speaker> ParseSpeakers(JsonSpeakersTable jst)
+    {
+      Dictionary<string, Speaker> speakers = new Dictionary<string, Speaker>();
+
+      foreach (var js in jst.documents)
+      {
+        Speaker s = new Speaker();
+        s.Name = js.fields.name.stringValue;
+        s.Company = js.fields.company.stringValue;
+        s.Country = js.fields.country.stringValue;
+        s.PhotoUrl = js.fields.photoUrl.stringValue;
+        
+        speakers.Add(js.name.Split('/').Last(), s);
+      }
+
+      return speakers;
+    }
+
     public static List<RectTransform> ComposeScheduleForHall(Hall h, int day, Schedule sch,
-      List<SessionItem> sessions, SpeechScript ss)
+      List<SessionItem> sessions, Dictionary<string, Speaker> speakers, SpeechScript ss)
     {
       // Get all sessions from schedule
       var sList = sch.Days[day].Timeslots.SelectMany(x => x.Sessions).Where(s => s.Hall == h).ToList();
@@ -92,7 +100,8 @@ namespace ua.org.gdg.devfest
       {
         SessionItem s = sessions.Find(x => sList[i].Items.Contains(x.Name));
         result.Add(ss.GetInstance(sch.Days[day].Timeslots[i].StartTime,
-          sch.Days[day].Timeslots[i].EndTime, s.Title, s.Tag));
+          sch.Days[day].Timeslots[i].EndTime, s.Title, s.Tag, 
+          s.Speakers.Count > 0 ? speakers[s.Speakers[0]] : null));
       }
 
       return result;

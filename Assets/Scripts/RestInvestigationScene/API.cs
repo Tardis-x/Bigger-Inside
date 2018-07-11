@@ -28,9 +28,11 @@ namespace ua.org.gdg.devfest
     {
       WWW scheduleRequest = new WWW(SCHEDULE_URL);
       WWW sessionRequest = new WWW(SESSIONS_URL);
+      WWW speakerRequest = new WWW(SPEAKERS_URL);
 
       StartCoroutine(OnScheduleResponse(scheduleRequest));
       StartCoroutine(OnSessionResponse(sessionRequest));
+      StartCoroutine(OnSpeakerResponse(speakerRequest));
     }
 
     //---------------------------------------------------------------------
@@ -45,7 +47,8 @@ namespace ua.org.gdg.devfest
 
     public void Request(Hall hall, int day)
     {
-      _listScript.AddContent(FirestoreHelper.ComposeScheduleForHall(hall, day, _schedule, _items, _speechScript));
+      _listScript.AddContent(FirestoreHelper
+        .ComposeScheduleForHall(hall, day, _schedule, _items, _speakers, _speechScript));
     }
 
     //---------------------------------------------------------------------
@@ -59,10 +62,11 @@ namespace ua.org.gdg.devfest
       "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/sessions?pageSize=40";
     
     private const string SPEAKERS_URL =
-      "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/speakers";
+      "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/speakers?pageSize=40";
 
     private Schedule _schedule;
     private List<SessionItem> _items;
+    private Dictionary<string, Speaker> _speakers;
 
     private IEnumerator OnScheduleResponse(WWW req)
     {
@@ -78,6 +82,14 @@ namespace ua.org.gdg.devfest
 
       SessionTable st = JsonConvert.DeserializeObject<SessionTable>(req.text);
       _items = FirestoreHelper.ParseSessions(st);
+    }
+    
+    private IEnumerator OnSpeakerResponse(WWW req)
+    {
+      yield return req;
+
+      JsonSpeakersTable st = JsonConvert.DeserializeObject<JsonSpeakersTable>(req.text);
+      _speakers = FirestoreHelper.ParseSpeakers(st);
     }
 
     private List<string> messages = new List<string>();

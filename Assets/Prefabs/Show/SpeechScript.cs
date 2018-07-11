@@ -13,8 +13,8 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     [Header("Value References")] 
-    [SerializeField] private Text _startTimeText;
-    [SerializeField] private Text _endTimeText;
+    [SerializeField] private Text _speakerCompanyCountryText;
+    [SerializeField] private Text _speakerNameText;
     [SerializeField] private Text _startTimeHoursText;
     [SerializeField] private Text _startTimeMinutesText;
     [SerializeField] private Text _nameText;
@@ -30,12 +30,17 @@ namespace ua.org.gdg.devfest
       return Instantiate(GetComponent<RectTransform>());
     }
 
-    public RectTransform GetInstance(string startTime, string endTime, string name, string tag)
+    public RectTransform GetInstance(string startTime, string endTime, string name, string tag, Speaker speaker)
     {
       SpeechScript instance = Instantiate(this);
       instance.SetName(name);
       instance.SetStartTime(startTime);
-      instance.SetEndTime(endTime);
+      if (speaker != null)
+      {
+        instance.SetSpeakerName(speaker.Name);
+        instance.SetSpeakerCompanyCountry(speaker.Company, speaker.Country);
+      }
+      
       instance.SetTag(tag);
       return instance.GetComponent<RectTransform>();
     }
@@ -53,14 +58,18 @@ namespace ua.org.gdg.devfest
 
     private void SetStartTime(string startTimeText)
     {
-      _startTimeText.text = startTimeText;
       _startTimeHoursText.text = startTimeText.Split(':')[0];
       _startTimeMinutesText.text = startTimeText.Split(':')[1];
     }
 
-    private void SetEndTime(string endTimeText)
+    private void SetSpeakerCompanyCountry(string company, string country)
     {
-      _endTimeText.text = endTimeText;
+      _speakerCompanyCountryText.text = company + " / " + country;
+    }
+
+    private void SetSpeakerName(string speakerNameText)
+    {
+      _speakerNameText.text = speakerNameText;
     }
 
     private void SetName(string nameText)
