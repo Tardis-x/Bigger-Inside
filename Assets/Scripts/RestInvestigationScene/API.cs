@@ -24,7 +24,7 @@ namespace ua.org.gdg.devfest
     // Messages
     //---------------------------------------------------------------------
 
-    private void Awake()
+    private void Start()
     {
       WWW scheduleRequest = new WWW(SCHEDULE_URL);
       WWW sessionRequest = new WWW(SESSIONS_URL);
@@ -40,21 +40,12 @@ namespace ua.org.gdg.devfest
     public void OnClick()
     {
       Request(Hall.Expo, 0);
+      _listScript.Show();
     }
 
     public void Request(Hall hall, int day)
     {
-//      WaitForSeconds w;
-//      while (!scheduleRequest.isDone || !sessionRequest.isDone)
-//        w = new WaitForSeconds(0.1f);
-//      
-//      JsonSchedule jSchedule = JsonConvert.DeserializeObject<JsonSchedule>(scheduleRequest.text);
-//      Schedule sch = FirestoreHelper.ParseSchedule(jSchedule);
-//      SessionTable st = JsonConvert.DeserializeObject<SessionTable>(sessionRequest.text);
-//      Dictionary<int, string> items = FirestoreHelper.ParseSessions(st);
-
       _listScript.AddContent(FirestoreHelper.ComposeScheduleForHall(hall, day, _schedule, _items, _speechScript));
-      //_listScript.Show();
     }
 
     //---------------------------------------------------------------------
@@ -66,9 +57,11 @@ namespace ua.org.gdg.devfest
 
     private const string SESSIONS_URL =
       "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/sessions?pageSize=40";
+    
+    
 
     private Schedule _schedule;
-    private Dictionary<int, string> _items;
+    private List<SessionItem> _items;
 
     private IEnumerator OnScheduleResponse(WWW req)
     {

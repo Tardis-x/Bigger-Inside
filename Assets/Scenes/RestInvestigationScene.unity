@@ -563,7 +563,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1478445288}
-        m_MethodName: Request
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -783,9 +783,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91734df6a10cf644ea60dc6f2af16e24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _responseText: {fileID: 1159232211}
   _listScript: {fileID: 2009221688}
-  _showScript: {fileID: 114552448249481966, guid: 79a7fe362ea270041826eaa0a57f50a3,
+  _speechScript: {fileID: 114552448249481966, guid: 79a7fe362ea270041826eaa0a57f50a3,
     type: 2}
 --- !u!224 &1478445289
 RectTransform:
@@ -860,7 +859,7 @@ Prefab:
     - target: {fileID: 224994440520921782, guid: 5bf6843e90ef44a41849bd84bc13c78d,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 3.800003
+      value: 3.7999878
       objectReference: {fileID: 0}
     - target: {fileID: 224994440520921782, guid: 5bf6843e90ef44a41849bd84bc13c78d,
         type: 2}
@@ -916,21 +915,6 @@ Prefab:
         type: 2}
       propertyPath: m_SizeDelta.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224182883140738164, guid: 5bf6843e90ef44a41849bd84bc13c78d,
-        type: 2}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224725858604324926, guid: 5bf6843e90ef44a41849bd84bc13c78d,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.000015258789
-      objectReference: {fileID: 0}
-    - target: {fileID: 224617415101734996, guid: 5bf6843e90ef44a41849bd84bc13c78d,
-        type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: -2.69001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5bf6843e90ef44a41849bd84bc13c78d, type: 2}
