@@ -98,14 +98,12 @@ namespace ua.org.gdg.devfest
       JsonSpeakersTable st = JsonConvert.DeserializeObject<JsonSpeakersTable>(req.text);
       _speakers = FirestoreHelper.ParseSpeakers(st);
 
-      _storage = FirebaseStorage.DefaultInstance;
-
-      foreach (var speaker in _speakers.Values)
-      {
-        string url = speaker.PhotoUrl;
-        WWW photoRequest = new WWW(url);
-        StartCoroutine(OnPhotoResponse(photoRequest, speaker));
-      }
+//      foreach (var speaker in _speakers.Values)
+//      {
+//        string url = speaker.PhotoUrl;
+//        WWW photoRequest = new WWW(url);
+//        StartCoroutine(OnPhotoResponse(photoRequest, speaker));
+//      }
     }
   }
 }

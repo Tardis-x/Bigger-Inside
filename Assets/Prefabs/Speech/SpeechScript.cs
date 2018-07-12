@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using Newtonsoft.Json.Converters;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,8 +21,17 @@ namespace ua.org.gdg.devfest
     [SerializeField] private Text _startTimeMinutesText;
     [SerializeField] private Text _nameText;
     [SerializeField] private Text _tagText;
-    [SerializeField] private Image _tagImage;
+    [SerializeField] private RawImage _tagImage;
     [SerializeField] private RawImage _speakerPhoto;
+    
+    //---------------------------------------------------------------------
+    // Messages
+    //---------------------------------------------------------------------
+
+    private void Awake()
+    {
+      LOGO_BASE_PATH = Application.persistentDataPath + "Graphics/Logo";
+    }
 
     //---------------------------------------------------------------------
     // Public
@@ -31,7 +42,8 @@ namespace ua.org.gdg.devfest
       return Instantiate(GetComponent<RectTransform>());
     }
 
-    public RectTransform GetInstance(string startTime, string endTime, string name, string tag, Speaker speaker)
+    public RectTransform GetInstance(string startTime, string endTime, string name, string tag, Speaker speaker,
+      string sessionImage)
     {
       SpeechScript instance = Instantiate(this);
       instance.SetName(name);
@@ -41,8 +53,9 @@ namespace ua.org.gdg.devfest
       {
         instance.SetSpeakerName(speaker.Name);
         instance.SetSpeakerCompanyCountry(speaker.Company, speaker.Country);
-        instance.SetSpeakerPhoto(speaker.Photo);
+        instance.LoadImage(speaker.PhotoUrl, instance._speakerPhoto);
       }
+      if(sessionImage != "") LoadImage(sessionImage, instance._tagImage);
       
       instance.SetTag(tag);
       return instance.GetComponent<RectTransform>();
@@ -58,6 +71,7 @@ namespace ua.org.gdg.devfest
     private const string FIREBASE_TAG_COLOR = "#FFA827";
     private const string DESIGN_TAG_COLOR = "#EC407B";
     private const string GENERAL_TAG_COLOR = "#9E9E9E";
+    private string LOGO_BASE_PATH;
 
     private void SetSpeakerPhoto(Texture2D photo)
     {
@@ -95,6 +109,11 @@ namespace ua.org.gdg.devfest
     {
       _tagText.text = tag;
     }
+
+    private void SetSpeakerImageVisible(bool visible)
+    {
+      _speakerPhoto.gameObject.SetActive(visible);
+    }
     
     private void SetTagImageColor(string tag)
     {
@@ -125,8 +144,75 @@ namespace ua.org.gdg.devfest
         default:
           ColorUtility.TryParseHtmlString(GENERAL_TAG_COLOR, out newColor);
           _tagImage.color = newColor;
+          SetSpeakerImageVisible(false);
           break;
       }
+    }
+    
+    public void LoadImage(string logoUrl, RawImage image)
+    {
+      string filePath = GetFilePathFromUrl(logoUrl);
+      
+      if (LoadFromFile(filePath, image)) return;
+      
+      WWW req = new WWW(logoUrl);
+      //StartCoroutine(OnResponse(req, filePath, image));
+
+      WaitForSeconds w;
+      
+      while (!req.isDone)
+      {
+        w = new WaitForSeconds(.01f);
+      }
+      
+      image.texture = req.texture;
+    }
+
+    private IEnumerator OnResponse(WWW req, string filePath, RawImage image)
+    {
+      yield return req;
+
+      image.texture = req.texture;
+      //SetImageTexture(image, req.bytes);
+      SaveLogoToFile(filePath, req.bytes);
+    }
+    
+    private bool LoadFromFile(string fileName, RawImage image)
+    {
+      var filePath = LOGO_BASE_PATH + fileName;
+      
+      if (!File.Exists(filePath)) return false;
+      
+      var fileData = File.ReadAllBytes(filePath);
+      SetImageTexture(image, fileData);
+      return true;
+    }
+
+    private void SetImageTexture(RawImage image, byte[] data)
+    {
+      var texture2D = new Texture2D(0, 0, TextureFormat.BGRA32, false);
+      texture2D.LoadImage(data);
+      image.texture = texture2D;
+    }
+    
+    private void SaveLogoToFile(string fileName, byte[] logoBytes)
+    {
+      var filePath = LOGO_BASE_PATH + fileName;
+      var directoryName = Path.GetDirectoryName(filePath);
+
+      if (directoryName == null) return;
+      
+      if (!Directory.Exists(directoryName))
+      {
+        Directory.CreateDirectory(directoryName);
+      }
+      
+      File.WriteAllBytes(filePath, logoBytes);
+    }
+
+    private string GetFilePathFromUrl(string url)
+    {
+      return url.Split('/').Last();
     }
   }
 }

@@ -57,7 +57,8 @@ namespace ua.org.gdg.devfest
         item.Title = s.fields.title.stringValue;
         item.Name = Convert.ToInt32(s.name.Split('/').Last());
         item.Tag = s.fields.tags == null? "General" : s.fields.tags.arrayValue.values.First().stringValue;
-
+        item.ImageUrl = s.fields.image != null ? s.fields.image.stringValue : null;
+        
         if (s.fields.speakers != null)
         {
           foreach (var speaker in s.fields.speakers.arrayValue.values)
@@ -102,7 +103,7 @@ namespace ua.org.gdg.devfest
         SessionItem s = sessions.Find(x => sList[i].Items.Contains(x.Name));
         result.Add(ss.GetInstance(sch.Days[day].Timeslots[i].StartTime,
           sch.Days[day].Timeslots[i].EndTime, s.Title, s.Tag, 
-          s.Speakers.Count > 0 ? speakers[s.Speakers[0]] : null));
+          s.Speakers.Count > 0 ? speakers[s.Speakers[0]] : null, s.ImageUrl ?? ""));
       }
 
       return result;

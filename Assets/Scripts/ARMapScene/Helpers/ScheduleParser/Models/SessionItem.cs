@@ -9,6 +9,7 @@ namespace ua.org.gdg.devfest
     public string Title { get; set; }
     public string Tag { get; set; }
     public List<string> Speakers { get; set; }
+    public string ImageUrl { get; set; }
 
     public SessionItem()
     {
