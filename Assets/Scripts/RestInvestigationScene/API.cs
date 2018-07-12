@@ -1,13 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
-using Firebase.Auth;
 using Newtonsoft.Json;
-using UnityEngine.Experimental.PlayerLoop;
-using UnityEngine.Networking.NetworkSystem;
+using Firebase.Storage;
 
 namespace ua.org.gdg.devfest
 {
@@ -60,10 +57,13 @@ namespace ua.org.gdg.devfest
 
     private const string SESSIONS_URL =
       "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/sessions?pageSize=40";
-    
+
     private const string SPEAKERS_URL =
       "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/speakers?pageSize=40";
 
+
+    private FirebaseStorage _storage;
+    private StorageReference _imageReference;
     private Schedule _schedule;
     private List<SessionItem> _items;
     private Dictionary<string, Speaker> _speakers;
@@ -83,25 +83,28 @@ namespace ua.org.gdg.devfest
       SessionTable st = JsonConvert.DeserializeObject<SessionTable>(req.text);
       _items = FirestoreHelper.ParseSessions(st);
     }
-    
+
+    private IEnumerator OnPhotoResponse(WWW req, Speaker speaker)
+    {
+      yield return req;
+
+      speaker.Photo = req.texture;
+    }
+
     private IEnumerator OnSpeakerResponse(WWW req)
     {
       yield return req;
 
       JsonSpeakersTable st = JsonConvert.DeserializeObject<JsonSpeakersTable>(req.text);
       _speakers = FirestoreHelper.ParseSpeakers(st);
-    }
 
-    private List<string> messages = new List<string>();
+      _storage = FirebaseStorage.DefaultInstance;
 
-    private void AddStatusText(string text)
-    {
-      messages.Add(text);
-      string txt = "";
-
-      foreach (string s in messages)
+      foreach (var speaker in _speakers.Values)
       {
-        txt += "\n" + s;
+        string url = speaker.PhotoUrl;
+        WWW photoRequest = new WWW(url);
+        StartCoroutine(OnPhotoResponse(photoRequest, speaker));
       }
     }
   }
