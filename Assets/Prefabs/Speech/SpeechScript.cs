@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] private Text _tagText;
     [SerializeField] private RawImage _tagImage;
     [SerializeField] private RawImage _speakerPhoto;
+    [SerializeField] private Text _timespanText;
     
     //---------------------------------------------------------------------
     // Messages
@@ -50,6 +52,7 @@ namespace ua.org.gdg.devfest
       SpeechScript instance = Instantiate(this);
       instance.SetName(name);
       instance.SetStartTime(startTime);
+      instance.SetTimespanText(GetTimespanText(startTime, endTime));
       
       if (speaker != null)
       {
@@ -78,6 +81,37 @@ namespace ua.org.gdg.devfest
     private string _photoUrl;
     private string _tagImageUrl;
 
+    private void SetTimespanText(string timespanText)
+    {
+      _timespanText.text = timespanText;
+    }
+    
+    private string GetTimespanText(string startTime, string endTime)
+    {
+      int startHour = Convert.ToInt32(startTime.Split(':')[0]);
+      int endHour = Convert.ToInt32(endTime.Split(':')[0]);
+      int startMinute = Convert.ToInt32(startTime.Split(':')[1]);
+      int endMinute = Convert.ToInt32(endTime.Split(':')[1]);
+
+      int hourSpan = endHour - startHour;
+      int minuteSpan = endMinute - startMinute;
+
+      if (minuteSpan < 0)
+      {
+        hourSpan--;
+        minuteSpan = 60 + minuteSpan;
+      }
+
+      string timespanText = "";
+
+      if (hourSpan == 1) timespanText += "1 hour";
+      if (hourSpan > 1) timespanText += hourSpan + " hours";
+      if (timespanText != "") timespanText += " ";
+      if(minuteSpan > 0) timespanText += minuteSpan + " mins";
+
+      return timespanText;
+    }
+    
     private void SetSpeakerPhoto(Texture2D photo)
     {
       _speakerPhoto.texture = photo;
