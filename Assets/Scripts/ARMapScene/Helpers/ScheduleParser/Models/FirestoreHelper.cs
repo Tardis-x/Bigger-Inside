@@ -58,6 +58,9 @@ namespace ua.org.gdg.devfest
         item.Name = Convert.ToInt32(s.name.Split('/').Last());
         item.Tag = s.fields.tags == null? "General" : s.fields.tags.arrayValue.values.First().stringValue;
         item.ImageUrl = s.fields.image != null ? s.fields.image.stringValue : null;
+        item.Complexity = s.fields.complexity != null ? s.fields.complexity.stringValue : "";
+        item.Language = s.fields.language != null ? s.fields.language.stringValue : "";
+        item.Description = s.fields.description.stringValue;
         
         if (s.fields.speakers != null)
         {
@@ -91,22 +94,35 @@ namespace ua.org.gdg.devfest
       return speakers;
     }
 
-    public static List<RectTransform> ComposeScheduleForHall(Hall h, int day, Schedule sch,
+    public static List<SpeechScript> ComposeScheduleForHall(Hall h, int day, Schedule sch,
       List<SessionItem> sessions, Dictionary<string, Speaker> speakers, SpeechScript ss)
     {
       // Get all sessions from schedule
       var sList = sch.Days[day].Timeslots.SelectMany(x => x.Sessions).Where(s => s.Hall == h).ToList();
-      var result = new List<RectTransform>();
+      var result = new List<SpeechScript>();
 
       for (int i = 0; i < sList.Count; i++)
       {
         SessionItem s = sessions.Find(x => sList[i].Items.Contains(x.Name));
-        result.Add(ss.GetInstance(sch.Days[day].Timeslots[i].StartTime,
-          sch.Days[day].Timeslots[i].EndTime, s.Title, s.Tag, 
-          s.Speakers.Count > 0 ? speakers[s.Speakers[0]] : null, s.ImageUrl ?? ""));
+        result.Add(ss.GetInstance(sch.Days[day].DateReadable, sch.Days[day].Timeslots[i].StartTime, 
+          sch.Days[day].Timeslots[i].EndTime, s.Speakers.Count > 0 ? speakers[s.Speakers[0]] : null, s,
+          HallToString(h)));
       }
 
       return result;
+    }
+
+    private static string HallToString(Hall h)
+    {
+      switch (h)
+      {
+          case Hall.Conference:
+            return "Conference hall";
+        case Hall.Expo:
+          return "Expo hall";
+        default:
+          return "Workshops";
+      }
     }
   }
 }

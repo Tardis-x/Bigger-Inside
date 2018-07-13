@@ -14,6 +14,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] private LayerMask _clicableObjects;
     [SerializeField] private LayerMask _uiLayer;
     [SerializeField] private RectTransform _scrollableList;
+    [SerializeField] private NavigationManager _navigationManager;
 
     //---------------------------------------------------------------------
     // Internal
@@ -21,7 +22,7 @@ namespace ua.org.gdg.devfest
 
     private bool _fingerMoved;
     private ScrollableListScript _listScript;
-    private InterractibleObject _lastInterracted;
+    private InteractableObject _lastInterracted;
 
     //---------------------------------------------------------------------
     // Messages
@@ -59,28 +60,31 @@ namespace ua.org.gdg.devfest
         {
           {
             Debug.Log("Object hit");
-            InterractibleObject
-              obj = hit.transform.gameObject.GetComponent<InterractibleObject>(); //get interraction
+            InteractableObject
+              obj = hit.transform.gameObject.GetComponent<InteractableObject>(); //get interraction
 
-            if (obj != null) //if obj is interractible
+            if (obj != null) //if obj is interactable
             {
               if(_lastInterracted != null) _lastInterracted.Disable();
               _lastInterracted = obj;
+              _navigationManager.CurrentState = obj.NavigationStateAfterInterraction;
               Debug.Log("Interraction started");
-              obj.Interract(); 
+              if(!_listScript.IsActive) obj.Interact(); 
             }
           }
         }
 
-        _uiLayer = ~_uiLayer;
+        //_uiLayer = ~_uiLayer;
         
-        // If ray casts not on list
-        if (!Physics.Raycast(ray, _uiLayer))
-        {
-          // Hide list and clear it
-          _listScript.Disable();
-          if(_lastInterracted != null) _lastInterracted.Disable();
-        }
+         //If ray casts not on list
+//        if (!Physics.Raycast(ray, _uiLayer))
+//        {
+//          // Hide list and clear it
+//          if (_lastInterracted != null)
+//          {
+//            _lastInterracted.Disable();
+//          }
+//        }
       }
     }
   }

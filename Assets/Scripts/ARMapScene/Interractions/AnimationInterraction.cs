@@ -6,7 +6,7 @@ using UnityEngine;
 namespace ua.org.gdg.devfest
 {
 
-	public class AnimationInterraction : InterractibleObject
+	public class AnimationInterraction : InteractableObject
 	{
 
 		private Animator _animator;
@@ -16,7 +16,7 @@ namespace ua.org.gdg.devfest
 			_animator = GetComponent<Animator>();
 		}
 
-		public override void Interract()
+		public override void Interact()
 		{
 			_animator.enabled = !_animator.enabled;
 		}

@@ -6,11 +6,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Converters;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace ua.org.gdg.devfest
 {
-  public class SpeechScript : MonoBehaviour
+  public class SpeechScript : InteractableObject
   {
     //---------------------------------------------------------------------
     // Editor
@@ -26,6 +27,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] private RawImage _tagImage;
     [SerializeField] private RawImage _speakerPhoto;
     [SerializeField] private Text _timespanText;
+    public DescriptionPanelScript SpeechDescriptionPanel;
     
     //---------------------------------------------------------------------
     // Messages
@@ -40,17 +42,18 @@ namespace ua.org.gdg.devfest
     {
       if(_photoUrl != null) LoadImage(_photoUrl, _speakerPhoto);
       if(_tagImageUrl != null) LoadImage(_tagImageUrl, _tagImage);
+      NavigationStateAfterInterraction = NavigationManager.State.ListItem;
     }
 
     //---------------------------------------------------------------------
     // Public
     //---------------------------------------------------------------------
 
-    public RectTransform GetInstance(string startTime, string endTime, string name, string tag, Speaker speaker,
-      string sessionImageUrl)
+    public SpeechScript GetInstance(string date, string startTime, string endTime, Speaker speaker,
+      SessionItem session, string hall)
     {
       SpeechScript instance = Instantiate(this);
-      instance.SetName(name);
+      instance.SetName(session.Title);
       instance.SetStartTime(startTime);
       instance.SetTimespanText(GetTimespanText(startTime, endTime));
       
@@ -61,16 +64,34 @@ namespace ua.org.gdg.devfest
         instance._photoUrl = speaker.PhotoUrl;
       }
 
-      if (sessionImageUrl != "") instance._tagImageUrl = sessionImageUrl;
+      if (session.ImageUrl != "") instance._tagImageUrl = session.ImageUrl;
       
-      instance.SetTag(tag);
-      return instance.GetComponent<RectTransform>();
+      instance.SetTag(session.Tag);
+      instance._item = session;
+      instance._date = date;
+      instance._startTime = startTime;
+      instance._endTime = endTime;
+      instance._hall = hall;
+      return instance;
+    }
+    
+    public override void Interact()
+    {
+      SpeechDescriptionPanel.SetData(_item, _speakerPhoto.texture, _speakerNameText.text,
+        _speakerCompanyCountryText.text, _date, _startTime, _endTime, _hall, _tagImage.texture);
+      SpeechDescriptionPanel.SetActive(true);
+    }
+
+    public override void Disable()
+    {
+      Destroy(_tagImage);
+      Destroy(_speakerPhoto);
     }
 
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
-
+    
     private const string ANDROID_TAG_COLOR = "#8DCB71";
     private const string WEB_TAG_COLOR = "#43A6F5";
     private const string CLOUD_TAG_COLOR = "#5C6CC0";
@@ -80,6 +101,11 @@ namespace ua.org.gdg.devfest
     private string LOGO_BASE_PATH;
     private string _photoUrl;
     private string _tagImageUrl;
+    private SessionItem _item;
+    private string _date;
+    private string _startTime;
+    private string _endTime;
+    private string _hall;
 
     private void SetTimespanText(string timespanText)
     {

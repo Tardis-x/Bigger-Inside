@@ -26,7 +26,7 @@ namespace ua.org.gdg.devfest
 			if (Physics.Raycast(ray, out hit)) //if hit
 			{
 				Debug.Log("Object hit");
-				InterractibleObject obj = hit.transform.gameObject.GetComponent<InterractibleObject>(); //get interraction
+				InteractableObject obj = hit.transform.gameObject.GetComponent<InteractableObject>(); //get interraction
 
 				if (obj != null) //if obj is interractible
 				{
@@ -34,7 +34,7 @@ namespace ua.org.gdg.devfest
 					timeFocused += Time.deltaTime; //start counting focus time
 					_scopeProgerssBar.fillAmount = timeFocused / _interractionTime;
 
-					if (timeFocused >= _interractionTime) obj.Interract(); //if focused long enough - interract
+					if (timeFocused >= _interractionTime) obj.Interact(); //if focused long enough - interract
 
 					return; // else - leave
 				}

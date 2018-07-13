@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ua.org.gdg.devfest
 {
@@ -11,6 +12,9 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     // Editor
     //---------------------------------------------------------------------
+
+    [SerializeField] private Scrollbar _scrollbar;
+    [SerializeField] private DescriptionPanelScript _descriptionPanel;
 
     //---------------------------------------------------------------------
     // Internal
@@ -44,18 +48,23 @@ namespace ua.org.gdg.devfest
     // Public
     //---------------------------------------------------------------------
 
+    public bool IsActive { get; private set; }
+    
     public void AddContentItem(RectTransform contentItem)
     {
       contentItem.SetParent(_contentContainer, false);
     }
 
-    public void AddContent(List<RectTransform> content)
+    public void AddContent(List<SpeechScript> content)
     {
       foreach (var item in content)
       {
-        item.SetParent(_contentContainer, false);
+        item.SpeechDescriptionPanel = _descriptionPanel;
+        item.GetComponent<RectTransform>().SetParent(_contentContainer, false);
       }
     }
+
+    //public NavigationManager.State State = NavigationManager.State.List;
 
     public void ClearContent()
     {
@@ -69,22 +78,28 @@ namespace ua.org.gdg.devfest
 
     public void Hide()
     {
+      IsActive = false;
       gameObject.SetActive(false);
     }
 
     public void Show()
     {
+      GetComponent<ScrollRect>().verticalNormalizedPosition = 1;
+      IsActive = true;
       gameObject.SetActive(true);
     }
 
     public void Disable()
     {
+      IsActive = false;
       ClearContent();
       gameObject.SetActive(false);
     }
 
     public void Enable()
     {
+      GetComponent<ScrollRect>().verticalNormalizedPosition = 1;
+      IsActive = true;
       ClearContent();
       gameObject.SetActive(true);
     }

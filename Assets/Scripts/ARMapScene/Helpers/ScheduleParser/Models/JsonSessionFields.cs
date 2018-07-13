@@ -11,5 +11,8 @@ namespace ua.org.gdg.devfest
     public JsonTag tags;
     public JsonTag speakers;
     public StringValue image;
+    public StringValue complexity;
+    public StringValue description;
+    public StringValue language;
   }
 }
