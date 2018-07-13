@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Converters;
 using UnityEngine;
 using UnityEngine.UI;
@@ -33,17 +34,18 @@ namespace ua.org.gdg.devfest
       LOGO_BASE_PATH = Application.persistentDataPath + "Graphics/Logo";
     }
 
+    private void Start()
+    {
+      if(_photoUrl != null) LoadImage(_photoUrl, _speakerPhoto);
+      if(_tagImageUrl != null) LoadImage(_tagImageUrl, _tagImage);
+    }
+
     //---------------------------------------------------------------------
     // Public
     //---------------------------------------------------------------------
 
-    public RectTransform GetInstance()
-    {
-      return Instantiate(GetComponent<RectTransform>());
-    }
-
     public RectTransform GetInstance(string startTime, string endTime, string name, string tag, Speaker speaker,
-      string sessionImage)
+      string sessionImageUrl)
     {
       SpeechScript instance = Instantiate(this);
       instance.SetName(name);
@@ -53,9 +55,10 @@ namespace ua.org.gdg.devfest
       {
         instance.SetSpeakerName(speaker.Name);
         instance.SetSpeakerCompanyCountry(speaker.Company, speaker.Country);
-        instance.LoadImage(speaker.PhotoUrl, instance._speakerPhoto);
+        instance._photoUrl = speaker.PhotoUrl;
       }
-      if(sessionImage != "") LoadImage(sessionImage, instance._tagImage);
+
+      if (sessionImageUrl != "") instance._tagImageUrl = sessionImageUrl;
       
       instance.SetTag(tag);
       return instance.GetComponent<RectTransform>();
@@ -72,6 +75,8 @@ namespace ua.org.gdg.devfest
     private const string DESIGN_TAG_COLOR = "#EC407B";
     private const string GENERAL_TAG_COLOR = "#9E9E9E";
     private string LOGO_BASE_PATH;
+    private string _photoUrl;
+    private string _tagImageUrl;
 
     private void SetSpeakerPhoto(Texture2D photo)
     {
@@ -149,23 +154,14 @@ namespace ua.org.gdg.devfest
       }
     }
     
-    public void LoadImage(string logoUrl, RawImage image)
+    private void LoadImage(string logoUrl, RawImage image)
     {
       string filePath = GetFilePathFromUrl(logoUrl);
       
       if (LoadFromFile(filePath, image)) return;
       
       WWW req = new WWW(logoUrl);
-      //StartCoroutine(OnResponse(req, filePath, image));
-
-      WaitForSeconds w;
-      
-      while (!req.isDone)
-      {
-        w = new WaitForSeconds(.01f);
-      }
-      
-      image.texture = req.texture;
+      StartCoroutine(OnResponse(req, filePath, image));
     }
 
     private IEnumerator OnResponse(WWW req, string filePath, RawImage image)
@@ -212,7 +208,9 @@ namespace ua.org.gdg.devfest
 
     private string GetFilePathFromUrl(string url)
     {
-      return url.Split('/').Last();
+      if(!url.Contains('%')) return url.Split('/').Last();
+
+      return url.Split('%').First(x => x.Contains("?")).Split('?').First(y => y.Contains(".jpg"));
     }
   }
 }
