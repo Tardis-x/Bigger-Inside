@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using ua.org.gdg.devfest;
-using UnityEngine;
-
+﻿using ua.org.gdg.devfest;
 public class PanelManager : Singleton<PanelManager>
 {
   //---------------------------------------------------------------------

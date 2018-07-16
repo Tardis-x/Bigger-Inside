@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using Vuforia;
 
 namespace ua.org.gdg.devfest

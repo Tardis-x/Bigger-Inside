@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 using System.Linq;
-using UnityEngine.UI;
 
 namespace ua.org.gdg.devfest
 {

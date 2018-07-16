@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ua.org.gdg.devfest
 {

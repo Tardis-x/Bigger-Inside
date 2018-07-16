@@ -17,7 +17,6 @@ using UnityEngine.SceneManagement;
 
 namespace ua.org.gdg.devfest
 {
-  using System;
   using System.Collections.Generic;
   using System.Threading.Tasks;
   using Google;
@@ -33,7 +32,6 @@ namespace ua.org.gdg.devfest
 
     private GoogleSignInConfiguration configuration;
     private FirebaseAuth _auth;
-    private FirebaseUser _user;
 
     // Defer the configuration creation until Awake so the web Client ID
     // Can be set via the property inspector in the Editor.
@@ -115,7 +113,6 @@ namespace ua.org.gdg.devfest
           else
           {
             signInCompleted.SetResult(authTask.Result);
-            _user = authTask.Result;
             AddStatusText("Firebase user: " + authTask.Result.DisplayName);
            
             
@@ -123,30 +120,6 @@ namespace ua.org.gdg.devfest
           }
         });
       }
-    }
-
-    public void OnSignInSilently()
-    {
-      GoogleSignIn.Configuration = configuration;
-      GoogleSignIn.Configuration.UseGameSignIn = false;
-      GoogleSignIn.Configuration.RequestIdToken = true;
-      AddStatusText("Calling SignIn Silently");
-
-      GoogleSignIn.DefaultInstance.SignInSilently()
-        .ContinueWith(OnAuthenticationFinished);
-    }
-
-
-    public void OnGamesSignIn()
-    {
-      GoogleSignIn.Configuration = configuration;
-      GoogleSignIn.Configuration.UseGameSignIn = true;
-      GoogleSignIn.Configuration.RequestIdToken = false;
-
-      AddStatusText("Calling Games SignIn");
-
-      GoogleSignIn.DefaultInstance.SignIn().ContinueWith(
-        OnAuthenticationFinished);
     }
 
     private List<string> messages = new List<string>();

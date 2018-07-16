@@ -1,6 +1,4 @@
-﻿
-
-namespace ua.org.gdg.devfest
+﻿namespace ua.org.gdg.devfest
 {
 	public class ScheduleItemUiModel
 	{

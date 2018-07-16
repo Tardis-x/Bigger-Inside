@@ -1,64 +1,65 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Analytics;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class Fade : MonoBehaviour
+namespace ua.org.gdg.devfest
 {
-  //---------------------------------------------------------------------
-  // Editor
-  //---------------------------------------------------------------------
-  
-  [SerializeField] private float _fadeRate;
-  
-  //---------------------------------------------------------------------
-  // Internal
-  //---------------------------------------------------------------------
-  
-  private Image _image;
-  private float _targetAlpha;
-  
-  //---------------------------------------------------------------------
-  // Messages
-  //---------------------------------------------------------------------
-  
-  // Use this for initialization
-  void Start ()
+  public class Fade : MonoBehaviour
   {
-    _image = GetComponent<Image>();
-    if(_image==null)
+    //---------------------------------------------------------------------
+    // Editor
+    //---------------------------------------------------------------------
+
+    [SerializeField] private float _fadeRate;
+
+    //---------------------------------------------------------------------
+    // Internal
+    //---------------------------------------------------------------------
+
+    private Image _image;
+    private float _targetAlpha;
+
+    //---------------------------------------------------------------------
+    // Messages
+    //---------------------------------------------------------------------
+
+    // Use this for initialization
+    void Start()
     {
-      Debug.LogError("Error: No image on " + name);
+      _image = GetComponent<Image>();
+      if (_image == null)
+      {
+        Debug.LogError("Error: No image on " + name);
+      }
+
+      _targetAlpha = _image.color.a;
     }
-    _targetAlpha = _image.color.a;
-  }
-     
-  // Update is called once per frame
-  void Update () 
-  {
-    Color curColor = _image.color;
-    float alphaDiff = Mathf.Abs(curColor.a - _targetAlpha);
-    
-    if (alphaDiff>0.0001f)
+
+    // Update is called once per frame
+    void Update()
     {
-      curColor.a = Mathf.Lerp(curColor.a, _targetAlpha, _fadeRate * Time.deltaTime);
-      _image.color = curColor;
+      Color curColor = _image.color;
+      float alphaDiff = Mathf.Abs(curColor.a - _targetAlpha);
+
+      if (alphaDiff > 0.0001f)
+      {
+        curColor.a = Mathf.Lerp(curColor.a, _targetAlpha, _fadeRate * Time.deltaTime);
+        _image.color = curColor;
+      }
     }
-  }
- 
-  //---------------------------------------------------------------------
-  // Helpers
-  //---------------------------------------------------------------------
-  
-  public void FadeOut()
-  {
-    _targetAlpha = 0.0f;
-  }
- 
-  public void FadeIn()
-  {
-    gameObject.SetActive(true);
-    _targetAlpha = 1.0f;
+
+    //---------------------------------------------------------------------
+    // Helpers
+    //---------------------------------------------------------------------
+
+    public void FadeOut()
+    {
+      _targetAlpha = 0.0f;
+    }
+
+    public void FadeIn()
+    {
+      gameObject.SetActive(true);
+      _targetAlpha = 1.0f;
+    }
   }
 }
