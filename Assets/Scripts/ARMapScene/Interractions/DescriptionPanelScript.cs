@@ -39,9 +39,12 @@ namespace ua.org.gdg.devfest
     // Public
     //---------------------------------------------------------------------
     
+    public bool Active { get; private set; }
+    
     public void SetActive(bool value)
     {
       gameObject.SetActive(value);
+      Active = value;
     }
 
     public void SetData(SessionItem session, Texture speakerPhoto, string speakerName, string speakerCompanyCountry,

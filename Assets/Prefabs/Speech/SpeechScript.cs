@@ -41,6 +41,8 @@ namespace ua.org.gdg.devfest
     {
       if(_photoUrl != null) LoadImage(_photoUrl, _speakerPhoto);
       if(_tagImageUrl != null) LoadImage(_tagImageUrl, _tagImage);
+      _panelManagerInstance = PanelManager.Instance;
+      _speechDescriptionPanel = _panelManagerInstance.SpeechDescriptionPanel;
     }
 
     //---------------------------------------------------------------------
@@ -75,10 +77,9 @@ namespace ua.org.gdg.devfest
     
     public override void Interact()
     {
-      //PanelManager.DefaultInstance.SchedulePanel
-      PanelManager.DefaultInstance.SpeechDescriptionPanel.SetData(_item, _speakerPhoto.texture, _speakerNameText.text,
+      _speechDescriptionPanel.SetData(_item, _speakerPhoto.texture, _speakerNameText.text,
         _speakerCompanyCountryText.text, _date, _startTime, _endTime, _hall, _tagImage.texture);
-      PanelManager.DefaultInstance.SpeechDescriptionPanel.SetActive(true);
+      _speechDescriptionPanel.SetActive(true);
     }
 
     public override void Disable()
@@ -105,6 +106,9 @@ namespace ua.org.gdg.devfest
     private string _startTime;
     private string _endTime;
     private string _hall;
+    private PanelManager _panelManagerInstance;
+    private DescriptionPanelScript _speechDescriptionPanel;
+    
 
     private void SetTimespanText(string timespanText)
     {

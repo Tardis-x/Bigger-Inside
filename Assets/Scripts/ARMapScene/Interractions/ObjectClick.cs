@@ -71,18 +71,6 @@ namespace ua.org.gdg.devfest
             }
           }
         }
-
-        //_uiLayer = ~_uiLayer;
-        
-         //If ray casts not on list
-//        if (!Physics.Raycast(ray, _uiLayer))
-//        {
-//          // Hide list and clear it
-//          if (_lastInterracted != null)
-//          {
-//            _lastInterracted.Disable();
-//          }
-//        }
       }
     }
   }

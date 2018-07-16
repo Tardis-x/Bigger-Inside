@@ -21,6 +21,8 @@ namespace ua.org.gdg.devfest
 
     private RectTransform _contentContainer;
     private float _contentWidth;
+    private PanelManager _panelManagerInstance;
+    private DescriptionPanelScript _speechDescriptionPanel;
 
     //---------------------------------------------------------------------
     // Messages
@@ -36,18 +38,18 @@ namespace ua.org.gdg.devfest
         _contentContainer = child;
         return;
       }
-      
-      
     }
 
     private void Start()
     {
       Hide();
+      _panelManagerInstance = PanelManager.Instance;
+      _speechDescriptionPanel = _panelManagerInstance.SpeechDescriptionPanel;
     }
     
     private void Update()
     {
-      if(Input.GetKeyDown(KeyCode.Escape)) Disable();
+      if(Input.GetKeyDown(KeyCode.Escape) && !_speechDescriptionPanel.Active) Disable();
     }
 
     //---------------------------------------------------------------------
