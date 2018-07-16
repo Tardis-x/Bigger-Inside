@@ -57,15 +57,15 @@ namespace ua.org.gdg.devfest
         {
           {
             Debug.Log("Object hit");
-            InteractableObject
-              obj = hit.transform.gameObject.GetComponent<InteractableObject>(); //get interraction
+            InteractableObject obj = hit.transform.gameObject.GetComponent<InteractableObject>(); //get interraction
 
             if (obj != null) //if obj is interactable
             {
-              if(_lastInterracted != null) _lastInterracted.Disable();
+              if (_lastInterracted != null) _lastInterracted.Disable();
               _lastInterracted = obj;
+
               Debug.Log("Interraction started");
-              if(!_listScript.IsActive) obj.Interact(); 
+              obj.Interact();
             }
           }
         }

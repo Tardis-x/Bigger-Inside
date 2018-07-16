@@ -12,22 +12,7 @@ namespace ua.org.gdg.devfest
 
 		[SerializeField] private Renderer _highlightRenderer;
 		[SerializeField] private Texture _defaultTexture;
-		[SerializeField] private Hall _hall;
-		
-		//---------------------------------------------------------------------
-		// Messages
-		//---------------------------------------------------------------------
-
-		private void Start()
-		{
-			_listScript = PanelManager.Instance.SchedulePanel;
-		}
-		
-		//---------------------------------------------------------------------
-		// Internal
-		//---------------------------------------------------------------------
-
-		private ScrollableListScript _listScript;
+		[SerializeField] private string _hall;
 		
 		//---------------------------------------------------------------------
 		// Public
@@ -35,16 +20,16 @@ namespace ua.org.gdg.devfest
 
 		public override void Interact()
 		{
-			// Show schedule
-			_listScript.Enable();
-			_listScript.SetContentForHall(_hall);
+			if (!PanelManager.Instance.SchedulePanel.IsActive)
+			{
+				PanelManager.Instance.SchedulePanel.EnablePanel();
+				PanelManager.Instance.SchedulePanel.SetContentForHall(_hall);
+			}
 		}
 
 		public override void Disable()
 		{
 			_highlightRenderer.material.mainTexture = _defaultTexture;
 		}
-		
-		
 	}
 }

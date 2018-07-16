@@ -61,12 +61,12 @@ namespace ua.org.gdg.devfest
 
 		private void HideListButtonOnClick()
 		{
-			_listScript.Disable();
+			_listScript.DisablePanel();
 		}
 
 		private void ShowListButtonOnClick()
 		{
-			_listScript.Enable();
+			_listScript.EnablePanel();
 		}
 	}
 }

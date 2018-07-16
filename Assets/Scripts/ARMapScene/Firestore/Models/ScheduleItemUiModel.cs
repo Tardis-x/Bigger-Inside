@@ -8,5 +8,8 @@ namespace ua.org.gdg.devfest
 		public Speaker Speaker { get; set; }
 	  public string Tag { get; set; }
 		public string ImageUrl { get; set; }
+		public string Title { get; set; }
+		public string StartTime { get; set; }
+		public string EndTime { get; set; }
 	}
 }

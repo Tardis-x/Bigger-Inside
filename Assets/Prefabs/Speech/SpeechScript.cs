@@ -49,37 +49,31 @@ namespace ua.org.gdg.devfest
     // Public
     //---------------------------------------------------------------------
 
-    public SpeechScript GetInstance(string date, string startTime, string endTime, Speaker speaker,
-      SessionItem session, string hall)
+    public SpeechScript GetInstance(ScheduleItemUiModel model)
     {
       SpeechScript instance = Instantiate(this);
-      instance.SetName(session.Title);
-      instance.SetStartTime(startTime);
-      instance.SetTimespanText(GetTimespanText(startTime, endTime));
+      instance.SetName(model.Title);
+      instance.SetStartTime(model.StartTime);
+      instance.SetTimespanText(GetTimespanText(model.StartTime, model.EndTime));
       
-      if (speaker != null)
+      if (model.Speaker != null)
       {
-        instance.SetSpeakerName(speaker.Name);
-        instance.SetSpeakerCompanyCountry(speaker.Company, speaker.Country);
-        instance._photoUrl = speaker.PhotoUrl;
+        instance.SetSpeakerName(model.Speaker.Name);
+        instance.SetSpeakerCompanyCountry(model.Speaker.Company, model.Speaker.Country);
+        instance._photoUrl = model.Speaker.PhotoUrl;
       }
 
-      if (session.ImageUrl != "") instance._tagImageUrl = session.ImageUrl;
-      
-      instance.SetTag(session.Tag);
-      instance._item = session;
-      instance._date = date;
-      instance._startTime = startTime;
-      instance._endTime = endTime;
-      instance._hall = hall;
+      if (model.ImageUrl != "") instance._tagImageUrl = model.ImageUrl;
+
+      instance._description = model.Description;
+      instance.SetTag(model.Tag);
       return instance;
     }
     
     public override void Interact()
     {
-      _speechDescriptionPanel.SetData(_item, _speakerPhoto.texture, _speakerNameText.text,
-        _speakerCompanyCountryText.text, _date, _startTime, _endTime, _hall, _tagImage.texture);
       _speechDescriptionPanel.SetActive(true);
+      _speechDescriptionPanel.SetData(_description);
     }
 
     public override void Disable()
@@ -108,6 +102,7 @@ namespace ua.org.gdg.devfest
     private string _hall;
     private PanelManager _panelManagerInstance;
     private DescriptionPanelScript _speechDescriptionPanel;
+    private ScheduleItemDescriptionUiModel _description;
     
 
     private void SetTimespanText(string timespanText)
@@ -190,26 +185,32 @@ namespace ua.org.gdg.devfest
       switch (tag)
       {
         case "Android":
+          _description.TagColor = ANDROID_TAG_COLOR;
           if (ColorUtility.TryParseHtmlString(ANDROID_TAG_COLOR, out newColor))
             _tagImage.color = newColor;
           break;
         case "Cloud":
+          _description.TagColor = CLOUD_TAG_COLOR;
           if (ColorUtility.TryParseHtmlString(CLOUD_TAG_COLOR, out newColor))
             _tagImage.color = newColor;
           break;
         case "Web":
+          _description.TagColor = WEB_TAG_COLOR;
           if (ColorUtility.TryParseHtmlString(WEB_TAG_COLOR, out newColor))
             _tagImage.color = newColor;
           break;
         case "Firebase":
+          _description.TagColor = FIREBASE_TAG_COLOR;
           ColorUtility.TryParseHtmlString(FIREBASE_TAG_COLOR, out newColor);
           _tagImage.color = newColor;
           break;
         case "Design":
+          _description.TagColor = DESIGN_TAG_COLOR;
           ColorUtility.TryParseHtmlString(DESIGN_TAG_COLOR, out newColor);
           _tagImage.color = newColor;
           break;
         default:
+          _description.TagColor = GENERAL_TAG_COLOR;
           ColorUtility.TryParseHtmlString(GENERAL_TAG_COLOR, out newColor);
           _tagImage.color = newColor;
           SetSpeakerImageVisible(false);
@@ -232,7 +233,6 @@ namespace ua.org.gdg.devfest
       yield return req;
 
       image.texture = req.texture;
-      //SetImageTexture(image, req.bytes);
       SaveLogoToFile(filePath, req.bytes);
     }
     

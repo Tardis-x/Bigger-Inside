@@ -9,7 +9,7 @@ namespace ua.org.gdg.devfest
     // Property
     //---------------------------------------------------------------------
     
-    public Hall Hall { get; set; }
+    public string Hall { get; set; }
     public List<Tag> Tags { get; set; }
     public List<int> Items { get; set; }
 
@@ -23,13 +23,13 @@ namespace ua.org.gdg.devfest
       switch (hall)
       {
           case 0:
-            Hall = Hall.Expo;
+            Hall = "Expo";
             break;
           case 1:
-            Hall = Hall.Conference;
+            Hall = "Conference";
             break;
           case 2:
-            Hall = Hall.Workshops;
+            Hall = "Workshops";
             break;
           default :
             throw new Exception("Unknown hall.");

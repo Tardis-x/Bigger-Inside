@@ -11,6 +11,7 @@
     public string Complexity { get; set; }
     public string Tag { get; set; }
     public string Description { get; set; }
+    public string TagColor { get; set; }
     public Speaker Speaker { get; set; }
   }
 }

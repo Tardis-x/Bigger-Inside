@@ -41,15 +41,15 @@ namespace ua.org.gdg.devfest
       return day;
     }
     
-    public static List<SessionItem> ParseSessions(SessionTable st)
+    public static Dictionary<int, SessionItem> ParseSessions(SessionTable st)
     {
-      List<SessionItem> result = new List<SessionItem>();
+      Dictionary<int, SessionItem> result = new Dictionary<int, SessionItem>();
       
       foreach (var s in st.documents)
       {
         SessionItem item = new SessionItem();
         item.Title = s.fields.title.stringValue;
-        item.Name = Convert.ToInt32(s.name.Split('/').Last());
+        item.Id = Convert.ToInt32(s.name.Split('/').Last());
         item.Tag = s.fields.tags == null? "General" : s.fields.tags.arrayValue.values.First().stringValue;
         item.ImageUrl = s.fields.image != null ? s.fields.image.stringValue : null;
         item.Complexity = s.fields.complexity != null ? s.fields.complexity.stringValue : "";
@@ -64,7 +64,7 @@ namespace ua.org.gdg.devfest
           }
         }
 
-        result.Add(item);
+        result.Add(item.Id, item);
       }
 
       return result;
