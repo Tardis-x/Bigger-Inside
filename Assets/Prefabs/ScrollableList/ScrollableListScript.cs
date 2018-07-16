@@ -12,18 +12,18 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     // Editor
     //---------------------------------------------------------------------
-
-    [SerializeField] private Scrollbar _scrollbar;
+    
     [SerializeField] private RectTransform _contentContainer;
+    [SerializeField] private SpeechScript _speechScript;
 
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
-
     
     private float _contentWidth;
     private PanelManager _panelManagerInstance;
     private DescriptionPanelScript _speechDescriptionPanel;
+    private FirebaseManager _firebaseManager;
 
     //---------------------------------------------------------------------
     // Messages
@@ -34,6 +34,7 @@ namespace ua.org.gdg.devfest
       Hide();
       _panelManagerInstance = PanelManager.Instance;
       _speechDescriptionPanel = _panelManagerInstance.SpeechDescriptionPanel;
+      _firebaseManager = FirebaseManager.Instance;
     }
     
     private void Update()
@@ -46,6 +47,15 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     public bool IsActive { get; private set; }
+
+    public void SetContentForHall(Hall hall)
+    {
+      ScheduleDay schedule;
+      Dictionary<string, Speaker> speakers;
+      List<SessionItem> sessions;
+      _firebaseManager.RequestData(out schedule, out speakers, out sessions);
+      AddContent(ComposeScheduleForHall(hall, schedule, sessions, speakers));
+    }
     
     public void AddContentItem(RectTransform contentItem)
     {
@@ -96,6 +106,41 @@ namespace ua.org.gdg.devfest
       IsActive = true;
       ClearContent();
       gameObject.SetActive(true);
+    }
+    
+    //---------------------------------------------------------------------
+    // Helpers
+    //---------------------------------------------------------------------
+		
+    private List<SpeechScript> ComposeScheduleForHall(Hall h, ScheduleDay day,
+      List<SessionItem> sessions, Dictionary<string, Speaker> speakers)
+    {
+      // Get all sessions from schedule
+      var sList = day.Timeslots.SelectMany(x => x.Sessions).Where(s => s.Hall == h).ToList();
+      var result = new List<SpeechScript>();
+
+      for (int i = 0; i < sList.Count; i++)
+      {
+        SessionItem s = sessions.Find(x => sList[i].Items.Contains(x.Name));
+        result.Add(_speechScript.GetInstance(day.DateReadable, day.Timeslots[i].StartTime, 
+          day.Timeslots[i].EndTime, s.Speakers.Count > 0 ? speakers[s.Speakers[0]] : null, s,
+          HallToString(h)));
+      }
+
+      return result;
+    }
+		
+    private static string HallToString(Hall h)
+    {
+      switch (h)
+      {
+        case Hall.Conference:
+          return "Conference hall";
+        case Hall.Expo:
+          return "Expo hall";
+        default:
+          return "Workshops";
+      }
     }
   }
 }

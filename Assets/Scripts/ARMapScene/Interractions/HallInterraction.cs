@@ -1,9 +1,6 @@
-﻿using System;
+﻿using System.Linq;
 using System.Collections.Generic;
-using ProBuilder2.Common;
 using UnityEngine;
-using UnityEngine.UI;
-using Firebase.Auth;
 
 namespace ua.org.gdg.devfest
 {
@@ -16,7 +13,6 @@ namespace ua.org.gdg.devfest
 		[SerializeField] private Renderer _highlightRenderer;
 		[SerializeField] private Texture _defaultTexture;
 		[SerializeField] private Hall _hall;
-		[SerializeField] private API _api;
 		
 		//---------------------------------------------------------------------
 		// Messages
@@ -41,13 +37,14 @@ namespace ua.org.gdg.devfest
 		{
 			// Show schedule
 			_listScript.Enable();
-			
-			_api.Request(_hall, 0);
+			_listScript.SetContentForHall(_hall);
 		}
 
 		public override void Disable()
 		{
 			_highlightRenderer.material.mainTexture = _defaultTexture;
 		}
+		
+		
 	}
 }
