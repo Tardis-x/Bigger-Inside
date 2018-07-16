@@ -14,7 +14,6 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     [SerializeField] private Scrollbar _scrollbar;
-    [SerializeField] private DescriptionPanelScript _descriptionPanel;
 
     //---------------------------------------------------------------------
     // Internal
@@ -37,11 +36,18 @@ namespace ua.org.gdg.devfest
         _contentContainer = child;
         return;
       }
+      
+      
     }
 
     private void Start()
     {
       Hide();
+    }
+    
+    private void Update()
+    {
+      if(Input.GetKeyDown(KeyCode.Escape)) Disable();
     }
 
     //---------------------------------------------------------------------
@@ -59,12 +65,9 @@ namespace ua.org.gdg.devfest
     {
       foreach (var item in content)
       {
-        item.SpeechDescriptionPanel = _descriptionPanel;
         item.GetComponent<RectTransform>().SetParent(_contentContainer, false);
       }
     }
-
-    //public NavigationManager.State State = NavigationManager.State.List;
 
     public void ClearContent()
     {

@@ -30,6 +30,11 @@ namespace ua.org.gdg.devfest
       SetActive(false);
     }
 
+    private void Update()
+    {
+      if(Input.GetKeyDown(KeyCode.Escape)) SetActive(false);
+    }
+
     //---------------------------------------------------------------------
     // Public
     //---------------------------------------------------------------------

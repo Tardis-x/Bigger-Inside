@@ -40,7 +40,6 @@ namespace ua.org.gdg.devfest
 			_listScript = _schedule.GetComponent<ScrollableListScript>();
 			_speechScript = _show.GetComponent<SpeechScript>();
 			_user = FirebaseAuth.DefaultInstance.CurrentUser;
-			NavigationStateAfterInterraction = NavigationManager.State.List;
 		}
 		
 		//---------------------------------------------------------------------

@@ -14,7 +14,6 @@ namespace ua.org.gdg.devfest
     [SerializeField] private LayerMask _clicableObjects;
     [SerializeField] private LayerMask _uiLayer;
     [SerializeField] private RectTransform _scrollableList;
-    [SerializeField] private NavigationManager _navigationManager;
 
     //---------------------------------------------------------------------
     // Internal
@@ -67,7 +66,6 @@ namespace ua.org.gdg.devfest
             {
               if(_lastInterracted != null) _lastInterracted.Disable();
               _lastInterracted = obj;
-              _navigationManager.CurrentState = obj.NavigationStateAfterInterraction;
               Debug.Log("Interraction started");
               if(!_listScript.IsActive) obj.Interact(); 
             }

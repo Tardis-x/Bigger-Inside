@@ -27,7 +27,6 @@ namespace ua.org.gdg.devfest
     [SerializeField] private RawImage _tagImage;
     [SerializeField] private RawImage _speakerPhoto;
     [SerializeField] private Text _timespanText;
-    public DescriptionPanelScript SpeechDescriptionPanel;
     
     //---------------------------------------------------------------------
     // Messages
@@ -42,7 +41,6 @@ namespace ua.org.gdg.devfest
     {
       if(_photoUrl != null) LoadImage(_photoUrl, _speakerPhoto);
       if(_tagImageUrl != null) LoadImage(_tagImageUrl, _tagImage);
-      NavigationStateAfterInterraction = NavigationManager.State.ListItem;
     }
 
     //---------------------------------------------------------------------
@@ -77,9 +75,10 @@ namespace ua.org.gdg.devfest
     
     public override void Interact()
     {
-      SpeechDescriptionPanel.SetData(_item, _speakerPhoto.texture, _speakerNameText.text,
+      //PanelManager.DefaultInstance.SchedulePanel
+      PanelManager.DefaultInstance.SpeechDescriptionPanel.SetData(_item, _speakerPhoto.texture, _speakerNameText.text,
         _speakerCompanyCountryText.text, _date, _startTime, _endTime, _hall, _tagImage.texture);
-      SpeechDescriptionPanel.SetActive(true);
+      PanelManager.DefaultInstance.SpeechDescriptionPanel.SetActive(true);
     }
 
     public override void Disable()
