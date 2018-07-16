@@ -14,12 +14,13 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     [SerializeField] private Scrollbar _scrollbar;
+    [SerializeField] private RectTransform _contentContainer;
 
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
 
-    private RectTransform _contentContainer;
+    
     private float _contentWidth;
     private PanelManager _panelManagerInstance;
     private DescriptionPanelScript _speechDescriptionPanel;
@@ -27,18 +28,6 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     // Messages
     //---------------------------------------------------------------------
-
-    private void Awake()
-    {
-      var children = GetComponentsInChildren<RectTransform>();
-
-      foreach (var child in children)
-      {
-        if (child.name != "ListContent") continue;
-        _contentContainer = child;
-        return;
-      }
-    }
 
     private void Start()
     {
@@ -103,7 +92,7 @@ namespace ua.org.gdg.devfest
 
     public void Enable()
     {
-      GetComponent<ScrollRect>().verticalNormalizedPosition = 1;
+      GetComponentInChildren<ScrollRect>().verticalNormalizedPosition = 1;
       IsActive = true;
       ClearContent();
       gameObject.SetActive(true);

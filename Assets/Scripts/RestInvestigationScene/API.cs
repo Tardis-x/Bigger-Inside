@@ -14,7 +14,6 @@ namespace ua.org.gdg.devfest
     // Editor
     //---------------------------------------------------------------------
 
-    [SerializeField] private ScrollableListScript _listScript;
     [SerializeField] private SpeechScript _speechScript;
 
     //---------------------------------------------------------------------
@@ -30,6 +29,8 @@ namespace ua.org.gdg.devfest
       StartCoroutine(OnScheduleResponse(scheduleRequest));
       StartCoroutine(OnSessionResponse(sessionRequest));
       StartCoroutine(OnSpeakerResponse(speakerRequest));
+
+      _listScript = PanelManager.Instance.SchedulePanel;
     }
 
     //---------------------------------------------------------------------
@@ -67,6 +68,7 @@ namespace ua.org.gdg.devfest
     private Schedule _schedule;
     private List<SessionItem> _items;
     private Dictionary<string, Speaker> _speakers;
+    private ScrollableListScript _listScript;
 
     private IEnumerator OnScheduleResponse(WWW req)
     {

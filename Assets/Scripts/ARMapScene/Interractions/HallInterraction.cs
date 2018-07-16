@@ -13,23 +13,10 @@ namespace ua.org.gdg.devfest
 		// Editor
 		//---------------------------------------------------------------------
 
-		[SerializeField] private RectTransform _schedule;
-		[SerializeField] private RectTransform _show;
 		[SerializeField] private Renderer _highlightRenderer;
 		[SerializeField] private Texture _defaultTexture;
-		[SerializeField] private Texture _selectedTexture;
 		[SerializeField] private Hall _hall;
 		[SerializeField] private API _api;
-		
-		//---------------------------------------------------------------------
-		// Internal
-		//---------------------------------------------------------------------
-
-		private ScrollableListScript _listScript;
-		private List<RectTransform> _content;
-		private SpeechScript _speechScript;
-		private FirebaseUser _user;
-		
 		
 		//---------------------------------------------------------------------
 		// Messages
@@ -37,10 +24,14 @@ namespace ua.org.gdg.devfest
 
 		private void Start()
 		{
-			_listScript = _schedule.GetComponent<ScrollableListScript>();
-			_speechScript = _show.GetComponent<SpeechScript>();
-			_user = FirebaseAuth.DefaultInstance.CurrentUser;
+			_listScript = PanelManager.Instance.SchedulePanel;
 		}
+		
+		//---------------------------------------------------------------------
+		// Internal
+		//---------------------------------------------------------------------
+
+		private ScrollableListScript _listScript;
 		
 		//---------------------------------------------------------------------
 		// Public
@@ -52,13 +43,11 @@ namespace ua.org.gdg.devfest
 			_listScript.Enable();
 			
 			_api.Request(_hall, 0);
-			//_highlightRenderer.material.mainTexture = _selectedTexture;
 		}
 
 		public override void Disable()
 		{
 			_highlightRenderer.material.mainTexture = _defaultTexture;
-			//_listScript.Disable();
 		}
 	}
 }

@@ -12,8 +12,6 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     [SerializeField] private LayerMask _clicableObjects;
-    [SerializeField] private LayerMask _uiLayer;
-    [SerializeField] private RectTransform _scrollableList;
 
     //---------------------------------------------------------------------
     // Internal
@@ -29,7 +27,7 @@ namespace ua.org.gdg.devfest
 
     private void Start()
     {
-      _listScript = _scrollableList.GetComponent<ScrollableListScript>();
+      _listScript = PanelManager.Instance.SchedulePanel;
     }
 
     // Update is called once per frame
