@@ -72,7 +72,7 @@ namespace ua.org.gdg.devfest
     /// </summary>
     public void OnBackButtonClick()
     {
-      DisablePanel();
+      Invoke("DisablePanel", .01f);
     }
     
     /// <summary>
