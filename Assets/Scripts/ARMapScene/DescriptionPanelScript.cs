@@ -69,6 +69,14 @@ namespace ua.org.gdg.devfest
       SetBackgroundColor(model.TagColor);
     }
 
+    /// <summary>
+    /// Only for Toolbar BackButton click event
+    /// </summary>
+    public void OnBackButtonClick()
+    {
+      SetActive(false);
+    }
+
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------

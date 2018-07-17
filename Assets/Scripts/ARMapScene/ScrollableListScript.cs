@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 namespace ua.org.gdg.devfest
@@ -13,6 +14,7 @@ namespace ua.org.gdg.devfest
 
     [SerializeField] private RectTransform _contentContainer;
     [SerializeField] private SpeechScript _speechScript;
+    [SerializeField] private Text _headerText;
 
     //---------------------------------------------------------------------
     // Internal
@@ -66,6 +68,14 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     /// <summary>
+    /// Only for OnClock of Toolbar BackButton 
+    /// </summary>
+    public void OnBackButtonClick()
+    {
+      DisablePanel();
+    }
+    
+    /// <summary>
     /// Panel avtive state.
     /// </summary>
     public bool Active { get; private set; }
@@ -83,6 +93,8 @@ namespace ua.org.gdg.devfest
       {
         AddContentItem(_speechScript.GetInstance(item));
       }
+      
+      SetListHeader(hall);
     }
 
     /// <summary>
@@ -94,6 +106,15 @@ namespace ua.org.gdg.devfest
       Active = true;
       ClearContent();
       gameObject.SetActive(true);
+    }
+    
+    //---------------------------------------------------------------------
+    // Internal
+    //---------------------------------------------------------------------
+
+    private void SetListHeader(string header)
+    {
+      _headerText.text = header;
     }
   }
 }
