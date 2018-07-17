@@ -41,7 +41,7 @@ namespace ua.org.gdg.devfest
     // Public
     //---------------------------------------------------------------------
 
-    public bool IsActive { get; private set; }
+    public bool Active { get; private set; }
 
     public void SetContentForHall(string hall)
     {
@@ -79,7 +79,7 @@ namespace ua.org.gdg.devfest
 
     public void DisablePanel()
     {
-      IsActive = false;
+      Active = false;
       ClearContent();
       gameObject.SetActive(false);
     }
@@ -87,7 +87,7 @@ namespace ua.org.gdg.devfest
     public void EnablePanel()
     {
       GetComponentInChildren<ScrollRect>().verticalNormalizedPosition = 1;
-      IsActive = true;
+      Active = true;
       ClearContent();
       gameObject.SetActive(true);
     }

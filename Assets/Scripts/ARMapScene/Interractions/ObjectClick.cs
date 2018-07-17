@@ -15,17 +15,11 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     private bool _fingerMoved;
-    private ScrollableListScript _listScript;
     private InteractableObject _lastInterracted;
 
     //---------------------------------------------------------------------
     // Messages
     //---------------------------------------------------------------------
-
-    private void Start()
-    {
-      _listScript = PanelManager.Instance.SchedulePanel;
-    }
 
     // Update is called once per frame
     void Update()

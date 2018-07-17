@@ -18,7 +18,7 @@ namespace ua.org.gdg.devfest
 
 		public override void Interact()
 		{
-			if (!PanelManager.Instance.SchedulePanel.IsActive)
+			if (!PanelManager.Instance.SchedulePanel.Active)
 			{
 				PanelManager.Instance.SchedulePanel.EnablePanel();
 				PanelManager.Instance.SchedulePanel.SetContentForHall(_hall);
