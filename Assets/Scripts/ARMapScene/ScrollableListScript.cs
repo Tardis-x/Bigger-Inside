@@ -19,30 +19,61 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     private float _contentWidth;
-    private PanelManager _panelManagerInstance;
-    private DescriptionPanelScript _speechDescriptionPanel;
+    
+    /// <summary>
+    /// Clear list content.
+    /// </summary>
+    private void ClearContent()
+    {
+      var items = _contentContainer.GetComponentsInChildren<RectTransform>().Where(x => x.parent == _contentContainer);
+
+      foreach (var item in items)
+      {
+        Destroy(item.gameObject);
+      }
+    }
+
+    /// <summary>
+    /// Clear panel and set active to false.
+    /// </summary>
+    private void DisablePanel()
+    {
+      Active = false;
+      ClearContent();
+      gameObject.SetActive(false);
+    }
+    
+    /// <summary>
+    /// Add chedule item to list.
+    /// </summary>
+    /// <param name="contentItem">Schedule item.</param>
+    private void AddContentItem(SpeechScript contentItem)
+    {
+      contentItem.GetComponent<RectTransform>().SetParent(_contentContainer, false);
+    }
 
     //---------------------------------------------------------------------
     // Messages
     //---------------------------------------------------------------------
 
-    private void Start()
-    {
-      _panelManagerInstance = PanelManager.Instance;
-      _speechDescriptionPanel = _panelManagerInstance.SpeechDescriptionPanel;
-    }
-
     private void Update()
     {
-      if (Input.GetKeyDown(KeyCode.Escape) && !_speechDescriptionPanel.Active) DisablePanel();
+      if (Input.GetKeyDown(KeyCode.Escape) && !PanelManager.Instance.SpeechDescriptionPanel.Active) DisablePanel();
     }
 
     //---------------------------------------------------------------------
     // Public
     //---------------------------------------------------------------------
 
+    /// <summary>
+    /// Panel avtive state.
+    /// </summary>
     public bool Active { get; private set; }
 
+    /// <summary>
+    /// Set panel content depending on hall.
+    /// </summary>
+    /// <param name="hall">Hall name.</param>
     public void SetContentForHall(string hall)
     {
       List<ScheduleItemUiModel> listContent;
@@ -54,36 +85,9 @@ namespace ua.org.gdg.devfest
       }
     }
 
-    public void AddContentItem(SpeechScript contentItem)
-    {
-      contentItem.GetComponent<RectTransform>().SetParent(_contentContainer, false);
-    }
-
-    public void AddContent(List<SpeechScript> content)
-    {
-      foreach (var item in content)
-      {
-        item.GetComponent<RectTransform>().SetParent(_contentContainer, false);
-      }
-    }
-
-    public void ClearContent()
-    {
-      var items = _contentContainer.GetComponentsInChildren<RectTransform>().Where(x => x.parent == _contentContainer);
-
-      foreach (var item in items)
-      {
-        Destroy(item.gameObject);
-      }
-    }
-
-    public void DisablePanel()
-    {
-      Active = false;
-      ClearContent();
-      gameObject.SetActive(false);
-    }
-
+    /// <summary>
+    /// Clear panel and set it active.
+    /// </summary>
     public void EnablePanel()
     {
       GetComponentInChildren<ScrollRect>().verticalNormalizedPosition = 1;

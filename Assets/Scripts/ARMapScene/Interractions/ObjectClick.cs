@@ -47,15 +47,12 @@ namespace ua.org.gdg.devfest
         if (Physics.Raycast(ray, out hit, _clicableObjects))
         {
           {
-            Debug.Log("Object hit");
             InteractableObject obj = hit.transform.gameObject.GetComponent<InteractableObject>(); //get interraction
 
             if (obj != null) //if obj is interactable
             {
               if (_lastInterracted != null) _lastInterracted.Disable();
               _lastInterracted = obj;
-
-              Debug.Log("Interraction started");
               obj.Interact();
             }
           }
