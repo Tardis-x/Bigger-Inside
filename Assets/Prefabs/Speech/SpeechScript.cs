@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Converters;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace ua.org.gdg.devfest
@@ -39,10 +35,8 @@ namespace ua.org.gdg.devfest
 
     private void Start()
     {
-      if(_photoUrl != null) LoadImage(_photoUrl, _speakerPhoto);
-      if(_tagImageUrl != null) LoadImage(_tagImageUrl, _tagImage);
-      _panelManagerInstance = PanelManager.Instance;
-      _speechDescriptionPanel = _panelManagerInstance.SpeechDescriptionPanel;
+      if(_model.Speaker != null) LoadImage(_model.Speaker.PhotoUrl, _speakerPhoto);
+      if(_model.ImageUrl != null) LoadImage(_model.ImageUrl, _tagImage);
     }
 
     //---------------------------------------------------------------------
@@ -56,24 +50,18 @@ namespace ua.org.gdg.devfest
       instance.SetStartTime(model.StartTime);
       instance.SetTimespanText(GetTimespanText(model.StartTime, model.EndTime));
       
-      if (model.Speaker != null)
-      {
-        instance.SetSpeakerName(model.Speaker.Name);
-        instance.SetSpeakerCompanyCountry(model.Speaker.Company, model.Speaker.Country);
-        instance._photoUrl = model.Speaker.PhotoUrl;
-      }
-
-      if (model.ImageUrl != "") instance._tagImageUrl = model.ImageUrl;
-
+      if (model.Speaker != null) instance.SetSpeakerData(model.Speaker);
+      
       instance._description = model.Description;
       instance.SetTag(model.Tag);
+      instance._model = model;
       return instance;
     }
     
     public override void Interact()
     {
-      _speechDescriptionPanel.SetActive(true);
-      _speechDescriptionPanel.SetData(_description);
+      PanelManager.Instance.SpeechDescriptionPanel.SetActive(true);
+      PanelManager.Instance.SpeechDescriptionPanel.SetData(_description);
     }
 
     public override void Disable()
@@ -93,16 +81,8 @@ namespace ua.org.gdg.devfest
     private const string DESIGN_TAG_COLOR = "#EC407B";
     private const string GENERAL_TAG_COLOR = "#9E9E9E";
     private string LOGO_BASE_PATH;
-    private string _photoUrl;
-    private string _tagImageUrl;
-    private SessionItem _item;
-    private string _date;
-    private string _startTime;
-    private string _endTime;
-    private string _hall;
-    private PanelManager _panelManagerInstance;
-    private DescriptionPanelScript _speechDescriptionPanel;
     private ScheduleItemDescriptionUiModel _description;
+    private ScheduleItemUiModel _model;
     
 
     private void SetTimespanText(string timespanText)
@@ -135,10 +115,11 @@ namespace ua.org.gdg.devfest
 
       return timespanText;
     }
-    
-    private void SetSpeakerPhoto(Texture2D photo)
+
+    private void SetSpeakerData(Speaker speaker)
     {
-      _speakerPhoto.texture = photo;
+      SetSpeakerCompanyCountry(speaker.Company, speaker.Country);
+      SetSpeakerName(speaker.Name);
     }
     
     private void SetStartTime(string startTimeText)

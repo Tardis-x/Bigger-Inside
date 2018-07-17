@@ -53,9 +53,7 @@ namespace ua.org.gdg.devfest
     {
       if (model.Speaker != null)
       {
-        LoadImage(model.Speaker.PhotoUrl, _speakerPhotoImage);
-        _speakerNameText.text = model.Speaker.Name;
-        _speakerCompanyCountryText.text = model.Speaker.Company + ", " + model.Speaker.Country;
+        SetSpeakerData(model.Speaker);
         ShowSpeakerData(true);
       }
       else
@@ -80,6 +78,13 @@ namespace ua.org.gdg.devfest
     private void ShowSpeakerData(bool value)
     {
       _speakerInfoGroup.gameObject.SetActive(value);
+    }
+
+    private void SetSpeakerData(Speaker speaker)
+    {
+      LoadImage(speaker.PhotoUrl, _speakerPhotoImage);
+      _speakerNameText.text = speaker.Name;
+      _speakerCompanyCountryText.text = speaker.Company + ", " + speaker.Country;
     }
     
     private void SetBackgroundColor(string color)
