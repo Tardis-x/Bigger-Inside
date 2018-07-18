@@ -127,7 +127,8 @@ namespace ua.org.gdg.devfest
           Language = s.Language,
           Speaker = s.Speakers.Count > 0 ? _speakers[s.Speakers[0]] : null,
           Tag = s.Tag,
-          Title = s.Title
+          Title = s.Title,
+          ImageUrl = s.ImageUrl
         };
         ScheduleItemUiModel model = new ScheduleItemUiModel
         {
