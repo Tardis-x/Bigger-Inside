@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class QuestUI : MonoBehaviour
@@ -77,11 +78,11 @@ public class QuestUI : MonoBehaviour
         }
     }
 
-    public void OnProgressButtonClicked()
+    public void OnMenuButtonClicked()
     {
         Debug.Log("QuestUI.OnProgressButtonClicked");
         
-        // TODO: Add implementation
+        SceneManager.LoadScene("MenuScene");
     }
 
     public void OnNextButtonClicked()
