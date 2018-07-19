@@ -1,9 +1,8 @@
 ﻿
-public enum QuestStepType
+public enum RiddleMarkerType
 {
-	Photo,
-	VrGame,
-	Riddles
-
-	// TODO: eInput - need to clarify if we need this at all
+	Android,
+	Firebase,
+	Angular,
+	Arcore
 }

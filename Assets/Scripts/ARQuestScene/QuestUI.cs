@@ -92,6 +92,8 @@ public class QuestUI : MonoBehaviour
 
     public void OnBackButtonClicked()
     {
+        Debug.Log("QuestUI.OnBackButtonClicked");
+        
         _activePanel.SetActive(false);
         _activePanel = _menuPanel;
         _menuPanel.SetActive(true);

@@ -1349,13 +1349,14 @@ GameObject:
   - component: {fileID: 548370952}
   - component: {fileID: 548370954}
   - component: {fileID: 548370953}
+  - component: {fileID: 548370955}
   m_Layer: 5
   m_Name: Riddles_Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &548370952
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1412,6 +1413,19 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 548370951}
+--- !u!114 &548370955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 548370951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d5af00b9d631a74ab6bd8c950daff30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _riddleText: {fileID: 580848279}
+  _scanButton: {fileID: 694647755}
 --- !u!1 &548834688
 GameObject:
   m_ObjectHideFlags: 0
@@ -1860,8 +1874,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: 
+      - m_Target: {fileID: 548370955}
+        m_MethodName: OnScanButtonClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2158,8 +2172,8 @@ RectTransform:
   - {fileID: 1977514293}
   - {fileID: 1713317397}
   - {fileID: 407020028}
-  - {fileID: 1746800701}
   - {fileID: 1972972451}
+  - {fileID: 1746800701}
   - {fileID: 1009450346}
   m_Father: {fileID: 1881586085}
   m_RootOrder: 2
@@ -3250,7 +3264,7 @@ RectTransform:
   m_Children:
   - {fileID: 53765255}
   m_Father: {fileID: 788277901}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -3608,7 +3622,7 @@ RectTransform:
   m_Children:
   - {fileID: 784139057}
   m_Father: {fileID: 788277901}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
