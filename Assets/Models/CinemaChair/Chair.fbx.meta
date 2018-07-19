@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 19ce3add177326340bc88d5cdab97488
+guid: 0283aeca27e84b445bdab10840957637
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: ChamferBox001
-    100002: ChamferBox002
-    100004: ChamferBox003
-    100006: ChamferBox004
-    100008: ChamferBox005
-    100010: ChamferBox006
-    100012: ChamferBox007
-    100014: ChamferBox008
-    100016: Group001
-    100018: Group002
-    100020: //RootNode
+    100000: //RootNode
+    100002: ChairDown
+    100004: ChairUp
+    100006: ChamferBox001
+    100008: ChamferBox002
+    100010: ChamferBox003
+    100012: ChamferBox004
+    100014: ChamferBox005
+    100016: ChamferBox006
+    100018: ChamferBox007
+    100020: ChamferBox008
     100022: Line001
     100024: Line002
     100026: Line003
@@ -34,17 +34,17 @@ ModelImporter:
     100056: Shape006
     100058: Shape007
     100060: Shape008
-    400000: ChamferBox001
-    400002: ChamferBox002
-    400004: ChamferBox003
-    400006: ChamferBox004
-    400008: ChamferBox005
-    400010: ChamferBox006
-    400012: ChamferBox007
-    400014: ChamferBox008
-    400016: Group001
-    400018: Group002
-    400020: //RootNode
+    400000: //RootNode
+    400002: ChairDown
+    400004: ChairUp
+    400006: ChamferBox001
+    400008: ChamferBox002
+    400010: ChamferBox003
+    400012: ChamferBox004
+    400014: ChamferBox005
+    400016: ChamferBox006
+    400018: ChamferBox007
+    400020: ChamferBox008
     400022: Line001
     400024: Line002
     400026: Line003
@@ -65,9 +65,9 @@ ModelImporter:
     400056: Shape006
     400058: Shape007
     400060: Shape008
-    2100000: 'Material #3'
-    2100002: wood_dark
-    2100004: 'Material #22'
+    2100000: wood_dark.002
+    2100002: 'Material #3.002'
+    2100004: 'Material #22.002'
     2300000: ChamferBox001
     2300002: ChamferBox002
     2300004: ChamferBox003
@@ -124,35 +124,46 @@ ModelImporter:
     3300050: Shape006
     3300052: Shape007
     3300054: Shape008
-    4300000: Line001
-    4300002: Shape001
-    4300004: Shape002
-    4300006: Line002
-    4300008: Shape003
-    4300010: Shape004
-    4300012: Line003
-    4300014: Object002
-    4300016: Line004
-    4300018: ChamferBox001
-    4300020: ChamferBox002
-    4300022: ChamferBox003
-    4300024: ChamferBox004
-    4300026: Line006
-    4300028: ChamferBox005
-    4300030: ChamferBox006
-    4300032: ChamferBox007
-    4300034: ChamferBox008
-    4300036: Line007
-    4300038: Line008
-    4300040: Line009
-    4300042: Line010
-    4300044: Line011
-    4300046: Object003
-    4300048: Shape005
-    4300050: Shape006
-    4300052: Shape007
-    4300054: Shape008
-    7400000: Take 001
+    4300000: Shape008
+    4300002: Shape007
+    4300004: Shape006
+    4300006: Shape005
+    4300008: Object003
+    4300010: Line011
+    4300012: Line010
+    4300014: Line009
+    4300016: Line008
+    4300018: Line007
+    4300020: ChamferBox008
+    4300022: ChamferBox007
+    4300024: ChamferBox006
+    4300026: ChamferBox005
+    4300028: Line006
+    4300030: ChamferBox004
+    4300032: ChamferBox003
+    4300034: ChamferBox002
+    4300036: ChamferBox001
+    4300038: Line004
+    4300040: Object002
+    4300042: Line003
+    4300044: Shape004
+    4300046: Shape003
+    4300048: Line002
+    4300050: Shape002
+    4300052: Shape001
+    4300054: Line001
+    7400000: Line011|Line006.001|Take 001|BaseLayer
+    7400002: Line011|Line006|Take 001|BaseLayer
+    7400004: Line011|Line006|Take 001|BaseLayer.001
+    7400006: Line011|Line011.001|Take 001|BaseLayer
+    7400008: Line011|Line011|Take 001|BaseLayer
+    7400010: Line011|Line011|Take 001|BaseLayer.001
+    7400012: Line006|Line006.001|Take 001|BaseLayer
+    7400014: Line006|Line006|Take 001|BaseLayer
+    7400016: Line006|Line006|Take 001|BaseLayer.001
+    7400018: Line006|Line011.001|Take 001|BaseLayer
+    7400020: Line006|Line011|Take 001|BaseLayer
+    7400022: Line006|Line011|Take 001|BaseLayer.001
     9500000: //RootNode
   externalObjects: {}
   materials:
@@ -185,7 +196,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 0.0005
     meshCompression: 3
     addColliders: 0
     importVisibility: 1
@@ -204,7 +215,7 @@ ModelImporter:
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
-    useFileScale: 1
+    useFileScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
