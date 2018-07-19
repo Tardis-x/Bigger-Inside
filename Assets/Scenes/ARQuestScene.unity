@@ -860,6 +860,7 @@ GameObject:
   - component: {fileID: 276523608}
   - component: {fileID: 276523607}
   - component: {fileID: 276523606}
+  - component: {fileID: 276523609}
   m_Layer: 5
   m_Name: VRGame_Panel
   m_TagString: Untagged
@@ -923,6 +924,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &276523609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 276523605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4022434997e1b094aa066f8052315ba1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &286863399
 GameObject:
   m_ObjectHideFlags: 0
@@ -2152,6 +2164,7 @@ GameObject:
   - component: {fileID: 788277901}
   - component: {fileID: 788277903}
   - component: {fileID: 788277902}
+  - component: {fileID: 788277904}
   m_Layer: 5
   m_Name: Photo_Panel
   m_TagString: Untagged
@@ -2216,6 +2229,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 788277900}
+--- !u!114 &788277904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 788277900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fe6471736cd23845b7ebbb687b75427, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &790118315
 GameObject:
   m_ObjectHideFlags: 0
