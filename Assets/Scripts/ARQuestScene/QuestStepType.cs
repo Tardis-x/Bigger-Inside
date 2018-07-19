@@ -1,10 +1,9 @@
 ﻿
 public enum QuestStepType
 {
-	Welcome,
 	Photo,
-	ArObject,
-	Final
+	VrGame,
+	Riddles
 
 	// TODO: eInput - need to clarify if we need this at all
 }

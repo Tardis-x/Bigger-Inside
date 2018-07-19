@@ -6,29 +6,38 @@ using UnityEngine.UI;
 public class QuestUI : MonoBehaviour
 {
     [SerializeField]
-    private Text _titleText;
+    GameObject _menuPanel;
 
     [SerializeField]
-    private Text _description;
-
+    GameObject _photoPanel;
     [SerializeField]
-    private GameObject _photoControlsPanel;
+    GameObject _vrGamePanel;
     [SerializeField]
-    private GameObject _arControlsPanel;
-    [SerializeField]
-    private GameObject _simpleControlsPanel;
+    GameObject _riddlesPanel;
 
-    private QuestManager _questManager;
+    GameObject _activePanel;
 
-    private void Awake()
+    QuestManager _questManager;
+
+    void Awake()
     {
         Debug.Log("QuestUI.Awake()");
         
         // obtain reference to object that represents quest manager
         QuestManagerReferenceInitialization();
+        
+        // show quest menu screen
+        _menuPanel.SetActive(true);
+
+        _activePanel = _menuPanel;
+        
+        // hide quest screens with tasks
+        _photoPanel.SetActive(false);
+        _vrGamePanel.SetActive(false);
+        _riddlesPanel.SetActive(false);
     }
 
-    private void QuestManagerReferenceInitialization()
+    void QuestManagerReferenceInitialization()
     {
         GameObject questManagerTemp = GameObject.Find("QuestManager");
 
@@ -47,69 +56,44 @@ public class QuestUI : MonoBehaviour
         }
     }
 
-    public void UpdateQuestUi(QuestStepData questStepData)
+    public void OnMainMenuButtonClicked()
     {
-        Debug.Log("QuestUI.UpdateQuestUI()");
-        
-        // update quest step title
-        _titleText.text = String.Format("{0}. {1}", questStepData.number, questStepData.name);
-
-        // update quest step description
-        _description.text = questStepData.description;
-
-        // show controls appropriate only for current quest step type
-        _photoControlsPanel.SetActive(false);
-        _arControlsPanel.SetActive(false);
-        _simpleControlsPanel.SetActive(false);
-        
-        // TODO: consider better option than using switch-statement
-        switch (questStepData.type)
-        {
-            case QuestStepType.Welcome:
-            case QuestStepType.Final:
-                _simpleControlsPanel.SetActive(true);
-                break;
-            case QuestStepType.Photo:
-                _photoControlsPanel.SetActive(true);
-                break;
-            case QuestStepType.ArObject:
-                _arControlsPanel.SetActive(true);
-                break;
-        }
-    }
-
-    public void OnMenuButtonClicked()
-    {
-        Debug.Log("QuestUI.OnProgressButtonClicked");
+        Debug.Log("QuestUI.OnMainMenuButtonClicked");
         
         SceneManager.LoadScene("MenuScene");
     }
 
-    public void OnNextButtonClicked()
+    public void OnPhotoButtonClicked()
     {
-        Debug.Log("QuestUI.OnNextButtonClicked");
+        Debug.Log("QuestUI.OnPhotoButtonClicked");
         
-        _questManager.CompleteCurrentStep();
+        _menuPanel.SetActive(false);
+        _activePanel = _photoPanel;
+        _photoPanel.SetActive(true);
+    }
+    
+    public void OnVrGameButtonClicked()
+    {
+        Debug.Log("QuestUI.OnVrGameButtonClicked");
+        
+        _menuPanel.SetActive(false);
+        _activePanel = _vrGamePanel;
+        _vrGamePanel.SetActive(true);
+    }
+    
+    public void OnRiddlesButtonClicked()
+    {
+        Debug.Log("QuestUI.OnRiddlesButtonClicked");
+        
+        _menuPanel.SetActive(false);
+        _activePanel = _riddlesPanel;
+        _riddlesPanel.SetActive(true);
     }
 
-    public void OnTakePhotoButtonClicked()
+    public void OnBackButtonClicked()
     {
-        Debug.Log("QuestUI.OnTakePhotoButtonClicked");
-        
-        // TODO: Add implementation
-    }
-
-    public void OnUploadPhotoButtonClicked()
-    {
-        Debug.Log("QuestUI.OnUploadPhotoButtonClicked");
-        
-        // TODO: Add implementation
-    }
-
-    public void OnScanButtonClicked()
-    {
-        Debug.Log("QuestUI.OnScanButtonClicked");
-        
-        // TODO: Add implementation
+        _activePanel.SetActive(false);
+        _activePanel = _menuPanel;
+        _menuPanel.SetActive(true);
     }
 }
