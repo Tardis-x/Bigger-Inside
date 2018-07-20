@@ -10,6 +10,11 @@ public class QuestRiddlesController : MonoBehaviour
 
 	[SerializeField]
 	Button _scanButton;
+
+	[SerializeField]
+	Camera _mainCamera;
+	[SerializeField]
+	Camera _arCamera;
 	
 	QuestManager _questManager;
 
@@ -21,6 +26,8 @@ public class QuestRiddlesController : MonoBehaviour
 		
 		// obtain reference to object that represents quest manager
 		QuestManagerReferenceInitialization();
+
+		Debug.Log("QuestRiddlesController.Awake - Camera count - " + Camera.allCameras.Length);
 	}
 	
 	void QuestManagerReferenceInitialization()
@@ -78,7 +85,10 @@ public class QuestRiddlesController : MonoBehaviour
 	public void OnScanButtonClicked()
 	{
 		Debug.Log("QuestRiddlesController.OnScanButtonClicked");
-
+		
+		_mainCamera.gameObject.SetActive(false);
+		_arCamera.gameObject.SetActive(true);
+		
 		_currentRiddleData.State = true;
 		
 		UpdateRiddlesScreen();
