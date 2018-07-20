@@ -2404,6 +2404,7 @@ RectTransform:
   - {fileID: 1972972451}
   - {fileID: 1746800701}
   - {fileID: 1009450346}
+  - {fileID: 1079005106}
   m_Father: {fileID: 1881586085}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2456,6 +2457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fe6471736cd23845b7ebbb687b75427, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  photoTextureHolder: {fileID: 0}
 --- !u!1 &790118315
 GameObject:
   m_ObjectHideFlags: 0
@@ -3050,7 +3052,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1881586086}
+      - m_Target: {fileID: 1079005107}
         m_MethodName: OnSharePictureButtonClick
         m_Mode: 1
         m_Arguments:
@@ -3096,6 +3098,47 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1009450345}
+--- !u!1 &1079005105
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1079005106}
+  - component: {fileID: 1079005107}
+  m_Layer: 0
+  m_Name: QuestPhotoController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1079005106
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1079005105}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -498.51886}
+  m_LocalScale: {x: 4.9851885, y: 4.9851885, z: 4.9851885}
+  m_Children: []
+  m_Father: {fileID: 788277901}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1079005107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1079005105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fe6471736cd23845b7ebbb687b75427, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  photoTextureHolder: {fileID: 0}
 --- !u!1 &1099614359
 GameObject:
   m_ObjectHideFlags: 0
@@ -4131,7 +4174,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1881586086}
+      - m_Target: {fileID: 1079005107}
         m_MethodName: OnTakePictureButtonClick
         m_Mode: 1
         m_Arguments:
