@@ -5,7 +5,7 @@ public class QuestRiddleData
 	{
 		this.number = number;
 		this.name = name;
-		this.Description = description;
+		this.description = description;
 		this.markerType = markerType;
 		
 		State = false;
@@ -17,7 +17,10 @@ public class QuestRiddleData
 
 	public bool State { get; set; }
 
-	public string Description { get; }
+	public string Description
+	{
+		get { return description; }
+	}
 
 	RiddleMarkerType markerType;
 }
