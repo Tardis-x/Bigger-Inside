@@ -20,8 +20,6 @@ public class QuestUI : MonoBehaviour
 
     QuestManager _questManager;
     
-    public Image photoTextureHolder;
-
     void Awake()
     {
         Debug.Log("QuestUI.Awake()");

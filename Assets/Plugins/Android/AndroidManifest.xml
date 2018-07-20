@@ -22,7 +22,7 @@
         <!-- Needed for Android Goodies photo picker -->
         <provider
                 android:name="com.deadmosquitogames.multipicker.utils.AMPFileProvider"
-                android:authorities="com.deadmosquitogames.androidgoodiesdemo.assetstore.multipicker.fileprovider"
+                android:authorities="ua.com.gdg.devfest.multipicker.fileprovider"
                 android:exported="false"
                 android:grantUriPermissions="true">
             <meta-data
