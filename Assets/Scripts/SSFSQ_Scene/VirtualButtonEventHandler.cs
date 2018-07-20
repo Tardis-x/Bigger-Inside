@@ -20,14 +20,14 @@ public class VirtualButtonEventHandler : MonoBehaviour,
 
   public Material m_VirtualButtonDefault;
   public Material m_VirtualButtonPressed;
-  public Renderer m_ResultButton;
   public float m_ButtonReleaseTimeDelay;
 
   #endregion // PUBLIC_MEMBERS
 
   #region PRIVATE_MEMBERS
 
-  VirtualButtonBehaviour virtualButtonBehaviour;
+  private VirtualButtonBehaviour virtualButtonBehaviour;
+  private Clickable _onClick;
 
   #endregion // PRIVATE_MEMBERS
 
@@ -38,6 +38,7 @@ public class VirtualButtonEventHandler : MonoBehaviour,
     // Register with the virtual buttons TrackableBehaviour
     virtualButtonBehaviour = GetComponent<VirtualButtonBehaviour>();
     virtualButtonBehaviour.RegisterEventHandler(this);
+    _onClick = GetComponent<Clickable>();
   }
 
   #endregion // MONOBEHAVIOUR_METHODS
@@ -53,7 +54,8 @@ public class VirtualButtonEventHandler : MonoBehaviour,
     Debug.Log("OnButtonPressed: " + vb.VirtualButtonName);
 
     SetVirtualButtonMaterial(m_VirtualButtonPressed);
-    m_ResultButton.sharedMaterial = m_VirtualButtonDefault;
+    
+    _onClick.OnClick();
     
     StopAllCoroutines();
 
@@ -68,7 +70,6 @@ public class VirtualButtonEventHandler : MonoBehaviour,
     Debug.Log("OnButtonReleased: " + vb.VirtualButtonName);
 
     SetVirtualButtonMaterial(m_VirtualButtonDefault);
-    m_ResultButton.sharedMaterial = m_VirtualButtonDefault;
 
     StartCoroutine(DelayOnButtonReleasedEvent(m_ButtonReleaseTimeDelay, vb.VirtualButtonName));
   }
