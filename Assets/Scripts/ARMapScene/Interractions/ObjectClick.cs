@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 namespace ua.org.gdg.devfest
 {
@@ -12,25 +9,17 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     [SerializeField] private LayerMask _clicableObjects;
-    [SerializeField] private LayerMask _uiLayer;
-    [SerializeField] private RectTransform _scrollableList;
 
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
 
     private bool _fingerMoved;
-    private ScrollableListScript _listScript;
-    private InterractibleObject _lastInterracted;
+    private InteractableObject _lastInterracted;
 
     //---------------------------------------------------------------------
     // Messages
     //---------------------------------------------------------------------
-
-    private void Start()
-    {
-      _listScript = _scrollableList.GetComponent<ScrollableListScript>();
-    }
 
     // Update is called once per frame
     void Update()
@@ -58,28 +47,15 @@ namespace ua.org.gdg.devfest
         if (Physics.Raycast(ray, out hit, _clicableObjects))
         {
           {
-            Debug.Log("Object hit");
-            InterractibleObject
-              obj = hit.transform.gameObject.GetComponent<InterractibleObject>(); //get interraction
+            InteractableObject obj = hit.transform.gameObject.GetComponent<InteractableObject>(); //get interraction
 
-            if (obj != null) //if obj is interractible
+            if (obj != null) //if obj is interactable
             {
-              if(_lastInterracted != null) _lastInterracted.Disable();
+              if (_lastInterracted != null) _lastInterracted.Disable();
               _lastInterracted = obj;
-              Debug.Log("Interraction started");
-              obj.Interract(); 
+              obj.Interact();
             }
           }
-        }
-
-        _uiLayer = ~_uiLayer;
-        
-        // If ray casts not on list
-        if (!Physics.Raycast(ray, _uiLayer))
-        {
-          // Hide list and clear it
-          _listScript.Disable();
-          if(_lastInterracted != null) _lastInterracted.Disable();
         }
       }
     }
