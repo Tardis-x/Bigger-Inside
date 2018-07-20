@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.deadmosquitogames.androidgoodiesdemo.assetstore"
+          android:versionName="1.0" android:versionCode="1" android:installLocation="preferExternal">
+    <supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true"
+                      android:xlargeScreens="true" android:anyDensity="true"/>
+    <uses-feature android:glEsVersion="0x00020000"/>
+    <supports-gl-texture android:name="GL_OES_compressed_ETC1_RGB8_texture"/>
+    <application android:theme="@style/UnityThemeSelector" android:icon="@drawable/app_icon"
+                 android:label="@string/app_name" android:debuggable="true" android:isGame="true">
+        <activity android:name="com.unity3d.player.UnityPlayerActivity" android:label="@string/app_name"
+                  android:screenOrientation="fullSensor" android:launchMode="singleTask"
+                  android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER"/>
+            </intent-filter>
+            <meta-data android:name="unityplayer.UnityActivity" android:value="true"/>
+        </activity>
+
+        <!-- Needed for Android Goodies photo picker -->
+        <provider
+                android:name="com.deadmosquitogames.multipicker.utils.AMPFileProvider"
+                android:authorities="com.deadmosquitogames.androidgoodiesdemo.assetstore.multipicker.fileprovider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/paths"/>
+        </provider>
+
+        <!-- Local push notifications -->
+        <receiver android:name="com.deadmosquitogames.notifications.GoodiesNotificationManager"/>
+
+        <!-- Unity requests all the runtime permissions when you application starts, all in a row. Uncomment these lines to prevent this from happening-->
+        <!--<meta-data-->
+                <!--android:name="unityplayer.SkipPermissionsDialog"-->
+                <!--android:value="true"/>-->
+    </application>
+
+    <!-- PERMISSIONS -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <!-- ANDROID GOODIES TEST APP PERMISSIONS -->
+
+    <!-- Modify screen brightness -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+
+    <!-- To open bluetooth settings on some devices -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
+    <!-- To be able to set phone wallpaper -->
+    <uses-permission android:name="android.permission.SET_WALLPAPER"/>
+
+    <!-- For dialing phone number directly functionality -->
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+
+    <!-- For GPS coordinates -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
+    <!-- Flashlight -->
+    <uses-permission android:name="android.permission.CAMERA" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera"/>
+
+    <uses-permission android:name="android.permission.FLASHLIGHT"/>
+    <uses-feature android:name="android.hardware.camera.flash" android:required="false"/>
+
+    <!-- For testing runtime permissions -->
+    <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_CALENDAR"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+
+    <!-- For contact picker -->
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+
+    <!-- For fingerprint scanner -->
+    <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
+
+    <!-- For audio recording -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!-- For GPS coordinates -->
+    <!-- Needed only if your app targets Android 5.0 (API level 21) or higher. -->
+    <uses-feature android:name="android.hardware.location.gps" android:required="false"/>
+    <!-- END ANDROID GOODIES TEST APP PERMISSIONS -->
+
+    <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
+    <uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="false"/>
+    <uses-feature android:name="android.hardware.touchscreen.multitouch.distinct" android:required="false"/>
+
+</manifest>
