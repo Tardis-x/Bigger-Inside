@@ -18,9 +18,4 @@ public class CharacterAnimmationScript : MonoBehaviour
   {
     _animator.SetTrigger("StandUpAndAskTrigger");
   }
-
-  public void SitDown()
-  {
-    _animator.SetBool("StandUpAndAsk", false);
-  }
 }
