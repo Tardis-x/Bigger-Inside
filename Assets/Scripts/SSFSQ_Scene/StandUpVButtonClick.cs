@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace ua.org.gdg.devfest
 {
@@ -9,7 +11,13 @@ namespace ua.org.gdg.devfest
 		// Editor
 		//---------------------------------------------------------------------
 
-		[SerializeField] private Animator _animator;
+		[SerializeField] private GameObject _chairs;
+		
+		//---------------------------------------------------------------------
+		// Internal
+		//---------------------------------------------------------------------
+
+		private CharacterAnimmationScript _character;
 
 		//---------------------------------------------------------------------
 		// Public
@@ -17,7 +25,19 @@ namespace ua.org.gdg.devfest
 
 		public override void OnClick()
 		{
-			_animator.SetBool("StandUpAndAsk", true);
+			_character = GetRandomCharacter();
+			_character.StandUpAndAsk();
+		}
+		
+		//---------------------------------------------------------------------
+		// Helpers
+		//---------------------------------------------------------------------
+
+		private CharacterAnimmationScript GetRandomCharacter()
+		{
+			var characters = _chairs.GetComponentsInChildren<CharacterAnimmationScript>();
+			int index = (int) Math.Round(Random.value * characters.Length);
+			return characters[index];
 		}
 	}
 }
