@@ -1,5 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using Firebase.Auth;
+using Firebase.Storage;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class QuestManager : MonoBehaviour
 {
@@ -8,6 +12,7 @@ public class QuestManager : MonoBehaviour
 	QuestUI _questUi;
 
 	int _currentStep;
+	
 
 	public Dictionary<int, QuestRiddleData> QuestRiddles
 	{
