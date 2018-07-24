@@ -164,7 +164,32 @@ public class QuestManager : MonoBehaviour
 				// mark riddle as complete in local storage
 				_questProgress.riddlesData[riddleKey] = true;
 				
+				
 				riddlesController.UpdateRiddlesScreen();
+			}
+			else if (task.IsFaulted)
+			{
+				Debug.LogError("QuestManager: Failed to update quest data in firebase realtime database!");
+				Debug.LogError("Error message: " + task.Exception.Message);
+			}
+			else if (task.IsCanceled)
+			{
+				Debug.LogError("QuestManager: Cancel updating quest data in firebase realtime database!");
+			}
+		});
+	}
+	public void CheckInPhoto(QuestPhotoController photoController)
+	{
+		// update quest riddle progress data in database
+		Dictionary<string, System.Object> childUpdates = new Dictionary<string, System.Object>();
+		childUpdates["users/" + FirebaseAuth.DefaultInstance.CurrentUser.UserId + "/photoData/state"] = true;
+		childUpdates["users/" + FirebaseAuth.DefaultInstance.CurrentUser.UserId + "/photoData/imageURL"] = photoController.imageUrl;
+		_database.UpdateChildrenAsync(childUpdates).ContinueWith(task => {
+			if (task.IsCompleted)
+			{
+				// mark photocapture as complete in local storage
+				_questProgress.photoData.state = true;
+				_questProgress.photoData.imgUrl = photoController.imageUrl;
 			}
 			else if (task.IsFaulted)
 			{
