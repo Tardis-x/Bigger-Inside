@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -16,15 +17,14 @@ public class QuestPhotoController : MonoBehaviour
 	private string userID;
 	private FirebaseStorage storage;
 	private string picturePath;
+	private int imageSize = 0;
 	void OnTakePictureButtonClick()
 	{
 		Debug.Log("Take a picture button Clicked.");
 		if (AGCamera.DeviceHasCamera())
 		{
 			Debug.Log("Phone has camera.");
-			var imageResultSize = ImageResultSize.Max1024; 
-			AGCamera.TakePhoto(
-				selectedImage =>
+			AGCamera.TakePhoto(selectedImage =>
 				{
 					Debug.Log("Taking Photo.");
 					// Load received image into Texture2D
@@ -34,13 +34,15 @@ public class QuestPhotoController : MonoBehaviour
 					AGUIMisc.ShowToast(msg);
 					picturePath = AndroidUri.FromFile(selectedImage.OriginalPath).JavaToString();
 					photoTextureHolder.sprite = SpriteFromTex2D(imageTexture2D);
+					//imageSize = selectedImage.Size;
 					AGUIMisc.ShowToast("Photo is ready for sharing and uploading.");
+					StartCoroutine(ShowSpinnerForPhoto());
 //					string galleryPath = AGFileUtils.SaveImageToGallery(imageTexture2D, selectedImage.DisplayName, "ARQuest", ImageFormat.JPEG);
 //					AGGallery.RefreshFile(galleryPath);
 					// Clean up
 					Resources.UnloadUnusedAssets();
 				},
-				error => AGUIMisc.ShowToast("Cancelled taking photo from camera: " + error), imageResultSize, false);
+				error => AGUIMisc.ShowToast("Cancelled taking photo from camera: " + error), ImageResultSize.Max1024, false);
 		}
 	}
 	public void OnSharePictureButtonClick()
@@ -61,17 +63,20 @@ public class QuestPhotoController : MonoBehaviour
 		string pictureNameInStorage = "/Pictures/" + userID + ".jpeg";
 		StorageReference pictureReference = storageRef.Child(pictureNameInStorage);
 		//Uploading image
-		var task = pictureReference.PutFileAsync(picturePath, null,
-		new StorageProgress<UploadState>(state => {
+		var task = pictureReference.PutFileAsync(picturePath);
 		//Is called periodically during the upload
-			Debug.Log(String.Format("Progress: {0} of {1} bytes transferred.",
-				state.BytesTransferred, state.TotalByteCount));
-			AGUIMisc.ShowToast(String.Format("Progress: {0} of {1} bytes transferred.",
-				state.BytesTransferred, state.TotalByteCount));
-		}), CancellationToken.None, null);
+//			Debug.Log(String.Format("Progress: {0} of {1} bytes transferred.",
+//				state.BytesTransferred, state.TotalByteCount));
+//			AGUIMisc.ShowToast(String.Format("Progress: {0} of {1} bytes transferred.",
+//				state.BytesTransferred, state.TotalByteCount));
+		var spinner = AGProgressDialog.CreateSpinnerDialog("Please wait...", "Uploading...");
+		spinner.Show();
 		task.ContinueWith(resultTask =>
 		{
-			if (!resultTask.IsFaulted && !resultTask.IsCanceled) {
+			spinner.Dismiss();
+//			progressBar.Dismiss();
+			if (!resultTask.IsFaulted && !resultTask.IsCanceled) 
+			{
 				Debug.Log("Upload finished.");
 				AGUIMisc.ShowToast("Upload finished.");
 			}
@@ -80,6 +85,16 @@ public class QuestPhotoController : MonoBehaviour
 				AGUIMisc.ShowToast(resultTask.Exception.Message);
 			}
 		});
+	}
+	private IEnumerator ShowSpinnerForPhoto()
+	{
+		// Create spinner dialog
+		var spinner = AGProgressDialog.CreateSpinnerDialog("Please wait...", "Saving photo...");
+		spinner.Show();
+		// Spin for some time (do important work)
+		yield return new WaitForSeconds(2);
+		// Dismiss spinner after all the background work is done
+		spinner.Dismiss();
 	}
 	Sprite SpriteFromTex2D(Texture2D texture)
 	{
