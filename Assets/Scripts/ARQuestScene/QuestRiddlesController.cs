@@ -18,7 +18,7 @@ public class QuestRiddlesController : MonoBehaviour
 	
 	QuestManager _questManager;
 
-	QuestRiddleData _currentRiddleData;
+	string _currentRiddle;
 	
 	void Awake()
 	{
@@ -56,20 +56,19 @@ public class QuestRiddlesController : MonoBehaviour
 		UpdateRiddlesScreen();
 	}
 
-	void UpdateRiddlesScreen()
+	public void UpdateRiddlesScreen()
 	{
 		bool anyRiddles = false;
 		
-		var riddles = _questManager.QuestRiddles;
-		
-		for (int i = 0; i < riddles.Count; i++)
-		{
-			var riddleData = riddles[i];
+		var riddlesProgress = _questManager.QuestRiddlesProgress;
+		var riddlesData = _questManager.QuestRiddlesData;
 
-			if (!riddleData.State)
+		foreach (var riddle in riddlesProgress)
+		{
+			if (!riddle.Value)
 			{
-				_riddleText.text = riddleData.Description;
-				_currentRiddleData = riddleData;
+				_riddleText.text = riddlesData[riddle.Key].description;
+				_currentRiddle = riddle.Key;
 				anyRiddles = true;
 				break;
 			}
@@ -89,8 +88,6 @@ public class QuestRiddlesController : MonoBehaviour
 		_mainCamera.gameObject.SetActive(false);
 		_arCamera.gameObject.SetActive(true);
 		
-		_currentRiddleData.State = true;
-		
-		UpdateRiddlesScreen();
+		_questManager.CompleteRiddle(_currentRiddle, this);
 	}
 }

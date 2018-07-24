@@ -99,6 +99,4 @@ public class QuestUI : MonoBehaviour
         _activePanel = _menuPanel;
         _menuPanel.SetActive(true);
     }
-    
-    
 }
