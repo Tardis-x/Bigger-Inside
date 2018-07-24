@@ -16,9 +16,38 @@ public class QuestPhotoController : MonoBehaviour
 	private Texture2D tex;
 	private string userID;
 	private FirebaseStorage storage;
-	private string picturePath;
+	public string picturePath;
 	private int imageSize = 0;
 	private StorageReference pictureReference;
+	QuestManager _questManager;
+	public string imageUrl;
+	
+	void Awake()
+	{
+		Debug.Log("QuestPhotoController.Awake");
+		
+		// obtain reference to object that represents quest manager
+		QuestManagerReferenceInitialization();
+	}
+	
+	void QuestManagerReferenceInitialization()
+	{
+		GameObject questManagerTemp = GameObject.Find("QuestManager");
+
+		if (questManagerTemp != null)
+		{
+			_questManager = questManagerTemp.GetComponent<QuestManager>();
+
+			if (_questManager == null)
+			{
+				Debug.LogError("Could not locate QuestManager component on " + questManagerTemp.name);
+			}
+		}
+		else
+		{
+			Debug.LogError("Could not locate quest manager object in current scene!");
+		}
+	}
 	
 	void OnTakePictureButtonClick()
 	{
@@ -71,6 +100,9 @@ public class QuestPhotoController : MonoBehaviour
 		task.ContinueWith(resultTask =>
 		{
 			spinner.Dismiss();
+			imageUrl = "gs://hoverboard-v2-dev.appspot.com" + pictureNameInStorage;
+			_questManager.questProgress.photoData.imgUrl = imageUrl;
+			_questManager.CheckInPhoto(this);
 			if (!resultTask.IsFaulted && !resultTask.IsCanceled) 
 			{
 				Debug.Log("Upload finished.");
@@ -87,7 +119,6 @@ public class QuestPhotoController : MonoBehaviour
 		// Create spinner dialog
 		var spinner = AGProgressDialog.CreateSpinnerDialog("Please wait...", "Saving photo...");
 		spinner.Show();
-		// Spin for some time (do important work)
 		yield return new WaitForSeconds(2);
 		// Dismiss spinner after all the background work is done
 		spinner.Dismiss();
