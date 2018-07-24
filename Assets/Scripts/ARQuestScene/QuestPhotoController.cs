@@ -18,6 +18,8 @@ public class QuestPhotoController : MonoBehaviour
 	private FirebaseStorage storage;
 	private string picturePath;
 	private int imageSize = 0;
+	private StorageReference pictureReference;
+	
 	void OnTakePictureButtonClick()
 	{
 		Debug.Log("Take a picture button Clicked.");
@@ -61,20 +63,14 @@ public class QuestPhotoController : MonoBehaviour
 		storage = FirebaseStorage.DefaultInstance;
 		StorageReference storageRef = storage.GetReferenceFromUrl("gs://hoverboard-v2-dev.appspot.com");
 		string pictureNameInStorage = "/Pictures/" + userID + ".jpeg";
-		StorageReference pictureReference = storageRef.Child(pictureNameInStorage);
+		pictureReference = storageRef.Child(pictureNameInStorage);
 		//Uploading image
 		var task = pictureReference.PutFileAsync(picturePath);
-		//Is called periodically during the upload
-//			Debug.Log(String.Format("Progress: {0} of {1} bytes transferred.",
-//				state.BytesTransferred, state.TotalByteCount));
-//			AGUIMisc.ShowToast(String.Format("Progress: {0} of {1} bytes transferred.",
-//				state.BytesTransferred, state.TotalByteCount));
 		var spinner = AGProgressDialog.CreateSpinnerDialog("Please wait...", "Uploading...");
 		spinner.Show();
 		task.ContinueWith(resultTask =>
 		{
 			spinner.Dismiss();
-//			progressBar.Dismiss();
 			if (!resultTask.IsFaulted && !resultTask.IsCanceled) 
 			{
 				Debug.Log("Upload finished.");
