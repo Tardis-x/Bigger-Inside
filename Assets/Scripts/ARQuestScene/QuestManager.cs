@@ -128,6 +128,31 @@ public class QuestManager : MonoBehaviour
 		_questProgress.riddlesData.Add("Firebase", false);
 	}
 
+	public void CompleteVrGame(int score, QuestVrGameController vrGameController)
+	{	
+		Dictionary<string, System.Object> childUpdates = new Dictionary<string, System.Object>();
+		childUpdates["users/" + FirebaseAuth.DefaultInstance.CurrentUser.UserId + "/vrGameData/score"] = score;
+		childUpdates["users/" + FirebaseAuth.DefaultInstance.CurrentUser.UserId + "/vrGameData/state"] = true;
+		
+		_database.UpdateChildrenAsync(childUpdates).ContinueWith(task => {
+			if (task.IsCompleted)
+			{
+				// mark VR game as completed in local storage
+				_questProgress.vrGameData.score = score;
+				_questProgress.vrGameData.state = true;
+			}
+			else if (task.IsFaulted)
+			{
+				Debug.LogError("QuestManager: Failed to update quest data in firebase realtime database!");
+				Debug.LogError("Error message: " + task.Exception.Message);
+			}
+			else if (task.IsCanceled)
+			{
+				Debug.LogError("QuestManager: Cancel updating quest data in firebase realtime database!");
+			}
+		});
+	}
+
 	public void CompleteRiddle(string riddleKey, QuestRiddlesController riddlesController)
 	{
 		// update quest riddle progress data in database
