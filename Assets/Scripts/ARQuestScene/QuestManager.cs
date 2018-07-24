@@ -8,16 +8,21 @@ using UnityEngine;
 
 public class QuestManager : MonoBehaviour
 {
-	QuestProgress questProgress;
+	QuestProgress _questProgress;
 	Dictionary<string, QuestRiddleContent> _questRiddlesContent;
 
 	QuestUI _questUi;
 
 	DatabaseReference _database;
 
+	public QuestProgress questProgress
+	{
+		get { return _questProgress; }
+	}
+
 	public Dictionary<string, bool> QuestRiddlesProgress
 	{
-		get { return questProgress.riddlesData; }
+		get { return _questProgress.riddlesData; }
 	}
 	
 	public Dictionary<string, QuestRiddleContent> QuestRiddlesContent
@@ -49,7 +54,7 @@ public class QuestManager : MonoBehaviour
 		_database.Child("users").Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId).GetValueAsync().ContinueWith(readTask => {
 			if (readTask.Result == null)
 			{
-				string json = JsonConvert.SerializeObject(questProgress);
+				string json = JsonConvert.SerializeObject(_questProgress);
 				_database.Child("users").Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId).SetRawJsonValueAsync(json).ContinueWith(writeTask => {
 					if (writeTask.IsFaulted)
 					{
@@ -73,7 +78,7 @@ public class QuestManager : MonoBehaviour
 				{
 					// retrieve user quest progress
 					DataSnapshot snapshot = readTask.Result;
-					questProgress = JsonConvert.DeserializeObject<QuestProgress>(snapshot.GetRawJsonValue());
+					_questProgress = JsonConvert.DeserializeObject<QuestProgress>(snapshot.GetRawJsonValue());
 				
 					Debug.Log("QuestManager: Quest data was successfully set up!");
 				}
@@ -102,25 +107,25 @@ public class QuestManager : MonoBehaviour
 	
 	void RiddleDataInitizalization()
 	{
-		questProgress = new QuestProgress();
+		_questProgress = new QuestProgress();
 		
 		_questRiddlesContent = new Dictionary<string, QuestRiddleContent>();
 		
 		QuestRiddleContent androidRiddle = new QuestRiddleContent("Popular mobile OS that is powered by Google?");
 		_questRiddlesContent.Add("Android", androidRiddle);
-		questProgress.riddlesData.Add("Android", false);
+		_questProgress.riddlesData.Add("Android", false);
 
 		QuestRiddleContent angularRiddle = new QuestRiddleContent("TypeScript-based open-source front-end web application platform?");
 		_questRiddlesContent.Add("Angular", angularRiddle);
-		questProgress.riddlesData.Add("Angular", false);
+		_questProgress.riddlesData.Add("Angular", false);
 
 		QuestRiddleContent arcoreRiddle = new QuestRiddleContent("Software development kit developed by Google that allow for mixed reality applications to be built?");
 		_questRiddlesContent.Add("Arcore", arcoreRiddle);
-		questProgress.riddlesData.Add("Arcore", false);
+		_questProgress.riddlesData.Add("Arcore", false);
 
 		QuestRiddleContent firebaseRiddle = new QuestRiddleContent("Mobile and web application development platform?");
 		_questRiddlesContent.Add("Firebase", firebaseRiddle);
-		questProgress.riddlesData.Add("Firebase", false);
+		_questProgress.riddlesData.Add("Firebase", false);
 	}
 
 	public void CompleteRiddle(string riddleKey, QuestRiddlesController riddlesController)
@@ -132,7 +137,7 @@ public class QuestManager : MonoBehaviour
 			if (task.IsCompleted)
 			{
 				// mark riddle as complete in local storage
-				questProgress.riddlesData[riddleKey] = true;
+				_questProgress.riddlesData[riddleKey] = true;
 				
 				riddlesController.UpdateRiddlesScreen();
 			}
