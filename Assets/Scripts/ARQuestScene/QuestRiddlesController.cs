@@ -89,13 +89,20 @@ public class QuestRiddlesController : MonoBehaviour
 		_arCamera.gameObject.SetActive(true);
 	}
 
-	public void OnImageScanned()
+	public void OnImageScanned(string scannedMarker)
 	{
 		Debug.Log("QuestRiddlesController.OnImageScanned");
-		
-		_questManager.CompleteRiddle(_currentRiddle, this);
-		
-		_mainCamera.gameObject.SetActive(true);
-		_arCamera.gameObject.SetActive(false);
+
+		if (scannedMarker == _currentRiddle)
+		{
+			_questManager.CompleteRiddle(_currentRiddle, this);
+			
+			_mainCamera.gameObject.SetActive(true);
+			_arCamera.gameObject.SetActive(false);
+		}
+		else
+		{
+			Debug.Log("QuestRiddlesController.OnImageScanned - wrong image scanned! Should be " + _currentRiddle + ". Actual " + scannedMarker);
+		}
 	}
 }

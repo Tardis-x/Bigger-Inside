@@ -7,11 +7,14 @@ using Vuforia;
 public class QuestImageTargetTracker : MonoBehaviour, ITrackableEventHandler
 {
 	TrackableBehaviour _trackableBehaviour;
+	
+	[SerializeField]
+	string _targetImageName;
 
-	[SerializeField]
-	UnityEvent _onDetectImageTarget;
-	[SerializeField]
-	UnityEvent _onLostImageTarget;
+	[System.Serializable]
+	public class OnDetectImageTarget : UnityEvent<string> {};
+
+	public OnDetectImageTarget onDetectImageTarget;
 	
 	void Start () 
 	{
@@ -23,19 +26,23 @@ public class QuestImageTargetTracker : MonoBehaviour, ITrackableEventHandler
 		{
 			_trackableBehaviour.RegisterTrackableEventHandler(this);
 		}
+
+		if (onDetectImageTarget == null)
+		{
+			onDetectImageTarget = new OnDetectImageTarget();
+		}
 	}
 
 	public void OnTrackableStateChanged(TrackableBehaviour.Status previousStatus, TrackableBehaviour.Status newStatus)
 	{
 		if (newStatus == TrackableBehaviour.Status.DETECTED || newStatus == TrackableBehaviour.Status.TRACKED || newStatus == TrackableBehaviour.Status.EXTENDED_TRACKED)
 		{
-			Debug.Log("QuestImageTargetTracker.OnTrackableStateChanged - Image found!");
-			_onDetectImageTarget.Invoke();
+			Debug.Log("QuestImageTargetTracker.OnTrackableStateChanged - Image found! " + _targetImageName);
+			onDetectImageTarget.Invoke(_targetImageName);
 		}
 		else
 		{
 			Debug.Log("QuestImageTargetTracker.OnTrackableStateChanged - Image lost!");
-			//_onLostImageTarget.Invoke();
 		}
 	}
 }
