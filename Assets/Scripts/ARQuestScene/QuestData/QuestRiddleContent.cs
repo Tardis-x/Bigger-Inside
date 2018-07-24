@@ -1,7 +1,7 @@
 ﻿
-public class QuestRiddleData
+public class QuestRiddleContent
 {
-	public QuestRiddleData(string description)
+	public QuestRiddleContent(string description)
 	{
 		this.description = description;
 	}

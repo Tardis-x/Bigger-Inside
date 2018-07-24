@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 using Vuforia;
 
@@ -18,8 +16,6 @@ public class QuestImageTargetTracker : MonoBehaviour, ITrackableEventHandler
 	
 	void Start () 
 	{
-		Debug.Log("QuestImageTargetTracker.Start");
-		
 		_trackableBehaviour = GetComponent<TrackableBehaviour>();
 		
 		if (_trackableBehaviour)
@@ -37,12 +33,7 @@ public class QuestImageTargetTracker : MonoBehaviour, ITrackableEventHandler
 	{
 		if (newStatus == TrackableBehaviour.Status.DETECTED || newStatus == TrackableBehaviour.Status.TRACKED || newStatus == TrackableBehaviour.Status.EXTENDED_TRACKED)
 		{
-			Debug.Log("QuestImageTargetTracker.OnTrackableStateChanged - Image found! " + _targetImageName);
 			onDetectImageTarget.Invoke(_targetImageName);
-		}
-		else
-		{
-			Debug.Log("QuestImageTargetTracker.OnTrackableStateChanged - Image lost!");
 		}
 	}
 }

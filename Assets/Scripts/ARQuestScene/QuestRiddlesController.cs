@@ -61,7 +61,7 @@ public class QuestRiddlesController : MonoBehaviour
 		bool anyRiddles = false;
 		
 		var riddlesProgress = _questManager.QuestRiddlesProgress;
-		var riddlesData = _questManager.QuestRiddlesData;
+		var riddlesData = _questManager.QuestRiddlesContent;
 
 		foreach (var riddle in riddlesProgress)
 		{
@@ -99,10 +99,6 @@ public class QuestRiddlesController : MonoBehaviour
 			
 			_mainCamera.gameObject.SetActive(true);
 			_arCamera.gameObject.SetActive(false);
-		}
-		else
-		{
-			Debug.Log("QuestRiddlesController.OnImageScanned - wrong image scanned! Should be " + _currentRiddle + ". Actual " + scannedMarker);
 		}
 	}
 }

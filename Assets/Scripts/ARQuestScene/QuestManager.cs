@@ -8,8 +8,8 @@ using UnityEngine;
 
 public class QuestManager : MonoBehaviour
 {
-	Dictionary<string, bool> _questRiddlesProgress;
-	Dictionary<string, QuestRiddleData> _questRiddlesData;
+	QuestProgress questProgress;
+	Dictionary<string, QuestRiddleContent> _questRiddlesContent;
 
 	QuestUI _questUi;
 
@@ -17,12 +17,12 @@ public class QuestManager : MonoBehaviour
 
 	public Dictionary<string, bool> QuestRiddlesProgress
 	{
-		get { return _questRiddlesProgress; }
+		get { return questProgress.riddlesData; }
 	}
 	
-	public Dictionary<string, QuestRiddleData> QuestRiddlesData
+	public Dictionary<string, QuestRiddleContent> QuestRiddlesContent
 	{
-		get { return _questRiddlesData; }
+		get { return _questRiddlesContent; }
 	}
 
 	void Awake()
@@ -49,7 +49,7 @@ public class QuestManager : MonoBehaviour
 		_database.Child("users").Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId).GetValueAsync().ContinueWith(readTask => {
 			if (readTask.Result == null)
 			{
-				string json = JsonConvert.SerializeObject(_questRiddlesProgress);
+				string json = JsonConvert.SerializeObject(questProgress);
 				_database.Child("users").Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId).SetRawJsonValueAsync(json).ContinueWith(writeTask => {
 					if (writeTask.IsFaulted)
 					{
@@ -73,7 +73,7 @@ public class QuestManager : MonoBehaviour
 				{
 					// retrieve user quest progress
 					DataSnapshot snapshot = readTask.Result;
-					_questRiddlesProgress = JsonConvert.DeserializeObject<Dictionary<string, bool>>(snapshot.GetRawJsonValue());
+					questProgress = JsonConvert.DeserializeObject<QuestProgress>(snapshot.GetRawJsonValue());
 				
 					Debug.Log("QuestManager: Quest data was successfully set up!");
 				}
@@ -101,38 +101,38 @@ public class QuestManager : MonoBehaviour
 	}
 	
 	void RiddleDataInitizalization()
-	{ 
+	{
+		questProgress = new QuestProgress();
 		
-		_questRiddlesProgress = new Dictionary<string, bool>();
-		_questRiddlesData = new Dictionary<string, QuestRiddleData>();
+		_questRiddlesContent = new Dictionary<string, QuestRiddleContent>();
 		
-		QuestRiddleData androidRiddle = new QuestRiddleData("Popular mobile OS that is powered by Google?");
-		_questRiddlesData.Add("Android", androidRiddle);
-		_questRiddlesProgress.Add("Android", false);
+		QuestRiddleContent androidRiddle = new QuestRiddleContent("Popular mobile OS that is powered by Google?");
+		_questRiddlesContent.Add("Android", androidRiddle);
+		questProgress.riddlesData.Add("Android", false);
 
-		QuestRiddleData angularRiddle = new QuestRiddleData("TypeScript-based open-source front-end web application platform?");
-		_questRiddlesData.Add("Angular", angularRiddle);
-		_questRiddlesProgress.Add("Angular", false);
+		QuestRiddleContent angularRiddle = new QuestRiddleContent("TypeScript-based open-source front-end web application platform?");
+		_questRiddlesContent.Add("Angular", angularRiddle);
+		questProgress.riddlesData.Add("Angular", false);
 
-		QuestRiddleData arcoreRiddle = new QuestRiddleData("Software development kit developed by Google that allow for mixed reality applications to be built?");
-		_questRiddlesData.Add("Arcore", arcoreRiddle);
-		_questRiddlesProgress.Add("Arcore", false);
+		QuestRiddleContent arcoreRiddle = new QuestRiddleContent("Software development kit developed by Google that allow for mixed reality applications to be built?");
+		_questRiddlesContent.Add("Arcore", arcoreRiddle);
+		questProgress.riddlesData.Add("Arcore", false);
 
-		QuestRiddleData firebaseRiddle = new QuestRiddleData("Mobile and web application development platform?");
-		_questRiddlesData.Add("Firebase", firebaseRiddle);
-		_questRiddlesProgress.Add("Firebase", false);
+		QuestRiddleContent firebaseRiddle = new QuestRiddleContent("Mobile and web application development platform?");
+		_questRiddlesContent.Add("Firebase", firebaseRiddle);
+		questProgress.riddlesData.Add("Firebase", false);
 	}
 
 	public void CompleteRiddle(string riddleKey, QuestRiddlesController riddlesController)
 	{
-		// update quest progress data in database
+		// update quest riddle progress data in database
 		Dictionary<string, System.Object> childUpdates = new Dictionary<string, System.Object>();
-		childUpdates["users/" + FirebaseAuth.DefaultInstance.CurrentUser.UserId + "/" + riddleKey] = true;
+		childUpdates["users/" + FirebaseAuth.DefaultInstance.CurrentUser.UserId + "/riddlesData/" + riddleKey] = true;
 		_database.UpdateChildrenAsync(childUpdates).ContinueWith(task => {
 			if (task.IsCompleted)
 			{
 				// mark riddle as complete in local storage
-				_questRiddlesProgress[riddleKey] = true;
+				questProgress.riddlesData[riddleKey] = true;
 				
 				riddlesController.UpdateRiddlesScreen();
 			}
