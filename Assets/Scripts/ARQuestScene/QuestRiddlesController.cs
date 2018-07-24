@@ -87,7 +87,15 @@ public class QuestRiddlesController : MonoBehaviour
 		
 		_mainCamera.gameObject.SetActive(false);
 		_arCamera.gameObject.SetActive(true);
+	}
+
+	public void OnImageScanned()
+	{
+		Debug.Log("QuestRiddlesController.OnImageScanned");
 		
 		_questManager.CompleteRiddle(_currentRiddle, this);
+		
+		_mainCamera.gameObject.SetActive(true);
+		_arCamera.gameObject.SetActive(false);
 	}
 }
