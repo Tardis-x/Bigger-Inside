@@ -26,8 +26,6 @@ public class QuestRiddlesController : MonoBehaviour
 		
 		// obtain reference to object that represents quest manager
 		QuestManagerReferenceInitialization();
-
-		Debug.Log("QuestRiddlesController.Awake - Camera count - " + Camera.allCameras.Length);
 	}
 	
 	void QuestManagerReferenceInitialization()
