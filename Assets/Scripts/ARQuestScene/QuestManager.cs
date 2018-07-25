@@ -140,6 +140,8 @@ public class QuestManager : MonoBehaviour
 				// mark VR game as completed in local storage
 				_questProgress.vrGameData.score = score;
 				_questProgress.vrGameData.state = true;
+				
+				vrGameController.UpdateVrGameScreen();
 			}
 			else if (task.IsFaulted)
 			{
@@ -163,7 +165,6 @@ public class QuestManager : MonoBehaviour
 			{
 				// mark riddle as complete in local storage
 				_questProgress.riddlesData[riddleKey] = true;
-				
 				
 				riddlesController.UpdateRiddlesScreen();
 			}
