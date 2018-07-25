@@ -45,6 +45,8 @@ public class QuestManager : MonoBehaviour
 	{
 		Debug.Log("QuestManager.Start");
 		
+		_questUi.FadeQuestScreenIn();
+		
 		// Set up the Editor before calling into the realtime database.
 		FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://hoverboard-v2-dev.firebaseio.com/");
 
@@ -64,6 +66,8 @@ public class QuestManager : MonoBehaviour
 					else if (writeTask.IsCompleted)
 					{
 						Debug.Log("QuestManager: Default quest data was successfully set up!");
+						
+						_questUi.FadeScreenOut();
 					}
 				});
 			}
@@ -81,6 +85,8 @@ public class QuestManager : MonoBehaviour
 					_questProgress = JsonConvert.DeserializeObject<QuestProgress>(snapshot.GetRawJsonValue());
 				
 					Debug.Log("QuestManager: Quest data was successfully set up!");
+					
+					_questUi.FadeScreenOut();
 				}
 			}
 		});

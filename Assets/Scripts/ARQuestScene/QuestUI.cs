@@ -3,9 +3,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using DeadMosquito.AndroidGoodies;
+using ua.org.gdg.devfest;
 
 public class QuestUI : MonoBehaviour
 {
+    [SerializeField] 
+    Image _fadeImage;
+    
     [SerializeField]
     GameObject _menuPanel;
 
@@ -98,5 +102,15 @@ public class QuestUI : MonoBehaviour
         _activePanel.SetActive(false);
         _activePanel = _menuPanel;
         _menuPanel.SetActive(true);
+    }
+
+    public void FadeQuestScreenIn()
+    {
+        _fadeImage.gameObject.SetActive(true);
+    }
+
+    public void FadeScreenOut()
+    {
+        _fadeImage.gameObject.SetActive(false);
     }
 }
