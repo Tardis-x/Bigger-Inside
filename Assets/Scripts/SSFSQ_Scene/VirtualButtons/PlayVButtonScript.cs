@@ -1,15 +1,30 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using ua.org.gdg.devfest;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ua.org.gdg.devfest
 {
   public class PlayVButtonScript : VirtualButtonOnClick
   {
+    //---------------------------------------------------------------------
+    // Editor
+    //---------------------------------------------------------------------
+
+    
+    //---------------------------------------------------------------------
+    // Public
+    //---------------------------------------------------------------------
+    
     public override void OnClick()
     {
-      if (!GameManager.Instance.GameActive) GameManager.Instance.NewGame();
+      if (!GameManager.Instance.GameActive)
+      {
+        GameManager.Instance.NewGame();
+        UIManager.Instance.SetPlayButton(false);
+      }
+      else
+      {
+        GameManager.Instance.StopGame();
+        UIManager.Instance.SetPlayButton(true);
+      }
     }
   }
 }

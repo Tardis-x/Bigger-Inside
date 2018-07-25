@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.UI;
+using Random = System.Random;
 
 namespace ua.org.gdg.devfest
 {
@@ -16,8 +19,7 @@ namespace ua.org.gdg.devfest
 
     [SerializeField] private int _maxBrains;
     [SerializeField] private int _maxStars;
-    [SerializeField] private HealthTimePanelScript _healthPanel;
-    [SerializeField] private GameObject _gameOverPanel;
+    [SerializeField] private float _timeForAnswer;
 
     //---------------------------------------------------------------------
     // Public
@@ -25,26 +27,34 @@ namespace ua.org.gdg.devfest
 
     public void NewGame()
     {
+      if(GameActive) return;
+      
       GameActive = true;
 
-      _gameOverPanel.SetActive(false);
-      _healthPanel.gameObject.SetActive(true);
+      UIManager.Instance.GameOverPanel.gameObject.SetActive(false);
+      UIManager.Instance.HealthTimePanel.gameObject.SetActive(true);
 
-      _healthPanel.ClearBrainsContainer();
-      _healthPanel.ClearStarsContainer();
+      UIManager.Instance.HealthTimePanel.ResetPanel();
+      
+      ResetBrains();
+      ResetStars();
+    }
 
-      _healthPanel.SetBrainsCount(_maxBrains);
-      _healthPanel.SetStarsCount(_maxStars);
-
-      _brainsCount = _maxBrains;
-      _starsCount = _maxStars;
+    public void StopGame()
+    {
+      if(!GameActive) return;
+      
+      GameActive = false;
+      
+      UIManager.Instance.GameOverPanel.gameObject.SetActive(false);
+      UIManager.Instance.HealthTimePanel.gameObject.SetActive(false);
     }
 
     public void SubtractStar()
     {
       if (_starsCount >= 0)
       {
-        _healthPanel.SubtractStar();
+        UIManager.Instance.HealthTimePanel.SubtractStar();
         _starsCount--;
       }
 
@@ -55,11 +65,18 @@ namespace ua.org.gdg.devfest
     {
       if (_brainsCount >= 0)
       {
-        _healthPanel.SubtractBrain();
+        UIManager.Instance.HealthTimePanel.SubtractBrain();
         _brainsCount--;
       }
 
       if (_brainsCount == 0) GameOver();
+    }
+
+    public void AskQuestion()
+    {
+      QuestionModel q = GetQuestion();
+      UIManager.Instance.ScreenQuestionText.text = q.Text;
+      UIManager.Instance.HealthTimePanel.StartCountdown(_timeForAnswer, OnTimeOut);
     }
 
     //---------------------------------------------------------------------
@@ -68,11 +85,49 @@ namespace ua.org.gdg.devfest
 
     private int _starsCount;
     private int _brainsCount;
+    
+    //Questions
+    private readonly QuestionModel[] _questions = {new QuestionModel
+    {
+      Good = true,
+      Text = "Good question"
+    }, 
+      new QuestionModel
+      {
+        Good = false,
+        Text = "BadQuestion"
+      }
+    };
+
+    private void OnTimeOut(QuestionModel qm)
+    {
+      if(qm.Good) SubtractStar();
+      else SubtractBrain();
+    }
+    
+    private QuestionModel GetQuestion()
+    {
+      int index = new Random().Next(_questions.Length);
+      return _questions[index];
+    }
 
     private void GameOver()
     {
-      _gameOverPanel.SetActive(true);
+      UIManager.Instance.GameOverPanel.gameObject.SetActive(true);
       GameActive = false;
+      UIManager.Instance.SetPlayButton(true);
+    }
+
+    private void ResetBrains()
+    {
+      UIManager.Instance.HealthTimePanel.SetBrainsCount(_maxBrains);
+      _brainsCount = _maxBrains;
+    }
+
+    private void ResetStars()
+    {
+      UIManager.Instance.HealthTimePanel.SetStarsCount(_maxStars);
+      _starsCount = _maxStars;
     }
   }
 }
