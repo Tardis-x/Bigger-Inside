@@ -12,7 +12,7 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     [Header("Overlay UI")] 
     public HealthTimePanelScript HealthTimePanel;
-    public RectTransform GameOverPanel;
+    public GameOverPanelScript GameOverPanel;
     
     [Space] 
     [Header("Virtual Buttons")] 
@@ -34,12 +34,13 @@ namespace ua.org.gdg.devfest
       {
         Instance.PlayVirtualButton.GetComponent<VirtualButtonEventHandler>()
           .m_VirtualButtonDefault = _playButtonMaterial;
-        
+        Instance.PlayVirtualButton.GetComponent<VirtualButtonEventHandler>().RefreshMaterial();
       }
       else
       {
         Instance.PlayVirtualButton.GetComponent<VirtualButtonEventHandler>()
           .m_VirtualButtonDefault = _stopButtonMaterial;
+        Instance.PlayVirtualButton.GetComponent<VirtualButtonEventHandler>().RefreshMaterial();
       }
     }
   }

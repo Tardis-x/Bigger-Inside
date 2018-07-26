@@ -4,7 +4,7 @@
 	{
 		public override void OnClick()
 		{
-			if(GameManager.Instance.GameActive) GameManager.Instance.AskQuestion();
+			if(GameManager.Instance.GameActive) GameManager.Instance.Hit();
 		}
 	}
 }

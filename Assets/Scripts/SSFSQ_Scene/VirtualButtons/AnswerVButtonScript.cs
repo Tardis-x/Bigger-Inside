@@ -8,7 +8,7 @@ namespace ua.org.gdg.devfest
   {
     public override void OnClick()
     {
-      if(GameManager.Instance.GameActive) GameManager.Instance.SubtractBrain();
+      if(GameManager.Instance.GameActive) GameManager.Instance.Answer();
     }
   }
 }

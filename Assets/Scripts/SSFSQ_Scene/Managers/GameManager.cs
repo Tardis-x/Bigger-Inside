@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.UI;
 using Random = System.Random;
 
 namespace ua.org.gdg.devfest
@@ -31,13 +30,14 @@ namespace ua.org.gdg.devfest
       
       GameActive = true;
 
-      UIManager.Instance.GameOverPanel.gameObject.SetActive(false);
-      UIManager.Instance.HealthTimePanel.gameObject.SetActive(true);
-
+      UIManager.Instance.GameOverPanel.HidePanel();
       UIManager.Instance.HealthTimePanel.ResetPanel();
+      UIManager.Instance.HealthTimePanel.ShowPanel();
       
       ResetBrains();
       ResetStars();
+      
+      AskQuestion();
     }
 
     public void StopGame()
@@ -46,37 +46,20 @@ namespace ua.org.gdg.devfest
       
       GameActive = false;
       
-      UIManager.Instance.GameOverPanel.gameObject.SetActive(false);
-      UIManager.Instance.HealthTimePanel.gameObject.SetActive(false);
+      UIManager.Instance.GameOverPanel.HidePanel();
+      UIManager.Instance.HealthTimePanel.HidePanel();
     }
 
-    public void SubtractStar()
+    public void Answer()
     {
-      if (_starsCount >= 0)
-      {
-        UIManager.Instance.HealthTimePanel.SubtractStar();
-        _starsCount--;
-      }
-
-      if (_starsCount == 0) GameOver();
+      OnAnswer();
+      AskQuestion();
     }
 
-    public void SubtractBrain()
+    public void Hit()
     {
-      if (_brainsCount >= 0)
-      {
-        UIManager.Instance.HealthTimePanel.SubtractBrain();
-        _brainsCount--;
-      }
-
-      if (_brainsCount == 0) GameOver();
-    }
-
-    public void AskQuestion()
-    {
-      QuestionModel q = GetQuestion();
-      UIManager.Instance.ScreenQuestionText.text = q.Text;
-      UIManager.Instance.HealthTimePanel.StartCountdown(_timeForAnswer, OnTimeOut);
+      OnHit();
+      AskQuestion();
     }
 
     //---------------------------------------------------------------------
@@ -85,6 +68,7 @@ namespace ua.org.gdg.devfest
 
     private int _starsCount;
     private int _brainsCount;
+    private QuestionModel _currentQuestion;
     
     //Questions
     private readonly QuestionModel[] _questions = {new QuestionModel
@@ -95,14 +79,54 @@ namespace ua.org.gdg.devfest
       new QuestionModel
       {
         Good = false,
-        Text = "BadQuestion"
+        Text = "Bad question"
       }
     };
 
-    private void OnTimeOut(QuestionModel qm)
+    private void OnTimeout()
     {
-      if(qm.Good) SubtractStar();
-      else SubtractBrain();
+      SubtractStar();
+      SubtractBrain();
+      AskQuestion();
+    }
+
+    private void AskQuestion()
+    {
+      _currentQuestion = GetQuestion();
+      UIManager.Instance.ScreenQuestionText.text = _currentQuestion.Text;
+      UIManager.Instance.HealthTimePanel.StartCountdown(_timeForAnswer, OnTimeout);
+    }
+    
+    private void OnHit()
+    {
+      if(_currentQuestion.Good) SubtractStar();
+    }
+
+    private void OnAnswer()
+    {
+      if(!_currentQuestion.Good) SubtractBrain();
+    }
+    
+    private void SubtractStar()
+    {
+      if (_starsCount >= 0)
+      {
+        UIManager.Instance.HealthTimePanel.SubtractStar();
+        _starsCount--;
+      }
+
+      if (_starsCount == 0) GameOver();
+    }
+
+    private void SubtractBrain()
+    {
+      if (_brainsCount >= 0)
+      {
+        UIManager.Instance.HealthTimePanel.SubtractBrain();
+        _brainsCount--;
+      }
+
+      if (_brainsCount == 0) GameOver();
     }
     
     private QuestionModel GetQuestion()
@@ -113,7 +137,8 @@ namespace ua.org.gdg.devfest
 
     private void GameOver()
     {
-      UIManager.Instance.GameOverPanel.gameObject.SetActive(true);
+      UIManager.Instance.GameOverPanel.ShowPanel();
+      UIManager.Instance.HealthTimePanel.HidePanel();
       GameActive = false;
       UIManager.Instance.SetPlayButton(true);
     }

@@ -34,16 +34,20 @@ namespace ua.org.gdg.devfest
 
     private float _timeLeft;
     private float _countdownTime;
-    private bool _keepCountdown;
+    private Coroutine _countdown;
+    private Action _onTimeout;
 
     private IEnumerator Countdown()
     {
-      while (_timeLeft >= 0 && _keepCountdown)
+      while (_timeLeft >= 0)
       {
-        yield return new WaitForSeconds(_timerRefreshRate);
+        yield return _timerRefreshRate;
         _timerImage.fillAmount = _timeLeft / _countdownTime;
-        _timeLeft -= _timerRefreshRate;
+        _timeLeft -= Time.deltaTime;
       }
+      
+      Debug.Log("TimeOut");
+      if (_onTimeout != null) _onTimeout();
     }
     
     private void ClearStarsContainer()
@@ -70,24 +74,37 @@ namespace ua.org.gdg.devfest
     // Public
     //---------------------------------------------------------------------
 
+    public void ShowPanel()
+    {
+      gameObject.SetActive(true);
+    }
+
+    public void HidePanel()
+    {
+      gameObject.SetActive(false);
+    }
+    
     public void ResetPanel()
     {
-      ResetCountDown();
+      ResetCountdown();
       ClearBrainsContainer();
       ClearStarsContainer();
     }
     
-    public void StartCountdown(float time, Action<QuestionModel> onTimeOut)
+    public void StartCountdown(float time, Action onTimeout)
     {
-      _countdownTime = _timeLeft = time;
-      _keepCountdown = true;
-      StartCoroutine(Countdown());
+      ResetCountdown();
+      _countdownTime = time;
+      _timeLeft = _countdownTime;
+      _onTimeout = onTimeout;
+      _countdown = StartCoroutine(Countdown());
     }
 
-    public void ResetCountDown()
+    private void ResetCountdown()
     {
-      _keepCountdown = false;
+      if(_countdown != null) StopCoroutine(_countdown);
       _timerImage.fillAmount = 1;
+      _timeLeft = _countdownTime;
     }
     
     public void SetStarsCount(int count)

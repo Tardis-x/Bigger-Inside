@@ -36,10 +36,8 @@ namespace ua.org.gdg.devfest
 
       SetVirtualButtonMaterial(m_VirtualButtonPressed);
 
-      _onClick.OnClick();
-
       StopAllCoroutines();
-
+      _onClick.OnClick();
       BroadcastMessage("HandleVirtualButtonPressed", SendMessageOptions.DontRequireReceiver);
     }
 
@@ -54,6 +52,12 @@ namespace ua.org.gdg.devfest
 
       StartCoroutine(DelayOnButtonReleasedEvent(m_ButtonReleaseTimeDelay, vb.VirtualButtonName));
     }
+
+    public void RefreshMaterial()
+    {
+      SetVirtualButtonMaterial(m_VirtualButtonDefault);
+    }
+    
     //---------------------------------------------------------------------
     // Messages
     //---------------------------------------------------------------------
@@ -61,8 +65,8 @@ namespace ua.org.gdg.devfest
     void Start()
     {
       // Register with the virtual buttons TrackableBehaviour
-      virtualButtonBehaviour = GetComponent<VirtualButtonBehaviour>();
-      virtualButtonBehaviour.RegisterEventHandler(this);
+      _virtualButtonBehaviour = GetComponent<VirtualButtonBehaviour>();
+      _virtualButtonBehaviour.RegisterEventHandler(this);
       _onClick = GetComponent<VirtualButtonOnClick>();
     }
 
@@ -71,14 +75,14 @@ namespace ua.org.gdg.devfest
     // Internal
     //---------------------------------------------------------------------
 
-    private VirtualButtonBehaviour virtualButtonBehaviour;
+    private VirtualButtonBehaviour _virtualButtonBehaviour;
     private VirtualButtonOnClick _onClick;
 
-    void SetVirtualButtonMaterial(Material material)
+    private void SetVirtualButtonMaterial(Material material)
     {
       if (material != null)
       {
-        virtualButtonBehaviour.GetComponent<MeshRenderer>().sharedMaterial = material;
+        _virtualButtonBehaviour.GetComponent<MeshRenderer>().sharedMaterial = material;
       }
     }
 
