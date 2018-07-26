@@ -66,16 +66,14 @@ public class QuestPhotoController : MonoBehaviour
                     Debug.Log("Taking Photo.");
                     // Load received image into Texture2D
                     var imageTexture2D = selectedImage.LoadTexture2D();
-                    string msg = string.Format("{0} was taken from camera with size {1}x{2}",
-                        selectedImage.DisplayName, imageTexture2D.width, imageTexture2D.height);
-                    AGUIMisc.ShowToast(msg);
+//                    string msg = string.Format("{0} was taken from camera with size {1}x{2}",
+//                        selectedImage.DisplayName, imageTexture2D.width, imageTexture2D.height);
+//                    AGUIMisc.ShowToast(msg);
                     picturePath = AndroidUri.FromFile(selectedImage.OriginalPath).JavaToString();
                     photoTextureHolder.sprite = SpriteFromTex2D(imageTexture2D);
-                    //imageSize = selectedImage.Size;
-                    AGUIMisc.ShowToast("Photo is ready for sharing and uploading.");
-                    StartCoroutine(ShowSpinnerForPhoto());
-//					string galleryPath = AGFileUtils.SaveImageToGallery(imageTexture2D, selectedImage.DisplayName, "ARQuest", ImageFormat.JPEG);
-//					AGGallery.RefreshFile(galleryPath);
+					string galleryPath = AGFileUtils.SaveImageToGallery(imageTexture2D, selectedImage.DisplayName, "ARQuest", ImageFormat.JPEG);
+					AGGallery.RefreshFile(galleryPath);
+                    OnUploadButtonClick();
                     // Clean up
                     Resources.UnloadUnusedAssets();
                 },
@@ -127,7 +125,7 @@ public class QuestPhotoController : MonoBehaviour
         tex = photoTextureHolder.mainTexture as Texture2D;
         string subject = "DevFest Photo";
         string body = "My photo with speaker!";
-        AGShare.ShareTextWithImage(subject, body, tex, true, "Share via facebook...");
+        AGShare.ShareTextWithImage(subject, body, tex);
 #elif UNITY_IOS
         var screenPosition = new Vector2(Screen.width / 2, Screen.height / 2);
 
@@ -148,7 +146,7 @@ public class QuestPhotoController : MonoBehaviour
 #endif
     }
 
-    public void OnUploadButtonClick()
+    void OnUploadButtonClick()
     {
 #if UNITY_ANDROID
         userID = FirebaseAuth.DefaultInstance.CurrentUser.DisplayName;
@@ -156,7 +154,7 @@ public class QuestPhotoController : MonoBehaviour
         //Creating reference to a picture in the database
         storage = FirebaseStorage.DefaultInstance;
         StorageReference storageRef = storage.GetReferenceFromUrl("gs://hoverboard-v2-dev.appspot.com");
-        string pictureNameInStorage = "/Pictures/" + userID + ".jpeg";
+        pictureNameInStorage = "/Pictures/" + userID + ".jpeg";
         pictureReference = storageRef.Child(pictureNameInStorage);
         //Uploading image
         var task = pictureReference.PutFileAsync(picturePath);
@@ -165,13 +163,14 @@ public class QuestPhotoController : MonoBehaviour
         task.ContinueWith(resultTask =>
             {
                 spinner.Dismiss();
+                //Saving picture progress for quest
                 imageUrl = "gs://hoverboard-v2-dev.appspot.com" + pictureNameInStorage;
                 _questManager.questProgress.photoData.imgUrl = imageUrl;
                 _questManager.CheckInPhoto(this);
                 if (!resultTask.IsFaulted && !resultTask.IsCanceled)
                 {
                     Debug.Log("Upload finished.");
-                    AGUIMisc.ShowToast("Upload finished.");
+                    AGUIMisc.ShowToast("Picture was successfully taken and uploaded.");
                 }
                 else
                 {
@@ -180,35 +179,23 @@ public class QuestPhotoController : MonoBehaviour
             });
 #elif UNITY_IOS
         picturePath = "file://" + picturePath;
-        Debug.Log("Picture path changed successfully.");
         userID = FirebaseAuth.DefaultInstance.CurrentUser.DisplayName;
         userID = userID.Replace(" ", string.Empty);
-        Debug.Log("String was changed.");
         //Creating reference to a picture in the database
         storage = FirebaseStorage.DefaultInstance;
-        Debug.Log("Firebase storage was initialized.");
         StorageReference storageRef = storage.GetReferenceFromUrl("gs://hoverboard-v2-dev.appspot.com");
-        Debug.Log("Storage reference was set.");
         pictureNameInStorage = "/Pictures/" + userID + ".jpeg";
-        Debug.Log("Path in storage was set.");
         pictureReference = storageRef.Child(pictureNameInStorage);
-        Debug.Log("Child reference was set.");
         //Uploading image
         var pictureMetadata = new MetadataChange();
         pictureMetadata.ContentType = "image/jpeg";
-        Debug.Log("Metadata was initialized.");
+        //Saving picture progress for quest
         imageUrl = "gs://hoverboard-v2-dev.appspot.com" + pictureNameInStorage;
-        Debug.Log("Image URL was set.");
         _questManager.questProgress.photoData.imgUrl = imageUrl;
         _questManager.CheckInPhoto(this);
-        Debug.Log("Image URL was changed in FireBase.");
         var task = pictureReference.PutFileAsync(picturePath, pictureMetadata);
-        Debug.Log("Image started uploading.");
         task.ContinueWith(resultTask =>
         {
-            Debug.Log(resultTask);
-            Debug.Log("XXX");
-            Debug.Log(resultTask.Exception);
             if (!resultTask.IsFaulted && !resultTask.IsCanceled)
             {
                 Debug.Log("Upload finished.");
@@ -221,25 +208,6 @@ public class QuestPhotoController : MonoBehaviour
 
 #endif
     }
-#if UNITY_ANDROID
-    private IEnumerator ShowSpinnerForPhoto()
-    {
-
-        // Create spinner dialog
-        var spinner = AGProgressDialog.CreateSpinnerDialog("Please wait...", "Saving photo...");
-        spinner.Show();
-        yield return new WaitForSeconds(2);
-        // Dismiss spinner after all the background work is done
-        spinner.Dismiss();
-
-    }
-#elif UNITY_IOS
-    private IEnumerator UploadFIleAfterThreeSeconds()
-    {
-        yield return new WaitForSeconds(10);
-        
-    }
-#endif
     Sprite SpriteFromTex2D(Texture2D texture)
     {
         return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
