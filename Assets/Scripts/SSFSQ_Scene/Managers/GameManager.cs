@@ -30,12 +30,8 @@ namespace ua.org.gdg.devfest
       
       GameActive = true;
 
-      UIManager.Instance.GameOverPanel.HidePanel();
-      UIManager.Instance.HealthTimePanel.ResetPanel();
-      UIManager.Instance.HealthTimePanel.ShowPanel();
-      
-      ResetBrains();
-      ResetStars();
+      ResetUI();
+      ResetHealthAndScore();
       
       AskQuestion();
     }
@@ -68,6 +64,7 @@ namespace ua.org.gdg.devfest
 
     private int _starsCount;
     private int _brainsCount;
+    private int _score;
     private QuestionModel _currentQuestion;
     
     //Questions
@@ -82,6 +79,20 @@ namespace ua.org.gdg.devfest
         Text = "Bad question"
       }
     };
+
+    private void ResetUI()
+    {
+      UIManager.Instance.GameOverPanel.HidePanel();
+      UIManager.Instance.HealthTimePanel.ResetPanel();
+      UIManager.Instance.HealthTimePanel.ShowPanel();
+    }
+
+    private void ResetHealthAndScore()
+    {
+      ResetBrains();
+      ResetStars();
+      _score = 0;
+    }
 
     private void OnTimeout()
     {
@@ -100,11 +111,13 @@ namespace ua.org.gdg.devfest
     private void OnHit()
     {
       if(_currentQuestion.Good) SubtractStar();
+      else _score++;
     }
 
     private void OnAnswer()
     {
       if(!_currentQuestion.Good) SubtractBrain();
+      else _score++;
     }
     
     private void SubtractStar()
@@ -137,6 +150,7 @@ namespace ua.org.gdg.devfest
 
     private void GameOver()
     {
+      UIManager.Instance.GameOverPanel.SetScore(_score);
       UIManager.Instance.GameOverPanel.ShowPanel();
       UIManager.Instance.HealthTimePanel.HidePanel();
       GameActive = false;
