@@ -14,6 +14,7 @@ public class QuestManager : MonoBehaviour
 	QuestUI _questUi;
 
 	DatabaseReference _database;
+	FirebaseAuth _auth;
 
 	public QuestProgress questProgress
 	{
@@ -33,6 +34,11 @@ public class QuestManager : MonoBehaviour
 	void Awake()
 	{
 		Debug.Log("QuestManager.Awake");
+		// Get the root reference location of the database.
+		_auth = FirebaseAuth.DefaultInstance;
+		_database = FirebaseDatabase.DefaultInstance.RootReference;
+		// Set up the Editor before calling into the realtime database.
+		FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://hoverboard-v2-dev.firebaseio.com/");
 
 		// obtain reference to object that represents quest UI
 		UiReferenceInitialization();
@@ -44,32 +50,27 @@ public class QuestManager : MonoBehaviour
 	void Start()
 	{
 		Debug.Log("QuestManager.Start");
-		
 		_questUi.FadeQuestScreenIn();
-		
-		// Set up the Editor before calling into the realtime database.
-		FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://hoverboard-v2-dev.firebaseio.com/");
-
-		// Get the root reference location of the database.
-		_database = FirebaseDatabase.DefaultInstance.RootReference;
-		
-		_database.Child("users").Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId).GetValueAsync().ContinueWith(readTask => {
+		string currentUserUserId = _auth.CurrentUser.UserId;
+		var with = _database.Child("users").Child(currentUserUserId).GetValueAsync().ContinueWith(readTask => {
 			if (readTask.Result == null)
 			{
+				Debug.Log("xxx3");
 				string json = JsonConvert.SerializeObject(_questProgress);
-				_database.Child("users").Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId).SetRawJsonValueAsync(json).ContinueWith(writeTask => {
-					if (writeTask.IsFaulted)
-					{
-						Debug.LogError("QuestManager: Failed to write default quest data to firebase realtime database!");
-						Debug.LogError("Error message: " + writeTask.Exception.Message);
-					}
-					else if (writeTask.IsCompleted)
-					{
-						Debug.Log("QuestManager: Default quest data was successfully set up!");
+				_database.Child("users").Child(currentUserUserId)
+					.SetRawJsonValueAsync(json).ContinueWith(writeTask => {
+						if (writeTask.IsFaulted)
+						{
+							Debug.LogError("QuestManager: Failed to write default quest data to firebase realtime database!");
+							Debug.LogError("Error message: " + writeTask.Exception.Message);
+						}
+						else if (writeTask.IsCompleted)
+						{
+							Debug.Log("QuestManager: Default quest data was successfully set up!");
 						
-						_questUi.FadeScreenOut();
-					}
-				});
+							_questUi.FadeScreenOut();
+						}
+					});
 			}
 			else
 			{
@@ -90,6 +91,7 @@ public class QuestManager : MonoBehaviour
 				}
 			}
 		});
+		var continueWith = with;
 	}
 
 	void UiReferenceInitialization()
@@ -137,8 +139,8 @@ public class QuestManager : MonoBehaviour
 	public void CompleteVrGame(int score, QuestVrGameController vrGameController)
 	{	
 		Dictionary<string, System.Object> childUpdates = new Dictionary<string, System.Object>();
-		childUpdates["users/" + FirebaseAuth.DefaultInstance.CurrentUser.UserId + "/vrGameData/score"] = score;
-		childUpdates["users/" + FirebaseAuth.DefaultInstance.CurrentUser.UserId + "/vrGameData/state"] = true;
+		childUpdates["users/" + _auth.CurrentUser.UserId + "/vrGameData/score"] = score;
+		childUpdates["users/" + _auth.CurrentUser.UserId + "/vrGameData/state"] = true;
 		
 		_database.UpdateChildrenAsync(childUpdates).ContinueWith(task => {
 			if (task.IsCompleted)
@@ -165,7 +167,7 @@ public class QuestManager : MonoBehaviour
 	{
 		// update quest riddle progress data in database
 		Dictionary<string, System.Object> childUpdates = new Dictionary<string, System.Object>();
-		childUpdates["users/" + FirebaseAuth.DefaultInstance.CurrentUser.UserId + "/riddlesData/" + riddleKey] = true;
+		childUpdates["users/" + _auth.CurrentUser.UserId + "/riddlesData/" + riddleKey] = true;
 		_database.UpdateChildrenAsync(childUpdates).ContinueWith(task => {
 			if (task.IsCompleted)
 			{
@@ -189,8 +191,8 @@ public class QuestManager : MonoBehaviour
 	{
 		// update quest riddle progress data in database
 		Dictionary<string, System.Object> childUpdates = new Dictionary<string, System.Object>();
-		childUpdates["users/" + FirebaseAuth.DefaultInstance.CurrentUser.UserId + "/photoData/state"] = true;
-		childUpdates["users/" + FirebaseAuth.DefaultInstance.CurrentUser.UserId + "/photoData/imageURL"] = photoController.imageUrl;
+		childUpdates["users/" + _auth.CurrentUser.UserId + "/photoData/state"] = true;
+		childUpdates["users/" + _auth.CurrentUser.UserId + "/photoData/imageURL"] = photoController.imageUrl;
 		_database.UpdateChildrenAsync(childUpdates).ContinueWith(task => {
 			if (task.IsCompleted)
 			{

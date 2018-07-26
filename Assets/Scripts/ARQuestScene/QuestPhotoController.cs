@@ -9,6 +9,7 @@ using DeadMosquito.AndroidGoodies.Internal;
 using DeadMosquito.IosGoodies;
 using Firebase.Auth;
 using Firebase.Storage;
+using ua.org.gdg.devfest;
 using Unity.Collections;
 using UnityEngine.UI;
 
@@ -16,7 +17,7 @@ public class QuestPhotoController : MonoBehaviour
 {
     public Image photoTextureHolder;
     private Texture2D tex;
-    private string userID = "1";
+    private string userID;
     private FirebaseStorage storage;
     public string picturePath;
     private int imageSize = 0;
@@ -25,6 +26,7 @@ public class QuestPhotoController : MonoBehaviour
     public string imageUrl;
     byte[] imageBytes;
     string pictureNameInStorage;
+    SigninSampleScript signIn;
 
     void Awake()
     {
@@ -106,7 +108,7 @@ public class QuestPhotoController : MonoBehaviour
                 Debug.Log("File was created.");
                 if (File.Exists(picturePath))
                 {
-                    Debug.Log("It is there, man...");
+                    Debug.Log("It is there, man...: " + picturePath);
                     //Upload
                     OnUploadButtonClick();
                 }
@@ -179,15 +181,7 @@ public class QuestPhotoController : MonoBehaviour
 #elif UNITY_IOS
         picturePath = "file://" + picturePath;
         Debug.Log("Picture path changed successfully.");
-        try
-        {
-            userID = FirebaseAuth.DefaultInstance.CurrentUser.UserId;
-            Debug.Log("UserID string was initialized.");
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e.Message);
-        }
+        userID = FirebaseAuth.DefaultInstance.CurrentUser.DisplayName;
         userID = userID.Replace(" ", string.Empty);
         Debug.Log("String was changed.");
         //Creating reference to a picture in the database
@@ -203,15 +197,18 @@ public class QuestPhotoController : MonoBehaviour
         var pictureMetadata = new MetadataChange();
         pictureMetadata.ContentType = "image/jpeg";
         Debug.Log("Metadata was initialized.");
+        imageUrl = "gs://hoverboard-v2-dev.appspot.com" + pictureNameInStorage;
+        Debug.Log("Image URL was set.");
+        _questManager.questProgress.photoData.imgUrl = imageUrl;
+        _questManager.CheckInPhoto(this);
+        Debug.Log("Image URL was changed in FireBase.");
         var task = pictureReference.PutFileAsync(picturePath, pictureMetadata);
         Debug.Log("Image started uploading.");
         task.ContinueWith(resultTask =>
         {
-            imageUrl = "gs://hoverboard-v2-dev.appspot.com" + pictureNameInStorage;
-            Debug.Log("Image URL was set.");
-            _questManager.questProgress.photoData.imgUrl = imageUrl;
-            _questManager.CheckInPhoto(this);
-            Debug.Log("Image URL was changed in FireBase.");
+            Debug.Log(resultTask);
+            Debug.Log("XXX");
+            Debug.Log(resultTask.Exception);
             if (!resultTask.IsFaulted && !resultTask.IsCanceled)
             {
                 Debug.Log("Upload finished.");

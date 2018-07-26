@@ -33,6 +33,7 @@ namespace ua.org.gdg.devfest
     private GoogleSignInConfiguration configuration;
     private FirebaseAuth _auth;
 
+
     // Defer the configuration creation until Awake so the web Client ID
     // Can be set via the property inspector in the Editor.
     void Awake()
@@ -112,9 +113,9 @@ namespace ua.org.gdg.devfest
           }
           else
           {
+            Debug.Log(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
             signInCompleted.SetResult(authTask.Result);
             AddStatusText("Firebase user: " + authTask.Result.DisplayName);
-           
             
             SceneManager.LoadScene("MenuScene");
           }
