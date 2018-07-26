@@ -18,12 +18,7 @@ namespace ua.org.gdg.devfest
       if (!GameManager.Instance.GameActive)
       {
         GameManager.Instance.NewGame();
-        UIManager.Instance.SetPlayButton(false);
-      }
-      else
-      {
-        GameManager.Instance.StopGame();
-        UIManager.Instance.SetPlayButton(true);
+        UIManager.Instance.ButtonsToPlayMode();
       }
     }
   }
