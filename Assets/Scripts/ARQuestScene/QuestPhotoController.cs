@@ -181,7 +181,7 @@ public class QuestPhotoController : MonoBehaviour
         const float compressionQuality = 0.1f;
         var screenPosition = new Vector2(Screen.width / 2f, Screen.height / 2f); // On iPads ONLY you can choose screen position of popover
         IGImagePicker.PickImageFromPhotosAlbum(OnIosTexturePickSuccess,
-            () => Debug.Log("Picking image from photos album was cancelled"),
+            () => _cameraText.text = "Picking image from photos album was cancelled",
             compressionQuality,
             allowEditing, screenPosition);
     }
@@ -272,6 +272,7 @@ void OnAndroidUploadButtonClick()
             {
                 Debug.Log("Upload finished.");
                 _cameraText.text = "Picture was successfully uploaded.";
+                StartCoroutine(TextClearing());
             }
             else
             {
@@ -280,6 +281,11 @@ void OnAndroidUploadButtonClick()
         });
     }
 #endif
+    public IEnumerator TextClearing()
+    {
+        yield return new WaitForSeconds(3);
+        _cameraText.text = "";
+    }
     Sprite SpriteFromTex2D(Texture2D texture)
     {
         return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
