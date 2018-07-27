@@ -57,6 +57,7 @@ public class QuestManager : MonoBehaviour
 		spinner.Show();
 #endif
 		string currentUserUserId = _auth.CurrentUser.UserId;
+		Debug.Log("String was activated.");
 		var with = _database.Child("users").Child(currentUserUserId).GetValueAsync().ContinueWith(readTask => {
 			if (readTask.Result == null)
 			{
