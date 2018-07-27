@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DeadMosquito.AndroidGoodies;
 using Firebase;
 using Firebase.Auth;
 using Firebase.Database;
@@ -51,11 +52,12 @@ public class QuestManager : MonoBehaviour
 	{
 		Debug.Log("QuestManager.Start");
 		_questUi.FadeQuestScreenIn();
+		var spinner = AGProgressDialog.CreateSpinnerDialog("Please wait", "Updating Quest Data...", AGDialogTheme.Dark);
+		spinner.Show();
 		string currentUserUserId = _auth.CurrentUser.UserId;
 		var with = _database.Child("users").Child(currentUserUserId).GetValueAsync().ContinueWith(readTask => {
 			if (readTask.Result == null)
 			{
-				Debug.Log("xxx3");
 				string json = JsonConvert.SerializeObject(_questProgress);
 				_database.Child("users").Child(currentUserUserId)
 					.SetRawJsonValueAsync(json).ContinueWith(writeTask => {
@@ -90,6 +92,7 @@ public class QuestManager : MonoBehaviour
 					_questUi.FadeScreenOut();
 				}
 			}
+			spinner.Dismiss();
 		});
 		var continueWith = with;
 	}

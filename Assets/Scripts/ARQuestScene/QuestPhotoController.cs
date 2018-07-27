@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using Firebase.Storage;
 using ua.org.gdg.devfest;
 using Unity.Collections;
 using UnityEngine.UI;
+using Debug = UnityEngine.Debug;
 
 public class QuestPhotoController : MonoBehaviour
 {
@@ -54,32 +56,33 @@ public class QuestPhotoController : MonoBehaviour
         }
     }
 
-    void OnTakePictureButtonClick()
+    public void OnPhotoActionButtonClick()
     {
 #if UNITY_ANDROID
-        Debug.Log("Take a picture button Clicked.");
-        if (AGCamera.DeviceHasCamera())
-        {
-            Debug.Log("Phone has camera.");
-            AGCamera.TakePhoto(selectedImage =>
+//        AGAlertDialog.ShowMessageDialog("Photo with speaker",
+//            "Please select a photo with speaker.",
+//            "Take a photo", OnTakePictureButtonClick,
+//            "Pick from Gallery", OnPickPictureButtonClick,
+//            "Cancel", () => AGUIMisc.ShowToast("Operation was cancelled"));
+        string[] photoActions = { "Take a photo", "Pick from Gallery"};
+        AGAlertDialog.ShowChooserDialog("Pick an action", photoActions,
+            colorIndex =>
+            {
+                switch (colorIndex)
                 {
-                    Debug.Log("Taking Photo.");
-                    // Load received image into Texture2D
-                    var imageTexture2D = selectedImage.LoadTexture2D();
-//                    string msg = string.Format("{0} was taken from camera with size {1}x{2}",
-//                        selectedImage.DisplayName, imageTexture2D.width, imageTexture2D.height);
-//                    AGUIMisc.ShowToast(msg);
-                    picturePath = AndroidUri.FromFile(selectedImage.OriginalPath).JavaToString();
-                    photoTextureHolder.sprite = SpriteFromTex2D(imageTexture2D);
-					string galleryPath = AGFileUtils.SaveImageToGallery(imageTexture2D, selectedImage.DisplayName, "ARQuest", ImageFormat.JPEG);
-					AGGallery.RefreshFile(galleryPath);
-                    OnUploadButtonClick();
-                    // Clean up
-                    Resources.UnloadUnusedAssets();
-                },
-                error => AGUIMisc.ShowToast("Cancelled taking photo from camera: " + error), ImageResultSize.Max1024,
-                false);
-        }
+                    case 0:
+                    {
+                        OnAndroidTakePictureButtonClick();
+                        break;
+                    }
+                    case 1:
+                    {
+                        OnAndroidPickPictureButtonClick();
+                        break;
+                    }
+                }
+            },AGDialogTheme.Dark);
+        
 #elif UNITY_IOS
         Debug.Log("Take a picture button Clicked.");
         const bool allowEditing = false;
@@ -117,8 +120,40 @@ public class QuestPhotoController : MonoBehaviour
         
 #endif
     }
+#if UNITY_ANDROID
+    void OnAndroidTakePictureButtonClick()
+    {
+        var imageResultSize = ImageResultSize.Max1024;
+        AGCamera.TakePhoto(OnAndroidImagePickSuccess,  
+            error => AGUIMisc.ShowToast("Cancelled taking photo from camera: " + error), imageResultSize, false);
+    }
+
+    void OnAndroidPickPictureButtonClick()
+    {
+        var imageResultSize = ImageResultSize.Max512;
+        AGGallery.PickImageFromGallery(OnAndroidImagePickSuccess, 
+            errorMessage => AGUIMisc.ShowToast("Cancelled picking image from gallery: " + errorMessage),
+            imageResultSize, false);
+    }
+    void OnAndroidImagePickSuccess(ImagePickResult selectedImage)
+    {
+        // Load received image into Texture2D
+        var imageTexture2D = selectedImage.LoadTexture2D();
+//                    string msg = string.Format("{0} was taken from camera with size {1}x{2}",
+//                        selectedImage.DisplayName, imageTexture2D.width, imageTexture2D.height);
+//                    AGUIMisc.ShowToast(msg);
+        picturePath = AndroidUri.FromFile(selectedImage.OriginalPath).JavaToString();
+        photoTextureHolder.sprite = SpriteFromTex2D(imageTexture2D);
+        string galleryPath = AGFileUtils.SaveImageToGallery(imageTexture2D, selectedImage.DisplayName, "ARQuest", ImageFormat.JPEG);
+        AGGallery.RefreshFile(galleryPath);
+        OnUploadButtonClick();
+        // Clean up
+        Resources.UnloadUnusedAssets();
+    }
+#elif UNITY_IOS
     
-   public void OnSharePictureButtonClick()
+#endif
+    public void OnSharePictureButtonClick()
     {
         Debug.Log("Share Button Clicked.");
 #if UNITY_ANDROID
@@ -158,7 +193,7 @@ public class QuestPhotoController : MonoBehaviour
         pictureReference = storageRef.Child(pictureNameInStorage);
         //Uploading image
         var task = pictureReference.PutFileAsync(picturePath);
-        var spinner = AGProgressDialog.CreateSpinnerDialog("Please wait...", "Uploading...");
+        var spinner = AGProgressDialog.CreateSpinnerDialog("Please wait...", "Uploading...", AGDialogTheme.Dark);
         spinner.Show();
         task.ContinueWith(resultTask =>
             {
