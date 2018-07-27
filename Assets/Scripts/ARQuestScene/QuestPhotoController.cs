@@ -87,7 +87,11 @@ public class QuestPhotoController : MonoBehaviour
 #elif UNITY_IOS
     string[] actionSheetOptions = {"Take a photo", "Pick from Library"};
     
-        IGActionSheet.ShowActionSheet("Pick an action:", "Cancel", () => _cameraText.text = "Operation was canceled.", 
+        IGActionSheet.ShowActionSheet("Pick an action:", "Cancel", () =>
+            {
+                _cameraText.text = "Operation was canceled.";
+                StartCoroutine(TextClearing());
+            }, 
             actionSheetOptions, index =>
             {
                 switch (index)
@@ -159,6 +163,8 @@ public class QuestPhotoController : MonoBehaviour
             Debug.Log("It is there, man...: " + picturePath);
             //Upload
             OnIosUploadButtonClick();
+            _cameraText.text = "Picture was picked and uploaded successfully.";
+            StartCoroutine(TextClearing());
         }
     }
 
@@ -170,7 +176,11 @@ public class QuestPhotoController : MonoBehaviour
         const IGImagePicker.CameraType cameraType = IGImagePicker.CameraType.Rear;
         const IGImagePicker.CameraFlashMode flashMode = IGImagePicker.CameraFlashMode.Off;
         IGImagePicker.PickImageFromCamera(OnIosTexturePickSuccess, 
-            () => _cameraText.text = "Picking image from camera cancelled", 
+            () =>
+            {
+                _cameraText.text = "Picking image from camera was canceled";
+                StartCoroutine(TextClearing());
+            }, 
             compressionQuality,
             allowEditing, cameraType, flashMode);
     }
@@ -181,7 +191,11 @@ public class QuestPhotoController : MonoBehaviour
         const float compressionQuality = 0.1f;
         var screenPosition = new Vector2(Screen.width / 2f, Screen.height / 2f); // On iPads ONLY you can choose screen position of popover
         IGImagePicker.PickImageFromPhotosAlbum(OnIosTexturePickSuccess,
-            () => _cameraText.text = "Picking image from photos album was cancelled",
+            () =>
+            {
+                _cameraText.text = "Picking image from photos album was canceled";
+                StartCoroutine(TextClearing());
+            },
             compressionQuality,
             allowEditing, screenPosition);
     }
@@ -271,8 +285,6 @@ void OnAndroidUploadButtonClick()
             if (!resultTask.IsFaulted && !resultTask.IsCanceled)
             {
                 Debug.Log("Upload finished.");
-                _cameraText.text = "Picture was successfully uploaded.";
-                StartCoroutine(TextClearing());
             }
             else
             {
@@ -281,10 +293,10 @@ void OnAndroidUploadButtonClick()
         });
     }
 #endif
-    public IEnumerator TextClearing()
+    IEnumerator TextClearing()
     {
         yield return new WaitForSeconds(3);
-        _cameraText.text = "";
+        _cameraText.text = string.Empty;
     }
     Sprite SpriteFromTex2D(Texture2D texture)
     {
