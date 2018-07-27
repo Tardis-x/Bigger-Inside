@@ -29,6 +29,7 @@ public class QuestPhotoController : MonoBehaviour
     byte[] imageBytes;
     string pictureNameInStorage;
     SigninSampleScript signIn;
+    public Text _cameraText;
 
     void Awake()
     {
@@ -86,7 +87,7 @@ public class QuestPhotoController : MonoBehaviour
 #elif UNITY_IOS
     string[] actionSheetOptions = {"Take a photo", "Pick from Library"};
     
-        IGActionSheet.ShowActionSheet("Pick an action:", "Cancel", () => Debug.Log("Cancel Clicked"), 
+        IGActionSheet.ShowActionSheet("Pick an action:", "Cancel", () => _cameraText.text = "Operation was canceled.", 
             actionSheetOptions, index =>
             {
                 switch (index)
@@ -169,7 +170,7 @@ public class QuestPhotoController : MonoBehaviour
         const IGImagePicker.CameraType cameraType = IGImagePicker.CameraType.Rear;
         const IGImagePicker.CameraFlashMode flashMode = IGImagePicker.CameraFlashMode.Off;
         IGImagePicker.PickImageFromCamera(OnIosTexturePickSuccess, 
-            () => Debug.Log("Picking image from camera cancelled"), 
+            () => _cameraText.text = "Picking image from camera cancelled", 
             compressionQuality,
             allowEditing, cameraType, flashMode);
     }
@@ -270,6 +271,7 @@ void OnAndroidUploadButtonClick()
             if (!resultTask.IsFaulted && !resultTask.IsCanceled)
             {
                 Debug.Log("Upload finished.");
+                _cameraText.text = "Picture was successfully uploaded.";
             }
             else
             {
