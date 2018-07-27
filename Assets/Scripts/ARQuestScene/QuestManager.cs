@@ -52,8 +52,10 @@ public class QuestManager : MonoBehaviour
 	{
 		Debug.Log("QuestManager.Start");
 		_questUi.FadeQuestScreenIn();
+#if UNITY_ANDROID
 		var spinner = AGProgressDialog.CreateSpinnerDialog("Please wait", "Updating Quest Data...", AGDialogTheme.Dark);
 		spinner.Show();
+#endif
 		string currentUserUserId = _auth.CurrentUser.UserId;
 		var with = _database.Child("users").Child(currentUserUserId).GetValueAsync().ContinueWith(readTask => {
 			if (readTask.Result == null)
@@ -92,7 +94,9 @@ public class QuestManager : MonoBehaviour
 					_questUi.FadeScreenOut();
 				}
 			}
+#if UNITY_ANDROID
 			spinner.Dismiss();
+#endif
 		});
 		var continueWith = with;
 	}

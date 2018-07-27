@@ -84,40 +84,25 @@ public class QuestPhotoController : MonoBehaviour
             },AGDialogTheme.Dark);
         
 #elif UNITY_IOS
-        Debug.Log("Take a picture button Clicked.");
-        const bool allowEditing = false;
-        const float compressionQuality = 0.1f;
-        const IGImagePicker.CameraType cameraType = IGImagePicker.CameraType.Rear;
-        const IGImagePicker.CameraFlashMode flashMode = IGImagePicker.CameraFlashMode.Off;
-        IGImagePicker.PickImageFromCamera(texture =>
+    string[] actionSheetOptions = {"Take a photo", "Pick from Library"};
+    
+        IGActionSheet.ShowActionSheet("Pick an action:", "Cancel", () => Debug.Log("Cancel Clicked"), 
+            actionSheetOptions, index =>
             {
-                Debug.Log("Successfully picked image from camera");
-                tex = texture;
-                Debug.Log("Texture saved.");
-                photoTextureHolder.sprite = SpriteFromTex2D(texture);
-                Debug.Log("Texture placed on image holder.");
-//                IGImagePicker.SaveImageToGallery(texture);
-//                Debug.Log("Image saved to gallery.");
-                //Creating local file from texture
-                picturePath = Application.persistentDataPath + "/photo.jpeg";
-                if (File.Exists(picturePath))
+                switch (index)
                 {
-                    File.Delete(picturePath);
-                    Debug.Log("File was deleted.");
+                    case 0:
+                    {
+                        OnIosTakePhotoButtonClick();
+                        break;
+                    }
+                    case 1:
+                    {
+                        OnIosPickPhotoButtonClick();
+                        break;
+                    }
                 }
-                File.WriteAllBytes(picturePath, texture.EncodeToJPG());
-                Debug.Log("File was created.");
-                if (File.Exists(picturePath))
-                {
-                    Debug.Log("It is there, man...: " + picturePath);
-                    //Upload
-                    OnUploadButtonClick();
-                }
-            }, 
-            () => Debug.Log("Picking image from camera cancelled"), 
-            compressionQuality,
-        allowEditing, cameraType, flashMode);
-        
+            });
 #endif
     }
 #if UNITY_ANDROID
@@ -127,7 +112,6 @@ public class QuestPhotoController : MonoBehaviour
         AGCamera.TakePhoto(OnAndroidImagePickSuccess,  
             error => AGUIMisc.ShowToast("Cancelled taking photo from camera: " + error), imageResultSize, false);
     }
-
     void OnAndroidPickPictureButtonClick()
     {
         var imageResultSize = ImageResultSize.Max512;
@@ -146,12 +130,60 @@ public class QuestPhotoController : MonoBehaviour
         photoTextureHolder.sprite = SpriteFromTex2D(imageTexture2D);
         string galleryPath = AGFileUtils.SaveImageToGallery(imageTexture2D, selectedImage.DisplayName, "ARQuest", ImageFormat.JPEG);
         AGGallery.RefreshFile(galleryPath);
-        OnUploadButtonClick();
+        OnAndroidUploadButtonClick();
         // Clean up
         Resources.UnloadUnusedAssets();
     }
 #elif UNITY_IOS
-    
+    void OnIosTexturePickSuccess(Texture2D texture)
+    {
+        Debug.Log("Successfully picked image from camera");
+        tex = texture;
+        Debug.Log("Texture saved.");
+        photoTextureHolder.sprite = SpriteFromTex2D(texture);
+        Debug.Log("Texture placed on image holder.");
+//                IGImagePicker.SaveImageToGallery(texture);
+//                Debug.Log("Image saved to gallery.");
+        //Creating local file from texture
+        picturePath = Application.persistentDataPath + "/photo.jpeg";
+        if (File.Exists(picturePath))
+        {
+            File.Delete(picturePath);
+            Debug.Log("File was deleted.");
+        }
+        File.WriteAllBytes(picturePath, texture.EncodeToJPG());
+        Debug.Log("File was created.");
+        if (File.Exists(picturePath))
+        {
+            Debug.Log("It is there, man...: " + picturePath);
+            //Upload
+            OnIosUploadButtonClick();
+        }
+    }
+
+    void OnIosTakePhotoButtonClick()
+    {
+        Debug.Log("Take a picture button Clicked.");
+        const bool allowEditing = false;
+        const float compressionQuality = 0.1f;
+        const IGImagePicker.CameraType cameraType = IGImagePicker.CameraType.Rear;
+        const IGImagePicker.CameraFlashMode flashMode = IGImagePicker.CameraFlashMode.Off;
+        IGImagePicker.PickImageFromCamera(OnIosTexturePickSuccess, 
+            () => Debug.Log("Picking image from camera cancelled"), 
+            compressionQuality,
+            allowEditing, cameraType, flashMode);
+    }
+
+    private void OnIosPickPhotoButtonClick()
+    {
+        const bool allowEditing = false;
+        const float compressionQuality = 0.1f;
+        var screenPosition = new Vector2(Screen.width / 2f, Screen.height / 2f); // On iPads ONLY you can choose screen position of popover
+        IGImagePicker.PickImageFromPhotosAlbum(OnIosTexturePickSuccess,
+            () => Debug.Log("Picking image from photos album was cancelled"),
+            compressionQuality,
+            allowEditing, screenPosition);
+    }
 #endif
     public void OnSharePictureButtonClick()
     {
@@ -162,7 +194,7 @@ public class QuestPhotoController : MonoBehaviour
         string body = "My photo with speaker!";
         AGShare.ShareTextWithImage(subject, body, tex);
 #elif UNITY_IOS
-        var screenPosition = new Vector2(Screen.width / 2, Screen.height / 2);
+        var screenPosition = new Vector2(Screen.width / 2f, Screen.height / 2f);
 
         IGShare.Share(
             activityType =>
@@ -181,9 +213,10 @@ public class QuestPhotoController : MonoBehaviour
 #endif
     }
 
-    void OnUploadButtonClick()
-    {
+    
 #if UNITY_ANDROID
+void OnAndroidUploadButtonClick()
+    {
         userID = FirebaseAuth.DefaultInstance.CurrentUser.DisplayName;
         userID = userID.Replace(" ", string.Empty);
         //Creating reference to a picture in the database
@@ -212,7 +245,10 @@ public class QuestPhotoController : MonoBehaviour
                     AGUIMisc.ShowToast(resultTask.Exception.Message);
                 }
             });
+    }
 #elif UNITY_IOS
+    void OnIosUploadButtonClick()
+    {
         picturePath = "file://" + picturePath;
         userID = FirebaseAuth.DefaultInstance.CurrentUser.DisplayName;
         userID = userID.Replace(" ", string.Empty);
@@ -240,9 +276,8 @@ public class QuestPhotoController : MonoBehaviour
                 Debug.Log(resultTask.Exception.Message);
             }
         });
-
-#endif
     }
+#endif
     Sprite SpriteFromTex2D(Texture2D texture)
     {
         return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
