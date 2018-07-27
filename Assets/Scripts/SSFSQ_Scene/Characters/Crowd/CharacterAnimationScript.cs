@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace ua.org.gdg.devfest
 {
@@ -16,7 +19,24 @@ namespace ua.org.gdg.devfest
 
     public void StandUpAndAsk()
     {
-      _animator.SetTrigger("StandUpAndAskTrigger");
+      _animator.SetTrigger("StandUpAndAsk");
+    }
+
+    public void StartThrowing()
+    {
+      StartCoroutine(Delay(() =>{ _animator.SetBool("Throw", true); }));
+    }
+
+    public void StopThrowing()
+    {
+      StartCoroutine(Delay(() =>
+      { _animator.SetBool("Throw", false); }));
+    }
+
+    private IEnumerator Delay(Action action)
+    {
+      yield return new WaitForSeconds(Random.value);
+      action();
     }
   }
 }

@@ -5,33 +5,38 @@
  * ==============================================================================*/
 
 using System.Collections;
+using System.Net.Configuration;
 using UnityEngine;
 using Vuforia;
 
 
 namespace ua.org.gdg.devfest
 {
-  /// <summary>
-  /// This class implements the IVirtualButtonEventHandler interface and
-  /// contains the logic to start animations depending on what 
-  /// virtual button has been pressed.
-  /// </summary>
   public class VirtualButtonEventHandler : MonoBehaviour,
     IVirtualButtonEventHandler
   {
+    //-----------------------------------------------
+    // Editor
+    //-----------------------------------------------
+
+    [SerializeField] private Material m_VirtualButtonDefault;
+    [SerializeField] private Material m_VirtualButtonPressed;
+    [SerializeField] private float m_ButtonReleaseTimeDelay;
+    
+    //-----------------------------------------------
+    // Properties
+    //-----------------------------------------------
+    
+    public bool ButtonEnabled { get; private set; }
+
     //---------------------------------------------------------------------
     // Public
     //---------------------------------------------------------------------
 
-    public Material m_VirtualButtonDefault;
-    public Material m_VirtualButtonPressed;
-    public float m_ButtonReleaseTimeDelay;
-
-    /// <summary>
-    /// Called when the virtual button has just been pressed:
-    /// </summary>
     public void OnButtonPressed(VirtualButtonBehaviour vb)
     {
+      if(!ButtonEnabled) return;
+      
       Debug.Log("OnButtonPressed: " + vb.VirtualButtonName);
 
       SetVirtualButtonMaterial(m_VirtualButtonPressed);
@@ -41,11 +46,10 @@ namespace ua.org.gdg.devfest
       BroadcastMessage("HandleVirtualButtonPressed", SendMessageOptions.DontRequireReceiver);
     }
 
-    /// <summary>
-    /// Called when the virtual button has just been released:
-    /// </summary>
     public void OnButtonReleased(VirtualButtonBehaviour vb)
     {
+      if(!ButtonEnabled) return;
+      
       Debug.Log("OnButtonReleased: " + vb.VirtualButtonName);
 
       SetVirtualButtonMaterial(m_VirtualButtonDefault);
@@ -53,16 +57,24 @@ namespace ua.org.gdg.devfest
       StartCoroutine(DelayOnButtonReleasedEvent(m_ButtonReleaseTimeDelay, vb.VirtualButtonName));
     }
 
-    public void RefreshMaterial()
+    public void SetVirtualButtonMaterial(Material material)
     {
-      SetVirtualButtonMaterial(m_VirtualButtonDefault);
+      if (material != null)
+      {
+        _virtualButtonBehaviour.GetComponent<MeshRenderer>().sharedMaterial = material;
+      }
     }
-    
+
+    public void SetButtonEnabled(bool value)
+    {
+      ButtonEnabled = value;
+    }
+
     //---------------------------------------------------------------------
     // Messages
     //---------------------------------------------------------------------
 
-    void Start()
+    private void Awake()
     {
       // Register with the virtual buttons TrackableBehaviour
       _virtualButtonBehaviour = GetComponent<VirtualButtonBehaviour>();
@@ -70,21 +82,12 @@ namespace ua.org.gdg.devfest
       _onClick = GetComponent<VirtualButtonOnClick>();
     }
 
-
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
 
     private VirtualButtonBehaviour _virtualButtonBehaviour;
     private VirtualButtonOnClick _onClick;
-
-    private void SetVirtualButtonMaterial(Material material)
-    {
-      if (material != null)
-      {
-        _virtualButtonBehaviour.GetComponent<MeshRenderer>().sharedMaterial = material;
-      }
-    }
 
     IEnumerator DelayOnButtonReleasedEvent(float waitTime, string buttonName)
     {

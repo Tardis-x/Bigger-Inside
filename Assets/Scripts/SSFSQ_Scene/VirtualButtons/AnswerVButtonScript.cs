@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace ua.org.gdg.devfest
+﻿namespace ua.org.gdg.devfest
 {
   public class AnswerVButtonScript : VirtualButtonOnClick
   {

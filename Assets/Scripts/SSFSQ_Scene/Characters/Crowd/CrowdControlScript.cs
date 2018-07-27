@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -7,12 +8,6 @@ namespace ua.org.gdg.devfest
 
 	public class CrowdControlScript : MonoBehaviour
 	{
-		///---------------------------------------------------------------------
-		// Editor
-		//---------------------------------------------------------------------
-
-		[SerializeField] private GameObject _chairs;
-		
 		//---------------------------------------------------------------------
 		// Internal
 		//---------------------------------------------------------------------
@@ -28,6 +23,26 @@ namespace ua.org.gdg.devfest
 			_character = GetRandomCharacter();
 			_character.StandUpAndAsk();
 		}
+
+		public void StartThrowing()
+		{
+			var characters = GetComponentsInChildren<CharacterAnimationScript>();
+			
+			foreach (var character in characters)
+			{
+				character.StartThrowing();
+			}
+		}
+		
+		public void StopThrowing()
+		{
+			var characters = GetComponentsInChildren<CharacterAnimationScript>();
+			
+			foreach (var character in characters)
+			{
+				character.StopThrowing();
+			}
+		}		
 		
 		//---------------------------------------------------------------------
 		// Helpers
@@ -35,7 +50,7 @@ namespace ua.org.gdg.devfest
 
 		private CharacterAnimationScript GetRandomCharacter()
 		{
-			var characters = _chairs.GetComponentsInChildren<CharacterAnimationScript>();
+			var characters = GetComponentsInChildren<CharacterAnimationScript>();
 			int index = (int) Math.Round(Random.value * characters.Length);
 			return characters[index];
 		}

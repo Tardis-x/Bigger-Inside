@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Random = System.Random;
 
 namespace ua.org.gdg.devfest
@@ -32,30 +31,21 @@ namespace ua.org.gdg.devfest
 
       ResetUI();
       ResetHealthAndScore();
+      AnimationManager.Instance.CrowdControl.StopThrowing();
       
       AskQuestion();
-    }
-
-    public void StopGame()
-    {
-      if(!GameActive) return;
-      
-      GameActive = false;
-      
-      UIManager.Instance.GameOverPanel.HidePanel();
-      UIManager.Instance.HealthTimePanel.HidePanel();
     }
 
     public void Answer()
     {
       OnAnswer();
-      AskQuestion();
+      if(GameActive) AskQuestion();
     }
 
     public void Hit()
     {
       OnHit();
-      AskQuestion();
+      if(GameActive) AskQuestion();
     }
 
     //---------------------------------------------------------------------
@@ -98,7 +88,7 @@ namespace ua.org.gdg.devfest
     {
       SubtractStar();
       SubtractBrain();
-      AskQuestion();
+      if(GameActive) AskQuestion();
     }
 
     private void AskQuestion()
@@ -106,6 +96,7 @@ namespace ua.org.gdg.devfest
       _currentQuestion = GetQuestion();
       UIManager.Instance.ScreenQuestionText.text = _currentQuestion.Text;
       UIManager.Instance.HealthTimePanel.StartCountdown(_timeForAnswer, OnTimeout);
+      AnimationManager.Instance.CrowdControl.AskQuestion();
     }
     
     private void OnHit()
@@ -128,7 +119,11 @@ namespace ua.org.gdg.devfest
         _starsCount--;
       }
 
-      if (_starsCount == 0) GameOver();
+      if (_starsCount == 0)
+      {
+        GameOver();
+        AnimationManager.Instance.CrowdControl.StartThrowing();
+      }
     }
 
     private void SubtractBrain()

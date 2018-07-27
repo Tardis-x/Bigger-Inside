@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using Vuforia;
+using UnityEngine.SceneManagement;
 
 namespace ua.org.gdg.devfest
 {
@@ -24,6 +24,15 @@ namespace ua.org.gdg.devfest
     [SerializeField] private Material _hitButtonMaterial;
     [SerializeField] private Material _answerButtonMaterial;
     [SerializeField] private Material _transparentButtonMaterial;
+    
+    //-----------------------------------------------
+    // Messages
+    //-----------------------------------------------
+
+    private void Start()
+    {
+      ButtonsToPauseMode();
+    }
 
     //-----------------------------------------------
     // Public
@@ -45,38 +54,38 @@ namespace ua.org.gdg.devfest
 
     private void HideHitButton()
     {
-      Instance.HitVirtualButton.m_VirtualButtonDefault = _transparentButtonMaterial;
-      Instance.HitVirtualButton.RefreshMaterial();
+      Instance.HitVirtualButton.SetVirtualButtonMaterial(_transparentButtonMaterial);
+      Instance.HitVirtualButton.SetButtonEnabled(false);
     }
 
     private void ShowHitButton()
     {
-      Instance.HitVirtualButton.m_VirtualButtonDefault = _hitButtonMaterial;
-      Instance.HitVirtualButton.RefreshMaterial();
+      Instance.HitVirtualButton.SetVirtualButtonMaterial(_hitButtonMaterial);
+      Instance.HitVirtualButton.SetButtonEnabled(true);
     }
 
     private void HideAnswerButton()
     {
-      Instance.AnswerVirtualButton.m_VirtualButtonDefault = _transparentButtonMaterial;
-      Instance.AnswerVirtualButton.RefreshMaterial();
+      Instance.AnswerVirtualButton.SetVirtualButtonMaterial(_transparentButtonMaterial);
+      Instance.AnswerVirtualButton.SetButtonEnabled(false);
     }
 
     private void ShowAnswerButton()
     {
-      Instance.AnswerVirtualButton.m_VirtualButtonDefault = _answerButtonMaterial;
-      Instance.AnswerVirtualButton.RefreshMaterial();
+      Instance.AnswerVirtualButton.SetVirtualButtonMaterial(_answerButtonMaterial);
+      Instance.AnswerVirtualButton.SetButtonEnabled(true);
     }
 
     private void HidePlayButton()
     {
-      Instance.PlayVirtualButton.m_VirtualButtonDefault = _transparentButtonMaterial;
-      Instance.PlayVirtualButton.RefreshMaterial();
+      Instance.PlayVirtualButton.SetVirtualButtonMaterial(_transparentButtonMaterial);
+      Instance.PlayVirtualButton.SetButtonEnabled(false);
     }
 
     private void ShowPlayButton()
     {
-      Instance.PlayVirtualButton.m_VirtualButtonDefault = _playButtonMaterial;
-      Instance.PlayVirtualButton.RefreshMaterial();
+      Instance.PlayVirtualButton.SetVirtualButtonMaterial(_playButtonMaterial);
+      Instance.PlayVirtualButton.SetButtonEnabled(true);
     }
   }
 }
