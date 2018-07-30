@@ -1,11 +1,14 @@
-﻿using ua.org.gdg.devfest;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Animations;
 
-public class SpeakerWalkStateBehaviour : StateMachineBehaviour 
+namespace ua.org.gdg.devfest
 {
-	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) 
+	public class SpeakerWalkStateBehaviour : StateMachineBehaviour
 	{
-		AnimationManager.Instance.SpeakerAnimation.MoveFroward();
+		// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
+		override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+		{
+			AnimationManager.Instance.SpeakerAnimation.MoveForward();
+		}
 	}
 }
