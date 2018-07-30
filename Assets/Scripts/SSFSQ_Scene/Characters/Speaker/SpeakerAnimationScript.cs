@@ -11,8 +11,8 @@ namespace ua.org.gdg.devfest
 
     [SerializeField] private Animator _animator;
     [SerializeField] private Transform _speakerTransform;
-    [SerializeField] private Transform _position1;
-    [SerializeField] private Transform _position2;
+    [SerializeField] private Transform _startPosition;
+    [SerializeField] private Transform _endPosition;
     [SerializeField] private float _moveSpeed;
 
     //---------------------------------------------------------------------
@@ -21,7 +21,7 @@ namespace ua.org.gdg.devfest
 
     private void Start()
     {
-      SetSpeedByDestination(_position2, NORMALIZED_TIME_OF_WALKING);
+      SetSpeedByDestination(_endPosition, NORMALIZED_TIME_OF_WALKING);
     }
 
     //---------------------------------------------------------------------
@@ -30,39 +30,32 @@ namespace ua.org.gdg.devfest
 
     public void TurnToCrowdPosition1()
     {
-      SetPosition(_position1);
-      SetSpeedByDestination(_position2, NORMALIZED_TIME_OF_WALKING);
+      SetPosition(_startPosition);
+      SetSpeedByDestination(_endPosition, NORMALIZED_TIME_OF_WALKING);
       SetRotation(180);
     }
     
     public void TurnToCrowdPosition2()
     {
-      SetPosition(_position2);
-      SetSpeedByDestination(_position1, NORMALIZED_TIME_OF_WALKING);
+      SetPosition(_endPosition);
+      SetSpeedByDestination(_startPosition, NORMALIZED_TIME_OF_WALKING);
       SetRotation(180);
     }
-
-    public void MoveForward()
-    {
-      _speakerTransform.Translate(Vector3.forward * _moveSpeed);
-    }
-
+    
     public void GoToStartPosition()
     {
-      if(_speakerTransform.position.x - _position1.position.x < ACCURACY) _animator.SetTrigger("Homed");
-      _speakerTransform.LookAt(_position1.position);
-      _speakerTransform.transform.position =
-        Vector3.MoveTowards(_speakerTransform.transform.position, _position1.position, _moveSpeed);
+      if(Vector3.Distance(_speakerTransform.localPosition, _startPosition.localPosition) < ACCURACY) _animator.SetTrigger("StartPosition");
+      _speakerTransform.LookAt(_startPosition.position);
+      _speakerTransform.transform.position=
+        Vector3.MoveTowards(_speakerTransform.transform.position, _startPosition.position, _moveSpeed);
     }
     
-    public void TurnLeft()
+    public void GoToEndPosition()
     {
-      _speakerTransform.Rotate(Vector3.up, -transform.eulerAngles.y + 90);
-    }
-
-    public void TurnRight()
-    {
-      _speakerTransform.Rotate(Vector3.up, -transform.eulerAngles.y - 90);
+      if(Vector3.Distance(_speakerTransform.localPosition, _endPosition.localPosition) < ACCURACY) _animator.SetTrigger("EndPosition");
+      _speakerTransform.LookAt(_endPosition.position);
+      _speakerTransform.transform.position =
+        Vector3.MoveTowards(_speakerTransform.transform.position, _endPosition.position, _moveSpeed);
     }
 
     public void StartBeingScared()
@@ -82,7 +75,7 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     private const float NORMALIZED_TIME_OF_WALKING = .5f;
-    private const float ACCURACY = .1f;
+    private const float ACCURACY = .001f;
     
     private void SetSpeedByDestination(Transform destination, float time)
     {

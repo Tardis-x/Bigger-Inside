@@ -31,7 +31,6 @@ namespace ua.org.gdg.devfest
 
       ResetUI();
       ResetHealthAndScore();
-      ResetAnimations();
       
       AskQuestion();
     }
@@ -70,17 +69,12 @@ namespace ua.org.gdg.devfest
       }
     };
 
-    private void ResetAnimations()
-    {
-      AnimationManager.Instance.CrowdControl.StopThrowing();
-      AnimationManager.Instance.SpeakerAnimation.StopBeingScared();
-    }
-
     private void ResetUI()
     {
       UIManager.Instance.GameOverPanel.HidePanel();
       UIManager.Instance.HealthTimePanel.ResetPanel();
       UIManager.Instance.HealthTimePanel.ShowPanel();
+      UIManager.Instance.ButtonsToPlayMode();
     }
 
     private void ResetHealthAndScore()

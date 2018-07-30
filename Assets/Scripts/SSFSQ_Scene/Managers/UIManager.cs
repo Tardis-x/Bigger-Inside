@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -24,7 +26,9 @@ namespace ua.org.gdg.devfest
     [SerializeField] private Material _hitButtonMaterial;
     [SerializeField] private Material _answerButtonMaterial;
     [SerializeField] private Material _transparentButtonMaterial;
-    
+    [SerializeField] private Text _getReadyText;
+    [SerializeField] private int _getReadyTime = 3;
+
     //-----------------------------------------------
     // Messages
     //-----------------------------------------------
@@ -50,6 +54,66 @@ namespace ua.org.gdg.devfest
       Instance.ShowPlayButton();
       Instance.HideAnswerButton();
       Instance.HideHitButton();
+    }
+
+    public void StartGetReadyCountdown(Action onCountdownFinished)
+    {
+      if (_countdown) return;
+
+      _countdown = true;
+      GetReadyTextSetActive(true);
+      ScreenQuestionTextSetActive(false);
+      HidePlayButton();
+      _timeLeft = _getReadyTime;
+      StartCoroutine(GetReadyCountDown(onCountdownFinished));
+    }
+
+    //---------------------------------------------------------------------
+    // Internal
+    //---------------------------------------------------------------------
+
+    private int _timeLeft;
+    private bool _countdown;
+
+    private IEnumerator GetReadyCountDown(Action onCountdownFinished)
+    {
+      while (_timeLeft >= -1)
+      {
+        if (_timeLeft > 0)
+        {
+          _getReadyText.text = "GET READY!\n" + _timeLeft;
+        }
+        else if (_timeLeft == 0)
+        {
+          _getReadyText.text = "GET READY!\nGO!";
+        }
+        else
+        {
+          EndGetReadyCountdown(onCountdownFinished);
+        }
+        
+        yield return new WaitForSeconds(1);
+        _timeLeft--;
+      }
+    }
+
+    private void EndGetReadyCountdown(Action onCountdownFinished)
+    {
+      _countdown = false;
+      ScreenQuestionTextSetActive(true);
+      GetReadyTextSetActive(false);
+      StopCoroutine(GetReadyCountDown(onCountdownFinished));
+      onCountdownFinished();
+    }
+
+    private void GetReadyTextSetActive(bool value)
+    {
+      _getReadyText.gameObject.SetActive(value);
+    }
+
+    private void ScreenQuestionTextSetActive(bool value)
+    {
+      ScreenQuestionText.gameObject.SetActive(value);
     }
 
     private void HideHitButton()

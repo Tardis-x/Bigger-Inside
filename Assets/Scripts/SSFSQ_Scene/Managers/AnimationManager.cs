@@ -13,5 +13,15 @@ namespace ua.org.gdg.devfest
 
 		[SerializeField] public CrowdControlScript CrowdControl;
 		[SerializeField] public SpeakerAnimationScript SpeakerAnimation;
+		
+		//---------------------------------------------------------------------
+		// Public
+		//---------------------------------------------------------------------
+
+		public void ResetAnimations()
+		{
+			Instance.CrowdControl.StopThrowing();
+			Instance.SpeakerAnimation.StopBeingScared();
+		}
 	}
 }

@@ -10,8 +10,8 @@
     {
       if (!GameManager.Instance.GameActive)
       {
-        GameManager.Instance.NewGame();
-        UIManager.Instance.ButtonsToPlayMode();
+        AnimationManager.Instance.ResetAnimations();
+        UIManager.Instance.StartGetReadyCountdown(GameManager.Instance.NewGame);
       }
     }
   }

@@ -24,7 +24,11 @@ namespace ua.org.gdg.devfest
 
     public void StartThrowing()
     {
-      StartCoroutine(Delay(() =>{ _animator.SetBool("Throw", true); }));
+      StartCoroutine(Delay(() =>
+      {
+        _animator.SetTrigger("StartThrowing");
+        _animator.SetBool("Throw", true);
+      }));
     }
 
     public void StopThrowing()

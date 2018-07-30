@@ -13,6 +13,16 @@ namespace ua.org.gdg.devfest
 		//---------------------------------------------------------------------
 
 		private CharacterAnimationScript _character;
+		private CharacterAnimationScript[] _characters;
+		
+		//---------------------------------------------------------------------
+		// Messages
+		//---------------------------------------------------------------------
+
+		private void Start()
+		{
+			_characters = GetComponentsInChildren<CharacterAnimationScript>();
+		}
 
 		//---------------------------------------------------------------------
 		// Public
@@ -26,9 +36,7 @@ namespace ua.org.gdg.devfest
 
 		public void StartThrowing()
 		{
-			var characters = GetComponentsInChildren<CharacterAnimationScript>();
-			
-			foreach (var character in characters)
+			foreach (var character in _characters)
 			{
 				character.StartThrowing();
 			}
@@ -36,9 +44,7 @@ namespace ua.org.gdg.devfest
 		
 		public void StopThrowing()
 		{
-			var characters = GetComponentsInChildren<CharacterAnimationScript>();
-			
-			foreach (var character in characters)
+			foreach (var character in _characters)
 			{
 				character.StopThrowing();
 			}
@@ -50,9 +56,8 @@ namespace ua.org.gdg.devfest
 
 		private CharacterAnimationScript GetRandomCharacter()
 		{
-			var characters = GetComponentsInChildren<CharacterAnimationScript>();
-			int index = (int) Math.Round(Random.value * characters.Length);
-			return characters[index];
+			int index = (int) Math.Floor(Random.value * _characters.Length);
+			return _characters[index];
 		}
 	}
 }
