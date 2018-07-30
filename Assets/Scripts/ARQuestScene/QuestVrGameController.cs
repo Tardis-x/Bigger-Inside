@@ -57,7 +57,7 @@ public class QuestVrGameController : MonoBehaviour
 		if (_questManager.questProgress.vrGameData.state)
 		{
 			_statusText.gameObject.SetActive(true);
-			_statusText.text = string.Format("You've completed VR game with score {0}!",_questManager.questProgress.vrGameData.score);
+			_statusText.text = string.Format("You've completed VR game with score {0}!",_questManager.questProgress.vrGameData.gameScore);
 
 			_scoreInputField.gameObject.SetActive(false);
 			_scanButton.gameObject.SetActive(false);

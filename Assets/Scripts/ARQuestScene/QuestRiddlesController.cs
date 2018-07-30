@@ -59,11 +59,11 @@ public class QuestRiddlesController : MonoBehaviour
 		bool anyRiddles = false;
 		
 		var riddlesProgress = _questManager.QuestRiddlesProgress;
-		var riddlesData = _questManager.QuestRiddlesContent;
+		var riddlesData = _questManager.QuestRiddlesData;
 
 		foreach (var riddle in riddlesProgress)
 		{
-			if (!riddle.Value)
+			if (!riddle.Value.isCompleted)
 			{
 				_riddleText.text = riddlesData[riddle.Key].description;
 				_currentRiddle = riddle.Key;

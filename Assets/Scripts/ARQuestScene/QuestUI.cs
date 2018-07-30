@@ -19,10 +19,14 @@ public class QuestUI : MonoBehaviour
     GameObject _vrGamePanel;
     [SerializeField]
     GameObject _riddlesPanel;
+    [SerializeField]
+    GameObject _leaderBoardPanel;
 
     GameObject _activePanel;
 
     QuestManager _questManager;
+
+    QuestLeaderBoard _questLeaderBoard;
     
     void Awake()
     {
@@ -89,10 +93,22 @@ public class QuestUI : MonoBehaviour
     public void OnRiddlesButtonClicked()
     {
         Debug.Log("QuestUI.OnRiddlesButtonClicked");
+        _questManager.CheckIfQuestIsActivated();
+        if (_questManager.isQuestActivated)
+        {
+            Debug.Log("Quest is activated.");
+            _menuPanel.SetActive(false);
+            _activePanel = _riddlesPanel;
+            _riddlesPanel.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("Quest is not activated.");
+#if UNITY_ANDROID
+            AGUIMisc.ShowToast("Riddles will be available tomorrow.");
+#endif
+        }
         
-        _menuPanel.SetActive(false);
-        _activePanel = _riddlesPanel;
-        _riddlesPanel.SetActive(true);
     }
 
     public void OnBackButtonClicked()
@@ -102,6 +118,14 @@ public class QuestUI : MonoBehaviour
         _activePanel.SetActive(false);
         _activePanel = _menuPanel;
         _menuPanel.SetActive(true);
+    }
+
+    public void OnLeaderBoardButtonClicked()
+    {
+        _menuPanel.SetActive(false);
+        _activePanel = _leaderBoardPanel;
+        _leaderBoardPanel.SetActive(true);
+        _questLeaderBoard.UpdateScore();
     }
 
     public void FadeQuestScreenIn()

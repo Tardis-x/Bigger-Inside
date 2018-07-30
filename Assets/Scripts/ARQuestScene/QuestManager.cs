@@ -10,7 +10,7 @@ using UnityEngine;
 public class QuestManager : MonoBehaviour
 {
 	QuestProgress _questProgress;
-	Dictionary<string, QuestRiddleContent> _questRiddlesContent;
+	Dictionary<string, QuestRiddleData> _questRiddlesData;
 
 	QuestUI _questUi;
 
@@ -22,15 +22,18 @@ public class QuestManager : MonoBehaviour
 		get { return _questProgress; }
 	}
 
-	public Dictionary<string, bool> QuestRiddlesProgress
+	public Dictionary<string, QuestRiddleData> QuestRiddlesProgress
 	{
 		get { return _questProgress.riddlesData; }
 	}
 	
-	public Dictionary<string, QuestRiddleContent> QuestRiddlesContent
+	public Dictionary<string, QuestRiddleData> QuestRiddlesData
 	{
-		get { return _questRiddlesContent; }
+		get { return _questRiddlesData; }
 	}
+
+	public bool isQuestActivated;
+	int _timesCompleted = 0;
 
 	void Awake()
 	{
@@ -56,7 +59,7 @@ public class QuestManager : MonoBehaviour
 		var spinner = AGProgressDialog.CreateSpinnerDialog("Please wait", "Updating Quest Data...", AGDialogTheme.Dark);
 		spinner.Show();
 #endif
-		string currentUserUserId = _auth.CurrentUser.UserId;
+		string currentUserUserId = _auth.CurrentUser.DisplayName;
 		Debug.Log("String was activated.");
 		var with = _database.Child("users").Child(currentUserUserId).GetValueAsync().ContinueWith(readTask => {
 			if (readTask.Result == null)
@@ -95,6 +98,9 @@ public class QuestManager : MonoBehaviour
 					_questUi.FadeScreenOut();
 				}
 			}
+			//Check if Quest is activated
+			CheckIfQuestIsActivated();
+			
 #if UNITY_ANDROID
 			spinner.Dismiss();
 #endif
@@ -125,87 +131,111 @@ public class QuestManager : MonoBehaviour
 	{
 		_questProgress = new QuestProgress();
 		
-		_questRiddlesContent = new Dictionary<string, QuestRiddleContent>();
+		_questRiddlesData = new Dictionary<string, QuestRiddleData>();
 		
-		QuestRiddleContent androidRiddle = new QuestRiddleContent("Popular mobile OS that is powered by Google?");
-		_questRiddlesContent.Add("Android", androidRiddle);
-		_questProgress.riddlesData.Add("Android", false);
+		QuestRiddleData androidRiddle = new QuestRiddleData("Popular mobile OS that is powered by Google?");
+		_questRiddlesData.Add("Android", androidRiddle);
+		_questProgress.riddlesData.Add("Android", androidRiddle);
 
-		QuestRiddleContent angularRiddle = new QuestRiddleContent("TypeScript-based open-source front-end web application platform?");
-		_questRiddlesContent.Add("Angular", angularRiddle);
-		_questProgress.riddlesData.Add("Angular", false);
+		QuestRiddleData angularRiddle = new QuestRiddleData("TypeScript-based open-source front-end web application platform?");
+		_questRiddlesData.Add("Angular", angularRiddle);
+		_questProgress.riddlesData.Add("Angular", angularRiddle);
 
-		QuestRiddleContent arcoreRiddle = new QuestRiddleContent("Software development kit developed by Google that allow for mixed reality applications to be built?");
-		_questRiddlesContent.Add("Arcore", arcoreRiddle);
-		_questProgress.riddlesData.Add("Arcore", false);
+		QuestRiddleData arcoreRiddle = new QuestRiddleData("Software development kit developed by Google that allow for mixed reality applications to be built?");
+		_questRiddlesData.Add("Arcore", arcoreRiddle);
+		_questProgress.riddlesData.Add("Arcore", arcoreRiddle);
 
-		QuestRiddleContent firebaseRiddle = new QuestRiddleContent("Mobile and web application development platform?");
-		_questRiddlesContent.Add("Firebase", firebaseRiddle);
-		_questProgress.riddlesData.Add("Firebase", false);
+		QuestRiddleData firebaseRiddle = new QuestRiddleData("Mobile and web application development platform?");
+		_questRiddlesData.Add("Firebase", firebaseRiddle);
+		_questProgress.riddlesData.Add("Firebase", firebaseRiddle);
 	}
 
 	public void CompleteVrGame(int score, QuestVrGameController vrGameController)
 	{	
 		Dictionary<string, System.Object> childUpdates = new Dictionary<string, System.Object>();
-		childUpdates["users/" + _auth.CurrentUser.UserId + "/vrGameData/score"] = score;
-		childUpdates["users/" + _auth.CurrentUser.UserId + "/vrGameData/state"] = true;
-		
-		_database.UpdateChildrenAsync(childUpdates).ContinueWith(task => {
-			if (task.IsCompleted)
-			{
-				// mark VR game as completed in local storage
-				_questProgress.vrGameData.score = score;
-				_questProgress.vrGameData.state = true;
-				
-				vrGameController.UpdateVrGameScreen();
-			}
-			else if (task.IsFaulted)
-			{
-				Debug.LogError("QuestManager: Failed to update quest data in firebase realtime database!");
-				Debug.LogError("Error message: " + task.Exception.Message);
-			}
-			else if (task.IsCanceled)
-			{
-				Debug.LogError("QuestManager: Cancel updating quest data in firebase realtime database!");
-			}
+		_database.Child("users/GlobalQuestData/VRGame").GetValueAsync().ContinueWith(task =>
+		{
+			DataSnapshot snapshot = task.Result;
+			_timesCompleted = JsonConvert.DeserializeObject<int>(snapshot.GetRawJsonValue());
+			_questProgress.vrGameData.score = 8000 - _timesCompleted * 8;
+			_questProgress.globalScore += _questProgress.vrGameData.score;
+			_timesCompleted++;
+			// update VR progress data in database
+			childUpdates["users/GlobalQuestData/VRGame"] = _timesCompleted;
+			childUpdates["users/" + _auth.CurrentUser.DisplayName + "/vrGameData/score"] = _questProgress.vrGameData.score;
+			childUpdates["users/" + _auth.CurrentUser.DisplayName + "/vrGameData/gameScore"] = score;
+			childUpdates["users/" + _auth.CurrentUser.DisplayName + "/vrGameData/state"] = true;
+			_database.UpdateChildrenAsync(childUpdates).ContinueWith(task1 => {
+				if (task1.IsCompleted)
+				{
+					// mark VR game as completed in local storage
+					_questProgress.vrGameData.gameScore = score;
+					_questProgress.vrGameData.state = true;
+					vrGameController.UpdateVrGameScreen();
+				}
+				else if (task1.IsFaulted)
+				{
+					Debug.LogError("QuestManager: Failed to update quest data in firebase realtime database!");
+					Debug.LogError("Error message: " + task1.Exception.Message);
+				}
+				else if (task1.IsCanceled)
+				{
+					Debug.LogError("QuestManager: Cancel updating quest data in firebase realtime database!");
+				}
+			});
 		});
+		
 	}
 
 	public void CompleteRiddle(string riddleKey, QuestRiddlesController riddlesController)
 	{
-		// update quest riddle progress data in database
 		Dictionary<string, System.Object> childUpdates = new Dictionary<string, System.Object>();
-		childUpdates["users/" + _auth.CurrentUser.UserId + "/riddlesData/" + riddleKey] = true;
-		_database.UpdateChildrenAsync(childUpdates).ContinueWith(task => {
-			if (task.IsCompleted)
+		
+		//Check, how many times before riddle was completed and assign a score
+		_database.Child("users/GlobalQuestData/" + riddleKey).GetValueAsync().ContinueWith(task =>
+		{
+			DataSnapshot snapshot = task.Result;
+            _timesCompleted = JsonConvert.DeserializeObject<int>(snapshot.GetRawJsonValue());
+			_questProgress.riddlesData[riddleKey].score = 1000 - _timesCompleted;
+			_questProgress.globalScore += _questProgress.riddlesData[riddleKey].score;
+			_timesCompleted++;
+			// update quest riddle progress data in database
+			childUpdates["users/" + _auth.CurrentUser.DisplayName + "/riddlesData/" + riddleKey + "/isCompleted"] = true;
+            childUpdates["users/GlobalQuestData/" + riddleKey] = _timesCompleted;
+            childUpdates["users/" + _auth.CurrentUser.DisplayName + "/riddlesData/" + riddleKey + "/score"] = _questProgress.riddlesData[riddleKey].score;
+			childUpdates["users/" + _auth.CurrentUser.DisplayName + "/globalScore"] = _questProgress.globalScore;
+			_database.UpdateChildrenAsync(childUpdates).ContinueWith(task1 => 
 			{
-				// mark riddle as complete in local storage
-				_questProgress.riddlesData[riddleKey] = true;
-				
-				riddlesController.UpdateRiddlesScreen();
-			}
-			else if (task.IsFaulted)
-			{
-				Debug.LogError("QuestManager: Failed to update quest data in firebase realtime database!");
-				Debug.LogError("Error message: " + task.Exception.Message);
-			}
-			else if (task.IsCanceled)
-			{
-				Debug.LogError("QuestManager: Cancel updating quest data in firebase realtime database!");
-			}
+				if (task1.IsCompleted)
+				{
+					// mark riddle as completed in local storage
+					_questProgress.riddlesData[riddleKey].isCompleted = true;
+					riddlesController.UpdateRiddlesScreen();
+				}
+				else if (task1.IsFaulted)
+				{
+					Debug.LogError("QuestManager: Failed to update quest data in firebase realtime database!");
+					Debug.LogError("Error message: " + task1.Exception.Message);
+				}
+				else if (task1.IsCanceled)
+				{
+					Debug.LogError("QuestManager: Cancel updating quest data in firebase realtime database!");
+				}
+			});
 		});
+		
 	}
 	public void CheckInPhoto(QuestPhotoController photoController)
 	{
 		// update quest riddle progress data in database
 		Dictionary<string, System.Object> childUpdates = new Dictionary<string, System.Object>();
-		childUpdates["users/" + _auth.CurrentUser.UserId + "/photoData/state"] = true;
-		childUpdates["users/" + _auth.CurrentUser.UserId + "/photoData/imageURL"] = photoController.imageUrl;
+		//childUpdates["users/" + _auth.CurrentUser.UserId + "/photoData/state"] = true;
+		childUpdates["users/" + _auth.CurrentUser.DisplayName + "/photoData/imageURL"] = photoController.imageUrl;
 		_database.UpdateChildrenAsync(childUpdates).ContinueWith(task => {
 			if (task.IsCompleted)
 			{
 				// mark photocapture as complete in local storage
-				_questProgress.photoData.state = true;
+				//_questProgress.photoData.state = true;
 				_questProgress.photoData.imgUrl = photoController.imageUrl;
 			}
 			else if (task.IsFaulted)
@@ -217,6 +247,16 @@ public class QuestManager : MonoBehaviour
 			{
 				Debug.LogError("QuestManager: Cancel updating quest data in firebase realtime database!");
 			}
+		});
+	}
+
+	public void CheckIfQuestIsActivated()
+	{
+		_database.Child("users/GlobalQuestData/QuestActivation").GetValueAsync().ContinueWith(task =>
+		{
+			DataSnapshot snapshot = task.Result;
+			isQuestActivated = JsonConvert.DeserializeObject<bool>(snapshot.GetRawJsonValue());
+			Debug.Log("Quest activation status: " + isQuestActivated);
 		});
 	}
 }

@@ -6,11 +6,12 @@ public class QuestProgress
 	{
 		photoData = new QuestPhotoData();
 		vrGameData = new QuestVrGameData();
-		riddlesData = new Dictionary<string, bool>();
+		riddlesData = new Dictionary<string, QuestRiddleData>();
 	}
 
 	public QuestPhotoData photoData { get; set; }
 	public QuestVrGameData vrGameData { get; set; }
 	
-	public Dictionary<string, bool> riddlesData { get; set; }
+	public Dictionary<string, QuestRiddleData> riddlesData { get; set; }
+	public int globalScore = 0;
 }
