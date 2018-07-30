@@ -2,62 +2,71 @@
 
 namespace ua.org.gdg.devfest
 {
-  public class SpeakerAnimationScript : Singleton<SpeakerAnimationScript>
+  public class SpeakerAnimationScript : MonoBehaviour
   {
     //---------------------------------------------------------------------
     // Editor
     //---------------------------------------------------------------------
 
     [SerializeField] private Animator _animator;
-    [SerializeField] private Transform _transform;
+    [SerializeField] private Transform _speakerTransform;
+    [SerializeField] private Transform _position1;
+    [SerializeField] private Transform _position2;
     [SerializeField] private float _moveSpeed;
-
-    //---------------------------------------------------------------------
-    // Messages
-    //---------------------------------------------------------------------
-
-    private void Awake()
-    {
-      _startPosition = _transform.localPosition;
-    }
 
     //---------------------------------------------------------------------
     // Public
     //---------------------------------------------------------------------
 
-    public void WalkAnotherWay()
+    public void TurnToCrowdPosition1()
     {
-      _animator.SetBool("WalkOneWay", !_animator.GetBool("WalkOneWay"));
-      ResetPosition();
-      ResetRotation();
+      SetPosition(_position1);
+      SetRotation(180);
+    }
+    
+    public void TurnToCrowdPosition2()
+    {
+      SetPosition(_position2);
+      SetRotation(180);
     }
 
     public void MoveFroward()
     {
-      _transform.Translate(Vector3.forward * _moveSpeed);
+      _speakerTransform.Translate(Vector3.forward * _moveSpeed);
+    }
+    
+    public void TurnLeft()
+    {
+      _speakerTransform.Rotate(Vector3.up, -transform.eulerAngles.y + 90);
+    }
+
+    public void TurnRight()
+    {
+      _speakerTransform.Rotate(Vector3.up, -transform.eulerAngles.y - 90);
+    }
+
+    public void StartBeingScared()
+    {
+      _animator.SetTrigger("StartBeingScared");
+    }
+
+    public void StopBeingScared()
+    {
+      _animator.SetTrigger("StopBeingScared");
     }
 
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
-
-    private Vector3 _startPosition;
-
-    private void ResetPosition()
+   
+    private void SetPosition(Transform position)
     {
-      _transform.localPosition = new Vector3(_transform.localPosition.x, transform.localPosition.y, _startPosition.z);
+      _speakerTransform.SetPositionAndRotation(position.position, position.rotation);
     }
 
-    private void ResetRotation()
+    private void SetRotation(float yRotation)
     {
-      _transform.Rotate(Vector3.up, -transform.eulerAngles.y + 180);
-    }
-
-    private void TurnToWalk()
-    {
-      var rotation = new Vector3(0, 0, 0);
-      rotation.y = _animator.GetBool("WalkOneWay") ? -90 : 90;
-      _transform.eulerAngles = rotation;
+      _speakerTransform.Rotate(Vector3.up, -transform.eulerAngles.y + yRotation);
     }
   }
 }

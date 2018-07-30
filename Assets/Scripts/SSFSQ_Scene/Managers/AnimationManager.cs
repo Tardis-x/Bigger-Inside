@@ -12,5 +12,6 @@ namespace ua.org.gdg.devfest
 		//-----------------------------------------------
 
 		[SerializeField] public CrowdControlScript CrowdControl;
+		[SerializeField] public SpeakerAnimationScript SpeakerAnimation;
 	}
 }

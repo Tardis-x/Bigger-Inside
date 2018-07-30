@@ -31,7 +31,7 @@ namespace ua.org.gdg.devfest
 
       ResetUI();
       ResetHealthAndScore();
-      AnimationManager.Instance.CrowdControl.StopThrowing();
+      ResetAnimations();
       
       AskQuestion();
     }
@@ -69,6 +69,12 @@ namespace ua.org.gdg.devfest
         Text = "Bad question"
       }
     };
+
+    private void ResetAnimations()
+    {
+      AnimationManager.Instance.CrowdControl.StopThrowing();
+      AnimationManager.Instance.SpeakerAnimation.StopBeingScared();
+    }
 
     private void ResetUI()
     {
@@ -123,6 +129,7 @@ namespace ua.org.gdg.devfest
       {
         GameOver();
         AnimationManager.Instance.CrowdControl.StartThrowing();
+        AnimationManager.Instance.SpeakerAnimation.StartBeingScared();
       }
     }
 

@@ -2,12 +2,12 @@
 
 namespace ua.org.gdg.devfest
 {
-	public class SpeakerAnimationDirectionScript : StateMachineBehaviour
+	public class SpeakerTalking1StateBehaviour : StateMachineBehaviour
 	{
 		// OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 		override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
-			SpeakerAnimationScript.Instance.WalkAnotherWay();
+			AnimationManager.Instance.SpeakerAnimation.TurnToCrowdPosition1();
 		}
 	}
 }
