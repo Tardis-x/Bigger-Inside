@@ -12,7 +12,6 @@ namespace ua.org.gdg.devfest
 		// Internal
 		//---------------------------------------------------------------------
 
-		private CharacterAnimationScript _character;
 		private CharacterAnimationScript[] _characters;
 		
 		//---------------------------------------------------------------------
@@ -28,10 +27,12 @@ namespace ua.org.gdg.devfest
 		// Public
 		//---------------------------------------------------------------------
 
+		public CharacterAnimationScript CurrentCharacter { get; private set; }
+		
 		public void AskQuestion()
 		{
-			_character = GetRandomCharacter();
-			_character.StandUpAndAsk();
+			CurrentCharacter = GetRandomCharacter();
+			CurrentCharacter.StandUpAndAsk();
 		}
 
 		public void StartThrowing()

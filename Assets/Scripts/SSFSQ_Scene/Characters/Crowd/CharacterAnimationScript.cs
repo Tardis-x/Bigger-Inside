@@ -52,6 +52,12 @@ namespace ua.org.gdg.devfest
         { _animator.SetBool("BeScared", false); }));
     }
 
+    public void GetHit()
+    {
+      AnimationManager.Instance.BoxingGlove.HitObject(GetComponent<Transform>());
+      _animator.SetTrigger("GetHit");
+    }
+
     private IEnumerator Delay(Action action)
     {
       yield return new WaitForSeconds(Random.value);
