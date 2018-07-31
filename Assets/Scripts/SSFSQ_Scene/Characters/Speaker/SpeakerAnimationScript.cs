@@ -21,8 +21,7 @@ namespace ua.org.gdg.devfest
 
     private void Start()
     {
-      SetSpeedByDestination(_endPosition, NORMALIZED_TIME_OF_WALKING);
-      DestinateToEnd();
+      DestinateToStart();
     }
 
     //---------------------------------------------------------------------
@@ -32,14 +31,12 @@ namespace ua.org.gdg.devfest
     public void TurnToCrowdPosition1()
     {
       SetPosition(_startPosition);
-      SetSpeedByDestination(_endPosition, NORMALIZED_TIME_OF_WALKING);
       SetRotation(180);
     }
 
     public void TurnToCrowdPosition2()
     {
       SetPosition(_endPosition);
-      SetSpeedByDestination(_startPosition, NORMALIZED_TIME_OF_WALKING);
       SetRotation(180);
     }
 
@@ -100,15 +97,8 @@ namespace ua.org.gdg.devfest
     // Internal
     //---------------------------------------------------------------------
 
-    private const float NORMALIZED_TIME_OF_WALKING = .5f;
     private const float ACCURACY = .001f;
     private Transform _currentDestination;
-
-    private void SetSpeedByDestination(Transform destination, float time)
-    {
-      var distance = Vector3.Distance(_speakerTransform.localPosition, destination.localPosition);
-      _moveSpeed = distance / time;
-    }
 
     private void SetPosition(Transform position)
     {
