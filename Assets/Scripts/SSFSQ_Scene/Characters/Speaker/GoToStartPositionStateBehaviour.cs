@@ -10,5 +10,10 @@ namespace ua.org.gdg.devfest
       AnimationManager.Instance.SpeakerAnimation.DestinateToStart();
       AnimationManager.Instance.SpeakerAnimation.GoToCurrentDestination();
     }
+
+    private void OnStateExit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    {
+      AnimationManager.Instance.SpeakerAnimation.LookAtTheCrowd();
+    }
   }
 }

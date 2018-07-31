@@ -28,18 +28,6 @@ namespace ua.org.gdg.devfest
     // Public
     //---------------------------------------------------------------------
 
-    public void TurnToCrowdPosition1()
-    {
-      SetPosition(_startPosition);
-      SetRotation(180);
-    }
-
-    public void TurnToCrowdPosition2()
-    {
-      SetPosition(_endPosition);
-      SetRotation(180);
-    }
-
     public void DestinateToStart()
     {
       _currentDestination = _startPosition;
@@ -52,16 +40,16 @@ namespace ua.org.gdg.devfest
 
     public void GoToCurrentDestination()
     {
-      if (Vector3.Distance(_speakerTransform.localPosition, _endPosition.localPosition) < ACCURACY
+      if (Vector3.Distance(_speakerTransform.localPosition, _currentDestination.localPosition) < ACCURACY
           && _currentDestination == _endPosition)
       {
-        _animator.SetTrigger("EndPosition");
+        _animator.SetBool("EndPosition", true);
       }
 
-      if (Vector3.Distance(_speakerTransform.localPosition, _startPosition.localPosition) < ACCURACY
+      if (Vector3.Distance(_speakerTransform.localPosition, _currentDestination.localPosition) < ACCURACY
           && _currentDestination == _startPosition)
       {
-        _animator.SetTrigger("StartPosition");
+        _animator.SetBool("StartPosition", true);
       }
 
       _speakerTransform.LookAt(_currentDestination.position);
@@ -71,7 +59,7 @@ namespace ua.org.gdg.devfest
 
     public void StartBeingScared()
     {
-      SetRotation(180);
+      LookAtTheCrowd();
       _animator.SetTrigger("StartBeingScared");
       _animator.SetBool("BeScared", true);
     }
@@ -83,7 +71,7 @@ namespace ua.org.gdg.devfest
 
     public void Die()
     {
-      SetRotation(180);
+      LookAtTheCrowd();
       _animator.SetTrigger("StartDying");
       _animator.SetBool("BeDead", true);
     }
@@ -100,14 +88,9 @@ namespace ua.org.gdg.devfest
     private const float ACCURACY = .001f;
     private Transform _currentDestination;
 
-    private void SetPosition(Transform position)
+    public void LookAtTheCrowd()
     {
-      _speakerTransform.SetPositionAndRotation(position.position, position.rotation);
-    }
-
-    private void SetRotation(float yRotation)
-    {
-      _speakerTransform.Rotate(Vector3.up, -transform.eulerAngles.y + yRotation);
+      _speakerTransform.LookAt(new Vector3(0, .001f, 1));
     }
   }
 }

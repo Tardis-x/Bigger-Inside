@@ -10,5 +10,11 @@ namespace ua.org.gdg.devfest
 		{
 			AnimationManager.Instance.SpeakerAnimation.GoToCurrentDestination();
 		}
+
+		private void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+		{
+			animator.SetBool("StartPosition", false);
+			animator.SetBool("EndPosition", false);
+		}
 	}
 }
