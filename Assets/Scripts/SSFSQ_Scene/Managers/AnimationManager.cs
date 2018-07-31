@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using ua.org.gdg.devfest;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ua.org.gdg.devfest
 {
@@ -21,7 +18,9 @@ namespace ua.org.gdg.devfest
 		public void ResetAnimations()
 		{
 			Instance.CrowdControl.StopThrowing();
+			Instance.CrowdControl.StopBeingScared();
 			Instance.SpeakerAnimation.StopBeingScared();
+			Instance.SpeakerAnimation.StopBeingDead();
 		}
 	}
 }

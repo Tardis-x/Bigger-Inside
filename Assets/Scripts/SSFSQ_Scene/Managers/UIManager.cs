@@ -63,6 +63,7 @@ namespace ua.org.gdg.devfest
       _countdown = true;
       GetReadyTextSetActive(true);
       ScreenQuestionTextSetActive(false);
+      GameOverPanel.HidePanel();
       HidePlayButton();
       _timeLeft = _getReadyTime;
       StartCoroutine(GetReadyCountDown(onCountdownFinished));

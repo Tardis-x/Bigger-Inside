@@ -135,7 +135,13 @@ namespace ua.org.gdg.devfest
         _brainsCount--;
       }
 
-      if (_brainsCount == 0) GameOver();
+      if (_brainsCount == 0)
+      {
+        GameOver();
+        AnimationManager.Instance.SpeakerAnimation.Die();
+        
+        if(_starsCount == 0) AnimationManager.Instance.CrowdControl.StartThrowing();
+      }
     }
     
     private QuestionModel GetQuestion()

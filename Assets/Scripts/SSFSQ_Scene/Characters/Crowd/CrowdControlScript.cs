@@ -48,7 +48,23 @@ namespace ua.org.gdg.devfest
 			{
 				character.StopThrowing();
 			}
-		}		
+		}
+
+		public void StartBeingScared()
+		{
+			foreach (var character in _characters)
+			{
+				character.StartBeingScared();
+			}
+		}
+
+		public void StopBeingScared()
+		{
+			foreach (var character in _characters)
+			{
+				character.StopBeingScared();
+			}
+		}
 		
 		//---------------------------------------------------------------------
 		// Helpers

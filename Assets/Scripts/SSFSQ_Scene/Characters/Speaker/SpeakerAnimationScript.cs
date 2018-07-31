@@ -22,6 +22,7 @@ namespace ua.org.gdg.devfest
     private void Start()
     {
       SetSpeedByDestination(_endPosition, NORMALIZED_TIME_OF_WALKING);
+      DestinateToEnd();
     }
 
     //---------------------------------------------------------------------
@@ -34,28 +35,41 @@ namespace ua.org.gdg.devfest
       SetSpeedByDestination(_endPosition, NORMALIZED_TIME_OF_WALKING);
       SetRotation(180);
     }
-    
+
     public void TurnToCrowdPosition2()
     {
       SetPosition(_endPosition);
       SetSpeedByDestination(_startPosition, NORMALIZED_TIME_OF_WALKING);
       SetRotation(180);
     }
-    
-    public void GoToStartPosition()
+
+    public void DestinateToStart()
     {
-      if(Vector3.Distance(_speakerTransform.localPosition, _startPosition.localPosition) < ACCURACY) _animator.SetTrigger("StartPosition");
-      _speakerTransform.LookAt(_startPosition.position);
-      _speakerTransform.transform.position=
-        Vector3.MoveTowards(_speakerTransform.transform.position, _startPosition.position, _moveSpeed);
+      _currentDestination = _startPosition;
     }
-    
-    public void GoToEndPosition()
+
+    public void DestinateToEnd()
     {
-      if(Vector3.Distance(_speakerTransform.localPosition, _endPosition.localPosition) < ACCURACY) _animator.SetTrigger("EndPosition");
-      _speakerTransform.LookAt(_endPosition.position);
+      _currentDestination = _endPosition;
+    }
+
+    public void GoToCurrentDestination()
+    {
+      if (Vector3.Distance(_speakerTransform.localPosition, _endPosition.localPosition) < ACCURACY
+          && _currentDestination == _endPosition)
+      {
+        _animator.SetTrigger("EndPosition");
+      }
+
+      if (Vector3.Distance(_speakerTransform.localPosition, _startPosition.localPosition) < ACCURACY
+          && _currentDestination == _startPosition)
+      {
+        _animator.SetTrigger("StartPosition");
+      }
+
+      _speakerTransform.LookAt(_currentDestination.position);
       _speakerTransform.transform.position =
-        Vector3.MoveTowards(_speakerTransform.transform.position, _endPosition.position, _moveSpeed);
+        Vector3.MoveTowards(_speakerTransform.transform.position, _currentDestination.position, _moveSpeed);
     }
 
     public void StartBeingScared()
@@ -70,19 +84,32 @@ namespace ua.org.gdg.devfest
       _animator.SetBool("BeScared", false);
     }
 
+    public void Die()
+    {
+      SetRotation(180);
+      _animator.SetTrigger("StartDying");
+      _animator.SetBool("BeDead", true);
+    }
+
+    public void StopBeingDead()
+    {
+      _animator.SetBool("BeDead", false);
+    }
+
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
 
     private const float NORMALIZED_TIME_OF_WALKING = .5f;
     private const float ACCURACY = .001f;
-    
+    private Transform _currentDestination;
+
     private void SetSpeedByDestination(Transform destination, float time)
     {
       var distance = Vector3.Distance(_speakerTransform.localPosition, destination.localPosition);
       _moveSpeed = distance / time;
     }
-    
+
     private void SetPosition(Transform position)
     {
       _speakerTransform.SetPositionAndRotation(position.position, position.rotation);
