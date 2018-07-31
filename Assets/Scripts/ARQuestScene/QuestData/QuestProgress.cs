@@ -13,5 +13,5 @@ public class QuestProgress
 	public QuestVrGameData vrGameData { get; set; }
 	
 	public Dictionary<string, QuestRiddleData> riddlesData { get; set; }
-	public int globalScore = 0;
+	public int globalScore;
 }

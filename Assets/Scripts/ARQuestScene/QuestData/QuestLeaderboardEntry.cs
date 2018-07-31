@@ -6,4 +6,10 @@ public class QuestLeaderboardEntry
 {
     public string userName;
     public int globalScore;
+
+    public QuestLeaderboardEntry(string s, int score)
+    {
+        userName = s;
+        globalScore = score;
+    }
 }

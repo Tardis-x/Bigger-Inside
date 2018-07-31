@@ -22,11 +22,11 @@ public class QuestUI : MonoBehaviour
     [SerializeField]
     GameObject _leaderBoardPanel;
 
+    public GameObject usersList;
+
     GameObject _activePanel;
 
     QuestManager _questManager;
-
-    QuestLeaderBoard _questLeaderBoard;
     
     void Awake()
     {
@@ -125,7 +125,6 @@ public class QuestUI : MonoBehaviour
         _menuPanel.SetActive(false);
         _activePanel = _leaderBoardPanel;
         _leaderBoardPanel.SetActive(true);
-        _questLeaderBoard.UpdateScore();
     }
 
     public void FadeQuestScreenIn()
@@ -136,5 +135,17 @@ public class QuestUI : MonoBehaviour
     public void FadeScreenOut()
     {
         _fadeImage.gameObject.SetActive(false);
+    }
+    public void OnBackFromLeaderBoardButtonClicked()
+    {
+        Debug.Log("QuestUI.OnBackButtonClicked");
+        
+        _activePanel.SetActive(false);
+        _activePanel = _menuPanel;
+        _menuPanel.SetActive(true);
+        foreach (Transform child in usersList.transform) 
+        {
+            Destroy(child.gameObject);
+        }
     }
 }
