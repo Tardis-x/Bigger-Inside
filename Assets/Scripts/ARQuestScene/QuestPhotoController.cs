@@ -22,7 +22,6 @@ public class QuestPhotoController : MonoBehaviour
     private string userID;
     private FirebaseStorage storage;
     public string picturePath;
-    private int imageSize = 0;
     private StorageReference pictureReference;
     QuestManager _questManager;
     public string imageUrl;

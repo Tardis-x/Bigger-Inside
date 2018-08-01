@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DeadMosquito.AndroidGoodies;
 using Firebase.Auth;
 using Firebase.Database;
@@ -25,7 +26,7 @@ public class QuestLeaderBoardController : MonoBehaviour
 	private void OnEnable()
 	{
 		Debug.Log("QuestLeaderBoardController.OnEnable");
-		_questManager.GetLeaderboardDataFromFirebase();
+		_questManager.UpdateUserScoreInLeaderBoard();
 		UpdateLeaderBoard();
 	}
 
@@ -52,14 +53,16 @@ public class QuestLeaderBoardController : MonoBehaviour
 	{
 		//Update player global score
 		scoreText.text = "Your score is: " + _questManager.questProgress.globalScore;
+		//Sort the leaderboard and present it
+		var items = from pair in _questManager.QuestLeaderboardData
+			orderby pair.Value descending 
+			select pair;
 		int i = 1;
-		foreach (KeyValuePair<string, int> pair in _questManager.QuestLeaderboardData)
+		foreach (KeyValuePair<string, int> pair in items)
 		{
 			Button x = Instantiate(playerInfoButtonPrefab, transform.position, Quaternion.identity, gridForList);
 			x.GetComponentInChildren<Text>().text = i + ". " + pair.Key + ". Score: " + pair.Value + " point(s).";
 			i++;
 		}
 	}
-
-	
 }

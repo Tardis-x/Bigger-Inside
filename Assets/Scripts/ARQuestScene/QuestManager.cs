@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using DeadMosquito.AndroidGoodies;
 using Firebase;
 using Firebase.Auth;
 using Firebase.Database;
 using Firebase.Unity.Editor;
 using Newtonsoft.Json;
-using ProBuilder2.Common;
 using UnityEngine;
 
 public class QuestManager : MonoBehaviour
@@ -84,6 +82,9 @@ public class QuestManager : MonoBehaviour
 							Debug.Log("QuestManager: Default quest data was successfully set up!");
 						
 							_questUi.FadeScreenOut();
+#if UNITY_ANDROID
+							spinner.Dismiss();
+#endif
 						}
 					});
 			}
@@ -111,8 +112,7 @@ public class QuestManager : MonoBehaviour
 			//Check if Quest is activated
 			CheckIfQuestIsActivated();
 		});
-		
-		GetLeaderboardDataFromFirebase();
+		UpdateUserScoreInLeaderBoard();
 	}
 
 	void UiReferenceInitialization()
@@ -160,6 +160,7 @@ public class QuestManager : MonoBehaviour
 	void LeaderBoardInitialization()
 	{
 		_questleaderboardData = new Dictionary<string, int>();
+		
 	}
 
 	
@@ -181,10 +182,6 @@ public class QuestManager : MonoBehaviour
 			childUpdates["users/" + _auth.CurrentUser.DisplayName + "/vrGameData/gameScore"] = score;
 			childUpdates["users/" + _auth.CurrentUser.DisplayName + "/vrGameData/state"] = true;
 			childUpdates["users/" + _auth.CurrentUser.DisplayName + "/globalScore"] = _questProgress.globalScore;
-			//Update local leaderboard
-			UpdateUserScoreInLeaderBoard();
-			//Update Firebase Leaderboard
-			UpdateFirebaseLeaderboard();
 			_database.UpdateChildrenAsync(childUpdates).ContinueWith(task1 => {
 				if (task1.IsCompleted)
 				{
@@ -192,6 +189,10 @@ public class QuestManager : MonoBehaviour
 					_questProgress.vrGameData.gameScore = score;
 					_questProgress.vrGameData.state = true;
 					vrGameController.UpdateVrGameScreen();
+					//Update local leaderboard
+					UpdateUserScoreInLeaderBoard();
+					//Update Firebase Leaderboard
+					UpdateFirebaseLeaderboard();
 				}
 				else if (task1.IsFaulted)
 				{
@@ -223,9 +224,6 @@ public class QuestManager : MonoBehaviour
             childUpdates["GlobalQuestData/" + riddleKey] = _timesCompleted;
             childUpdates["users/" + _auth.CurrentUser.DisplayName + "/riddlesData/" + riddleKey + "/score"] = _questProgress.riddlesData[riddleKey].score;
 			childUpdates["users/" + _auth.CurrentUser.DisplayName + "/globalScore"] = _questProgress.globalScore;
-			UpdateUserScoreInLeaderBoard();
-			//Update Firebase Leaderboard
-			UpdateFirebaseLeaderboard();
 			_database.UpdateChildrenAsync(childUpdates).ContinueWith(task1 => 
 			{
 				if (task1.IsCompleted)
@@ -233,6 +231,10 @@ public class QuestManager : MonoBehaviour
 					// mark riddle as completed in local storage
 					_questProgress.riddlesData[riddleKey].isCompleted = true;
 					riddlesController.UpdateRiddlesScreen();
+					//Update loacal score
+					UpdateUserScoreInLeaderBoard();
+					//Update Firebase Leaderboard
+					UpdateFirebaseLeaderboard();
 				}
 				else if (task1.IsFaulted)
 				{
@@ -247,10 +249,10 @@ public class QuestManager : MonoBehaviour
 		});
 	}
 	
-	public void GetLeaderboardDataFromFirebase()
+	void GetLeaderboardDataFromFirebase()
 	{
 #if UNITY_ANDROID
-		var spinner = AGProgressDialog.CreateSpinnerDialog("Please wait", "Updating Quest Data...", AGDialogTheme.Dark);
+		var spinner = AGProgressDialog.CreateSpinnerDialog("Please wait", "Updating Leaderboard...", AGDialogTheme.Dark);
 		spinner.Show();
 #endif
 		//Try to get data from firebase
@@ -266,10 +268,16 @@ public class QuestManager : MonoBehaviour
 						{
 							Debug.LogError("QuestManager: Failed to write default leaderboard data to firebase realtime database!");
 							Debug.LogError("Error message: " + writeTask.Exception.Message);
+#if UNITY_ANDROID
+							spinner.Dismiss();
+#endif
 						}
 						else if (writeTask.IsCompleted)
 						{
 							Debug.Log("QuestManager: Default leaderboard data was successfully set up!");
+#if UNITY_ANDROID
+							spinner.Dismiss();
+#endif
 						}
 					});
 			}
@@ -279,6 +287,9 @@ public class QuestManager : MonoBehaviour
 				{
 					Debug.LogError("QuestManager: Failed to retrieve leaderboard data from firebase realtime database!");
 					Debug.LogError("Error message: " + readTask.Exception.Message);
+#if UNITY_ANDROID
+					spinner.Dismiss();
+#endif
 				}
 				else if (readTask.IsCompleted) 
 				{
@@ -295,7 +306,7 @@ public class QuestManager : MonoBehaviour
 		});
 	}
 	
-	void UpdateUserScoreInLeaderBoard()
+	public void UpdateUserScoreInLeaderBoard()
 	{
 		GetLeaderboardDataFromFirebase();
 		if (!CheckIfUserIsAlreadyInLeaderboard())
@@ -306,20 +317,9 @@ public class QuestManager : MonoBehaviour
 		{
 			_questleaderboardData[currentUserUserId] = _questProgress.globalScore;
 		}
-		SortLeaderBoard();
 	}
 
-	void SortLeaderBoard()
-	{
-		var list = _questleaderboardData.ToList();
-		list.Sort((pair1,pair2) => pair1.Value.CompareTo(pair2.Value));
-		_questleaderboardData.Clear();
-		foreach (var x in list)
-		{
-			_questleaderboardData.Add(x.Key, x.Value);
-		}
-	}
-
+	
 	bool CheckIfUserIsAlreadyInLeaderboard()
 	{
 		bool x = false;
