@@ -28,14 +28,23 @@ namespace ua.org.gdg.devfest
     // Public
     //---------------------------------------------------------------------
 
+    public bool AnimationBusy { get; private set; }
+
+    public void SetBusy(bool value)
+    {
+      AnimationBusy = value;
+    }
+    
     public void DestinateToStart()
     {
       _currentDestination = _startPosition;
+      _animator.SetBool("DestinationStart", true);
     }
 
     public void DestinateToEnd()
     {
       _currentDestination = _endPosition;
+      _animator.SetBool("DestinationStart", false);
     }
 
     public void GoToCurrentDestination()
@@ -79,6 +88,20 @@ namespace ua.org.gdg.devfest
     public void StopBeingDead()
     {
       _animator.SetBool("BeDead", false);
+    }
+
+    public void Answer()
+    {
+      _animator.SetTrigger("Question");
+      _animator.SetBool("Answer", true);
+      SetBusy(true);
+    }
+
+    public void Hit()
+    {
+      _animator.SetTrigger("Question");
+      _animator.SetBool("Hit", true);
+      SetBusy(true);
     }
 
     //---------------------------------------------------------------------

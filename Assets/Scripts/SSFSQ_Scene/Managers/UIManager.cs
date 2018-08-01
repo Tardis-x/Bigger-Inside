@@ -2,7 +2,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 namespace ua.org.gdg.devfest
 {
@@ -54,6 +53,13 @@ namespace ua.org.gdg.devfest
       Instance.ShowPlayButton();
       Instance.HideAnswerButton();
       Instance.HideHitButton();
+    }
+
+    public void ToAnswerMode()
+    {
+      HideAnswerButton();
+      HideHitButton();
+      HealthTimePanel.PauseCountDown(true);
     }
 
     public void StartGetReadyCountdown(Action onCountdownFinished)

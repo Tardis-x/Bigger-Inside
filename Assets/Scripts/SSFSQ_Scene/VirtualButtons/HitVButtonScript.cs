@@ -4,7 +4,11 @@
 	{
 		public override void OnClick()
 		{
-			if(GameManager.Instance.GameActive) GameManager.Instance.Hit();
+			if (GameManager.Instance.GameActive)
+			{
+				GameManager.Instance.Hit();
+				UIManager.Instance.ToAnswerMode();
+			}
 		}
 	}
 }

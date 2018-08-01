@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using Random = System.Random;
 
 namespace ua.org.gdg.devfest
@@ -32,19 +33,19 @@ namespace ua.org.gdg.devfest
       ResetUI();
       ResetHealthAndScore();
       
-      AskQuestion();
+      StartCoroutine(OnSpeakerReady());
     }
 
     public void Answer()
     {
       OnAnswer();
-      if(GameActive) AskQuestion();
+      StartCoroutine(OnSpeakerReady());
     }
 
     public void Hit()
     {
       OnHit();
-      if(GameActive) AskQuestion();
+      StartCoroutine(OnSpeakerReady());
     }
 
     //---------------------------------------------------------------------
@@ -88,19 +89,33 @@ namespace ua.org.gdg.devfest
     {
       SubtractStar();
       SubtractBrain();
-      if(GameActive) AskQuestion();
+      StartCoroutine(OnSpeakerReady());
     }
 
     private void AskQuestion()
     {
+      if(!GameActive) return;
+      
       _currentQuestion = GetQuestion();
       UIManager.Instance.ScreenQuestionText.text = _currentQuestion.Text;
       UIManager.Instance.HealthTimePanel.StartCountdown(_timeForAnswer, OnTimeout);
+      UIManager.Instance.ButtonsToPlayMode();
       AnimationManager.Instance.CrowdControl.AskQuestion();
+    }
+
+    private IEnumerator OnSpeakerReady()
+    {
+      while (AnimationManager.Instance.SpeakerAnimation.AnimationBusy)
+      {
+        yield return false;
+      }
+      
+      AskQuestion();
     }
     
     private void OnHit()
     {
+      AnimationManager.Instance.SpeakerAnimation.Hit();
       AnimationManager.Instance.CrowdControl.CurrentCharacter.GetHit();
       
       if(_currentQuestion.Good) SubtractStar();
@@ -109,6 +124,8 @@ namespace ua.org.gdg.devfest
 
     private void OnAnswer()
     {
+      AnimationManager.Instance.SpeakerAnimation.Answer();
+      
       if(!_currentQuestion.Good) SubtractBrain();
       else _score++;
     }

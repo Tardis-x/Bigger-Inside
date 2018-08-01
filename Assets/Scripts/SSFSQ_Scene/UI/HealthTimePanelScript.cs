@@ -36,6 +36,7 @@ namespace ua.org.gdg.devfest
     private float _countdownTime;
     private Coroutine _countdown;
     private Action _onTimeout;
+    private bool _countDownPaused;
 
     private IEnumerator Countdown()
     {
@@ -43,7 +44,7 @@ namespace ua.org.gdg.devfest
       {
         yield return _timerRefreshRate;
         _timerImage.fillAmount = _timeLeft / _countdownTime;
-        _timeLeft -= Time.deltaTime;
+        if(!_countDownPaused) _timeLeft -= Time.deltaTime;
       }
       
       Debug.Log("TimeOut");
@@ -68,6 +69,13 @@ namespace ua.org.gdg.devfest
       {
         Destroy(b.gameObject);
       }
+    }
+    
+    private void ResetCountdown()
+    {
+      if(_countdown != null) StopCoroutine(_countdown);
+      _timerImage.fillAmount = 1;
+      _timeLeft = _countdownTime;
     }
     
     //---------------------------------------------------------------------
@@ -97,14 +105,13 @@ namespace ua.org.gdg.devfest
       _countdownTime = time;
       _timeLeft = _countdownTime;
       _onTimeout = onTimeout;
+      _countDownPaused = false;
       _countdown = StartCoroutine(Countdown());
     }
 
-    private void ResetCountdown()
+    public void PauseCountDown(bool value)
     {
-      if(_countdown != null) StopCoroutine(_countdown);
-      _timerImage.fillAmount = 1;
-      _timeLeft = _countdownTime;
+      _countDownPaused = value;
     }
     
     public void SetStarsCount(int count)
