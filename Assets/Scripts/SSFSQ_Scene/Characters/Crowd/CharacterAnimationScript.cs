@@ -28,13 +28,13 @@ namespace ua.org.gdg.devfest
       {
         _animator.SetTrigger("StartThrowing");
         _animator.SetBool("Throw", true);
-      }, Random.value * .5f));
+      }, Random.value));
     }
 
     public void StopThrowing()
     {
       StartCoroutine(Delay(() =>
-      { _animator.SetBool("Throw", false); }, Random.value + .5f));
+      { _animator.SetBool("Throw", false); }, Random.value + 1));
     }
 
     public void StartBeingScared()

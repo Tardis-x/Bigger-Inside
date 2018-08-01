@@ -114,8 +114,6 @@ namespace ua.org.gdg.devfest
     public void LookAtTheCrowd()
     {
       _speakerTransform.LookAt(new Vector3(0, .001f, 1));
-      _speakerTransform.transform.position =
-        Vector3.MoveTowards(_speakerTransform.transform.position, new Vector3(0, .001f, 1), _moveSpeed);
     }
   }
 }

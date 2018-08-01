@@ -11,7 +11,17 @@ namespace ua.org.gdg.devfest
 		[SerializeField] public CrowdControlScript CrowdControl;
 		[SerializeField] public SpeakerAnimationScript SpeakerAnimation;
 		[SerializeField] public BoxingGloveScript BoxingGlove;
+		[SerializeField] private ParticleSystem _tomatoes;
 		
+		//---------------------------------------------------------------------
+		// Messages
+		//---------------------------------------------------------------------
+
+		private void Start()
+		{
+			_tomatoes.Stop();
+		}
+
 		//---------------------------------------------------------------------
 		// Public
 		//---------------------------------------------------------------------
@@ -22,6 +32,16 @@ namespace ua.org.gdg.devfest
 			Instance.CrowdControl.StopBeingScared();
 			Instance.SpeakerAnimation.StopBeingScared();
 			Instance.SpeakerAnimation.StopBeingDead();
+		}
+
+		public void TurnTomatoesOn()
+		{
+			_tomatoes.Play();
+		}
+
+		public void TurnTomatoesOff()
+		{
+			_tomatoes.Stop(true, ParticleSystemStopBehavior.StopEmitting);
 		}
 	}
 }

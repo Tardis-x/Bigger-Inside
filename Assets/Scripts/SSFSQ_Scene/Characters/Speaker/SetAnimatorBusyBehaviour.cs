@@ -9,5 +9,10 @@ namespace ua.org.gdg.devfest
 		{
 			AnimationManager.Instance.SpeakerAnimation.SetBusy(true);
 		}
+
+		public override void OnStateMachineExit(Animator animator, int stateMachinePathHash)
+		{
+			animator.SetBool("FacingTheCrowd", true);
+		}
 	}
 }

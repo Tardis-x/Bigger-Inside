@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using Random = System.Random;
 
@@ -33,19 +34,21 @@ namespace ua.org.gdg.devfest
       ResetUI();
       ResetHealthAndScore();
       
-      StartCoroutine(OnSpeakerReady());
+      StartCoroutine(AwaitSpeakerReady(AskQuestion));
     }
 
     public void Answer()
     {
-      OnAnswer();
-      StartCoroutine(OnSpeakerReady());
+      AnimationManager.Instance.SpeakerAnimation.Answer();
+      
+      if(GameActive) StartCoroutine(AwaitSpeakerReady(OnAnswer));
     }
 
     public void Hit()
     {
-      OnHit();
-      StartCoroutine(OnSpeakerReady());
+      AnimationManager.Instance.SpeakerAnimation.Hit();
+      
+      if(GameActive) StartCoroutine(AwaitSpeakerReady(OnHit));
     }
 
     //---------------------------------------------------------------------
@@ -89,7 +92,7 @@ namespace ua.org.gdg.devfest
     {
       SubtractStar();
       SubtractBrain();
-      StartCoroutine(OnSpeakerReady());
+      StartCoroutine(AwaitSpeakerReady(AskQuestion));
     }
 
     private void AskQuestion()
@@ -103,41 +106,39 @@ namespace ua.org.gdg.devfest
       AnimationManager.Instance.CrowdControl.AskQuestion();
     }
 
-    private IEnumerator OnSpeakerReady()
+    private IEnumerator AwaitSpeakerReady(Action onSpeakerReady)
     {
       while (AnimationManager.Instance.SpeakerAnimation.AnimationBusy)
       {
         yield return false;
       }
-      
-      AskQuestion();
+
+      onSpeakerReady();
     }
     
     private void OnHit()
     {
-      AnimationManager.Instance.SpeakerAnimation.Hit();
-      
       if(_currentQuestion.Good) SubtractStar();
       else _score++;
+      AskQuestion();
     }
 
     private void OnAnswer()
     {
-      AnimationManager.Instance.SpeakerAnimation.Answer();
-      
       if(!_currentQuestion.Good) SubtractBrain();
       else _score++;
+      AskQuestion();
     }
     
     private void SubtractStar()
     {
-      if (_starsCount >= 0)
+      if (_starsCount > 0)
       {
         UIManager.Instance.HealthTimePanel.SubtractStar();
         _starsCount--;
       }
 
-      if (_starsCount == 0)
+      if (_starsCount <= 0)
       {
         GameOver();
         AnimationManager.Instance.CrowdControl.StartThrowing();
@@ -147,13 +148,13 @@ namespace ua.org.gdg.devfest
 
     private void SubtractBrain()
     {
-      if (_brainsCount >= 0)
+      if (_brainsCount > 0)
       {
         UIManager.Instance.HealthTimePanel.SubtractBrain();
         _brainsCount--;
       }
 
-      if (_brainsCount == 0)
+      if (_brainsCount <= 0)
       {
         GameOver();
         AnimationManager.Instance.SpeakerAnimation.Die();
@@ -170,11 +171,11 @@ namespace ua.org.gdg.devfest
 
     private void GameOver()
     {
+      GameActive = false;
       UIManager.Instance.GameOverPanel.SetScore(_score);
       UIManager.Instance.GameOverPanel.ShowPanel();
       UIManager.Instance.HealthTimePanel.HidePanel();
       UIManager.Instance.ButtonsToPauseMode();
-      GameActive = false;
     }
 
     private void ResetBrains()
