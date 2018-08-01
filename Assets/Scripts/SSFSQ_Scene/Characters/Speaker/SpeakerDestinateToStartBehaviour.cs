@@ -8,6 +8,12 @@ namespace ua.org.gdg.devfest
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
       AnimationManager.Instance.SpeakerAnimation.DestinateToStart();
+      animator.SetBool("Turning", true);
+    }
+    
+    override public void OnStateExit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    {
+      animator.SetBool("Turning", false);
     }
   }
 }

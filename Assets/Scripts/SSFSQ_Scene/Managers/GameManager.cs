@@ -116,7 +116,6 @@ namespace ua.org.gdg.devfest
     private void OnHit()
     {
       AnimationManager.Instance.SpeakerAnimation.Hit();
-      AnimationManager.Instance.CrowdControl.CurrentCharacter.GetHit();
       
       if(_currentQuestion.Good) SubtractStar();
       else _score++;
