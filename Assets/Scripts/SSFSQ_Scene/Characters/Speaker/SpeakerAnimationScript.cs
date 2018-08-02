@@ -90,10 +90,18 @@ namespace ua.org.gdg.devfest
       _animator.SetBool("BeDead", false);
     }
 
-    public void Answer()
+    public void Answer(bool goodQuestion)
     {
       _animator.SetTrigger("Question");
-      _animator.SetBool("Answer", true);
+      if (goodQuestion)
+      {
+        _animator.SetBool("Answer", true);
+      }
+      else
+      {
+        _animator.SetBool("Yell", true);
+      }
+
       SetBusy(true);
     }
 

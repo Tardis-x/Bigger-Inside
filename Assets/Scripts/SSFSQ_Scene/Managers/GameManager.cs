@@ -39,7 +39,7 @@ namespace ua.org.gdg.devfest
 
     public void Answer()
     {
-      AnimationManager.Instance.SpeakerAnimation.Answer();
+      AnimationManager.Instance.SpeakerAnimation.Answer(_currentQuestion.Good);
       
       if(GameActive) StartCoroutine(AwaitSpeakerReady(OnAnswer));
     }

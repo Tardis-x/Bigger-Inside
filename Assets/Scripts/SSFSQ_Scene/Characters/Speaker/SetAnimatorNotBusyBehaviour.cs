@@ -10,6 +10,7 @@ namespace ua.org.gdg.devfest
 			AnimationManager.Instance.SpeakerAnimation.SetBusy(false);
 			animator.SetBool("Hit", false);
 			animator.SetBool("Answer", false);
+			animator.SetBool("Yell", false);
 		}
 
 		public override void OnStateMachineExit(Animator animator, int stateMachinePathHash)
