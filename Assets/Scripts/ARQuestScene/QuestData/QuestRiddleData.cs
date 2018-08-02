@@ -1,15 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 
 public class QuestRiddleData
 {
-	public readonly string description;
-	public bool isCompleted;
 	public int score;
+	public bool isCompleted;
 
-	public QuestRiddleData(string des)
+	public QuestRiddleData(bool isComp, int sc)
 	{
-		description = des;
+		isCompleted = isComp;
+		score = sc;
 	}
 }

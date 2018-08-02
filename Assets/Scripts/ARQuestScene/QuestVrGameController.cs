@@ -12,6 +12,8 @@ public class QuestVrGameController : MonoBehaviour
 	[SerializeField]
 	Text _statusText;
 	[SerializeField]
+	Text _descriptionText;
+	[SerializeField]
 	InputField _scoreInputField;
 	[SerializeField]
 	Button _scanButton;
@@ -56,16 +58,15 @@ public class QuestVrGameController : MonoBehaviour
 	{
 		if (_questManager.questProgress.vrGameData.state)
 		{
+			_descriptionText.text = "";
 			_statusText.gameObject.SetActive(true);
-			_statusText.text = string.Format("You've completed VR game with score {0}!",_questManager.questProgress.vrGameData.gameScore);
-
+			_statusText.text = string.Format("You have completed VR game with score: {0} points!",_questManager.questProgress.vrGameData.gameScore);
 			_scoreInputField.gameObject.SetActive(false);
 			_scanButton.gameObject.SetActive(false);
 		}
 		else
 		{
 			_statusText.gameObject.SetActive(false);
-			
 			_scoreInputField.gameObject.SetActive(true);
 			_scanButton.gameObject.SetActive(true);
 		}
@@ -82,13 +83,17 @@ public class QuestVrGameController : MonoBehaviour
 	public void OnImageScanned(string scannedMarker)
 	{
 		Debug.Log("QuestVrGameController.OnImageScanned");
-
-		if (scannedMarker == "vrGame")
+		
+		if (!_questManager.questProgress.vrGameData.state)
 		{
-			_questManager.CompleteVrGame(Int32.Parse(_scoreInputField.text), this);
-			
-			_mainCamera.gameObject.SetActive(true);
-			_arCamera.gameObject.SetActive(false);
+			if (scannedMarker == "vrGame")
+            {
+            	_questManager.CompleteVrGame(Int32.Parse(_scoreInputField.text), this);
+            	
+            	_mainCamera.gameObject.SetActive(true);
+            	_arCamera.gameObject.SetActive(false);
+            }
 		}
+		
 	}
 }

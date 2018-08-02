@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using DeadMosquito.AndroidGoodies;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,12 +9,28 @@ public class QuestRiddlesController : MonoBehaviour
 {
 	[SerializeField]
 	Text _riddleText;
+	
+	[SerializeField]
+	Text _descriptionText;
+	
+	[SerializeField]
+	Text _scanStatusText;
 
 	[SerializeField]
 	Button _scanButton;
+	
+	[SerializeField]
+	Button _submitButton;
+
+	[SerializeField] 
+	InputField _inputField;
+	
+	[SerializeField]
+	Image _riddleImageHolder;
 
 	[SerializeField]
 	Camera _mainCamera;
+	
 	[SerializeField]
 	Camera _arCamera;
 	
@@ -35,7 +53,7 @@ public class QuestRiddlesController : MonoBehaviour
 		if (questManagerTemp != null)
 		{
 			_questManager = questManagerTemp.GetComponent<QuestManager>();
-
+			
 			if (_questManager == null)
 			{
 				Debug.LogError("Could not locate QuestManager component on " + questManagerTemp.name);
@@ -53,28 +71,45 @@ public class QuestRiddlesController : MonoBehaviour
 
 		UpdateRiddlesScreen();
 	}
-
 	public void UpdateRiddlesScreen()
 	{
+		_questManager.ReadRiddleDataFromQuestProgress();
 		bool anyRiddles = false;
 		
-		var riddlesProgress = _questManager.QuestRiddlesProgress;
-		var riddlesData = _questManager.QuestRiddlesData;
-
-		foreach (var riddle in riddlesProgress)
+		foreach (KeyValuePair<string, QuestRiddleDataFull> riddle in _questManager.QuestRiddlesDataFull)
 		{
 			if (!riddle.Value.isCompleted)
 			{
-				_riddleText.text = riddlesData[riddle.Key].description;
 				_currentRiddle = riddle.Key;
+				if (riddle.Value.isText)
+				{
+					_descriptionText.text = "Type the correct answer and press Submit";
+					_riddleText.text = riddle.Value.description;
+					_scanButton.gameObject.SetActive(false);
+					_submitButton.gameObject.SetActive(true);
+					_inputField.gameObject.SetActive(true);
+				}
+				else if(!riddle.Value.isText)
+				{
+					_riddleText.text = "";
+					_descriptionText.text = "Guess the technology, shown on the picture, and find the right mark";
+					_riddleImageHolder.sprite = Sprite.Create(riddle.Value.texture, new Rect(0.0f, 0.0f, 
+						riddle.Value.texture.width, riddle.Value.texture.height), new Vector2(0f, 0f), 100.0f);
+					_submitButton.gameObject.SetActive(false);
+					_inputField.gameObject.SetActive(false);
+					_scanButton.gameObject.SetActive(true);
+				}
 				anyRiddles = true;
 				break;
 			}
 		}
-
 		if (!anyRiddles)
 		{
-			_riddleText.text = "You completed all riddles!";
+			_descriptionText.text = "You completed all riddles!";
+			
+			_riddleImageHolder.gameObject.SetActive(false);
+			_inputField.gameObject.SetActive(false);
+			_submitButton.gameObject.SetActive(false);
 			_scanButton.gameObject.SetActive(false);
 		}
 	}
@@ -89,14 +124,60 @@ public class QuestRiddlesController : MonoBehaviour
 
 	public void OnImageScanned(string scannedMarker)
 	{
-		Debug.Log("QuestRiddlesController.OnImageScanned");
-
-		if (scannedMarker == _currentRiddle)
+		Debug.Log("QuestRiddlesController.OnImageScanned:" + scannedMarker);
+		scannedMarker = scannedMarker.ToLower().Replace(" ", String.Empty);
+		string answer = _currentRiddle.ToLower().Replace(" ", String.Empty);
+		if (!_questManager.questProgress.riddlesData[_currentRiddle].isCompleted)
 		{
-			_questManager.CompleteRiddle(_currentRiddle, this);
-			
-			_mainCamera.gameObject.SetActive(true);
-			_arCamera.gameObject.SetActive(false);
+			if (scannedMarker == answer)
+			{
+				Debug.Log("QuestRiddlesController.OnImageScanned: strings are equal.");
+				_questManager.CompleteRiddle(_currentRiddle, this);
+				_scanStatusText.text = "You scanned the correct marker!";
+				StartCoroutine(CameraSwitchDelay());
+			}
+			else
+			{
+				Debug.Log("QuestRiddlesController.OnImageScanned: strings are not equal.");
+				_scanStatusText.text = "You scanned the wrong marker!";
+				StartCoroutine(StatusTextDelay());
+			}
 		}
+	}
+
+	public void OnSubmitButtonClicked()
+	{
+		Debug.Log("QuestRiddlesController.OnAnswerSubmitted");
+		
+		string answer = _inputField.text;
+		answer = answer.ToLower().Replace(" ", String.Empty);
+		string correctAnswer = _currentRiddle.ToLower().Replace(" ", String.Empty);
+		if (answer == correctAnswer)
+		{
+#if UNITY_ANDROID
+			AGUIMisc.ShowToast("The answer is correct! :)");
+#endif
+			_inputField.text = "";
+			_questManager.CompleteRiddle(_currentRiddle, this);
+		}
+		else
+		{
+#if UNITY_ANDROID
+			AGUIMisc.ShowToast("The answer is incorrect. Please, try again.");
+#endif
+		}
+	}
+
+	IEnumerator CameraSwitchDelay()
+	{
+		yield return new WaitForSeconds(3);
+		_scanStatusText.text = "";
+		_mainCamera.gameObject.SetActive(true);
+		_arCamera.gameObject.SetActive(false);
+	}
+	IEnumerator StatusTextDelay()
+	{
+		yield return new WaitForSeconds(3);
+		_scanStatusText.text = "";
 	}
 }

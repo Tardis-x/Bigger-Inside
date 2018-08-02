@@ -1,18 +1,13 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DeadMosquito.AndroidGoodies;
-using Firebase.Auth;
-using Firebase.Database;
-using Newtonsoft.Json;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class QuestLeaderBoardController : MonoBehaviour
 {
 	public Text scoreText;
-	public Button playerInfoButtonPrefab;
+	public Text textPrefab;
 	public Transform gridForList;
 	QuestManager _questManager;
 	
@@ -53,16 +48,16 @@ public class QuestLeaderBoardController : MonoBehaviour
 	{
 		//Update player global score
 		scoreText.text = "Your score is: " + _questManager.questProgress.globalScore;
-		//Sort the leaderboard and present it
-		var items = from pair in _questManager.QuestLeaderboardData
-			orderby pair.Value descending 
-			select pair;
 		int i = 1;
-		foreach (KeyValuePair<string, int> pair in items)
+		foreach (KeyValuePair<string, int> pair in _questManager.QuestLeaderboardData.OrderByDescending(key => key.Value))
 		{
-			Button x = Instantiate(playerInfoButtonPrefab, transform.position, Quaternion.identity, gridForList);
-			x.GetComponentInChildren<Text>().text = i + ". " + pair.Key + ". Score: " + pair.Value + " point(s).";
+			Text userInfo = Instantiate(textPrefab, transform.position, Quaternion.identity, gridForList);
+			userInfo.text = String.Format("   {0}. {1}. \n    Score: {2} point(s).", i, pair.Key, pair.Value);
 			i++;
+			if (pair.Key == _questManager.currentUserUserId)
+			{
+				userInfo.color = Color.black;
+			}
 		}
 	}
 }

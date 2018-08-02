@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Diagnostics;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Collections;
 using UnityEngine;
 using DeadMosquito.AndroidGoodies;
 using DeadMosquito.AndroidGoodies.Internal;
-using DeadMosquito.IosGoodies;
 using Firebase.Auth;
 using Firebase.Storage;
 using ua.org.gdg.devfest;
-using Unity.Collections;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
