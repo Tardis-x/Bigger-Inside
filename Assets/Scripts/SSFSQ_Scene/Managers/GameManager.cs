@@ -176,6 +176,7 @@ namespace ua.org.gdg.devfest
       UIManager.Instance.GameOverPanel.ShowPanel();
       UIManager.Instance.HealthTimePanel.HidePanel();
       UIManager.Instance.ScreenQuestionTextSetActive(false);
+      AnimationManager.Instance.ShowSneaker(true);
       UIManager.Instance.ButtonsToPauseMode();
     }
 
