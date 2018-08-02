@@ -37,6 +37,11 @@ public class QuestRiddlesController : MonoBehaviour
 	QuestManager _questManager;
 
 	string _currentRiddle;
+
+	private bool _isWrongAnswerSubmitted;
+	private bool _isCorrectAnswerSubmitted;
+	private ColorBlock _colors;
+	private Color _color;
 	
 	void Awake()
 	{
@@ -71,6 +76,24 @@ public class QuestRiddlesController : MonoBehaviour
 
 		UpdateRiddlesScreen();
 	}
+
+	void FixedUpdate()
+	{
+		if (_isWrongAnswerSubmitted)
+		{
+			_color = _inputField.image.color;
+			_color.g += 0.02f;
+			_color.b += 0.02f;
+			_inputField.image.color = _color;
+		}
+		else if (_isCorrectAnswerSubmitted)
+		{
+			_color = _inputField.image.color;
+			_color.r += 0.02f;
+			_color.b += 0.02f;
+			_inputField.image.color = _color;
+		}
+	}
 	public void UpdateRiddlesScreen()
 	{
 		_questManager.ReadRiddleDataFromQuestProgress();
@@ -104,7 +127,7 @@ public class QuestRiddlesController : MonoBehaviour
 					_scanButton.gameObject.SetActive(true);
 					//Making Image field visible
 					Color color = _riddleImageHolder.color;
-					color.a = 255;
+					color.a = 1;
 					_riddleImageHolder.color = color;
 				}
 				anyRiddles = true;
@@ -168,10 +191,20 @@ public class QuestRiddlesController : MonoBehaviour
 			AGUIMisc.ShowToast("The answer is correct! :)");
 #endif
 			_inputField.text = "";
+			_inputField.image.color = Color.green;
+			_isCorrectAnswerSubmitted = true;
+			StartCoroutine(CorrectAnswerHighlight());
 			_questManager.CompleteRiddle(_currentRiddle, this);
+#if UNITY_ANDROID
+			AGUIMisc.ShowToast("The answer is correct!");
+#endif
 		}
 		else
 		{
+			_inputField.image.color = Color.red;
+			_isWrongAnswerSubmitted = true;
+			StartCoroutine(WrongAnswerHighlight());
+			
 #if UNITY_ANDROID
 			AGUIMisc.ShowToast("The answer is incorrect. Please, try again.");
 #endif
@@ -189,5 +222,18 @@ public class QuestRiddlesController : MonoBehaviour
 	{
 		yield return new WaitForSeconds(3);
 		_scanStatusText.text = "";
+	}
+	
+	IEnumerator WrongAnswerHighlight()
+	{
+		yield return new WaitForSeconds(1);
+		_isWrongAnswerSubmitted = false;
+		_inputField.image.color = Color.white;
+	}
+	IEnumerator CorrectAnswerHighlight()
+	{
+		yield return new WaitForSeconds(1);
+		_isCorrectAnswerSubmitted = false;
+		_inputField.image.color = Color.white;
 	}
 }

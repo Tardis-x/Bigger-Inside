@@ -10,6 +10,7 @@ public class QuestLeaderBoardController : MonoBehaviour
 	public Text textPrefab;
 	public Transform gridForList;
 	QuestManager _questManager;
+	public Scrollbar _scrollbar;
 	
 	void Awake()
 	{
@@ -53,11 +54,14 @@ public class QuestLeaderBoardController : MonoBehaviour
 		{
 			Text userInfo = Instantiate(textPrefab, transform.position, Quaternion.identity, gridForList);
 			userInfo.text = String.Format("   {0}. {1}. \n    Score: {2} point(s).", i, pair.Key, pair.Value);
-			i++;
 			if (pair.Key == _questManager.currentUserUserId)
 			{
 				userInfo.color = Color.black;
+				scoreText.text = i + ". Your score is: " + _questManager.questProgress.globalScore;
 			}
+			i++;
 		}
+
+		_scrollbar.value = 1;
 	}
 }
