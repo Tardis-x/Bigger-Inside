@@ -74,6 +74,11 @@ namespace ua.org.gdg.devfest
       _timeLeft = _getReadyTime;
       StartCoroutine(GetReadyCountDown(onCountdownFinished));
     }
+    
+    public void ScreenQuestionTextSetActive(bool value)
+    {
+      ScreenQuestionText.gameObject.SetActive(value);
+    }
 
     //---------------------------------------------------------------------
     // Internal
@@ -116,11 +121,6 @@ namespace ua.org.gdg.devfest
     private void GetReadyTextSetActive(bool value)
     {
       _getReadyText.gameObject.SetActive(value);
-    }
-
-    private void ScreenQuestionTextSetActive(bool value)
-    {
-      ScreenQuestionText.gameObject.SetActive(value);
     }
 
     private void HideHitButton()
