@@ -1,7 +1,9 @@
 ﻿using System.Collections;
+using System.IO;
 using UnityEngine;
 using DeadMosquito.AndroidGoodies;
 using DeadMosquito.AndroidGoodies.Internal;
+using DeadMosquito.IosGoodies;
 using Firebase.Auth;
 using Firebase.Storage;
 using ua.org.gdg.devfest;

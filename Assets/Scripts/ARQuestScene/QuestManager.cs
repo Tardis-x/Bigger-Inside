@@ -34,7 +34,7 @@ public class QuestManager : MonoBehaviour
 		get { return _questRiddlesDataFull; }
 	}
 	public bool isQuestActivated;
-	int _timesCompleted = 0;
+	int _timesCompleted;
 	public string currentUserUserId;
 	public Texture2D[] riddleImages;
 
@@ -43,19 +43,23 @@ public class QuestManager : MonoBehaviour
 		Debug.Log("QuestManager.Awake");
 		// Get the root reference location of the database.
 		_auth = FirebaseAuth.DefaultInstance;
+		Debug.Log("QuestManager.Awake.Auth");
 		_database = FirebaseDatabase.DefaultInstance.RootReference;
+		Debug.Log("QuestManager.Awake:Database");
 		currentUserUserId = _auth.CurrentUser.DisplayName;
+		Debug.Log("QuestManager.Awake.Username");
 		// Set up the Editor before calling into the realtime database.
 		FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://hoverboard-v2-dev.firebaseio.com/");
-
+		Debug.Log("QuestManager.Awake.URL");
 		// obtain reference to object that represents quest UI
 		UiReferenceInitialization();
-
+		Debug.Log("QuestManager.Awake.UI");
 		// initialize riddle data
 		RiddleDataInitizalization();
-		
+		Debug.Log("QuestManager.Awake.Riddle");
 		//Initialize Leaderboard
 		LeaderBoardInitialization();
+		Debug.Log("QuestManager.Awake.Leaderboard");
 	}
 	
 	void Start()
@@ -138,6 +142,7 @@ public class QuestManager : MonoBehaviour
 		_questProgress = new QuestProgress();
 		
 		_questRiddlesDataFull = new Dictionary<string, QuestRiddleDataFull>();
+		Debug.Log("RiddleDataInitialization0");
 		//Text riddles
 		QuestRiddleDataFull riddle1 = new QuestRiddleDataFull(true, "How are Google newcomers called?");
 		_questRiddlesDataFull.Add("Noogler", riddle1);
@@ -157,6 +162,7 @@ public class QuestManager : MonoBehaviour
 		_questRiddlesDataFull.Add("GoogleSearch", riddle7);
 		QuestRiddleDataFull riddle8 = new QuestRiddleDataFull(false, riddleImages[3]);
 		_questRiddlesDataFull.Add("Snap", riddle8);
+		Debug.Log("RiddleDataInitialization1");
 		WriteRiddleDataInQuestProgress();
 	}
 
@@ -366,11 +372,13 @@ public class QuestManager : MonoBehaviour
 
 	void WriteRiddleDataInQuestProgress()
 	{
+		Debug.Log("RiddleDataInitialization2");
 		foreach (var fullRiddle in _questRiddlesDataFull)
 		{
 			QuestRiddleData riddle = new QuestRiddleData(fullRiddle.Value.isCompleted, fullRiddle.Value.score);
 			_questProgress.riddlesData.Add(fullRiddle.Key, riddle);
 		}
+		Debug.Log("RiddleDataInitialization3");
 	}
 
 	public void ReadRiddleDataFromQuestProgress()

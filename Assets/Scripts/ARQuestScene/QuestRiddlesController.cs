@@ -88,6 +88,10 @@ public class QuestRiddlesController : MonoBehaviour
 					_scanButton.gameObject.SetActive(false);
 					_submitButton.gameObject.SetActive(true);
 					_inputField.gameObject.SetActive(true);
+					//Making Image field invisible
+					Color color = _riddleImageHolder.color;
+					color.a = 0;
+					_riddleImageHolder.color = color;
 				}
 				else if(!riddle.Value.isText)
 				{
@@ -98,6 +102,10 @@ public class QuestRiddlesController : MonoBehaviour
 					_submitButton.gameObject.SetActive(false);
 					_inputField.gameObject.SetActive(false);
 					_scanButton.gameObject.SetActive(true);
+					//Making Image field visible
+					Color color = _riddleImageHolder.color;
+					color.a = 255;
+					_riddleImageHolder.color = color;
 				}
 				anyRiddles = true;
 				break;
@@ -133,12 +141,14 @@ public class QuestRiddlesController : MonoBehaviour
 			{
 				Debug.Log("QuestRiddlesController.OnImageScanned: strings are equal.");
 				_questManager.CompleteRiddle(_currentRiddle, this);
+				_scanStatusText.color = Color.green;
 				_scanStatusText.text = "You scanned the correct marker!";
 				StartCoroutine(CameraSwitchDelay());
 			}
 			else
 			{
 				Debug.Log("QuestRiddlesController.OnImageScanned: strings are not equal.");
+				_scanStatusText.color = Color.red;
 				_scanStatusText.text = "You scanned the wrong marker!";
 				StartCoroutine(StatusTextDelay());
 			}
