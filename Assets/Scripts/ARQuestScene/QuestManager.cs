@@ -143,23 +143,21 @@ public class QuestManager : MonoBehaviour
 		
 		_questRiddlesDataFull = new Dictionary<string, QuestRiddleDataFull>();
 		Debug.Log("RiddleDataInitialization0");
-		//Text riddles
 		QuestRiddleDataFull riddle1 = new QuestRiddleDataFull(true, "How are Google newcomers called?");
 		_questRiddlesDataFull.Add("Noogler", riddle1);
+		QuestRiddleDataFull riddle5 = new QuestRiddleDataFull(false, riddleImages[0]);
+        		_questRiddlesDataFull.Add("Angular", riddle5);
 		QuestRiddleDataFull riddle2 = new QuestRiddleDataFull(true, "What was the first google doodle in 1998?");
 		_questRiddlesDataFull.Add("BurningMan", riddle2);
+		QuestRiddleDataFull riddle6 = new QuestRiddleDataFull(false, riddleImages[1]);
+        		_questRiddlesDataFull.Add("Firebase", riddle6);
 		QuestRiddleDataFull riddle3 = new QuestRiddleDataFull(true,
 			"One day a computer failure stumped Grace Hopper and her team until she opened the machine and found THIS inside!");
 		_questRiddlesDataFull.Add("Bug", riddle3);
+		QuestRiddleDataFull riddle7 = new QuestRiddleDataFull(false, riddleImages[2]);
+        		_questRiddlesDataFull.Add("GoogleSearch", riddle7);
 		QuestRiddleDataFull riddle4 = new QuestRiddleDataFull(true, "The most important thing in the programming language is THIS. A language will not succeed without a good THIS. I have recently invented a very good THIS and now I am looking for a suitable language. -- Donald Knuth");
 		_questRiddlesDataFull.Add("Name", riddle4);
-		//Image riddles
-		QuestRiddleDataFull riddle5 = new QuestRiddleDataFull(false, riddleImages[0]);
-		_questRiddlesDataFull.Add("Angular", riddle5);
-		QuestRiddleDataFull riddle6 = new QuestRiddleDataFull(false, riddleImages[1]);
-		_questRiddlesDataFull.Add("Firebase", riddle6);
-		QuestRiddleDataFull riddle7 = new QuestRiddleDataFull(false, riddleImages[2]);
-		_questRiddlesDataFull.Add("GoogleSearch", riddle7);
 		QuestRiddleDataFull riddle8 = new QuestRiddleDataFull(false, riddleImages[3]);
 		_questRiddlesDataFull.Add("Snap", riddle8);
 		Debug.Log("RiddleDataInitialization1");

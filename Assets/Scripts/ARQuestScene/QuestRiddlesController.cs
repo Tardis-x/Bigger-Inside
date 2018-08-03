@@ -187,27 +187,17 @@ public class QuestRiddlesController : MonoBehaviour
 		string correctAnswer = _currentRiddle.ToLower().Replace(" ", String.Empty);
 		if (answer == correctAnswer)
 		{
-#if UNITY_ANDROID
-			AGUIMisc.ShowToast("The answer is correct! :)");
-#endif
 			_inputField.text = "";
 			_inputField.image.color = Color.green;
 			_isCorrectAnswerSubmitted = true;
 			StartCoroutine(CorrectAnswerHighlight());
 			_questManager.CompleteRiddle(_currentRiddle, this);
-#if UNITY_ANDROID
-			AGUIMisc.ShowToast("The answer is correct!");
-#endif
 		}
 		else
 		{
 			_inputField.image.color = Color.red;
 			_isWrongAnswerSubmitted = true;
 			StartCoroutine(WrongAnswerHighlight());
-			
-#if UNITY_ANDROID
-			AGUIMisc.ShowToast("The answer is incorrect. Please, try again.");
-#endif
 		}
 	}
 
