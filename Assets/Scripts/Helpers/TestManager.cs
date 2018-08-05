@@ -9,7 +9,7 @@ public class TestManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		#if UNITY_ANDROID
-		var isArCoreSupported = ARCoreHelper.ArCoreCheck();
+		var isArCoreSupported = ARCoreHelper.CheckArCoreSupport();
 		Text.text = isArCoreSupported.ToString();
 		#endif
 	}

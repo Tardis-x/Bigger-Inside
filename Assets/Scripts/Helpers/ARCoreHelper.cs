@@ -10,12 +10,12 @@ namespace ua.org.gdg.devfest {
             return context;
         }
 
-        public static bool ArCoreCheck() {
+        public static bool CheckArCoreSupport() {
             var arCoreApk = new AndroidJavaClass("com.google.ar.core.ArCoreApk");
             var arCoreApkInstance = arCoreApk.CallStatic<AndroidJavaObject>("getInstance");
             var availability = arCoreApkInstance.Call<AndroidJavaObject>("checkAvailability", GetAppContext());
-
             var isUnsupported = availability.Call<bool>("isUnsupported");
+            
             return !isUnsupported;
         }
     }
