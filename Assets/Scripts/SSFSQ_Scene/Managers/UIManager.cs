@@ -80,6 +80,13 @@ namespace ua.org.gdg.devfest
       ScreenQuestionText.gameObject.SetActive(value);
     }
 
+    public void SetComponents(GameOverPanelScript gameOverPanel, Text screenQuestionText, Text getReadyText)
+    {
+      GameOverPanel = gameOverPanel;
+      ScreenQuestionText = screenQuestionText;
+      _getReadyText = getReadyText;
+    }
+
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------

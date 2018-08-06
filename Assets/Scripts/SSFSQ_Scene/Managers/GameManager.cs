@@ -7,11 +7,36 @@ namespace ua.org.gdg.devfest
 {
   public class GameManager : Singleton<GameManager>
   {
+    private Environment _environmentInstance;
+    
+    private int _starsCount;
+    private int _brainsCount;
+    private int _score;
+    private QuestionModel _currentQuestion;
+    
+    //Questions
+    private readonly QuestionModel[] _questions = {new QuestionModel
+      {
+        Good = true,
+        Text = "Good question"
+      }, 
+      new QuestionModel
+      {
+        Good = false,
+        Text = "Bad question"
+      }
+    };
+    
     //---------------------------------------------------------------------
     // Property
     //---------------------------------------------------------------------
 
     public bool GameActive { get; private set; }
+
+    public Environment EnvironmentInstance
+    {
+      get { return _environmentInstance; }
+    }
 
     //---------------------------------------------------------------------
     // Editor
@@ -25,6 +50,22 @@ namespace ua.org.gdg.devfest
     [Space] 
     [Header("Prefabs")] 
     [SerializeField] private GameObject _environment;
+
+    [Space]
+    [Header("Targets")]
+    [SerializeField] private GameObject _imageTarget;
+    
+    //---------------------------------------------------------------------
+    // Messages
+    //---------------------------------------------------------------------
+
+    private void Awake()
+    {
+      var environment = Instantiate(_environment, _imageTarget.transform);
+      _environmentInstance = environment.GetComponent<Environment>();
+
+      SetComponentToManagers();
+    }
 
     //---------------------------------------------------------------------
     // Public
@@ -60,23 +101,14 @@ namespace ua.org.gdg.devfest
     // Internal
     //---------------------------------------------------------------------
 
-    private int _starsCount;
-    private int _brainsCount;
-    private int _score;
-    private QuestionModel _currentQuestion;
-    
-    //Questions
-    private readonly QuestionModel[] _questions = {new QuestionModel
+    private void SetComponentToManagers()
     {
-      Good = true,
-      Text = "Good question"
-    }, 
-      new QuestionModel
-      {
-        Good = false,
-        Text = "Bad question"
-      }
-    };
+      UIManager.Instance.SetComponents(_environmentInstance.GameOverPanel, _environmentInstance.ScreenQuestionText,
+        _environmentInstance.GetReadyText);
+      
+      AnimationManager.Instance.SetComponents(_environmentInstance.CrowdControl, _environmentInstance.SpeakerAnimation,
+        _environmentInstance.BoxingGlove, _environmentInstance.Tomatoes);
+    }
 
     private void ResetUI()
     {

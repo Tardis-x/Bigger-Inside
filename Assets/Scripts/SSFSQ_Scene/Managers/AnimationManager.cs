@@ -50,5 +50,14 @@ namespace ua.org.gdg.devfest
 		{
 			_sneaker.SetActive(value);
 		}
+
+		public void SetComponents(CrowdControlScript crowdControl, SpeakerAnimationScript speakerAnimation, 
+			BoxingGloveScript boxingGlove, ParticleSystem tomatoes)
+		{
+			CrowdControl = crowdControl;
+			SpeakerAnimation = speakerAnimation;
+			BoxingGlove = boxingGlove;
+			_tomatoes = tomatoes;
+		}
 	}
 }
