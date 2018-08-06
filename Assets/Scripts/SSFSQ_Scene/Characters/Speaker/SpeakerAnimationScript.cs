@@ -63,7 +63,7 @@ namespace ua.org.gdg.devfest
 
       _speakerTransform.LookAt(_currentDestination.position);
       _speakerTransform.transform.position =
-        Vector3.MoveTowards(_speakerTransform.transform.position, _currentDestination.position, _moveSpeed);
+        Vector3.MoveTowards(_speakerTransform.transform.position, _currentDestination.position, _moveSpeed * Time.deltaTime);
     }
 
     public void StartBeingScared()

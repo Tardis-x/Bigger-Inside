@@ -17,9 +17,14 @@ namespace ua.org.gdg.devfest
     // Editor
     //---------------------------------------------------------------------
 
+    [Header("Game logic")]
     [SerializeField] private int _maxBrains;
     [SerializeField] private int _maxStars;
     [SerializeField] private float _timeForAnswer;
+
+    [Space] 
+    [Header("Prefabs")] 
+    [SerializeField] private GameObject _environment;
 
     //---------------------------------------------------------------------
     // Public
