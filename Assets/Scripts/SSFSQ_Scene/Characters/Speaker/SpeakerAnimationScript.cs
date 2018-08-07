@@ -18,6 +18,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] private Transform _startPosition;
     [SerializeField] private Transform _endPosition;
     [SerializeField] private float _moveSpeed;
+    [SerializeField] private Transform _lookingPoint;
 
     //---------------------------------------------------------------------
     // Messages
@@ -143,7 +144,7 @@ namespace ua.org.gdg.devfest
 
     public void LookAtTheCrowd()
     {
-      _speakerTransform.LookAt(new Vector3(0, .001f, 1));
+      _speakerTransform.LookAt(_lookingPoint.transform);
     }
   }
 }

@@ -7,7 +7,6 @@ namespace ua.org.gdg.devfest
 		private CrowdControlScript _crowdControl;
 		private SpeakerAnimationScript _speakerAnimation;
 		private BoxingGloveScript _boxingGlove;
-		private ParticleSystem _tomatoes;
 		
 		//-----------------------------------------------
 		// Editor
@@ -45,9 +44,6 @@ namespace ua.org.gdg.devfest
 			_crowdControl = environmentInstance.CrowdControl;
 			_speakerAnimation = environmentInstance.SpeakerAnimation;
 			_boxingGlove = environmentInstance.BoxingGlove;
-			_tomatoes = environmentInstance.Tomatoes;
-			
-			_tomatoes.Stop();
 		}
 
 		public void OnGameOver()
@@ -66,22 +62,6 @@ namespace ua.org.gdg.devfest
 			Instance._speakerAnimation.StopBeingScared();
 			Instance._speakerAnimation.StopBeingDead();
 			Instance.ShowSneaker(false);
-		}
-
-		public void TurnTomatoesOn()
-		{
-			if (_tomatoes != null)
-			{
-				_tomatoes.Play();
-			}
-		}
-
-		public void TurnTomatoesOff()
-		{
-			if (_tomatoes != null)
-			{
-				_tomatoes.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-			}
 		}
 
 		public void ShowSneaker(bool value)
