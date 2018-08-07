@@ -155,6 +155,8 @@ public class QuestUI : MonoBehaviour
 			{
 				ShowInfoPanel("Third task is Knowledge Gate", 
 					"Will become available tomorrow!");
+				_proceedButton.gameObject.SetActive(false);
+				_changeInfoButton.gameObject.SetActive(false);
 			}
 		}
 		//Leaderboard Panel
