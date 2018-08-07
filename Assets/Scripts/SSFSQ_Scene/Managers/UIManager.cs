@@ -14,6 +14,11 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     // Editor
     //---------------------------------------------------------------------
+
+    [Header("Variables")] 
+    [SerializeField] private IntVariable _score;
+    
+    [Space]
     [Header("Overlay UI")] 
     public HealthTimePanelScript HealthTimePanel;
 
@@ -35,11 +40,6 @@ namespace ua.org.gdg.devfest
     // Property
     //---------------------------------------------------------------------
 
-    public GameOverPanelScript GameOverPanel
-    {
-      get { return _gameOverPanel; }
-    }
-
     public Text ScreenQuestionText
     {
       get { return _screenQuestionText; }
@@ -53,10 +53,40 @@ namespace ua.org.gdg.devfest
     {
       ButtonsToPauseMode();
     }
+    
+    //---------------------------------------------------------------------
+    // Events
+    //---------------------------------------------------------------------
+    
+    public void OnEnvironmentInstantiated()
+    {
+      var environmentInstance = GameManager.Instance.EnvironmentInstance;
+      
+      _gameOverPanel = environmentInstance.GameOverPanel;
+      _screenQuestionText = environmentInstance.ScreenQuestionText;
+      _getReadyText = environmentInstance.GetReadyText;
+    }
+
+    public void OnGameOver()
+    {
+      _gameOverPanel.SetScore(_score.RuntimeValue);
+      _gameOverPanel.ShowPanel();
+      HealthTimePanel.HidePanel();
+      ScreenQuestionTextSetActive(false);
+      ButtonsToPauseMode();
+    }
 
     //-----------------------------------------------
     // Public
     //-----------------------------------------------
+
+    public void ResetUI()
+    {
+      _gameOverPanel.HidePanel();
+      HealthTimePanel.ResetPanel();
+      HealthTimePanel.ShowPanel();
+      ButtonsToPlayMode();
+    }
 
     public void ButtonsToPlayMode()
     {
@@ -95,15 +125,6 @@ namespace ua.org.gdg.devfest
     public void ScreenQuestionTextSetActive(bool value)
     {
       if(_screenQuestionText != null) _screenQuestionText.gameObject.SetActive(value);
-    }
-
-    public void OnEnvironmentInstantiated()
-    {
-      var environmentInstance = GameManager.Instance.EnvironmentInstance;
-      
-      _gameOverPanel = environmentInstance.GameOverPanel;
-      _screenQuestionText = environmentInstance.ScreenQuestionText;
-      _getReadyText = environmentInstance.GetReadyText;
     }
 
     //---------------------------------------------------------------------

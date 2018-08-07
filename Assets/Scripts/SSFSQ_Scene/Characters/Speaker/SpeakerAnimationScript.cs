@@ -8,7 +8,11 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     // Editor
     //---------------------------------------------------------------------
+    [Header("Events")]
+    [SerializeField] private IntVariable _brainsCount;
+    [SerializeField] private IntVariable _starsCount;
 
+    [Space]
     [SerializeField] private Animator _animator;
     [SerializeField] private Transform _speakerTransform;
     [SerializeField] private Transform _startPosition;
@@ -22,6 +26,24 @@ namespace ua.org.gdg.devfest
     private void Start()
     {
       DestinateToStart();
+    }
+    
+    //---------------------------------------------------------------------
+    // Events
+    //---------------------------------------------------------------------
+
+    public void OnGameOver()
+    {
+      if (_starsCount.RuntimeValue == 0)
+      {
+        StartBeingScared();
+        return;
+      }
+      
+      if(_brainsCount.RuntimeValue == 0)
+      {
+        Die();
+      }
     }
 
     //---------------------------------------------------------------------

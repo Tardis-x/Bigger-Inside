@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,6 +7,9 @@ namespace ua.org.gdg.devfest
 
 	public class CrowdControlScript : MonoBehaviour
 	{
+		[Header("Events")]
+		[SerializeField] private IntVariable _starsCount;
+		
 		//---------------------------------------------------------------------
 		// Internal
 		//---------------------------------------------------------------------
@@ -15,12 +17,21 @@ namespace ua.org.gdg.devfest
 		private CharacterAnimationScript[] _characters;
 		
 		//---------------------------------------------------------------------
-		// Messages
+		// Message
 		//---------------------------------------------------------------------
 
 		private void Start()
 		{
 			_characters = GetComponentsInChildren<CharacterAnimationScript>();
+		}
+		
+		//---------------------------------------------------------------------
+		// Events
+		//---------------------------------------------------------------------
+
+		public void OnGameOver()
+		{
+			if(_starsCount.RuntimeValue == 0) StartThrowing();
 		}
 
 		//---------------------------------------------------------------------

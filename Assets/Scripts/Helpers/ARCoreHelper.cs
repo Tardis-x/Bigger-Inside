@@ -14,7 +14,8 @@ namespace ua.org.gdg.devfest {
             #endif
         }
 
-        public static bool CheckArCoreSupport() {
+        public static bool CheckArCoreSupport()
+        {
             #if UNITY_ANDROID
                 var arCoreApk = new AndroidJavaClass("com.google.ar.core.ArCoreApk");
                 var arCoreApkInstance = arCoreApk.CallStatic<AndroidJavaObject>("getInstance");

@@ -10,9 +10,6 @@ namespace ua.org.gdg.devfest
   {
     private Environment _environmentInstance;
     
-    private int _starsCount;
-    private int _brainsCount;
-    private int _score;
     private QuestionModel _currentQuestion;
     
     //Questions
@@ -42,10 +39,18 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     // Editor
     //---------------------------------------------------------------------
+    
+    [Header("Public Variables")]
+    [SerializeField] private IntVariable _score;
+    [SerializeField] private IntVariable _brainsCount;
+    [SerializeField] private IntVariable _starsCount;
 
-    [Header("Game logic")]
-    [SerializeField] private int _maxBrains;
-    [SerializeField] private int _maxStars;
+    [Space]
+    [Header("Events")] 
+    [SerializeField] private GameEvent _onGameOver;
+    
+    [Space]
+    [Header("Values")]
     [SerializeField] private float _timeForAnswer;
 
     [Space] 
@@ -68,14 +73,19 @@ namespace ua.org.gdg.devfest
     private void Start()
     {
       var arCoreSupport = ARCoreHelper.CheckArCoreSupport();
+      arCoreSupport = false;
       PrepareScene(arCoreSupport);
-      if (!arCoreSupport)
-      {
-        var environment = Instantiate(_environment, _imageTarget.transform);        
-        _environmentInstance = environment.GetComponent<Environment>();
-      }
       
       _text.text = "ARCore support: " + arCoreSupport;
+    }
+    
+    //---------------------------------------------------------------------
+    // Events
+    //---------------------------------------------------------------------
+
+    public void OnEnvironmentInstantiated()
+    {
+      _environmentInstance = FindObjectOfType<Environment>();
     }
 
     //---------------------------------------------------------------------
@@ -88,7 +98,7 @@ namespace ua.org.gdg.devfest
       
       GameActive = true;
 
-      ResetUI();
+      UIManager.Instance.ResetUI();
       ResetHealthAndScore();
       
       StartCoroutine(AwaitSpeakerReady(AskQuestion));
@@ -108,36 +118,29 @@ namespace ua.org.gdg.devfest
       if(GameActive) StartCoroutine(AwaitSpeakerReady(OnHit));
     }
 
-    public void OnEnvironmentInstantiated()
-    {
-      _environmentInstance = FindObjectOfType<Environment>();
-    }
-
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
 
     private void PrepareScene(bool arCoreSupport)
     {
-      _planeFinder.SetActive(arCoreSupport);
+      _planeFinder.gameObject.SetActive(arCoreSupport);
       
       _imageTarget.SetActive(!arCoreSupport);
-      AnimationManager.Instance.ShowSneaker(false);
-    }
-
-    private void ResetUI()
-    {
-      UIManager.Instance.GameOverPanel.HidePanel();
-      UIManager.Instance.HealthTimePanel.ResetPanel();
-      UIManager.Instance.HealthTimePanel.ShowPanel();
-      UIManager.Instance.ButtonsToPlayMode();
+      AnimationManager.Instance.ShowSneaker(!arCoreSupport);
+      
+      if (!arCoreSupport)
+      {
+        var environment = Instantiate(_environment, _imageTarget.transform);        
+        _environmentInstance = environment.GetComponent<Environment>();
+      }
     }
 
     private void ResetHealthAndScore()
     {
       ResetBrains();
       ResetStars();
-      _score = 0;
+      _score.RuntimeValue = 0;
     }
 
     private void OnTimeout()
@@ -171,47 +174,42 @@ namespace ua.org.gdg.devfest
     private void OnHit()
     {
       if(_currentQuestion.Good) SubtractStar();
-      else _score++;
+      else _score.RuntimeValue++;
       AskQuestion();
     }
 
     private void OnAnswer()
     {
       if(!_currentQuestion.Good) SubtractBrain();
-      else _score++;
+      else _score.RuntimeValue++;
       AskQuestion();
     }
     
     private void SubtractStar()
     {
-      if (_starsCount > 0)
+      if (_starsCount.RuntimeValue > 0)
       {
         UIManager.Instance.HealthTimePanel.SubtractStar();
-        _starsCount--;
+        _starsCount.RuntimeValue--;
       }
 
-      if (_starsCount <= 0)
+      if (_starsCount.RuntimeValue <= 0)
       {
         GameOver();
-        AnimationManager.Instance.CrowdControl.StartThrowing();
-        AnimationManager.Instance.SpeakerAnimation.StartBeingScared();
       }
     }
 
     private void SubtractBrain()
     {
-      if (_brainsCount > 0)
+      if (_brainsCount.RuntimeValue > 0)
       {
         UIManager.Instance.HealthTimePanel.SubtractBrain();
-        _brainsCount--;
+        _brainsCount.RuntimeValue--;
       }
 
-      if (_brainsCount <= 0)
+      if (_brainsCount.RuntimeValue <= 0)
       {
         GameOver();
-        AnimationManager.Instance.SpeakerAnimation.Die();
-        
-        if(_starsCount == 0) AnimationManager.Instance.CrowdControl.StartThrowing();
       }
     }
     
@@ -221,27 +219,22 @@ namespace ua.org.gdg.devfest
       return _questions[index];
     }
 
-    private void GameOver()
+    public void GameOver()
     {
       GameActive = false;
-      UIManager.Instance.GameOverPanel.SetScore(_score);
-      UIManager.Instance.GameOverPanel.ShowPanel();
-      UIManager.Instance.HealthTimePanel.HidePanel();
-      UIManager.Instance.ScreenQuestionTextSetActive(false);
-      AnimationManager.Instance.ShowSneaker(true);
-      UIManager.Instance.ButtonsToPauseMode();
+      _onGameOver.Raise();
     }
 
     private void ResetBrains()
     {
-      UIManager.Instance.HealthTimePanel.SetBrainsCount(_maxBrains);
-      _brainsCount = _maxBrains;
+      UIManager.Instance.HealthTimePanel.SetBrainsCount(_brainsCount.InitialValue);
+      _brainsCount.ResetValue();
     }
 
     private void ResetStars()
     {
-      UIManager.Instance.HealthTimePanel.SetStarsCount(_maxStars);
-      _starsCount = _maxStars;
+      UIManager.Instance.HealthTimePanel.SetStarsCount(_starsCount.InitialValue);
+      _starsCount.ResetValue();
     }
   }
 }

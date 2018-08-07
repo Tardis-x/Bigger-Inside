@@ -33,6 +33,27 @@ namespace ua.org.gdg.devfest
 		{
 			get { return _boxingGlove; }
 		}
+		
+		//---------------------------------------------------------------------
+		// Events
+		//---------------------------------------------------------------------
+		
+		public void OnEnvironmentInstantiated()
+		{
+			var environmentInstance = GameManager.Instance.EnvironmentInstance;
+			
+			_crowdControl = environmentInstance.CrowdControl;
+			_speakerAnimation = environmentInstance.SpeakerAnimation;
+			_boxingGlove = environmentInstance.BoxingGlove;
+			_tomatoes = environmentInstance.Tomatoes;
+			
+			_tomatoes.Stop();
+		}
+
+		public void OnGameOver()
+		{
+			ShowSneaker(true);
+		}
 
 		//---------------------------------------------------------------------
 		// Public
@@ -66,18 +87,6 @@ namespace ua.org.gdg.devfest
 		public void ShowSneaker(bool value)
 		{
 			_sneaker.SetActive(value);
-		}
-
-		public void OnEnvironmentInstantiated()
-		{
-			var environmentInstance = GameManager.Instance.EnvironmentInstance;
-			
-			_crowdControl = environmentInstance.CrowdControl;
-			_speakerAnimation = environmentInstance.SpeakerAnimation;
-			_boxingGlove = environmentInstance.BoxingGlove;
-			_tomatoes = environmentInstance.Tomatoes;
-			
-			_tomatoes.Stop();
 		}
 	}
 }
