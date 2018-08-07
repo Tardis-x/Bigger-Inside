@@ -7,26 +7,43 @@ namespace ua.org.gdg.devfest
 {
   public class UIManager : Singleton<UIManager>
   {
+    private GameOverPanelScript _gameOverPanel;
+    private Text _screenQuestionText;
+    private Text _getReadyText;
+    
     //---------------------------------------------------------------------
     // Editor
     //---------------------------------------------------------------------
-    [Header("Overlay UI")] public HealthTimePanelScript HealthTimePanel;
-    public GameOverPanelScript GameOverPanel;
+    [Header("Overlay UI")] 
+    public HealthTimePanelScript HealthTimePanel;
 
-    [Space] [Header("Virtual Buttons")] public VirtualButtonEventHandler PlayVirtualButton;
+    [Space] 
+    [Header("Virtual Buttons")] 
+    public VirtualButtonEventHandler PlayVirtualButton;
     public VirtualButtonEventHandler AnswerVirtualButton;
     public VirtualButtonEventHandler HitVirtualButton;
 
-    [Space] [Header("Environment Screen")] public Text ScreenQuestionText;
-
-    [Space] [Header("VirtualButtonsMaterials")] [SerializeField]
-    private Material _playButtonMaterial;
-
+    [Space] 
+    [Header("VirtualButtonsMaterials")] 
+    [SerializeField] private Material _playButtonMaterial;
     [SerializeField] private Material _hitButtonMaterial;
     [SerializeField] private Material _answerButtonMaterial;
     [SerializeField] private Material _transparentButtonMaterial;
-    [SerializeField] private Text _getReadyText;
     [SerializeField] private int _getReadyTime = 3;
+    
+    //---------------------------------------------------------------------
+    // Property
+    //---------------------------------------------------------------------
+
+    public GameOverPanelScript GameOverPanel
+    {
+      get { return _gameOverPanel; }
+    }
+
+    public Text ScreenQuestionText
+    {
+      get { return _screenQuestionText; }
+    }
 
     //-----------------------------------------------
     // Messages
@@ -69,7 +86,7 @@ namespace ua.org.gdg.devfest
       _countdown = true;
       GetReadyTextSetActive(true);
       ScreenQuestionTextSetActive(false);
-      if(GameOverPanel != null) GameOverPanel.HidePanel();
+      if(_gameOverPanel != null) _gameOverPanel.HidePanel();
       HidePlayButton();
       _timeLeft = _getReadyTime;
       StartCoroutine(GetReadyCountDown(onCountdownFinished));
@@ -77,15 +94,15 @@ namespace ua.org.gdg.devfest
     
     public void ScreenQuestionTextSetActive(bool value)
     {
-      if(ScreenQuestionText != null) ScreenQuestionText.gameObject.SetActive(value);
+      if(_screenQuestionText != null) _screenQuestionText.gameObject.SetActive(value);
     }
 
     public void OnEnvironmentInstantiated()
     {
       var environmentInstance = GameManager.Instance.EnvironmentInstance;
       
-      GameOverPanel = environmentInstance.GameOverPanel;
-      ScreenQuestionText = environmentInstance.ScreenQuestionText;
+      _gameOverPanel = environmentInstance.GameOverPanel;
+      _screenQuestionText = environmentInstance.ScreenQuestionText;
       _getReadyText = environmentInstance.GetReadyText;
     }
 

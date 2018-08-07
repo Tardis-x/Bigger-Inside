@@ -57,6 +57,8 @@ namespace ua.org.gdg.devfest
     [SerializeField] private GameObject _imageTarget;
     [SerializeField] private GameObject _planeFinder;
 
+    [Space]
+    [Header("Debug")]
     [SerializeField] private Text _text;
     
     //---------------------------------------------------------------------

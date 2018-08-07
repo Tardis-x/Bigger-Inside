@@ -4,23 +4,34 @@ namespace ua.org.gdg.devfest
 {
 	public class AnimationManager : Singleton<AnimationManager>
 	{
+		private CrowdControlScript _crowdControl;
+		private SpeakerAnimationScript _speakerAnimation;
+		private BoxingGloveScript _boxingGlove;
+		private ParticleSystem _tomatoes;
+		
 		//-----------------------------------------------
 		// Editor
 		//-----------------------------------------------
 
-		[SerializeField] public CrowdControlScript CrowdControl;
-		[SerializeField] public SpeakerAnimationScript SpeakerAnimation;
-		[SerializeField] public BoxingGloveScript BoxingGlove;
 		[SerializeField] private GameObject _sneaker;
-		[SerializeField] private ParticleSystem _tomatoes;
 		
 		//---------------------------------------------------------------------
-		// Messages
+		// Property
 		//---------------------------------------------------------------------
 
-		private void Start()
+		public CrowdControlScript CrowdControl
 		{
-			// _tomatoes.Stop();
+			get { return _crowdControl; }
+		}
+
+		public SpeakerAnimationScript SpeakerAnimation
+		{
+			get { return _speakerAnimation; }
+		}
+
+		public BoxingGloveScript BoxingGlove
+		{
+			get { return _boxingGlove; }
 		}
 
 		//---------------------------------------------------------------------
@@ -29,10 +40,10 @@ namespace ua.org.gdg.devfest
 
 		public void ResetAnimations()
 		{
-			Instance.CrowdControl.StopThrowing();
-			Instance.CrowdControl.StopBeingScared();
-			Instance.SpeakerAnimation.StopBeingScared();
-			Instance.SpeakerAnimation.StopBeingDead();
+			Instance._crowdControl.StopThrowing();
+			Instance._crowdControl.StopBeingScared();
+			Instance._speakerAnimation.StopBeingScared();
+			Instance._speakerAnimation.StopBeingDead();
 			Instance.ShowSneaker(false);
 		}
 
@@ -61,9 +72,9 @@ namespace ua.org.gdg.devfest
 		{
 			var environmentInstance = GameManager.Instance.EnvironmentInstance;
 			
-			CrowdControl = environmentInstance.CrowdControl;
-			SpeakerAnimation = environmentInstance.SpeakerAnimation;
-			BoxingGlove = environmentInstance.BoxingGlove;
+			_crowdControl = environmentInstance.CrowdControl;
+			_speakerAnimation = environmentInstance.SpeakerAnimation;
+			_boxingGlove = environmentInstance.BoxingGlove;
 			_tomatoes = environmentInstance.Tomatoes;
 			
 			_tomatoes.Stop();
