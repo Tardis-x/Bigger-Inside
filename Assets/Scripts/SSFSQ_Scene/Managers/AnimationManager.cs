@@ -20,7 +20,7 @@ namespace ua.org.gdg.devfest
 
 		private void Start()
 		{
-			_tomatoes.Stop();
+			// _tomatoes.Stop();
 		}
 
 		//---------------------------------------------------------------------
@@ -38,12 +38,18 @@ namespace ua.org.gdg.devfest
 
 		public void TurnTomatoesOn()
 		{
-			_tomatoes.Play();
+			if (_tomatoes != null)
+			{
+				_tomatoes.Play();
+			}
 		}
 
 		public void TurnTomatoesOff()
 		{
-			_tomatoes.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+			if (_tomatoes != null)
+			{
+				_tomatoes.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+			}
 		}
 
 		public void ShowSneaker(bool value)
@@ -51,13 +57,16 @@ namespace ua.org.gdg.devfest
 			_sneaker.SetActive(value);
 		}
 
-		public void SetComponents(CrowdControlScript crowdControl, SpeakerAnimationScript speakerAnimation, 
-			BoxingGloveScript boxingGlove, ParticleSystem tomatoes)
+		public void OnEnvironmentInstantiated()
 		{
-			CrowdControl = crowdControl;
-			SpeakerAnimation = speakerAnimation;
-			BoxingGlove = boxingGlove;
-			_tomatoes = tomatoes;
+			var environmentInstance = GameManager.Instance.EnvironmentInstance;
+			
+			CrowdControl = environmentInstance.CrowdControl;
+			SpeakerAnimation = environmentInstance.SpeakerAnimation;
+			BoxingGlove = environmentInstance.BoxingGlove;
+			_tomatoes = environmentInstance.Tomatoes;
+			
+			_tomatoes.Stop();
 		}
 	}
 }

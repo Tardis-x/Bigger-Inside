@@ -69,7 +69,7 @@ namespace ua.org.gdg.devfest
       _countdown = true;
       GetReadyTextSetActive(true);
       ScreenQuestionTextSetActive(false);
-      GameOverPanel.HidePanel();
+      if(GameOverPanel != null) GameOverPanel.HidePanel();
       HidePlayButton();
       _timeLeft = _getReadyTime;
       StartCoroutine(GetReadyCountDown(onCountdownFinished));
@@ -77,14 +77,16 @@ namespace ua.org.gdg.devfest
     
     public void ScreenQuestionTextSetActive(bool value)
     {
-      ScreenQuestionText.gameObject.SetActive(value);
+      if(ScreenQuestionText != null) ScreenQuestionText.gameObject.SetActive(value);
     }
 
-    public void SetComponents(GameOverPanelScript gameOverPanel, Text screenQuestionText, Text getReadyText)
+    public void OnEnvironmentInstantiated()
     {
-      GameOverPanel = gameOverPanel;
-      ScreenQuestionText = screenQuestionText;
-      _getReadyText = getReadyText;
+      var environmentInstance = GameManager.Instance.EnvironmentInstance;
+      
+      GameOverPanel = environmentInstance.GameOverPanel;
+      ScreenQuestionText = environmentInstance.ScreenQuestionText;
+      _getReadyText = environmentInstance.GetReadyText;
     }
 
     //---------------------------------------------------------------------
@@ -127,7 +129,7 @@ namespace ua.org.gdg.devfest
 
     private void GetReadyTextSetActive(bool value)
     {
-      _getReadyText.gameObject.SetActive(value);
+      if(_getReadyText != null) _getReadyText.gameObject.SetActive(value);
     }
 
     private void HideHitButton()

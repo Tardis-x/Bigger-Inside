@@ -9,8 +9,9 @@ namespace ua.org.gdg.devfest {
                 var context = activity.Call<AndroidJavaObject>("getApplicationContext");
             
                 return context;
+            #else
+                return null;
             #endif
-            return null;
         }
 
         public static bool CheckArCoreSupport() {
@@ -21,8 +22,9 @@ namespace ua.org.gdg.devfest {
                 var isUnsupported = availability.Call<bool>("isUnsupported");
             
                 return !isUnsupported;
+            #else
+                return false;
             #endif
-            return false;
         }
     }
 }

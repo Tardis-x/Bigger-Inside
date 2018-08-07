@@ -21,6 +21,10 @@ namespace ua.org.gdg.devfest
         [SerializeField] private BoxingGloveScript _boxingGlove;
         [SerializeField] private ParticleSystem _tomatoes;
 
+        [Space]
+        [Header("Events")]
+        [SerializeField] private GameEvent _onInstantiated;
+
         //---------------------------------------------------------------------
         // Property
         //---------------------------------------------------------------------
@@ -60,5 +64,13 @@ namespace ua.org.gdg.devfest
             get { return _tomatoes; }
         }
 
+        //---------------------------------------------------------------------
+        // Messages
+        //---------------------------------------------------------------------
+
+        private void Start()
+        {
+            _onInstantiated.Raise();
+        }
     }
 }

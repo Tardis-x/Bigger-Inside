@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using ua.org.gdg.devfest;
+﻿using ua.org.gdg.devfest;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TestManager : MonoBehaviour {
@@ -12,6 +11,11 @@ public class TestManager : MonoBehaviour {
 		var isArCoreSupported = ARCoreHelper.CheckArCoreSupport();
 		Text.text = isArCoreSupported.ToString();
 		#endif
+	}
+
+	public void LoadScene()
+	{
+		SceneManager.LoadScene(1);
 	}
 	
 	// Update is called once per frame

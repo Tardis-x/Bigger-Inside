@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = System.Random;
 
 namespace ua.org.gdg.devfest
@@ -54,17 +55,25 @@ namespace ua.org.gdg.devfest
     [Space]
     [Header("Targets")]
     [SerializeField] private GameObject _imageTarget;
+    [SerializeField] private GameObject _planeFinder;
+
+    [SerializeField] private Text _text;
     
     //---------------------------------------------------------------------
     // Messages
     //---------------------------------------------------------------------
 
-    private void Awake()
+    private void Start()
     {
-      var environment = Instantiate(_environment, _imageTarget.transform);
-      _environmentInstance = environment.GetComponent<Environment>();
-
-      SetComponentToManagers();
+      var arCoreSupport = ARCoreHelper.CheckArCoreSupport();
+      PrepareScene(arCoreSupport);
+      if (!arCoreSupport)
+      {
+        var environment = Instantiate(_environment, _imageTarget.transform);        
+        _environmentInstance = environment.GetComponent<Environment>();
+      }
+      
+      _text.text = "ARCore support: " + arCoreSupport;
     }
 
     //---------------------------------------------------------------------
@@ -97,17 +106,21 @@ namespace ua.org.gdg.devfest
       if(GameActive) StartCoroutine(AwaitSpeakerReady(OnHit));
     }
 
+    public void OnEnvironmentInstantiated()
+    {
+      _environmentInstance = FindObjectOfType<Environment>();
+    }
+
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
 
-    private void SetComponentToManagers()
+    private void PrepareScene(bool arCoreSupport)
     {
-      UIManager.Instance.SetComponents(_environmentInstance.GameOverPanel, _environmentInstance.ScreenQuestionText,
-        _environmentInstance.GetReadyText);
+      _planeFinder.SetActive(arCoreSupport);
       
-      AnimationManager.Instance.SetComponents(_environmentInstance.CrowdControl, _environmentInstance.SpeakerAnimation,
-        _environmentInstance.BoxingGlove, _environmentInstance.Tomatoes);
+      _imageTarget.SetActive(!arCoreSupport);
+      AnimationManager.Instance.ShowSneaker(false);
     }
 
     private void ResetUI()
