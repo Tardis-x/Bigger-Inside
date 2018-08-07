@@ -53,7 +53,7 @@ public class QuestLeaderBoardController : MonoBehaviour
 		foreach (KeyValuePair<string, int> pair in _questManager.QuestLeaderboardData.OrderByDescending(key => key.Value))
 		{
 			Text userInfo = Instantiate(textPrefab, transform.position, Quaternion.identity, gridForList);
-			userInfo.text = String.Format("   {0}. {1}. \n    Score: {2} point(s).", i, pair.Key, pair.Value);
+			userInfo.text = String.Format("   {0}. {1} \n    Score: {2} point(s).", i, pair.Key, pair.Value);
 			if (pair.Key == _questManager.currentUserUserId)
 			{
 				userInfo.color = Color.black;

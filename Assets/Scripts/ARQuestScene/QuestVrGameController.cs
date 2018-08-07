@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,8 +18,11 @@ public class QuestVrGameController : MonoBehaviour
 	InputField _scoreInputField;
 	[SerializeField]
 	Button _scanButton;
+	[SerializeField] 
+	Text _scanStatusText;
 	
 	QuestManager _questManager;
+	
 	
 	void Awake()
 	{
@@ -88,12 +92,27 @@ public class QuestVrGameController : MonoBehaviour
 		{
 			if (scannedMarker == "vrGame")
             {
-            	_questManager.CompleteVrGame(Int32.Parse(_scoreInputField.text), this);
-            	
-            	_mainCamera.gameObject.SetActive(true);
-            	_arCamera.gameObject.SetActive(false);
+            	_scanStatusText.color = Color.green;
+	            _scanStatusText.text = "Congratulations! Step completed!\nLoading next step...";
+	            StartCoroutine(CameraSwitchDelay());
             }
 		}
+	}
+	
+	IEnumerator CameraSwitchDelay()
+	{
+		//Hide panel's elements for better smoothness
+		_scoreInputField.gameObject.SetActive(false);
+		_scanButton.gameObject.SetActive(false);
+		_statusText.text = "";
+		_descriptionText.text = "";
 		
+		yield return new WaitForSeconds(3);
+		_scanStatusText.text = "";
+		//Switch cameras
+		_mainCamera.gameObject.SetActive(true);
+		_arCamera.gameObject.SetActive(false);
+		
+		_questManager.CompleteVrGame(Int32.Parse(_scoreInputField.text), this);
 	}
 }

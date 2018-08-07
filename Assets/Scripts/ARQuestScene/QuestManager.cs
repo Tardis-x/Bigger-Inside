@@ -142,7 +142,7 @@ public class QuestManager : MonoBehaviour
 		_questProgress = new QuestProgress();
 		
 		_questRiddlesDataFull = new Dictionary<string, QuestRiddleDataFull>();
-		Debug.Log("RiddleDataInitialization0");
+		Debug.Log("RiddleDataInitialization");
 		QuestRiddleDataFull riddle1 = new QuestRiddleDataFull(true, "How are Google newcomers called?");
 		_questRiddlesDataFull.Add("Noogler", riddle1);
 		QuestRiddleDataFull riddle5 = new QuestRiddleDataFull(false, riddleImages[0]);
@@ -156,11 +156,10 @@ public class QuestManager : MonoBehaviour
 		_questRiddlesDataFull.Add("Bug", riddle3);
 		QuestRiddleDataFull riddle7 = new QuestRiddleDataFull(false, riddleImages[2]);
         		_questRiddlesDataFull.Add("GoogleSearch", riddle7);
-		QuestRiddleDataFull riddle4 = new QuestRiddleDataFull(true, "The most important thing in the programming language is THIS. A language will not succeed without a good THIS. I have recently invented a very good THIS and now I am looking for a suitable language. -- Donald Knuth");
-		_questRiddlesDataFull.Add("Name", riddle4);
 		QuestRiddleDataFull riddle8 = new QuestRiddleDataFull(false, riddleImages[3]);
 		_questRiddlesDataFull.Add("Snap", riddle8);
-		Debug.Log("RiddleDataInitialization1");
+		QuestRiddleDataFull riddle4 = new QuestRiddleDataFull(true, "The most important thing in the programming language is THIS. A language will not succeed without a good THIS. I have recently invented a very good THIS and now I am looking for a suitable language. -- Donald Knuth");
+		_questRiddlesDataFull.Add("Name", riddle4);
 		WriteRiddleDataInQuestProgress();
 	}
 
@@ -194,7 +193,8 @@ public class QuestManager : MonoBehaviour
 					// mark VR game as completed in local storage
 					_questProgress.vrGameData.gameScore = score;
 					_questProgress.vrGameData.state = true;
-					vrGameController.UpdateVrGameScreen();
+					//Refresh the info panel
+					_questUi.OnChangeInfoButtonClicked();
 					//Update local leaderboard
 					UpdateUserScoreInLeaderBoard();
 					//Update Firebase Leaderboard
@@ -213,6 +213,33 @@ public class QuestManager : MonoBehaviour
 		});
 	}
 
+	public void CompletePhoto()
+	{	
+		Dictionary<string, System.Object> childUpdates = new Dictionary<string, System.Object>();
+		
+		_questProgress.photoData.state = true;
+		//Refresh the info panel
+		_questUi.OnChangeInfoButtonClicked();
+		childUpdates["users/" + currentUserUserId + "/photoData/state"] = true;
+		// mark photo step as completed in firebase
+		_database.UpdateChildrenAsync(childUpdates).ContinueWith(task => 
+		{
+			if (task.IsCompleted)
+			{
+				
+			}
+			else if (task.IsFaulted)
+			{
+				Debug.LogError("QuestManager: Failed to update quest data in firebase realtime database!");
+				Debug.LogError("Error message: " + task.Exception.Message);
+			}
+			else if (task.IsCanceled)
+			{
+				Debug.LogError("QuestManager: Cancel updating quest data in firebase realtime database!");
+			}
+		});
+	}
+	
 	public void CompleteRiddle(string riddleKey, QuestRiddlesController riddlesController)
 	{
 		Dictionary<string, System.Object> childUpdates = new Dictionary<string, System.Object>();
@@ -260,6 +287,33 @@ public class QuestManager : MonoBehaviour
 					Debug.LogError("QuestManager: Cancel updating quest data in firebase realtime database!");
 				}
 			});
+		});
+	}
+
+	public void CompleteAllRiddles()
+	{
+		Dictionary<string, System.Object> childUpdates = new Dictionary<string, System.Object>();
+		
+		_questProgress.allRiddlesCompleted = true;
+		//Refresh the info panel
+		_questUi.OnChangeInfoButtonClicked();
+		
+		childUpdates["users/" + _auth.CurrentUser.DisplayName + "/allRiddlesCompleted"] = true;
+		_database.UpdateChildrenAsync(childUpdates).ContinueWith(task => 
+		{
+			if (task.IsCompleted)
+			{
+				
+			}
+			else if (task.IsFaulted)
+			{
+				Debug.LogError("QuestManager: Failed to update quest data in firebase realtime database!");
+				Debug.LogError("Error message: " + task.Exception.Message);
+			}
+			else if (task.IsCanceled)
+			{
+				Debug.LogError("QuestManager: Cancel updating quest data in firebase realtime database!");
+			}
 		});
 	}
 	
@@ -335,15 +389,13 @@ public class QuestManager : MonoBehaviour
 	
 	public void CheckInPhoto(QuestPhotoController photoController)
 	{
-		// update quest riddle progress data in database
 		Dictionary<string, System.Object> childUpdates = new Dictionary<string, System.Object>();
-		//childUpdates["users/" + _auth.CurrentUser.UserId + "/photoData/state"] = true;
+		
 		childUpdates["users/" + _auth.CurrentUser.DisplayName + "/photoData/imageURL"] = photoController.imageUrl;
+		
 		_database.UpdateChildrenAsync(childUpdates).ContinueWith(task => {
 			if (task.IsCompleted)
 			{
-				// mark photocapture as complete in local storage
-				//_questProgress.photoData.state = true;
 				_questProgress.photoData.imgUrl = photoController.imageUrl;
 			}
 			else if (task.IsFaulted)
@@ -386,5 +438,33 @@ public class QuestManager : MonoBehaviour
 			_questRiddlesDataFull[riddle.Key].score = riddle.Value.score;
 			_questRiddlesDataFull[riddle.Key].isCompleted = riddle.Value.isCompleted;
 		}
+	}
+
+	public void CompleteGoogleColorsRiddle()
+	{
+		Dictionary<string, System.Object> childUpdates = new Dictionary<string, System.Object>();
+		
+		_questProgress.isGoogleColorsCompleted = true;
+		//Refresh the info panel
+		_questUi.OnChangeInfoButtonClicked();
+		
+		childUpdates["users/" + _auth.CurrentUser.DisplayName + "/isGoogleColorsCompleted"] = true;
+		
+		_database.UpdateChildrenAsync(childUpdates).ContinueWith(task1 => 
+		{
+			if (task1.IsCompleted)
+			{
+				
+			}
+			else if (task1.IsFaulted)
+			{
+				Debug.LogError("QuestManager: Failed to update quest data in firebase realtime database!");
+				Debug.LogError("Error message: " + task1.Exception.Message);
+			}
+			else if (task1.IsCanceled)
+			{
+				Debug.LogError("QuestManager: Cancel updating quest data in firebase realtime database!");
+			}
+		});
 	}
 }

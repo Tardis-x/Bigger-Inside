@@ -38,10 +38,13 @@ public class QuestRiddlesController : MonoBehaviour
 
 	string _currentRiddle;
 
-	private bool _isWrongAnswerSubmitted;
-	private bool _isCorrectAnswerSubmitted;
-	private ColorBlock _colors;
-	private Color _color;
+	bool _isWrongAnswerSubmitted;
+	
+	bool _isCorrectAnswerSubmitted;
+	
+	ColorBlock _colors;
+	
+	Color _color;
 	
 	void Awake()
 	{
@@ -137,6 +140,9 @@ public class QuestRiddlesController : MonoBehaviour
 		if (!anyRiddles)
 		{
 			_descriptionText.text = "You completed all riddles!";
+			
+			//Mark completion of third quest step for UI
+			_questManager.CompleteAllRiddles();
 			
 			_riddleImageHolder.gameObject.SetActive(false);
 			_inputField.gameObject.SetActive(false);

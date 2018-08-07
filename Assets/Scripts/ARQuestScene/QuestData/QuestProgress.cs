@@ -14,4 +14,6 @@ public class QuestProgress
 	
 	public Dictionary<string, QuestRiddleData> riddlesData { get; set; }
 	public int globalScore;
+	public bool isGoogleColorsCompleted;
+	public bool allRiddlesCompleted;
 }

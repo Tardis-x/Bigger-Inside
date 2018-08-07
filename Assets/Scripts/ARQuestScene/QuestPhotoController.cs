@@ -12,72 +12,77 @@ using Debug = UnityEngine.Debug;
 
 public class QuestPhotoController : MonoBehaviour
 {
-    public Image photoTextureHolder;
-    private Texture2D tex;
-    private string userID;
-    private FirebaseStorage storage;
-    public string picturePath;
-    private StorageReference pictureReference;
-    QuestManager _questManager;
-    public string imageUrl;
-    byte[] imageBytes;
-    string pictureNameInStorage;
-    SigninSampleScript signIn;
-    public Text _cameraText;
+	public Image photoTextureHolder;
+	Texture2D tex;
+	string userID;
+	FirebaseStorage storage;
+	public string picturePath;
+	StorageReference pictureReference;
+	QuestManager _questManager;
+	public string imageUrl;
+	byte[] imageBytes;
+	string pictureNameInStorage;
+	SigninSampleScript signIn;
+	public Text _cameraText;
+	string _photoComment;
+	[SerializeField] Camera _mainCamera;
+	[SerializeField] Camera _arCamera;
+	[SerializeField] Text _scanStatusText;
 
-    void Awake()
-    {
-        Debug.Log("QuestPhotoController.Awake");
-        // obtain reference to object that represents quest manager
-        QuestManagerReferenceInitialization();
-    }
+	void Awake()
+	{
+		Debug.Log("QuestPhotoController.Awake");
+		// obtain reference to object that represents quest manager
+		QuestManagerReferenceInitialization();
+		_photoComment = "";
+		userID = FirebaseAuth.DefaultInstance.CurrentUser.DisplayName;
+		userID = userID.Replace(" ", string.Empty);
+		//Creating reference to a picture in the database
+		storage = FirebaseStorage.DefaultInstance;
+	}
 
-    void QuestManagerReferenceInitialization()
-    {
-        GameObject questManagerTemp = GameObject.Find("QuestManager");
+	void QuestManagerReferenceInitialization()
+	{
+		GameObject questManagerTemp = GameObject.Find("QuestManager");
 
-        if (questManagerTemp != null)
-        {
-            _questManager = questManagerTemp.GetComponent<QuestManager>();
+		if (questManagerTemp != null)
+		{
+			_questManager = questManagerTemp.GetComponent<QuestManager>();
 
-            if (_questManager == null)
-            {
-                Debug.LogError("Could not locate QuestManager component on " + questManagerTemp.name);
-            }
-        }
-        else
-        {
-            Debug.LogError("Could not locate quest manager object in current scene!");
-        }
-    }
+			if (_questManager == null)
+			{
+				Debug.LogError("Could not locate QuestManager component on " + questManagerTemp.name);
+			}
+		}
+		else
+		{
+			Debug.LogError("Could not locate quest manager object in current scene!");
+		}
+	}
 
-    public void OnPhotoActionButtonClick()
-    {
+	public void OnPhotoActionButtonClick(string s)
+	{
+		_photoComment = s;
 #if UNITY_ANDROID
-//        AGAlertDialog.ShowMessageDialog("Photo with speaker",
-//            "Please select a photo with speaker.",
-//            "Take a photo", OnTakePictureButtonClick,
-//            "Pick from Gallery", OnPickPictureButtonClick,
-//            "Cancel", () => AGUIMisc.ShowToast("Operation was cancelled"));
-        string[] photoActions = { "Take a photo", "Pick from Gallery"};
-        AGAlertDialog.ShowChooserDialog("Pick an action", photoActions,
-            colorIndex =>
-            {
-                switch (colorIndex)
-                {
-                    case 0:
-                    {
-                        OnAndroidTakePictureButtonClick();
-                        break;
-                    }
-                    case 1:
-                    {
-                        OnAndroidPickPictureButtonClick();
-                        break;
-                    }
-                }
-            },AGDialogTheme.Dark);
-        
+		string[] photoActions = {"Take a photo", "Pick from Gallery"};
+		AGAlertDialog.ShowChooserDialog("Pick an action", photoActions,
+			colorIndex =>
+			{
+				switch (colorIndex)
+				{
+					case 0:
+					{
+						OnAndroidTakePictureButtonClick();
+						break;
+					}
+					case 1:
+					{
+						OnAndroidPickPictureButtonClick();
+						break;
+					}
+				}
+			}, AGDialogTheme.Dark);
+
 #elif UNITY_IOS
     string[] actionSheetOptions = {"Take a photo", "Pick from Library"};
     
@@ -103,36 +108,39 @@ public class QuestPhotoController : MonoBehaviour
                 }
             });
 #endif
-    }
+	}
 #if UNITY_ANDROID
-    void OnAndroidTakePictureButtonClick()
-    {
-        var imageResultSize = ImageResultSize.Max1024;
-        AGCamera.TakePhoto(OnAndroidImagePickSuccess,  
-            error => AGUIMisc.ShowToast("Cancelled taking photo from camera: " + error), imageResultSize, false);
-    }
-    void OnAndroidPickPictureButtonClick()
-    {
-        var imageResultSize = ImageResultSize.Max512;
-        AGGallery.PickImageFromGallery(OnAndroidImagePickSuccess, 
-            errorMessage => AGUIMisc.ShowToast("Cancelled picking image from gallery: " + errorMessage),
-            imageResultSize, false);
-    }
-    void OnAndroidImagePickSuccess(ImagePickResult selectedImage)
-    {
-        // Load received image into Texture2D
-        var imageTexture2D = selectedImage.LoadTexture2D();
+	void OnAndroidTakePictureButtonClick()
+	{
+		var imageResultSize = ImageResultSize.Max1024;
+		AGCamera.TakePhoto(OnAndroidImagePickSuccess,
+			error => AGUIMisc.ShowToast("Cancelled taking photo from camera: " + error), imageResultSize, false);
+	}
+
+	void OnAndroidPickPictureButtonClick()
+	{
+		var imageResultSize = ImageResultSize.Max512;
+		AGGallery.PickImageFromGallery(OnAndroidImagePickSuccess,
+			errorMessage => AGUIMisc.ShowToast("Cancelled picking image from gallery: " + errorMessage),
+			imageResultSize, false);
+	}
+
+	void OnAndroidImagePickSuccess(ImagePickResult selectedImage)
+	{
+		// Load received image into Texture2D
+		var imageTexture2D = selectedImage.LoadTexture2D();
 //                    string msg = string.Format("{0} was taken from camera with size {1}x{2}",
 //                        selectedImage.DisplayName, imageTexture2D.width, imageTexture2D.height);
 //                    AGUIMisc.ShowToast(msg);
-        picturePath = AndroidUri.FromFile(selectedImage.OriginalPath).JavaToString();
-        photoTextureHolder.sprite = SpriteFromTex2D(imageTexture2D);
-        string galleryPath = AGFileUtils.SaveImageToGallery(imageTexture2D, selectedImage.DisplayName, "ARQuest", ImageFormat.JPEG);
-        AGGallery.RefreshFile(galleryPath);
-        OnAndroidUploadButtonClick();
-        // Clean up
-        Resources.UnloadUnusedAssets();
-    }
+		picturePath = AndroidUri.FromFile(selectedImage.OriginalPath).JavaToString();
+		photoTextureHolder.sprite = SpriteFromTex2D(imageTexture2D);
+		string galleryPath =
+			AGFileUtils.SaveImageToGallery(imageTexture2D, selectedImage.DisplayName, "ARQuest", ImageFormat.JPEG);
+		AGGallery.RefreshFile(galleryPath);
+		OnAndroidUploadButtonClick();
+		// Clean up
+		Resources.UnloadUnusedAssets();
+	}
 #elif UNITY_IOS
     void OnIosTexturePickSuccess(Texture2D texture)
     {
@@ -183,7 +191,8 @@ public class QuestPhotoController : MonoBehaviour
     {
         const bool allowEditing = false;
         const float compressionQuality = 0.1f;
-        var screenPosition = new Vector2(Screen.width / 2f, Screen.height / 2f); // On iPads ONLY you can choose screen position of popover
+        var screenPosition =
+ new Vector2(Screen.width / 2f, Screen.height / 2f); // On iPads ONLY you can choose screen position of popover
         IGImagePicker.PickImageFromPhotosAlbum(OnIosTexturePickSuccess,
             () =>
             {
@@ -194,14 +203,14 @@ public class QuestPhotoController : MonoBehaviour
             allowEditing, screenPosition);
     }
 #endif
-    public void OnSharePictureButtonClick()
-    {
-        Debug.Log("Share Button Clicked.");
+	public void OnSharePictureButtonClick()
+	{
+		Debug.Log("Share Button Clicked.");
 #if UNITY_ANDROID
-        tex = photoTextureHolder.mainTexture as Texture2D;
-        string subject = "DevFest Photo";
-        string body = "My photo with speaker!";
-        AGShare.ShareTextWithImage(subject, body, tex);
+		tex = photoTextureHolder.mainTexture as Texture2D;
+		string subject = "DevFest Photo";
+		string body = "My photo with speaker!";
+		AGShare.ShareTextWithImage(subject, body, tex);
 #elif UNITY_IOS
         var screenPosition = new Vector2(Screen.width / 2f, Screen.height / 2f);
 
@@ -220,41 +229,37 @@ public class QuestPhotoController : MonoBehaviour
             error => Debug.LogError("Error happened when sharing activity: " + error),
             "Google DevFest!", tex, screenPosition);
 #endif
-    }
+	}
 
-    
+
 #if UNITY_ANDROID
-void OnAndroidUploadButtonClick()
-    {
-        userID = FirebaseAuth.DefaultInstance.CurrentUser.DisplayName;
-        userID = userID.Replace(" ", string.Empty);
-        //Creating reference to a picture in the database
-        storage = FirebaseStorage.DefaultInstance;
-        StorageReference storageRef = storage.GetReferenceFromUrl("gs://hoverboard-v2-dev.appspot.com");
-        pictureNameInStorage = "/Pictures/" + userID + ".jpeg";
-        pictureReference = storageRef.Child(pictureNameInStorage);
-        //Uploading image
-        var task = pictureReference.PutFileAsync(picturePath);
-        var spinner = AGProgressDialog.CreateSpinnerDialog("Please wait...", "Uploading...", AGDialogTheme.Dark);
-        spinner.Show();
-        task.ContinueWith(resultTask =>
-            {
-                spinner.Dismiss();
-                //Saving picture progress for quest
-                imageUrl = "gs://hoverboard-v2-dev.appspot.com" + pictureNameInStorage;
-                _questManager.questProgress.photoData.imgUrl = imageUrl;
-                _questManager.CheckInPhoto(this);
-                if (!resultTask.IsFaulted && !resultTask.IsCanceled)
-                {
-                    Debug.Log("Upload finished.");
-                    AGUIMisc.ShowToast("Picture was successfully taken and uploaded.");
-                }
-                else
-                {
-                    AGUIMisc.ShowToast(resultTask.Exception.Message);
-                }
-            });
-    }
+	void OnAndroidUploadButtonClick()
+	{
+		StorageReference storageRef = storage.GetReferenceFromUrl("gs://hoverboard-v2-dev.appspot.com");
+		pictureNameInStorage = "/Pictures/" + userID + _photoComment + ".jpeg";
+		pictureReference = storageRef.Child(pictureNameInStorage);
+		//Uploading image
+		var task = pictureReference.PutFileAsync(picturePath);
+		var spinner = AGProgressDialog.CreateSpinnerDialog("Please wait...", "Uploading...", AGDialogTheme.Dark);
+		spinner.Show();
+		task.ContinueWith(resultTask =>
+		{
+			spinner.Dismiss();
+			//Saving picture progress for quest
+			imageUrl = "gs://hoverboard-v2-dev.appspot.com" + pictureNameInStorage;
+			_questManager.questProgress.photoData.imgUrl = imageUrl;
+			_questManager.CheckInPhoto(this);
+			if (!resultTask.IsFaulted && !resultTask.IsCanceled)
+			{
+				Debug.Log("Upload finished.");
+				AGUIMisc.ShowToast("Picture was successfully taken and uploaded.");
+			}
+			else
+			{
+				AGUIMisc.ShowToast(resultTask.Exception.Message);
+			}
+		});
+	}
 #elif UNITY_IOS
     void OnIosUploadButtonClick()
     {
@@ -264,7 +269,7 @@ void OnAndroidUploadButtonClick()
         //Creating reference to a picture in the database
         storage = FirebaseStorage.DefaultInstance;
         StorageReference storageRef = storage.GetReferenceFromUrl("gs://hoverboard-v2-dev.appspot.com");
-        pictureNameInStorage = "/Pictures/" + userID + ".jpeg";
+        pictureNameInStorage = "/Pictures/" + userID + _photoComment + ".jpeg";
         pictureReference = storageRef.Child(pictureNameInStorage);
         //Uploading image
         var pictureMetadata = new MetadataChange();
@@ -287,13 +292,48 @@ void OnAndroidUploadButtonClick()
         });
     }
 #endif
-    IEnumerator TextClearing()
-    {
-        yield return new WaitForSeconds(3);
-        _cameraText.text = string.Empty;
-    }
-    Sprite SpriteFromTex2D(Texture2D texture)
-    {
-        return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-    }
+
+	public void OnScanButtonClicked()
+	{
+		Debug.Log("QuestPhotoController.OnScanButtonClicked");
+
+		_mainCamera.gameObject.SetActive(false);
+
+		_arCamera.gameObject.SetActive(true);
+	}
+
+	public void OnImageScanned(string scannedMarker)
+	{
+		Debug.Log("QuestPhotoController.OnImageScanned");
+
+		if (!_questManager.questProgress.photoData.state)
+		{
+			if (scannedMarker == "Photo")
+			{
+				_scanStatusText.color = Color.green;
+				_scanStatusText.text = "Congratulations! Step completed!\nLoading next step...";
+				StartCoroutine(CameraSwitchDelay());
+			}
+		}
+	}
+
+	IEnumerator CameraSwitchDelay()
+	{
+		yield return new WaitForSeconds(3);
+		_scanStatusText.text = "";
+		_mainCamera.gameObject.SetActive(true);
+		_arCamera.gameObject.SetActive(false);
+		_questManager.CompletePhoto();
+	}
+
+	IEnumerator TextClearing()
+	{
+		yield return new WaitForSeconds(3);
+		_cameraText.text = string.Empty;
+	}
+
+	Sprite SpriteFromTex2D(Texture2D texture)
+	{
+		return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+	}
 }
