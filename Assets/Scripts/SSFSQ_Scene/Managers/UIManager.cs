@@ -81,6 +81,11 @@ namespace ua.org.gdg.devfest
       HidePlayButton();
     }
 
+    public void OnGameStart()
+    {
+      ResetUI();
+    }
+
     //-----------------------------------------------
     // Public
     //-----------------------------------------------

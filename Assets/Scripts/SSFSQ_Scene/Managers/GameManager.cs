@@ -15,12 +15,12 @@ namespace ua.org.gdg.devfest
     //Questions
     private readonly QuestionModel[] _questions = {new QuestionModel
       {
-        Good = true,
+        isGood = true,
         Text = "Good question"
       }, 
       new QuestionModel
       {
-        Good = false,
+        isGood = false,
         Text = "Bad question"
       }
     };
@@ -103,7 +103,6 @@ namespace ua.org.gdg.devfest
       
       GameActive = true;
 
-      UIManager.Instance.ResetUI();
       ResetHealthAndScore();
       
       StartCoroutine(AwaitSpeakerReady(AskQuestion));
@@ -111,7 +110,7 @@ namespace ua.org.gdg.devfest
 
     public void Answer()
     {
-      AnimationManager.Instance.SpeakerAnimation.Answer(_currentQuestion.Good);
+      AnimationManager.Instance.SpeakerAnimation.Answer(_currentQuestion.isGood);
       
       if(GameActive) StartCoroutine(AwaitSpeakerReady(OnAnswer));
     }
@@ -145,7 +144,7 @@ namespace ua.org.gdg.devfest
     {
       ResetBrains();
       ResetStars();
-      _score.RuntimeValue = 0;
+      _score.ResetValue();
     }
 
     private void OnTimeout()
@@ -178,14 +177,14 @@ namespace ua.org.gdg.devfest
     
     private void OnHit()
     {
-      if(_currentQuestion.Good) SubtractStar();
+      if(_currentQuestion.isGood) SubtractStar();
       else _score.RuntimeValue++;
       AskQuestion();
     }
 
     private void OnAnswer()
     {
-      if(!_currentQuestion.Good) SubtractBrain();
+      if(!_currentQuestion.isGood) SubtractBrain();
       else _score.RuntimeValue++;
       AskQuestion();
     }
