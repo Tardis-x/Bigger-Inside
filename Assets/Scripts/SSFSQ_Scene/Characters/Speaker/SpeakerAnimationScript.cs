@@ -38,13 +38,18 @@ namespace ua.org.gdg.devfest
       if (_starsCount.RuntimeValue == 0)
       {
         StartBeingScared();
-        return;
       }
       
       if(_brainsCount.RuntimeValue == 0)
       {
         Die();
       }
+    }
+
+    public void OnCountdownStart()
+    {
+      StopBeingScared();
+      StopBeingDead();
     }
 
     //---------------------------------------------------------------------

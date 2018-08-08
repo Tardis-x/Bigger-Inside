@@ -4067,7 +4067,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4732607837621428}
   m_Layer: 0
-  m_Name: Looking Point
+  m_Name: LookingPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5551,6 +5551,7 @@ GameObject:
   - component: {fileID: 95260811036195890}
   - component: {fileID: 114213146982501752}
   - component: {fileID: 114691169719035490}
+  - component: {fileID: 114011890039811144}
   m_Layer: 0
   m_Name: Speaker
   m_TagString: Untagged
@@ -20594,6 +20595,7 @@ GameObject:
   - component: {fileID: 4587270667715134}
   - component: {fileID: 114248715965491318}
   - component: {fileID: 114594994476606598}
+  - component: {fileID: 114914937445598726}
   m_Layer: 0
   m_Name: Chairs
   m_TagString: Untagged
@@ -21135,6 +21137,8 @@ GameObject:
   - component: {fileID: 223803994635303470}
   - component: {fileID: 114933651314198072}
   - component: {fileID: 114585299312379770}
+  - component: {fileID: 114893343721714724}
+  - component: {fileID: 114667077904340986}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -39084,7 +39088,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1176079475504966}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.149, z: 0.517}
+  m_LocalPosition: {x: 0, y: 0.018, z: 0.517}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4604637859905864}
@@ -42887,7 +42891,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1225821117279040}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.029, y: 0.01, z: -0.038}
+  m_LocalPosition: {x: -0.029, y: 0.013, z: -0.038}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4385335927699026}
@@ -66340,6 +66344,34 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114011890039811144
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1225821117279040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3318b37b5a34577429583f0b3833dd78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 5dee60eb8fac37d4298a9ceb4e161843, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114213146982501752}
+        m_MethodName: OnCountdownStart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114040657566635928
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -66870,6 +66902,34 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Superlaser ultragalactic screen for making very scientifical smart questions
+--- !u!114 &114667077904340986
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1887980816679414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3318b37b5a34577429583f0b3833dd78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 5dee60eb8fac37d4298a9ceb4e161843, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114893343721714724}
+        m_MethodName: OnCountdownStart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114678686353087278
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -82398,6 +82458,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 95008388531171160}
+--- !u!114 &114893343721714724
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1887980816679414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f021e8e7afdf14488103e38264f430c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _score: {fileID: 11400000, guid: a3c579eea8d21434ba490ae4a74db8da, type: 2}
+  _timeLeft: {fileID: 11400000, guid: e603ac3119ceba840937541215b43942, type: 2}
+  _gameOverPanel: {fileID: 114348632761217504}
+  _screenQuestionText: {fileID: 114660093442742394}
+  _getReadyText: {fileID: 114040657566635928}
+  _onGameStart: {fileID: 11400000, guid: b66138f4113e40d459c4c2fac5d2c3c8, type: 2}
 --- !u!114 &114905969289010362
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -82443,6 +82520,34 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'YOUR SCORE: 500'
+--- !u!114 &114914937445598726
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1867059505458174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3318b37b5a34577429583f0b3833dd78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 5dee60eb8fac37d4298a9ceb4e161843, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114248715965491318}
+        m_MethodName: OnCountdownStart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114933651314198072
 MonoBehaviour:
   m_ObjectHideFlags: 1

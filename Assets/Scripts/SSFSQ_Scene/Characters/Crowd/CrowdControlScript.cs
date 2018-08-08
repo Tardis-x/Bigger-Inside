@@ -34,6 +34,12 @@ namespace ua.org.gdg.devfest
 			if(_starsCount.RuntimeValue == 0) StartThrowing();
 		}
 
+		public void OnCountdownStart()
+		{
+			StopThrowing();
+			StopBeingScared();
+		}
+
 		//---------------------------------------------------------------------
 		// Public
 		//---------------------------------------------------------------------

@@ -51,18 +51,15 @@ namespace ua.org.gdg.devfest
 			ShowSneaker(true);
 		}
 
+		public void OnCountdownStart()
+		{
+			Debug.Log("AnimationManager: OnCountDownStart");
+			ShowSneaker(false);
+		}
+
 		//---------------------------------------------------------------------
 		// Public
 		//---------------------------------------------------------------------
-
-		public void ResetAnimations()
-		{
-			Instance._crowdControl.StopThrowing();
-			Instance._crowdControl.StopBeingScared();
-			Instance._speakerAnimation.StopBeingScared();
-			Instance._speakerAnimation.StopBeingDead();
-			Instance.ShowSneaker(false);
-		}
 
 		public void ShowSneaker(bool value)
 		{

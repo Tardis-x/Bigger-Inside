@@ -1,17 +1,25 @@
-﻿namespace ua.org.gdg.devfest
+﻿using UnityEngine;
+
+namespace ua.org.gdg.devfest
 {
   public class PlayVButtonScript : VirtualButtonOnClick
   {
+    //---------------------------------------------------------------------
+    // Editor
+    //---------------------------------------------------------------------
+    [Header("Events")] 
+    [SerializeField] private GameEvent _onCountdownStart;
     //---------------------------------------------------------------------
     // Public
     //---------------------------------------------------------------------
     
     public override void OnClick()
     {
+      Debug.Log("Play Button PRESSED!");
       if (!GameManager.Instance.GameActive)
       {
-        AnimationManager.Instance.ResetAnimations();
-        UIManager.Instance.StartGetReadyCountdown(GameManager.Instance.NewGame);
+        Debug.Log("Raising OnCountDownStart");
+        _onCountdownStart.Raise();
       }
     }
   }

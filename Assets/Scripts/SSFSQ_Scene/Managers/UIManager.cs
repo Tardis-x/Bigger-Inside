@@ -34,7 +34,6 @@ namespace ua.org.gdg.devfest
     [SerializeField] private Material _hitButtonMaterial;
     [SerializeField] private Material _answerButtonMaterial;
     [SerializeField] private Material _transparentButtonMaterial;
-    [SerializeField] private int _getReadyTime = 3;
     
     //---------------------------------------------------------------------
     // Property
@@ -76,6 +75,12 @@ namespace ua.org.gdg.devfest
       ButtonsToPauseMode();
     }
 
+    public void OnCountdownStart()
+    {
+      Debug.Log("UI Manager: OnCountDownStart");
+      HidePlayButton();
+    }
+
     //-----------------------------------------------
     // Public
     //-----------------------------------------------
@@ -108,19 +113,6 @@ namespace ua.org.gdg.devfest
       HideHitButton();
       HealthTimePanel.PauseCountDown(true);
     }
-
-    public void StartGetReadyCountdown(Action onCountdownFinished)
-    {
-      if (_countdown) return;
-
-      _countdown = true;
-      GetReadyTextSetActive(true);
-      ScreenQuestionTextSetActive(false);
-      if(_gameOverPanel != null) _gameOverPanel.HidePanel();
-      HidePlayButton();
-      _timeLeft = _getReadyTime;
-      StartCoroutine(GetReadyCountDown(onCountdownFinished));
-    }
     
     public void ScreenQuestionTextSetActive(bool value)
     {
@@ -130,40 +122,6 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
-
-    private int _timeLeft;
-    private bool _countdown;
-
-    private IEnumerator GetReadyCountDown(Action onCountdownFinished)
-    {
-      while (_timeLeft >= -1)
-      {
-        if (_timeLeft > 0)
-        {
-          _getReadyText.text = "GET READY!\n" + _timeLeft;
-        }
-        else if (_timeLeft == 0)
-        {
-          _getReadyText.text = "GET READY!\nGO!";
-        }
-        else
-        {
-          EndGetReadyCountdown(onCountdownFinished);
-        }
-        
-        yield return new WaitForSeconds(1);
-        _timeLeft--;
-      }
-    }
-
-    private void EndGetReadyCountdown(Action onCountdownFinished)
-    {
-      _countdown = false;
-      ScreenQuestionTextSetActive(true);
-      GetReadyTextSetActive(false);
-      StopCoroutine(GetReadyCountDown(onCountdownFinished));
-      onCountdownFinished();
-    }
 
     private void GetReadyTextSetActive(bool value)
     {
@@ -196,8 +154,8 @@ namespace ua.org.gdg.devfest
 
     private void HidePlayButton()
     {
-      Instance.PlayVirtualButton.SetVirtualButtonMaterial(_transparentButtonMaterial);
-      Instance.PlayVirtualButton.SetButtonEnabled(false);
+      PlayVirtualButton.SetVirtualButtonMaterial(_transparentButtonMaterial);
+      PlayVirtualButton.SetButtonEnabled(false);
     }
 
     private void ShowPlayButton()

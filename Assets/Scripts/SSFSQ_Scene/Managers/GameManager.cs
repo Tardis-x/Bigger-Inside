@@ -73,7 +73,6 @@ namespace ua.org.gdg.devfest
     private void Start()
     {
       var arCoreSupport = ARCoreHelper.CheckArCoreSupport();
-      arCoreSupport = false;
       PrepareScene(arCoreSupport);
       
       _text.text = "ARCore support: " + arCoreSupport;
@@ -86,6 +85,12 @@ namespace ua.org.gdg.devfest
     public void OnEnvironmentInstantiated()
     {
       _environmentInstance = FindObjectOfType<Environment>();
+    }
+
+    public void OnGameStart()
+    {
+      Debug.Log("Game Manager: OnGameStart");
+      NewGame();
     }
 
     //---------------------------------------------------------------------
@@ -215,13 +220,14 @@ namespace ua.org.gdg.devfest
     
     private QuestionModel GetQuestion()
     {
-      int index = new Random().Next(_questions.Length);
+      var index = new Random().Next(_questions.Length);
       return _questions[index];
     }
 
     public void GameOver()
     {
       GameActive = false;
+      Debug.Log("RAISING OnGameOver");
       _onGameOver.Raise();
     }
 
