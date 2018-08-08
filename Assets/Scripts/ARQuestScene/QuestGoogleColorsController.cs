@@ -30,6 +30,9 @@ public class QuestGoogleColorsController : MonoBehaviour
 	
 	[SerializeField] 
 	Button _letterButton6;
+
+	[SerializeField] 
+	Text _submitResultText;
 	
 	Dictionary<int, Button> _buttons;
 		
@@ -99,6 +102,11 @@ public class QuestGoogleColorsController : MonoBehaviour
 		{
 			_questManager.CompleteGoogleColorsRiddle();
 		}
+		else
+		{
+			_submitResultText.text = "You picked wrong colors.\nPlease, try again";
+			StartCoroutine(ClearText());
+		}
 	}
 
 	public void OnGoogleLetterButtonClicked(int buttonIndex)
@@ -113,5 +121,11 @@ public class QuestGoogleColorsController : MonoBehaviour
 		_colorsPanel.SetActive(false);
 		Debug.Log("Selected color index is: " + colorIndex);
 		UpdateLetterColor(colorIndex);
+	}
+
+	IEnumerator ClearText()
+	{
+		yield return new WaitForSeconds(2);
+		_submitResultText.text = "";
 	}
 }

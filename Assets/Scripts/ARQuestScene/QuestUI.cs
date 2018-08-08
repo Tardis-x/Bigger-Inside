@@ -33,13 +33,12 @@ public class QuestUI : MonoBehaviour
 
 		// obtain reference to object that represents quest manager
 		QuestManagerReferenceInitialization();
-		
 		//Show Info panel with custom content
-		ShowInfoPanel("Welcome to the DevFest Quest Adventure!", 
-			"You will have to complete different tasks in order to proceed with the Quest. Are you ready?");
+		
+		_infoPanel.SetActive(true);
 		_proceedButton.gameObject.SetActive(false);
 		_changeInfoButton.gameObject.SetActive(true);
-		
+
 		// hide quest screens with tasks
 		_photoPanel.SetActive(false);
 		_vrGamePanel.SetActive(false);
@@ -107,7 +106,6 @@ public class QuestUI : MonoBehaviour
 
 	public void OnChangeInfoButtonClicked()
 	{
-		_infoPanel.SetActive(true);
 		//Disable previous panels
 		_photoPanel.SetActive(false);
 		_vrGamePanel.SetActive(false);
@@ -119,22 +117,22 @@ public class QuestUI : MonoBehaviour
 		//Google Riddle Info
 		if (!_questManager.questProgress.isGoogleColorsCompleted)
 		{
-			ShowInfoPanel("Test of worthiness", 
+			ShowInfoPanel("Test of worthiness",
 				"In order to begin the Quest you have to solve a riddle to prove your capability for the future tasks");
 		}
 		//Photo Panel
 		else if (!_questManager.questProgress.photoData.state)
 		{
-			ShowInfoPanel("First task is Social Gate", 
+			ShowInfoPanel("First task is Social Gate",
 				"You have to:\n- Take a photo with a speaker;\n" +
 				"- Take a crazy photo with your friend(s) in front of Press Wall;\n" +
-				"- Share thoso photos with hashtags #dfua, #devfest and #dfua_gate1;\n" +
+				"- Share those photos with hashtags #dfua, #devfest and #dfua_gate1;\n" +
 				"- Show Quest guys your post(s) for confirmation.");
 		}
 		//VR Game Panel
 		else if (!_questManager.questProgress.vrGameData.state)
 		{
-			ShowInfoPanel("Second task is Virtual Reality Gate", 
+			ShowInfoPanel("Second task is Virtual Reality Gate",
 				"You have to:\n" +
 				"- Find a stand with Beat Saber Game demo;\n" +
 				"- Play the game and achieve a minimum of 50000 points;\n" +
@@ -146,14 +144,14 @@ public class QuestUI : MonoBehaviour
 			_questManager.CheckIfQuestIsActivated();
 			if (_questManager.isQuestActivated)
 			{
-				ShowInfoPanel("Third task is Knowledge Gate", 
+				ShowInfoPanel("Third task is Knowledge Gate",
 					"You will have to answer different questions about Google " +
 					"and its technologies and find the cyphered technologies logos, " +
 					"hidden in Planeta Kino.\n Good luck, friend!");
 			}
 			else
 			{
-				ShowInfoPanel("Third task is Knowledge Gate", 
+				ShowInfoPanel("Third task is Knowledge Gate",
 					"Will become available tomorrow!");
 				_proceedButton.gameObject.SetActive(false);
 				_changeInfoButton.gameObject.SetActive(false);
@@ -162,18 +160,14 @@ public class QuestUI : MonoBehaviour
 		//Leaderboard Panel
 		else
 		{
-			ShowInfoPanel("Congratulations!", 
+			ShowInfoPanel("Congratulations!",
 				"You have completed all the steps in the quest. Press the button to look at the Leaderboards.");
 			_proceedButton.GetComponentInChildren<Text>().text = "Show Leaderboard";
 		}
 	}
-	
+
 	public void OnProceedButtonClicked()
 	{
-		//Switch the buttons
-		_changeInfoButton.gameObject.SetActive(true);
-		_proceedButton.gameObject.SetActive(false);
-		_infoPanel.SetActive(false);
 		//Google Riddle Panel
 		if (!_questManager.questProgress.isGoogleColorsCompleted)
 		{
@@ -216,12 +210,16 @@ public class QuestUI : MonoBehaviour
 			_activePanel = _leaderBoardPanel;
 			_leaderBoardPanel.SetActive(true);
 		}
+		//Switch the buttons
+		_changeInfoButton.gameObject.SetActive(true);
+		_proceedButton.gameObject.SetActive(false);
+		_infoPanel.SetActive(false);
 	}
 
-	void ShowInfoPanel(string shortDescription, string longDescription)
+	public void ShowInfoPanel(string shortDescription, string longDescription)
 	{
+		_infoPanel.SetActive(true);
 		_shortDescription.text = shortDescription;
 		_longDescription.text = longDescription;
-		_infoPanel.SetActive(true);
 	}
 }

@@ -208,8 +208,8 @@ public class QuestPhotoController : MonoBehaviour
 		Debug.Log("Share Button Clicked.");
 #if UNITY_ANDROID
 		tex = photoTextureHolder.mainTexture as Texture2D;
-		string subject = "DevFest Photo";
-		string body = "My photo with speaker!";
+		string subject = "DevFest";
+		string body = "My awesome photo from DFUA'18";
 		AGShare.ShareTextWithImage(subject, body, tex);
 #elif UNITY_IOS
         var screenPosition = new Vector2(Screen.width / 2f, Screen.height / 2f);
@@ -247,7 +247,14 @@ public class QuestPhotoController : MonoBehaviour
 			spinner.Dismiss();
 			//Saving picture progress for quest
 			imageUrl = "gs://hoverboard-v2-dev.appspot.com" + pictureNameInStorage;
-			_questManager.questProgress.photoData.imgUrl = imageUrl;
+			if (_photoComment == "_speaker")
+			{
+				_questManager.questProgress.photoData.imgUrlSpeaker = imageUrl;
+			}
+			else if (_photoComment == "_friend")
+			{
+				_questManager.questProgress.photoData.imgUrlFriend = imageUrl;
+			}
 			_questManager.CheckInPhoto(this);
 			if (!resultTask.IsFaulted && !resultTask.IsCanceled)
 			{

@@ -196,7 +196,9 @@ public class QuestRiddlesController : MonoBehaviour
 			_inputField.text = "";
 			_inputField.image.color = Color.green;
 			_isCorrectAnswerSubmitted = true;
+			
 			StartCoroutine(CorrectAnswerHighlight());
+			
 			_questManager.CompleteRiddle(_currentRiddle, this);
 		}
 		else

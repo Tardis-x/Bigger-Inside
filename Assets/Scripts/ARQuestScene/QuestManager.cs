@@ -98,6 +98,8 @@ public class QuestManager : MonoBehaviour
 				{
 					Debug.LogError("QuestManager: Failed to retrieve quest data from firebase realtime database!");
 					Debug.LogError("Error message: " + readTask.Exception.Message);
+					
+					_questUi.FadeScreenOut();
 				}
 				else if (readTask.IsCompleted) 
 				{
@@ -107,6 +109,18 @@ public class QuestManager : MonoBehaviour
 					
 					Debug.Log("QuestManager: Quest data was successfully set up!");
 					_questUi.FadeScreenOut();
+					
+					Debug.Log("Updating Info screen");
+					if (questProgress.allRiddlesCompleted)
+					{
+						_questUi.OnChangeInfoButtonClicked();
+					}
+					else
+					{
+						Debug.Log("Default info screen");
+						_questUi.ShowInfoPanel("Welcome to the DevFest Quest Adventure!",
+							"You will have to complete different tasks in order to proceed with the Quest. Are you ready?");
+					}
 				}
 #if UNITY_ANDROID
 				spinner.Dismiss();
@@ -391,12 +405,14 @@ public class QuestManager : MonoBehaviour
 	{
 		Dictionary<string, System.Object> childUpdates = new Dictionary<string, System.Object>();
 		
-		childUpdates["users/" + _auth.CurrentUser.DisplayName + "/photoData/imageURL"] = photoController.imageUrl;
+		childUpdates["users/" + _auth.CurrentUser.DisplayName + "/photoData/imageURLSpeaker"] = questProgress.photoData.imgUrlSpeaker;
+		
+		childUpdates["users/" + _auth.CurrentUser.DisplayName + "/photoData/imageURLFriend"] = questProgress.photoData.imgUrlFriend;
 		
 		_database.UpdateChildrenAsync(childUpdates).ContinueWith(task => {
 			if (task.IsCompleted)
 			{
-				_questProgress.photoData.imgUrl = photoController.imageUrl;
+				
 			}
 			else if (task.IsFaulted)
 			{
