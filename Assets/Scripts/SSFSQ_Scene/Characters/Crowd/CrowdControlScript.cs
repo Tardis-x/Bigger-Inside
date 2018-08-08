@@ -9,6 +9,10 @@ namespace ua.org.gdg.devfest
 	{
 		[Header("Events")]
 		[SerializeField] private IntVariable _starsCount;
+
+		[Space] 
+		[Header("Game Objects")]
+		[SerializeField] private BoxingGloveScript _boxingGlove;
 		
 		//---------------------------------------------------------------------
 		// Internal
@@ -47,6 +51,7 @@ namespace ua.org.gdg.devfest
 
 		public void OnSpeakerHit()
 		{
+			_boxingGlove.HitObject(CurrentCharacter.transform);
 			CurrentCharacter.GetHit();
 		}
 

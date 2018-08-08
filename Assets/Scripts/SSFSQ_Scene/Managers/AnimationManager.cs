@@ -6,7 +6,6 @@ namespace ua.org.gdg.devfest
 	{
 		private CrowdControlScript _crowdControl;
 		private SpeakerAnimationScript _speakerAnimation;
-		private BoxingGloveScript _boxingGlove;
 		
 		//-----------------------------------------------
 		// Editor
@@ -27,11 +26,6 @@ namespace ua.org.gdg.devfest
 		{
 			get { return _speakerAnimation; }
 		}
-
-		public BoxingGloveScript BoxingGlove
-		{
-			get { return _boxingGlove; }
-		}
 		
 		//---------------------------------------------------------------------
 		// Events
@@ -43,7 +37,6 @@ namespace ua.org.gdg.devfest
 			
 			_crowdControl = environmentInstance.CrowdControl;
 			_speakerAnimation = environmentInstance.SpeakerAnimation;
-			_boxingGlove = environmentInstance.BoxingGlove;
 		}
 
 		public void OnGameOver()
