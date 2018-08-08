@@ -90,7 +90,7 @@ namespace ua.org.gdg.devfest
     // Public
     //-----------------------------------------------
 
-    public void ResetUI()
+    private void ResetUI()
     {
       _gameOverPanel.HidePanel();
       HealthTimePanel.ResetPanel();
