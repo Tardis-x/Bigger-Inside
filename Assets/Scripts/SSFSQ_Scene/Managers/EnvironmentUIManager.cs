@@ -43,6 +43,7 @@ namespace ua.org.gdg.devfest
         {
             _gameOverPanel.SetScore(_score.RuntimeValue);
             _gameOverPanel.ShowPanel();
+            _screenQuestionText.text = "";
             ScreenQuestionTextSetActive(false);
         }
 

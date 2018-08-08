@@ -40,6 +40,16 @@ namespace ua.org.gdg.devfest
 			StopBeingScared();
 		}
 
+		public void OnSpeakerDied()
+		{
+			StartBeingScared();
+		}
+
+		public void OnSpeakerHit()
+		{
+			CurrentCharacter.GetHit();
+		}
+
 		//---------------------------------------------------------------------
 		// Public
 		//---------------------------------------------------------------------
