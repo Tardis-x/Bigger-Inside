@@ -39,6 +39,13 @@ namespace ua.org.gdg.devfest
             _countdownCoroutine = StartCoroutine(GetReadyCountDown());
         }
 
+        public void OnGameOver()
+        {
+            _gameOverPanel.SetScore(_score.RuntimeValue);
+            _gameOverPanel.ShowPanel();
+            ScreenQuestionTextSetActive(false);
+        }
+
         //---------------------------------------------------------------------
         // Internal
         //---------------------------------------------------------------------

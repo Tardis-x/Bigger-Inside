@@ -68,10 +68,7 @@ namespace ua.org.gdg.devfest
 
     public void OnGameOver()
     {
-      _gameOverPanel.SetScore(_score.RuntimeValue);
-      _gameOverPanel.ShowPanel();
       HealthTimePanel.HidePanel();
-      ScreenQuestionTextSetActive(false);
       ButtonsToPauseMode();
     }
 
@@ -117,11 +114,6 @@ namespace ua.org.gdg.devfest
       HideAnswerButton();
       HideHitButton();
       HealthTimePanel.PauseCountDown(true);
-    }
-    
-    public void ScreenQuestionTextSetActive(bool value)
-    {
-      if(_screenQuestionText != null) _screenQuestionText.gameObject.SetActive(value);
     }
 
     //---------------------------------------------------------------------
