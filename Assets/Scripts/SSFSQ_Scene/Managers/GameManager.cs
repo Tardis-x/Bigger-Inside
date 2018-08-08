@@ -90,7 +90,7 @@ namespace ua.org.gdg.devfest
     public void OnGameStart()
     {
       Debug.Log("Game Manager: OnGameStart");
-      NewGame();
+      Invoke("NewGame", 0.1f);
     }
 
     //---------------------------------------------------------------------
