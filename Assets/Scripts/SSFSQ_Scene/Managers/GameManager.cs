@@ -6,6 +6,8 @@ namespace ua.org.gdg.devfest
 {
   public class GameManager : MonoBehaviour
   {
+    private PlayerChoice _playerChoice;
+    
     //Questions
     private readonly QuestionModel[] _questions = {new QuestionModel
       {
@@ -34,7 +36,9 @@ namespace ua.org.gdg.devfest
     [SerializeField] private IntVariable _brainsCount;
     [SerializeField] private IntVariable _starsCount;
     [SerializeField] private QuestionVariable _currentQuestion;
-    [SerializeField] private PlayerChoiceVariable _playerChoice;
+
+    [Header("Submanagers")] 
+    [SerializeField] private UIManager _uiManager;
 
     [Space]
     [Header("Events")] 
@@ -83,18 +87,18 @@ namespace ua.org.gdg.devfest
     public void OnAnswer()
     {
       Debug.Log("Game Manager: OnAnswer");
-      _playerChoice.Value = PlayerChoice.Answer;
+      _playerChoice = PlayerChoice.Answer;
     }
 
     public void OnHit()
     {
       Debug.Log("Game Manager: OnHit");
-      _playerChoice.Value = PlayerChoice.Hit;
+      _playerChoice = PlayerChoice.Hit;
     }
 
     public void OnSpeakerAnimationEnd()
     {
-      switch (_playerChoice.Value)
+      switch (_playerChoice)
       {
           case PlayerChoice.Answer:
             Answer();
@@ -185,6 +189,7 @@ namespace ua.org.gdg.devfest
       if (_starsCount.RuntimeValue > 0)
       {
         _starsCount.RuntimeValue--;
+        _uiManager.SubstractStar();
       }
 
       if (_starsCount.RuntimeValue <= 0)
@@ -198,6 +203,7 @@ namespace ua.org.gdg.devfest
       if (_brainsCount.RuntimeValue > 0)
       {
         _brainsCount.RuntimeValue--;
+        _uiManager.SubstractBrain();
       }
 
       if (_brainsCount.RuntimeValue <= 0)

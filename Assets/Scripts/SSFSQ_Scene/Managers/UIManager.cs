@@ -12,8 +12,6 @@ namespace ua.org.gdg.devfest
     [SerializeField] private IntVariable _score;
     [SerializeField] private IntVariable _brainsCount;
     [SerializeField] private IntVariable _starsCount;
-    [SerializeField] private PlayerChoiceVariable _playerChoice;
-    [SerializeField] private QuestionVariable _currentQuestion;
     [SerializeField] private int _timeForAnswer = 5;
     
     [Space]
@@ -76,21 +74,6 @@ namespace ua.org.gdg.devfest
       _healthTimePanel.StartCountdown(_timeForAnswer);
     }
 
-    public void OnSpeakerAnimationEnd()
-    {
-      switch (_playerChoice.Value)
-      {
-        case PlayerChoice.Answer:
-          if(!_currentQuestion.Value.IsGood) _healthTimePanel.SubtractBrain();
-          break;
-        case PlayerChoice.Hit:
-          if(_currentQuestion.Value.IsGood) _healthTimePanel.SubtractStar();
-          break;
-        default: 
-          return;
-      }
-    }
-
     //-----------------------------------------------
     // Public
     //-----------------------------------------------
@@ -124,6 +107,16 @@ namespace ua.org.gdg.devfest
       HideAnswerButton();
       HideHitButton();
       _healthTimePanel.PauseCountDown(true);
+    }
+
+    public void SubstractBrain()
+    {
+      _healthTimePanel.SubtractBrain();
+    }
+
+    public void SubstractStar()
+    {
+      _healthTimePanel.SubtractStar();
     }
 
     //---------------------------------------------------------------------
