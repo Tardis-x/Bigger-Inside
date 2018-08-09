@@ -83,6 +83,11 @@ namespace ua.org.gdg.devfest
       ResetUI();
     }
 
+    public void OnAnswerAndHit()
+    {
+      ToAnswerMode();
+    }
+
     //-----------------------------------------------
     // Public
     //-----------------------------------------------

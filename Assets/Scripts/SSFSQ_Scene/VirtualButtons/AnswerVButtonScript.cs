@@ -12,7 +12,6 @@ namespace ua.org.gdg.devfest
       if (GameManager.Instance.GameActive)
       {
         _onAnswer.Raise();
-        UIManager.Instance.ToAnswerMode();
       }
     }
   }
