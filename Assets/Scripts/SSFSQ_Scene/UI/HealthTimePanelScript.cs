@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
@@ -14,6 +13,7 @@ namespace ua.org.gdg.devfest
     [Header("Public Variables")] 
     [SerializeField] private IntVariable _timeForAnswer;
     [SerializeField] private QuestionVariable _currentQuestion;
+    [SerializeField] private PlayerChoiceVariable _playerChoice;
     
     [Header("Events")]
     [SerializeField] private GameEvent _onTimeout;
@@ -46,16 +46,21 @@ namespace ua.org.gdg.devfest
       StartCountdown(_timeForAnswer.RuntimeValue);
     }
 
-    public void OnAnswer()
+    public void OnSpeakerAnimationEnd()
     {
       Debug.Log("HealthTimePanel: OnAnswer");
-      if(!_currentQuestion.Value.IsGood) SubtractBrain();
-    }
-
-    public void OnHit()
-    {
-      Debug.Log("HealthTimePanel: OnHit");
-      if(_currentQuestion.Value.IsGood) SubtractStar();
+      switch (_playerChoice.Value)
+      {
+          case PlayerChoice.Answer:
+            if(!_currentQuestion.Value.IsGood) SubtractBrain();
+            break;
+          case PlayerChoice.Hit:
+            if(_currentQuestion.Value.IsGood) SubtractStar();
+            break;
+          default: 
+            return;
+      }
+      
     }
 
     //---------------------------------------------------------------------

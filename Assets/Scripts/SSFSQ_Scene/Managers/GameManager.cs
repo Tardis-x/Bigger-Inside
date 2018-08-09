@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using Random = System.Random;
 
@@ -8,8 +6,6 @@ namespace ua.org.gdg.devfest
 {
   public class GameManager : Singleton<GameManager>
   {
-    private Environment _environmentInstance;
-    
     //Questions
     private readonly QuestionModel[] _questions = {new QuestionModel
       {
@@ -22,19 +18,12 @@ namespace ua.org.gdg.devfest
         Text = "Bad question"
       }
     };
-
-    private PlayerChoice _playerChoice;
     
     //---------------------------------------------------------------------
     // Property
     //---------------------------------------------------------------------
 
     public bool GameActive { get; private set; }
-
-    public Environment EnvironmentInstance
-    {
-      get { return _environmentInstance; }
-    }
 
     //---------------------------------------------------------------------
     // Editor
@@ -45,6 +34,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] private IntVariable _brainsCount;
     [SerializeField] private IntVariable _starsCount;
     [SerializeField] private QuestionVariable _currentQuestion;
+    [SerializeField] private PlayerChoiceVariable _playerChoice;
 
     [Space]
     [Header("Events")] 
@@ -93,18 +83,18 @@ namespace ua.org.gdg.devfest
     public void OnAnswer()
     {
       Debug.Log("Game Manager: OnAnswer");
-      _playerChoice = PlayerChoice.Answer;
+      _playerChoice.Value = PlayerChoice.Answer;
     }
 
     public void OnHit()
     {
       Debug.Log("Game Manager: OnHit");
-      _playerChoice = PlayerChoice.Hit;
+      _playerChoice.Value = PlayerChoice.Hit;
     }
 
     public void OnSpeakerAnimationEnd()
     {
-      switch (_playerChoice)
+      switch (_playerChoice.Value)
       {
           case PlayerChoice.Answer:
             Answer();
@@ -167,12 +157,10 @@ namespace ua.org.gdg.devfest
       _planeFinder.gameObject.SetActive(arCoreSupport);
       
       _imageTarget.SetActive(!arCoreSupport);
-      AnimationManager.Instance.ShowSneaker(!arCoreSupport);
       
       if (!arCoreSupport)
       {
-        var environment = Instantiate(_environment, _imageTarget.transform);        
-        _environmentInstance = environment.GetComponent<Environment>();
+        Instantiate(_environment, _imageTarget.transform);        
       }
     }
 
