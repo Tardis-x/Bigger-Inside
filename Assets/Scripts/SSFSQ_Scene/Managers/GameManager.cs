@@ -49,6 +49,7 @@ namespace ua.org.gdg.devfest
     [Space]
     [Header("Events")] 
     [SerializeField] private GameEvent _onGameOver;
+    [SerializeField] private GameEvent _onNewQuestion;
     
     [Space]
     [Header("Values")]
@@ -57,12 +58,6 @@ namespace ua.org.gdg.devfest
     [Space] 
     [Header("Prefabs")] 
     [SerializeField] private GameObject _environment;
-
-    [Space] 
-    [Header("Animations")] 
-    [SerializeField] private AnimationClip _talkingClip;
-    [SerializeField] private AnimationClip _yellingClip;
-    [SerializeField] private AnimationClip _angryClip;
 
     [Space]
     [Header("Targets")]
@@ -89,11 +84,6 @@ namespace ua.org.gdg.devfest
     // Events
     //---------------------------------------------------------------------
 
-    public void OnEnvironmentInstantiated()
-    {
-      _environmentInstance = FindObjectOfType<Environment>();
-    }
-
     public void OnGameStart()
     {
       Debug.Log("Game Manager: OnGameStart");
@@ -102,11 +92,13 @@ namespace ua.org.gdg.devfest
 
     public void OnAnswer()
     {
+      Debug.Log("Game Manager: OnAnswer");
       _playerChoice = PlayerChoice.Answer;
     }
 
     public void OnHit()
     {
+      Debug.Log("Game Manager: OnHit");
       _playerChoice = PlayerChoice.Hit;
     }
 
@@ -123,6 +115,14 @@ namespace ua.org.gdg.devfest
           default:
             return;
       }
+    }
+
+    public void OnTimeout()
+    {
+      Debug.Log("Game Manager: OnTimeout");
+      SubtractStar();
+      SubtractBrain();
+      AskQuestion();
     }
 
     //---------------------------------------------------------------------
@@ -144,6 +144,7 @@ namespace ua.org.gdg.devfest
     {
       if(!_currentQuestion.Value.IsGood) SubtractBrain();
       else _score.RuntimeValue++;
+      
       AskQuestion();
     }
 
@@ -151,6 +152,9 @@ namespace ua.org.gdg.devfest
     {
       if(_currentQuestion.Value.IsGood) SubtractStar();
       else _score.RuntimeValue++;
+      
+      if(_starsCount.RuntimeValue <= 0) return;
+      
       AskQuestion();
     }
 
@@ -179,29 +183,19 @@ namespace ua.org.gdg.devfest
       _score.ResetValue();
     }
 
-    private void OnTimeout()
-    {
-      SubtractStar();
-      SubtractBrain();
-      AskQuestion();
-    }
-
     private void AskQuestion()
     {
-      if(!GameActive) return;
+      if(_brainsCount.RuntimeValue <= 0 || _starsCount.RuntimeValue <= 0) return;
       
       _currentQuestion.Value = GetQuestion();
-      UIManager.Instance.ScreenQuestionText.text = _currentQuestion.Value.Text;
-      UIManager.Instance.HealthTimePanel.StartCountdown(_timeForAnswer, OnTimeout);
-      UIManager.Instance.ButtonsToPlayMode();
-      AnimationManager.Instance.CrowdControl.AskQuestion();
+      Debug.Log("Game Manager: RAISING OnNewQuestion");
+      _onNewQuestion.Raise();
     }
     
     private void SubtractStar()
     {
       if (_starsCount.RuntimeValue > 0)
       {
-        UIManager.Instance.HealthTimePanel.SubtractStar();
         _starsCount.RuntimeValue--;
       }
 
@@ -215,7 +209,6 @@ namespace ua.org.gdg.devfest
     {
       if (_brainsCount.RuntimeValue > 0)
       {
-        UIManager.Instance.HealthTimePanel.SubtractBrain();
         _brainsCount.RuntimeValue--;
       }
 

@@ -55,6 +55,11 @@ namespace ua.org.gdg.devfest
 			CurrentCharacter.GetHit();
 		}
 
+		public void OnNewQuestion()
+		{
+			AskQuestion();
+		}
+
 		//---------------------------------------------------------------------
 		// Public
 		//---------------------------------------------------------------------

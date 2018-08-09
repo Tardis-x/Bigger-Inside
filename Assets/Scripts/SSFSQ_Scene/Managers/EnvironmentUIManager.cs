@@ -14,6 +14,7 @@ namespace ua.org.gdg.devfest
         [Header("Variables")]
         [SerializeField] private IntVariable _score;
         [SerializeField] private IntVariable _timeLeft;
+        [SerializeField] private QuestionVariable _currentQuestion;
 
         [Space]
         [Header("UI")]
@@ -45,6 +46,11 @@ namespace ua.org.gdg.devfest
             _gameOverPanel.ShowPanel();
             _screenQuestionText.text = "";
             ScreenQuestionTextSetActive(false);
+        }
+
+        public void OnNewQuestion()
+        {
+            _screenQuestionText.text = _currentQuestion.Value.Text;
         }
 
         //---------------------------------------------------------------------
@@ -87,6 +93,7 @@ namespace ua.org.gdg.devfest
         {
             ScreenQuestionTextSetActive(true);
             GetReadyTextSetActive(false);
+            _gameOverPanel.HidePanel();
             StopCoroutine(_countdownCoroutine);
             Debug.Log("RAISING OnGameStart");
             _onGameStart.Raise();

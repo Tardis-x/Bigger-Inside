@@ -20600,6 +20600,7 @@ GameObject:
   - component: {fileID: 114914937445598726}
   - component: {fileID: 114818624455346486}
   - component: {fileID: 114612201471421650}
+  - component: {fileID: 114625659272393232}
   m_Layer: 0
   m_Name: Chairs
   m_TagString: Untagged
@@ -21144,6 +21145,7 @@ GameObject:
   - component: {fileID: 114893343721714724}
   - component: {fileID: 114667077904340986}
   - component: {fileID: 114229014560646684}
+  - component: {fileID: 114072982608555088}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -66410,6 +66412,34 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: SAVE SPEAKER FROM STUPID QUESTIONS
+--- !u!114 &114072982608555088
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1887980816679414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3318b37b5a34577429583f0b3833dd78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 29abb88088ae9a44da9da78aadbec4bb, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114893343721714724}
+        m_MethodName: OnNewQuestion
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114095205868585900
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -66932,6 +66962,34 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 114248715965491318}
         m_MethodName: OnSpeakerHit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &114625659272393232
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1867059505458174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3318b37b5a34577429583f0b3833dd78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 29abb88088ae9a44da9da78aadbec4bb, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114248715965491318}
+        m_MethodName: OnNewQuestion
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -82618,6 +82676,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _score: {fileID: 11400000, guid: a3c579eea8d21434ba490ae4a74db8da, type: 2}
   _timeLeft: {fileID: 11400000, guid: e603ac3119ceba840937541215b43942, type: 2}
+  _currentQuestion: {fileID: 11400000, guid: 7954f15677ea9724dadf1626fd55cb02, type: 2}
   _gameOverPanel: {fileID: 114348632761217504}
   _screenQuestionText: {fileID: 114660093442742394}
   _getReadyText: {fileID: 114040657566635928}

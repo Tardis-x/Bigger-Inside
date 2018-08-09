@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 namespace ua.org.gdg.devfest
 {
   public class UIManager : Singleton<UIManager>
   {
-    private GameOverPanelScript _gameOverPanel;
-    private Text _screenQuestionText;
-    private Text _getReadyText;
-    
     //---------------------------------------------------------------------
     // Editor
     //---------------------------------------------------------------------
@@ -35,14 +28,6 @@ namespace ua.org.gdg.devfest
     [SerializeField] private Material _answerButtonMaterial;
     [SerializeField] private Material _transparentButtonMaterial;
     
-    //---------------------------------------------------------------------
-    // Property
-    //---------------------------------------------------------------------
-
-    public Text ScreenQuestionText
-    {
-      get { return _screenQuestionText; }
-    }
 
     //-----------------------------------------------
     // Messages
@@ -56,18 +41,10 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     // Events
     //---------------------------------------------------------------------
-    
-    public void OnEnvironmentInstantiated()
-    {
-      var environmentInstance = GameManager.Instance.EnvironmentInstance;
-      
-      _gameOverPanel = environmentInstance.GameOverPanel;
-      _screenQuestionText = environmentInstance.ScreenQuestionText;
-      _getReadyText = environmentInstance.GetReadyText;
-    }
 
     public void OnGameOver()
     {
+      Debug.Log("UI Manager: OnGameOver");
       HealthTimePanel.HidePanel();
       ButtonsToPauseMode();
     }
@@ -88,13 +65,17 @@ namespace ua.org.gdg.devfest
       ToAnswerMode();
     }
 
+    public void OnNewQuestion()
+    {
+      ButtonsToPlayMode();
+    }
+
     //-----------------------------------------------
     // Public
     //-----------------------------------------------
 
     private void ResetUI()
     {
-      _gameOverPanel.HidePanel();
       HealthTimePanel.ResetPanel();
       HealthTimePanel.ShowPanel();
       ButtonsToPlayMode();
@@ -109,6 +90,7 @@ namespace ua.org.gdg.devfest
 
     public void ButtonsToPauseMode()
     {
+      Debug.Log("UI Manager: ButtonsToPauseMode");
       Instance.ShowPlayButton();
       Instance.HideAnswerButton();
       Instance.HideHitButton();
@@ -125,13 +107,9 @@ namespace ua.org.gdg.devfest
     // Internal
     //---------------------------------------------------------------------
 
-    private void GetReadyTextSetActive(bool value)
-    {
-      if(_getReadyText != null) _getReadyText.gameObject.SetActive(value);
-    }
-
     private void HideHitButton()
     {
+      Debug.Log("UI Manager: Hide hit");
       Instance.HitVirtualButton.SetVirtualButtonMaterial(_transparentButtonMaterial);
       Instance.HitVirtualButton.SetButtonEnabled(false);
     }
@@ -144,6 +122,7 @@ namespace ua.org.gdg.devfest
 
     private void HideAnswerButton()
     {
+      Debug.Log("UI Manager: HideAnswerButton");
       Instance.AnswerVirtualButton.SetVirtualButtonMaterial(_transparentButtonMaterial);
       Instance.AnswerVirtualButton.SetButtonEnabled(false);
     }
@@ -162,6 +141,7 @@ namespace ua.org.gdg.devfest
 
     private void ShowPlayButton()
     {
+      Debug.Log("UI Manager: ShowPlayButton");
       Instance.PlayVirtualButton.SetVirtualButtonMaterial(_playButtonMaterial);
       Instance.PlayVirtualButton.SetButtonEnabled(true);
     }

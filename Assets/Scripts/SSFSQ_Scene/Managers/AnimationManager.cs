@@ -4,8 +4,6 @@ namespace ua.org.gdg.devfest
 {
 	public class AnimationManager : Singleton<AnimationManager>
 	{
-		private CrowdControlScript _crowdControl;
-		
 		//-----------------------------------------------
 		// Editor
 		//-----------------------------------------------
@@ -16,21 +14,10 @@ namespace ua.org.gdg.devfest
 		// Property
 		//---------------------------------------------------------------------
 
-		public CrowdControlScript CrowdControl
-		{
-			get { return _crowdControl; }
-		}
 		
 		//---------------------------------------------------------------------
 		// Events
 		//---------------------------------------------------------------------
-		
-		public void OnEnvironmentInstantiated()
-		{
-			var environmentInstance = GameManager.Instance.EnvironmentInstance;
-			
-			_crowdControl = environmentInstance.CrowdControl;
-		}
 
 		public void OnGameOver()
 		{
