@@ -11,6 +11,7 @@ namespace ua.org.gdg.devfest
     [Header("Events")]
     [SerializeField] private IntVariable _brainsCount;
     [SerializeField] private IntVariable _starsCount;
+    [SerializeField] private QuestionVariable _currentQuestion;
 
     [Space]
     [SerializeField] private Animator _animator;
@@ -50,6 +51,16 @@ namespace ua.org.gdg.devfest
     {
       StopBeingScared();
       StopBeingDead();
+    }
+
+    public void OnAnswer()
+    {
+      Answer(_currentQuestion.Value.IsGood);
+    }
+
+    public void OnHit()
+    {
+      Hit();
     }
 
     //---------------------------------------------------------------------

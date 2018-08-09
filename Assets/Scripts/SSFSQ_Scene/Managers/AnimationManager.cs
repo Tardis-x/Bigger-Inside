@@ -5,7 +5,6 @@ namespace ua.org.gdg.devfest
 	public class AnimationManager : Singleton<AnimationManager>
 	{
 		private CrowdControlScript _crowdControl;
-		private SpeakerAnimationScript _speakerAnimation;
 		
 		//-----------------------------------------------
 		// Editor
@@ -21,11 +20,6 @@ namespace ua.org.gdg.devfest
 		{
 			get { return _crowdControl; }
 		}
-
-		public SpeakerAnimationScript SpeakerAnimation
-		{
-			get { return _speakerAnimation; }
-		}
 		
 		//---------------------------------------------------------------------
 		// Events
@@ -36,7 +30,6 @@ namespace ua.org.gdg.devfest
 			var environmentInstance = GameManager.Instance.EnvironmentInstance;
 			
 			_crowdControl = environmentInstance.CrowdControl;
-			_speakerAnimation = environmentInstance.SpeakerAnimation;
 		}
 
 		public void OnGameOver()

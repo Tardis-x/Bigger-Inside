@@ -10,20 +10,20 @@ namespace ua.org.gdg.devfest
   {
     private Environment _environmentInstance;
     
-    private QuestionModel _currentQuestion;
-    
     //Questions
     private readonly QuestionModel[] _questions = {new QuestionModel
       {
-        isGood = true,
+        IsGood = true,
         Text = "Good question"
       }, 
       new QuestionModel
       {
-        isGood = false,
+        IsGood = false,
         Text = "Bad question"
       }
     };
+
+    private PlayerChoice _playerChoice;
     
     //---------------------------------------------------------------------
     // Property
@@ -44,6 +44,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] private IntVariable _score;
     [SerializeField] private IntVariable _brainsCount;
     [SerializeField] private IntVariable _starsCount;
+    [SerializeField] private QuestionVariable _currentQuestion;
 
     [Space]
     [Header("Events")] 
@@ -56,6 +57,12 @@ namespace ua.org.gdg.devfest
     [Space] 
     [Header("Prefabs")] 
     [SerializeField] private GameObject _environment;
+
+    [Space] 
+    [Header("Animations")] 
+    [SerializeField] private AnimationClip _talkingClip;
+    [SerializeField] private AnimationClip _yellingClip;
+    [SerializeField] private AnimationClip _angryClip;
 
     [Space]
     [Header("Targets")]
@@ -93,6 +100,31 @@ namespace ua.org.gdg.devfest
       Invoke("NewGame", 0.1f);
     }
 
+    public void OnAnswer()
+    {
+      _playerChoice = PlayerChoice.Answer;
+    }
+
+    public void OnHit()
+    {
+      _playerChoice = PlayerChoice.Hit;
+    }
+
+    public void OnSpeakerAnimationEnd()
+    {
+      switch (_playerChoice)
+      {
+          case PlayerChoice.Answer:
+            Answer();
+            break;
+          case PlayerChoice.Hit:
+            Hit();
+            break;
+          default:
+            return;
+      }
+    }
+
     //---------------------------------------------------------------------
     // Public
     //---------------------------------------------------------------------
@@ -104,22 +136,22 @@ namespace ua.org.gdg.devfest
       GameActive = true;
 
       ResetHealthAndScore();
-      
-      StartCoroutine(AwaitSpeakerReady(AskQuestion));
+
+      AskQuestion();
     }
 
     public void Answer()
     {
-      AnimationManager.Instance.SpeakerAnimation.Answer(_currentQuestion.isGood);
-      
-      if(GameActive) StartCoroutine(AwaitSpeakerReady(OnAnswer));
+      if(!_currentQuestion.Value.IsGood) SubtractBrain();
+      else _score.RuntimeValue++;
+      AskQuestion();
     }
 
     public void Hit()
     {
-      AnimationManager.Instance.SpeakerAnimation.Hit();
-      
-      if(GameActive) StartCoroutine(AwaitSpeakerReady(OnHit));
+      if(_currentQuestion.Value.IsGood) SubtractStar();
+      else _score.RuntimeValue++;
+      AskQuestion();
     }
 
     //---------------------------------------------------------------------
@@ -151,42 +183,18 @@ namespace ua.org.gdg.devfest
     {
       SubtractStar();
       SubtractBrain();
-      StartCoroutine(AwaitSpeakerReady(AskQuestion));
+      AskQuestion();
     }
 
     private void AskQuestion()
     {
       if(!GameActive) return;
       
-      _currentQuestion = GetQuestion();
-      UIManager.Instance.ScreenQuestionText.text = _currentQuestion.Text;
+      _currentQuestion.Value = GetQuestion();
+      UIManager.Instance.ScreenQuestionText.text = _currentQuestion.Value.Text;
       UIManager.Instance.HealthTimePanel.StartCountdown(_timeForAnswer, OnTimeout);
       UIManager.Instance.ButtonsToPlayMode();
       AnimationManager.Instance.CrowdControl.AskQuestion();
-    }
-
-    private IEnumerator AwaitSpeakerReady(Action onSpeakerReady)
-    {
-      while (AnimationManager.Instance.SpeakerAnimation.AnimationBusy)
-      {
-        yield return false;
-      }
-
-      onSpeakerReady();
-    }
-    
-    private void OnHit()
-    {
-      if(_currentQuestion.isGood) SubtractStar();
-      else _score.RuntimeValue++;
-      AskQuestion();
-    }
-
-    private void OnAnswer()
-    {
-      if(!_currentQuestion.isGood) SubtractBrain();
-      else _score.RuntimeValue++;
-      AskQuestion();
     }
     
     private void SubtractStar()

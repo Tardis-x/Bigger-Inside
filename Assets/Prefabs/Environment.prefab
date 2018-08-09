@@ -5552,6 +5552,8 @@ GameObject:
   - component: {fileID: 114213146982501752}
   - component: {fileID: 114691169719035490}
   - component: {fileID: 114011890039811144}
+  - component: {fileID: 114253114934539244}
+  - component: {fileID: 114333060092199792}
   m_Layer: 0
   m_Name: Speaker
   m_TagString: Untagged
@@ -66493,6 +66495,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _brainsCount: {fileID: 11400000, guid: 00462910c70cd454d80e659be0f3b8e3, type: 2}
   _starsCount: {fileID: 11400000, guid: c3aeef1eed1df6b428386930d2069f67, type: 2}
+  _currentQuestion: {fileID: 11400000, guid: 7954f15677ea9724dadf1626fd55cb02, type: 2}
   _animator: {fileID: 95260811036195890}
   _speakerTransform: {fileID: 4919156603937474}
   _startPosition: {fileID: 4250160496955682}
@@ -66580,6 +66583,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _starsCount: {fileID: 11400000, guid: c3aeef1eed1df6b428386930d2069f67, type: 2}
   _boxingGlove: {fileID: 114120386023618974}
+--- !u!114 &114253114934539244
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1225821117279040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3318b37b5a34577429583f0b3833dd78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: e7093e536f9ce3b498803a728fd24782, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114213146982501752}
+        m_MethodName: OnAnswer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114296057396948894
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -66640,6 +66671,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 95672616444141916}
+--- !u!114 &114333060092199792
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1225821117279040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3318b37b5a34577429583f0b3833dd78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 0f433bc1095f78a4f8cabfeded596fc0, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114213146982501752}
+        m_MethodName: OnHit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114348632761217504
 MonoBehaviour:
   m_ObjectHideFlags: 1
