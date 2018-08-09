@@ -22,9 +22,9 @@ namespace ua.org.gdg.devfest
 
     [Space] 
     [Header("Virtual Buttons")] 
-    public VirtualButtonEventHandler PlayVirtualButton;
-    public VirtualButtonEventHandler AnswerVirtualButton;
-    public VirtualButtonEventHandler HitVirtualButton;
+    [SerializeField] private VirtualButtonEventHandler _playVirtualButton;
+    [SerializeField] private VirtualButtonEventHandler _answerVirtualButton;
+    [SerializeField] private VirtualButtonEventHandler _hitVirtualButton;
 
     [Space] 
     [Header("VirtualButtonsMaterials")] 
@@ -133,40 +133,40 @@ namespace ua.org.gdg.devfest
     private void HideHitButton()
     {
       Debug.Log("UI Manager: Hide hit");
-      HitVirtualButton.SetVirtualButtonMaterial(_transparentButtonMaterial);
-      HitVirtualButton.SetButtonEnabled(false);
+      _hitVirtualButton.SetVirtualButtonMaterial(_transparentButtonMaterial);
+      _hitVirtualButton.SetButtonEnabled(false);
     }
 
     private void ShowHitButton()
     {
-      HitVirtualButton.SetVirtualButtonMaterial(_hitButtonMaterial);
-      HitVirtualButton.SetButtonEnabled(true);
+      _hitVirtualButton.SetVirtualButtonMaterial(_hitButtonMaterial);
+      _hitVirtualButton.SetButtonEnabled(true);
     }
 
     private void HideAnswerButton()
     {
       Debug.Log("UI Manager: HideAnswerButton");
-      AnswerVirtualButton.SetVirtualButtonMaterial(_transparentButtonMaterial);
-      AnswerVirtualButton.SetButtonEnabled(false);
+      _answerVirtualButton.SetVirtualButtonMaterial(_transparentButtonMaterial);
+      _answerVirtualButton.SetButtonEnabled(false);
     }
 
     private void ShowAnswerButton()
     {
-      AnswerVirtualButton.SetVirtualButtonMaterial(_answerButtonMaterial);
-      AnswerVirtualButton.SetButtonEnabled(true);
+      _answerVirtualButton.SetVirtualButtonMaterial(_answerButtonMaterial);
+      _answerVirtualButton.SetButtonEnabled(true);
     }
 
     private void HidePlayButton()
     {
-      PlayVirtualButton.SetVirtualButtonMaterial(_transparentButtonMaterial);
-      PlayVirtualButton.SetButtonEnabled(false);
+      _playVirtualButton.SetVirtualButtonMaterial(_transparentButtonMaterial);
+      _playVirtualButton.SetButtonEnabled(false);
     }
 
     private void ShowPlayButton()
     {
       Debug.Log("UI Manager: ShowPlayButton");
-      PlayVirtualButton.SetVirtualButtonMaterial(_playButtonMaterial);
-      PlayVirtualButton.SetButtonEnabled(true);
+      _playVirtualButton.SetVirtualButtonMaterial(_playButtonMaterial);
+      _playVirtualButton.SetButtonEnabled(true);
     }
   }
 }
