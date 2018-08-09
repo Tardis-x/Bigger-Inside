@@ -1280,13 +1280,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1158121466}
   - component: {fileID: 1158121468}
-  - component: {fileID: 1158121467}
   - component: {fileID: 1158121469}
   - component: {fileID: 1158121470}
   - component: {fileID: 1158121471}
   - component: {fileID: 1158121473}
   - component: {fileID: 1158121472}
   - component: {fileID: 1158121474}
+  - component: {fileID: 1158121467}
   m_Layer: 0
   m_Name: UI Manager
   m_TagString: Untagged
@@ -1318,12 +1318,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3318b37b5a34577429583f0b3833dd78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 865f4bbc7315cf040a8041cb7efc27f4, type: 2}
+  Event: {fileID: 11400000, guid: 8f69154f75462e84cba709804d700995, type: 2}
   Response:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1158121468}
-        m_MethodName: OnEnvironmentInstantiated
+        m_MethodName: OnSpeakerAnimationEnd
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1347,7 +1347,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _score: {fileID: 11400000, guid: a3c579eea8d21434ba490ae4a74db8da, type: 2}
-  HealthTimePanel: {fileID: 1968428801}
+  _brainsCount: {fileID: 11400000, guid: 00462910c70cd454d80e659be0f3b8e3, type: 2}
+  _starsCount: {fileID: 11400000, guid: c3aeef1eed1df6b428386930d2069f67, type: 2}
+  _playerChoice: {fileID: 11400000, guid: 7edaca9edf67ca54883fd84a4d257104, type: 2}
+  _currentQuestion: {fileID: 11400000, guid: 7954f15677ea9724dadf1626fd55cb02, type: 2}
+  _timeForAnswer: 5
+  _healthTimePanel: {fileID: 1968428801}
   PlayVirtualButton: {fileID: 1665490023}
   AnswerVirtualButton: {fileID: 1241564780}
   HitVirtualButton: {fileID: 1900831090}
@@ -2517,6 +2522,7 @@ MonoBehaviour:
   _brainsCount: {fileID: 11400000, guid: 00462910c70cd454d80e659be0f3b8e3, type: 2}
   _starsCount: {fileID: 11400000, guid: c3aeef1eed1df6b428386930d2069f67, type: 2}
   _currentQuestion: {fileID: 11400000, guid: 7954f15677ea9724dadf1626fd55cb02, type: 2}
+  _playerChoice: {fileID: 11400000, guid: 7edaca9edf67ca54883fd84a4d257104, type: 2}
   _onGameOver: {fileID: 11400000, guid: 93a255c37338e054b9b61b4cdab7bee8, type: 2}
   _onNewQuestion: {fileID: 11400000, guid: 29abb88088ae9a44da9da78aadbec4bb, type: 2}
   _timeForAnswer: 5
@@ -2924,9 +2930,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1968428800}
   - component: {fileID: 1968428801}
-  - component: {fileID: 1968428802}
-  - component: {fileID: 1968428804}
-  - component: {fileID: 1968428803}
   m_Layer: 5
   m_Name: HealthTimePanel
   m_TagString: Untagged
@@ -2966,8 +2969,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdc060458e7faf84d97a2a37f00814dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeForAnswer: {fileID: 11400000, guid: 22f3aa40faa8dba46a2bd934301af995, type: 2}
-  _currentQuestion: {fileID: 11400000, guid: 7954f15677ea9724dadf1626fd55cb02, type: 2}
   _onTimeout: {fileID: 11400000, guid: 394cb8ce0de00ce4c863d54b7ef2cf81, type: 2}
   _timerImage: {fileID: 55336123}
   _timerRefreshRate: 100
@@ -2977,90 +2978,6 @@ MonoBehaviour:
     type: 2}
   _starPrefab: {fileID: 224786647817231946, guid: 3534cd1849d873e4f85f612c18206406,
     type: 2}
---- !u!114 &1968428802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1968428799}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3318b37b5a34577429583f0b3833dd78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 29abb88088ae9a44da9da78aadbec4bb, type: 2}
-  Response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1968428801}
-        m_MethodName: OnNewQuestion
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
---- !u!114 &1968428803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1968428799}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3318b37b5a34577429583f0b3833dd78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 0f433bc1095f78a4f8cabfeded596fc0, type: 2}
-  Response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1968428801}
-        m_MethodName: OnHit
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
---- !u!114 &1968428804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1968428799}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3318b37b5a34577429583f0b3833dd78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: e7093e536f9ce3b498803a728fd24782, type: 2}
-  Response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1968428801}
-        m_MethodName: OnAnswer
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!1001 &2041992481
 Prefab:
   m_ObjectHideFlags: 0

@@ -221,13 +221,11 @@ namespace ua.org.gdg.devfest
 
     private void ResetBrains()
     {
-      UIManager.Instance.HealthTimePanel.SetBrainsCount(_brainsCount.InitialValue);
       _brainsCount.ResetValue();
     }
 
     private void ResetStars()
     {
-      UIManager.Instance.HealthTimePanel.SetStarsCount(_starsCount.InitialValue);
       _starsCount.ResetValue();
     }
   }

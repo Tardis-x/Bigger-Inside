@@ -2,7 +2,7 @@
 
 namespace ua.org.gdg.devfest
 {
-  public class UIManager : Singleton<UIManager>
+  public class UIManager : MonoBehaviour
   {
     //---------------------------------------------------------------------
     // Editor
@@ -10,10 +10,15 @@ namespace ua.org.gdg.devfest
 
     [Header("Variables")] 
     [SerializeField] private IntVariable _score;
+    [SerializeField] private IntVariable _brainsCount;
+    [SerializeField] private IntVariable _starsCount;
+    [SerializeField] private PlayerChoiceVariable _playerChoice;
+    [SerializeField] private QuestionVariable _currentQuestion;
+    [SerializeField] private int _timeForAnswer = 5;
     
     [Space]
     [Header("Overlay UI")] 
-    public HealthTimePanelScript HealthTimePanel;
+    [SerializeField] private HealthTimePanelScript _healthTimePanel;
 
     [Space] 
     [Header("Virtual Buttons")] 
@@ -45,7 +50,7 @@ namespace ua.org.gdg.devfest
     public void OnGameOver()
     {
       Debug.Log("UI Manager: OnGameOver");
-      HealthTimePanel.HidePanel();
+      _healthTimePanel.HidePanel();
       ButtonsToPauseMode();
     }
 
@@ -68,6 +73,22 @@ namespace ua.org.gdg.devfest
     public void OnNewQuestion()
     {
       ButtonsToPlayMode();
+      _healthTimePanel.StartCountdown(_timeForAnswer);
+    }
+
+    public void OnSpeakerAnimationEnd()
+    {
+      switch (_playerChoice.Value)
+      {
+        case PlayerChoice.Answer:
+          if(!_currentQuestion.Value.IsGood) _healthTimePanel.SubtractBrain();
+          break;
+        case PlayerChoice.Hit:
+          if(_currentQuestion.Value.IsGood) _healthTimePanel.SubtractStar();
+          break;
+        default: 
+          return;
+      }
     }
 
     //-----------------------------------------------
@@ -76,31 +97,33 @@ namespace ua.org.gdg.devfest
 
     private void ResetUI()
     {
-      HealthTimePanel.ResetPanel();
-      HealthTimePanel.ShowPanel();
+      _healthTimePanel.ResetPanel();
+      _healthTimePanel.SetBrainsCount(_brainsCount.InitialValue);
+      _healthTimePanel.SetStarsCount(_starsCount.InitialValue);
+      _healthTimePanel.ShowPanel();
       ButtonsToPlayMode();
     }
 
     public void ButtonsToPlayMode()
     {
-      Instance.HidePlayButton();
-      Instance.ShowAnswerButton();
-      Instance.ShowHitButton();
+      HidePlayButton();
+      ShowAnswerButton();
+      ShowHitButton();
     }
 
     public void ButtonsToPauseMode()
     {
       Debug.Log("UI Manager: ButtonsToPauseMode");
-      Instance.ShowPlayButton();
-      Instance.HideAnswerButton();
-      Instance.HideHitButton();
+      ShowPlayButton();
+      HideAnswerButton();
+      HideHitButton();
     }
 
     public void ToAnswerMode()
     {
       HideAnswerButton();
       HideHitButton();
-      HealthTimePanel.PauseCountDown(true);
+      _healthTimePanel.PauseCountDown(true);
     }
 
     //---------------------------------------------------------------------
@@ -110,27 +133,27 @@ namespace ua.org.gdg.devfest
     private void HideHitButton()
     {
       Debug.Log("UI Manager: Hide hit");
-      Instance.HitVirtualButton.SetVirtualButtonMaterial(_transparentButtonMaterial);
-      Instance.HitVirtualButton.SetButtonEnabled(false);
+      HitVirtualButton.SetVirtualButtonMaterial(_transparentButtonMaterial);
+      HitVirtualButton.SetButtonEnabled(false);
     }
 
     private void ShowHitButton()
     {
-      Instance.HitVirtualButton.SetVirtualButtonMaterial(_hitButtonMaterial);
-      Instance.HitVirtualButton.SetButtonEnabled(true);
+      HitVirtualButton.SetVirtualButtonMaterial(_hitButtonMaterial);
+      HitVirtualButton.SetButtonEnabled(true);
     }
 
     private void HideAnswerButton()
     {
       Debug.Log("UI Manager: HideAnswerButton");
-      Instance.AnswerVirtualButton.SetVirtualButtonMaterial(_transparentButtonMaterial);
-      Instance.AnswerVirtualButton.SetButtonEnabled(false);
+      AnswerVirtualButton.SetVirtualButtonMaterial(_transparentButtonMaterial);
+      AnswerVirtualButton.SetButtonEnabled(false);
     }
 
     private void ShowAnswerButton()
     {
-      Instance.AnswerVirtualButton.SetVirtualButtonMaterial(_answerButtonMaterial);
-      Instance.AnswerVirtualButton.SetButtonEnabled(true);
+      AnswerVirtualButton.SetVirtualButtonMaterial(_answerButtonMaterial);
+      AnswerVirtualButton.SetButtonEnabled(true);
     }
 
     private void HidePlayButton()
@@ -142,8 +165,8 @@ namespace ua.org.gdg.devfest
     private void ShowPlayButton()
     {
       Debug.Log("UI Manager: ShowPlayButton");
-      Instance.PlayVirtualButton.SetVirtualButtonMaterial(_playButtonMaterial);
-      Instance.PlayVirtualButton.SetButtonEnabled(true);
+      PlayVirtualButton.SetVirtualButtonMaterial(_playButtonMaterial);
+      PlayVirtualButton.SetButtonEnabled(true);
     }
   }
 }

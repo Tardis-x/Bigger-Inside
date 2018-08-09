@@ -10,11 +10,6 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     // Editor
     //---------------------------------------------------------------------
-    [Header("Public Variables")] 
-    [SerializeField] private IntVariable _timeForAnswer;
-    [SerializeField] private QuestionVariable _currentQuestion;
-    [SerializeField] private PlayerChoiceVariable _playerChoice;
-    
     [Header("Events")]
     [SerializeField] private GameEvent _onTimeout;
 
@@ -34,33 +29,6 @@ namespace ua.org.gdg.devfest
     private void Awake()
     {
       _timerRefreshRate = 1 / _timerRefreshRate;
-    }
-    
-    //---------------------------------------------------------------------
-    // Messages
-    //---------------------------------------------------------------------
-
-    public void OnNewQuestion()
-    {
-      Debug.Log("HealthTimePanel: OnNewQuestion");
-      StartCountdown(_timeForAnswer.RuntimeValue);
-    }
-
-    public void OnSpeakerAnimationEnd()
-    {
-      Debug.Log("HealthTimePanel: OnAnswer");
-      switch (_playerChoice.Value)
-      {
-          case PlayerChoice.Answer:
-            if(!_currentQuestion.Value.IsGood) SubtractBrain();
-            break;
-          case PlayerChoice.Hit:
-            if(_currentQuestion.Value.IsGood) SubtractStar();
-            break;
-          default: 
-            return;
-      }
-      
     }
 
     //---------------------------------------------------------------------
