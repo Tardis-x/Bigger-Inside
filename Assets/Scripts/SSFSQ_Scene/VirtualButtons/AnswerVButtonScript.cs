@@ -9,10 +9,7 @@ namespace ua.org.gdg.devfest
     
     public override void OnClick()
     {
-      if (GameManager.Instance.GameActive)
-      {
         _onAnswer.Raise();
-      }
     }
   }
 }

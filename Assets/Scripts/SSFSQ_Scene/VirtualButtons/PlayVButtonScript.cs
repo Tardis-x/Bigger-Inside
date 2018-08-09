@@ -16,11 +16,8 @@ namespace ua.org.gdg.devfest
     public override void OnClick()
     {
       Debug.Log("Play Button PRESSED!");
-      if (!GameManager.Instance.GameActive)
-      {
         Debug.Log("Raising OnCountDownStart");
         _onCountdownStart.Raise();
-      }
     }
   }
 }

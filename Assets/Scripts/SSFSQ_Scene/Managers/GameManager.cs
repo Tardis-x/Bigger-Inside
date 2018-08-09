@@ -4,7 +4,7 @@ using Random = System.Random;
 
 namespace ua.org.gdg.devfest
 {
-  public class GameManager : Singleton<GameManager>
+  public class GameManager : MonoBehaviour
   {
     //Questions
     private readonly QuestionModel[] _questions = {new QuestionModel
