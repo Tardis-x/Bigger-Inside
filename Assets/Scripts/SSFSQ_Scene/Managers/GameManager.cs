@@ -73,6 +73,11 @@ namespace ua.org.gdg.devfest
       
       _text.text = "ARCore support: " + arCoreSupport;
     }
+
+    public void OnContentPlaced(GameObject environment)
+    {
+      _planeFinder.SetActive(false);
+    }
     
     //---------------------------------------------------------------------
     // Events
