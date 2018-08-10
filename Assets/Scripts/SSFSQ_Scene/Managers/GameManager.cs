@@ -77,6 +77,7 @@ namespace ua.org.gdg.devfest
     public void OnContentPlaced(GameObject environment)
     {
       _planeFinder.SetActive(false);
+      _uiManager.ShowARCorePanel(true);
     }
     
     //---------------------------------------------------------------------

@@ -9,32 +9,29 @@ namespace ua.org.gdg.devfest
         // Editor
         //---------------------------------------------------------------------
 
-        [Header("Events")] 
-        [SerializeField] private GameEvent _onCountdownStart;
-        [SerializeField] private GameEvent _onHit;
-        [SerializeField] private GameEvent _onAnswer;
+        [Header("UI")]
+        [SerializeField] private GameObject _buttonPlay;
+        [SerializeField] private GameObject _buttonAnswer;
+        [SerializeField] private GameObject _buttonHit;
 
 
         //---------------------------------------------------------------------
         // Public
         //---------------------------------------------------------------------
 
-        public void OnButtonPlayClick()
+        public void ShowPlayButton(bool value)
         {
-            Debug.Log("BUTTON PLAY PRESSED");
-            _onCountdownStart.Raise();
+            _buttonPlay.SetActive(value);
         }
 
-        public void OnButtonHitClick()
+        public void ShowAnswerButton(bool value)
         {
-            Debug.Log("BUTTON HIT PRESSED");
-            _onHit.Raise();
+            _buttonAnswer.SetActive(value);
         }
-
-        public void OnButtonAnswerClick()
+        
+        public void ShowHitButton(bool value)
         {
-            Debug.Log("BUTTON ANSWER PRESSED");
-            _onAnswer.Raise();
+            _buttonHit.SetActive(value);
         }
     }
 }

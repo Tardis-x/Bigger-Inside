@@ -17,6 +17,7 @@ namespace ua.org.gdg.devfest
     [Space]
     [Header("Overlay UI")] 
     [SerializeField] private HealthTimePanelScript _healthTimePanel;
+    [SerializeField] private ARCorePanelScript _arCorePanel;
 
     [Space] 
     [Header("Virtual Buttons")] 
@@ -119,6 +120,11 @@ namespace ua.org.gdg.devfest
       _healthTimePanel.SubtractStar();
     }
 
+    public void ShowARCorePanel(bool value)
+    {
+      _arCorePanel.gameObject.SetActive(value);
+    }
+
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
@@ -128,12 +134,14 @@ namespace ua.org.gdg.devfest
       Debug.Log("UI Manager: Hide hit");
       _hitVirtualButton.SetVirtualButtonMaterial(_transparentButtonMaterial);
       _hitVirtualButton.SetButtonEnabled(false);
+      _arCorePanel.ShowHitButton(false);
     }
 
     private void ShowHitButton()
     {
       _hitVirtualButton.SetVirtualButtonMaterial(_hitButtonMaterial);
       _hitVirtualButton.SetButtonEnabled(true);
+      _arCorePanel.ShowHitButton(true);
     }
 
     private void HideAnswerButton()
@@ -141,18 +149,21 @@ namespace ua.org.gdg.devfest
       Debug.Log("UI Manager: HideAnswerButton");
       _answerVirtualButton.SetVirtualButtonMaterial(_transparentButtonMaterial);
       _answerVirtualButton.SetButtonEnabled(false);
+      _arCorePanel.ShowAnswerButton(false);
     }
 
     private void ShowAnswerButton()
     {
       _answerVirtualButton.SetVirtualButtonMaterial(_answerButtonMaterial);
       _answerVirtualButton.SetButtonEnabled(true);
+      _arCorePanel.ShowAnswerButton(true);
     }
 
     private void HidePlayButton()
     {
       _playVirtualButton.SetVirtualButtonMaterial(_transparentButtonMaterial);
       _playVirtualButton.SetButtonEnabled(false);
+      _arCorePanel.ShowPlayButton(false);
     }
 
     private void ShowPlayButton()
@@ -160,6 +171,7 @@ namespace ua.org.gdg.devfest
       Debug.Log("UI Manager: ShowPlayButton");
       _playVirtualButton.SetVirtualButtonMaterial(_playButtonMaterial);
       _playVirtualButton.SetButtonEnabled(true);
+      _arCorePanel.ShowPlayButton(true);
     }
   }
 }
