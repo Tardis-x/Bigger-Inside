@@ -85556,7 +85556,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 30
+      scalar: 0.15
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -85672,7 +85672,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.01
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -86078,7 +86078,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 1
+      value: 0.03
       mode: 0
       spread: 0
       speed:
@@ -90083,7 +90083,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 1
+  moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
@@ -90093,7 +90093,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 1.5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -90146,7 +90146,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 90
+      scalar: 0.53
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -90262,7 +90262,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 4
+      scalar: 0.025
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -90584,7 +90584,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 15
+      scalar: 0.07
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -90645,7 +90645,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: -72.61, y: 0, z: 0}
-    m_Scale: {x: 90, y: 40, z: 1}
+    m_Scale: {x: 0.5, y: 0.2, z: 0.5}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
