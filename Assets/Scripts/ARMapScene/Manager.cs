@@ -60,7 +60,8 @@ namespace ua.org.gdg.devfest
       
 			if (!arCoreSupport)
 			{
-				Instantiate(_environment, _imageTarget.transform);        
+				Instantiate(_environment, _imageTarget.transform);  
+				EnableObjectClick();
 			}
 		}
 
