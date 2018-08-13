@@ -16,6 +16,12 @@ namespace ua.org.gdg.devfest
 
     private bool _fingerMoved;
     private InteractableObject _lastInterracted;
+    
+    //---------------------------------------------------------------------
+    // Property
+    //---------------------------------------------------------------------
+
+    public bool IsInteractable { get; set; }
 
     //---------------------------------------------------------------------
     // Messages
@@ -24,6 +30,8 @@ namespace ua.org.gdg.devfest
     // Update is called once per frame
     void Update()
     {
+      if(!IsInteractable) return;
+      
       Touch touch = new Touch();
 
       try

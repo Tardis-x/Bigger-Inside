@@ -20,6 +20,7 @@ namespace ua.org.gdg.devfest
 		[Header("UI")] 
 		[SerializeField] private GameObject _descriptionPanel;
 		[SerializeField] private GameObject _schedulePanel;
+		[SerializeField] private ObjectClick _objectClick;
 		
 		//---------------------------------------------------------------------
 		// Events
@@ -40,10 +41,11 @@ namespace ua.org.gdg.devfest
 			PrepareScene(arCoreSupport);
 		}
 
-		public void OnContentPlaced(GameObject environment)
+		public void OnContentPlaced(GameObject anchor)
 		{
 			_planeFinder.SetActive(false);
 			ShowFirebaseUI(false);
+			Invoke("EnableObjectClick", 0.5f);
 		}
 		
 		//---------------------------------------------------------------------
@@ -66,6 +68,11 @@ namespace ua.org.gdg.devfest
 		{
 			_descriptionPanel.SetActive(value);
 			_schedulePanel.SetActive(value);
+		}
+
+		private void EnableObjectClick()
+		{
+			_objectClick.IsInteractable = true;
 		}
 	}
 }
