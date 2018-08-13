@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Vuforia;
 
 namespace ua.org.gdg.devfest
 {
@@ -16,6 +15,20 @@ namespace ua.org.gdg.devfest
 		[Header("Targets")]
 		[SerializeField] private GameObject _imageTarget;
 		[SerializeField] private GameObject _planeFinder;
+
+		[Space] 
+		[Header("UI")] 
+		[SerializeField] private GameObject _descriptionPanel;
+		[SerializeField] private GameObject _schedulePanel;
+		
+		//---------------------------------------------------------------------
+		// Events
+		//---------------------------------------------------------------------
+
+		public void OnTrackingLost()
+		{
+			ShowFirebaseUI(false);
+		}
 		
 		//---------------------------------------------------------------------
 		// Messages
@@ -30,7 +43,7 @@ namespace ua.org.gdg.devfest
 		public void OnContentPlaced(GameObject environment)
 		{
 			_planeFinder.SetActive(false);
-			_planeFinder.GetComponent<PlaneFinderBehaviour>().OnInteractiveHitTest.RemoveAllListeners();
+			ShowFirebaseUI(false);
 		}
 		
 		//---------------------------------------------------------------------
@@ -47,6 +60,12 @@ namespace ua.org.gdg.devfest
 			{
 				Instantiate(_environment, _imageTarget.transform);        
 			}
+		}
+
+		private void ShowFirebaseUI(bool value)
+		{
+			_descriptionPanel.SetActive(value);
+			_schedulePanel.SetActive(value);
 		}
 	}
 }
