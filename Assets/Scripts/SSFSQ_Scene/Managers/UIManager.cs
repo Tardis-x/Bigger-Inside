@@ -48,14 +48,12 @@ namespace ua.org.gdg.devfest
 
     public void OnGameOver()
     {
-      Debug.Log("UI Manager: OnGameOver");
       _healthTimePanel.HidePanel();
       ButtonsToPauseMode();
     }
 
     public void OnCountdownStart()
     {
-      Debug.Log("UI Manager: OnCountDownStart");
       HidePlayButton();
     }
 
@@ -97,7 +95,6 @@ namespace ua.org.gdg.devfest
 
     public void ButtonsToPauseMode()
     {
-      Debug.Log("UI Manager: ButtonsToPauseMode");
       ShowPlayButton();
       HideAnswerButton();
       HideHitButton();
@@ -131,7 +128,6 @@ namespace ua.org.gdg.devfest
 
     private void HideHitButton()
     {
-      Debug.Log("UI Manager: Hide hit");
       _hitVirtualButton.SetVirtualButtonMaterial(_transparentButtonMaterial);
       _hitVirtualButton.SetButtonEnabled(false);
       _arCorePanel.ShowHitButton(false);
@@ -146,7 +142,6 @@ namespace ua.org.gdg.devfest
 
     private void HideAnswerButton()
     {
-      Debug.Log("UI Manager: HideAnswerButton");
       _answerVirtualButton.SetVirtualButtonMaterial(_transparentButtonMaterial);
       _answerVirtualButton.SetButtonEnabled(false);
       _arCorePanel.ShowAnswerButton(false);
@@ -168,7 +163,6 @@ namespace ua.org.gdg.devfest
 
     private void ShowPlayButton()
     {
-      Debug.Log("UI Manager: ShowPlayButton");
       _playVirtualButton.SetVirtualButtonMaterial(_playButtonMaterial);
       _playVirtualButton.SetButtonEnabled(true);
       _arCorePanel.ShowPlayButton(true);

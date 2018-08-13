@@ -15,8 +15,6 @@ namespace ua.org.gdg.devfest
     
     public override void OnClick()
     {
-      Debug.Log("Play Button PRESSED!");
-        Debug.Log("Raising OnCountDownStart");
         _onCountdownStart.Raise();
     }
   }

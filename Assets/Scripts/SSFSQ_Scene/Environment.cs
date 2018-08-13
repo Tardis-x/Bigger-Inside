@@ -71,7 +71,6 @@ namespace ua.org.gdg.devfest
         private void Start()
         {
             _onInstantiated.Raise();
-            Debug.Log("INSTANTIATED IN " + transform.parent.gameObject.name);
         }
     }
 }

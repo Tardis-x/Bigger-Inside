@@ -49,7 +49,6 @@ namespace ua.org.gdg.devfest
         if(!_countDownPaused) _timeLeft -= Time.deltaTime;
       }
       
-      Debug.Log("TimeOut");
       SubtractStar();
       SubtractBrain();
       _onTimeout.Raise();

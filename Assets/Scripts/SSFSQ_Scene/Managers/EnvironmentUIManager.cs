@@ -32,7 +32,6 @@ namespace ua.org.gdg.devfest
 
         public void OnCountdownStart()
         {
-            Debug.Log("Environment: OnCountDownStart");
             GetReadyTextSetActive(true);
             ScreenQuestionTextSetActive(false);
             _gameOverPanel.HidePanel();
@@ -95,7 +94,6 @@ namespace ua.org.gdg.devfest
             GetReadyTextSetActive(false);
             _gameOverPanel.HidePanel();
             StopCoroutine(_countdownCoroutine);
-            Debug.Log("RAISING OnGameStart");
             _onGameStart.Raise();
         }
     }

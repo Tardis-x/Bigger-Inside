@@ -13,7 +13,6 @@ public class SneakerGameEventsHandler : MonoBehaviour {
 
 	public void OnCountdownStart()
 	{
-		Debug.Log("AnimationManager: OnCountDownStart");
 		ShowSneaker(false);
 	}
 

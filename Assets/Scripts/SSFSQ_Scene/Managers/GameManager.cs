@@ -86,19 +86,16 @@ namespace ua.org.gdg.devfest
 
     public void OnGameStart()
     {
-      Debug.Log("Game Manager: OnGameStart");
       Invoke("NewGame", 0.1f);
     }
 
     public void OnAnswer()
     {
-      Debug.Log("Game Manager: OnAnswer");
       _playerChoice = PlayerChoice.Answer;
     }
 
     public void OnHit()
     {
-      Debug.Log("Game Manager: OnHit");
       _playerChoice = PlayerChoice.Hit;
     }
 
@@ -119,7 +116,6 @@ namespace ua.org.gdg.devfest
 
     public void OnTimeout()
     {
-      Debug.Log("Game Manager: OnTimeout");
       SubtractStar();
       SubtractBrain();
       AskQuestion();
@@ -186,7 +182,6 @@ namespace ua.org.gdg.devfest
       if(_brainsCount.RuntimeValue <= 0 || _starsCount.RuntimeValue <= 0) return;
       
       _currentQuestion.Value = GetQuestion();
-      Debug.Log("Game Manager: RAISING OnNewQuestion");
       _onNewQuestion.Raise();
     }
     
@@ -224,10 +219,9 @@ namespace ua.org.gdg.devfest
       return _questions[index];
     }
 
-    public void GameOver()
+    private void GameOver()
     {
       GameActive = false;
-      Debug.Log("RAISING OnGameOver");
       _onGameOver.Raise();
     }
 
