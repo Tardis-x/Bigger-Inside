@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
+using Vuforia;
 
 namespace ua.org.gdg.devfest
 {
@@ -21,6 +23,7 @@ namespace ua.org.gdg.devfest
 		[SerializeField] private GameObject _descriptionPanel;
 		[SerializeField] private GameObject _schedulePanel;
 		[SerializeField] private ObjectClick _objectClick;
+		[SerializeField] private Text _hint;
 		
 		//---------------------------------------------------------------------
 		// Events
@@ -28,7 +31,14 @@ namespace ua.org.gdg.devfest
 
 		public void OnTrackingLost()
 		{
-			ShowFirebaseUI(false);
+			ShowFirebaseUI(false);		
+			_hint.gameObject.SetActive(true);
+			
+			EnableObjectClick(false);
+			
+			_planeFinder.SetActive(true);
+			// _planeFinder.GetComponent<PlaneFinderBehaviour>().OnAutomaticHitTest.AddListener(OnAutomaticHitTest);
+			
 		}
 		
 		//---------------------------------------------------------------------
@@ -44,8 +54,21 @@ namespace ua.org.gdg.devfest
 		public void OnContentPlaced(GameObject anchor)
 		{
 			_planeFinder.SetActive(false);
+			ShowHint(false);
 			ShowFirebaseUI(false);
 			Invoke("EnableObjectClick", 0.5f);
+		}
+
+		public void OnAutomaticHitTest(HitTestResult hitTestResult)
+		{
+			if (hitTestResult == null)
+			{
+				_hint.gameObject.SetActive(true);
+				return;
+			}
+						
+			_hint.gameObject.SetActive(false);
+			// _planeFinder.GetComponent<PlaneFinderBehaviour>().OnAutomaticHitTest.RemoveAllListeners();
 		}
 		
 		//---------------------------------------------------------------------
@@ -74,6 +97,16 @@ namespace ua.org.gdg.devfest
 		private void EnableObjectClick()
 		{
 			_objectClick.IsInteractable = true;
+		}
+	
+		private void EnableObjectClick(bool value)
+		{
+			_objectClick.IsInteractable = value;
+		}
+
+		private void ShowHint(bool value)
+		{
+			_hint.gameObject.SetActive(value);
 		}
 	}
 }
