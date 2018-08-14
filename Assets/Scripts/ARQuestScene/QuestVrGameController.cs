@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,11 +13,16 @@ public class QuestVrGameController : MonoBehaviour
 	[SerializeField]
 	Text _statusText;
 	[SerializeField]
+	Text _descriptionText;
+	[SerializeField]
 	InputField _scoreInputField;
 	[SerializeField]
 	Button _scanButton;
+	[SerializeField] 
+	Text _scanStatusText;
 	
 	QuestManager _questManager;
+	
 	
 	void Awake()
 	{
@@ -56,16 +62,15 @@ public class QuestVrGameController : MonoBehaviour
 	{
 		if (_questManager.questProgress.vrGameData.state)
 		{
+			_descriptionText.text = "";
 			_statusText.gameObject.SetActive(true);
-			_statusText.text = string.Format("You've completed VR game with score {0}!",_questManager.questProgress.vrGameData.score);
-
+			_statusText.text = string.Format("You have completed VR game with score: {0} points!",_questManager.questProgress.vrGameData.gameScore);
 			_scoreInputField.gameObject.SetActive(false);
 			_scanButton.gameObject.SetActive(false);
 		}
 		else
 		{
 			_statusText.gameObject.SetActive(false);
-			
 			_scoreInputField.gameObject.SetActive(true);
 			_scanButton.gameObject.SetActive(true);
 		}
@@ -82,13 +87,32 @@ public class QuestVrGameController : MonoBehaviour
 	public void OnImageScanned(string scannedMarker)
 	{
 		Debug.Log("QuestVrGameController.OnImageScanned");
-
-		if (scannedMarker == "vrGame")
+		
+		if (!_questManager.questProgress.vrGameData.state)
 		{
-			_questManager.CompleteVrGame(Int32.Parse(_scoreInputField.text), this);
-			
-			_mainCamera.gameObject.SetActive(true);
-			_arCamera.gameObject.SetActive(false);
+			if (scannedMarker == "vrGame")
+            {
+            	_scanStatusText.color = Color.green;
+	            _scanStatusText.text = "Congratulations! Step completed!\nLoading next step...";
+	            StartCoroutine(CameraSwitchDelay());
+            }
 		}
+	}
+	
+	IEnumerator CameraSwitchDelay()
+	{
+		//Hide panel's elements for better smoothness
+		_scoreInputField.gameObject.SetActive(false);
+		_scanButton.gameObject.SetActive(false);
+		_statusText.text = "";
+		_descriptionText.text = "";
+		
+		yield return new WaitForSeconds(3);
+		_scanStatusText.text = "";
+		//Switch cameras
+		_mainCamera.gameObject.SetActive(true);
+		_arCamera.gameObject.SetActive(false);
+		
+		_questManager.CompleteVrGame(Int32.Parse(_scoreInputField.text), this);
 	}
 }
