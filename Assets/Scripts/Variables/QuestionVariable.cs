@@ -2,7 +2,7 @@
 
 namespace ua.org.gdg.devfest
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(menuName = "Variables/QuestionVariable")]
     public class QuestionVariable : ScriptableObject
     {
         public QuestionModel Value;

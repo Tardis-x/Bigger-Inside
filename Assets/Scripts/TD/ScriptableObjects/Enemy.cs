@@ -2,7 +2,7 @@
 
 namespace ua.org.gdg.devfest
 {
-  [CreateAssetMenu]
+  [CreateAssetMenu(menuName = "TowerDefence/Enemy")]
   public class Enemy : ScriptableObject
   {
     [SerializeField] private IntReference _hp;
@@ -10,5 +10,6 @@ namespace ua.org.gdg.devfest
     [SerializeField] private FloatReference _speed;
     [SerializeField] private IntReference _moneyPerLevel;
     [SerializeField] private IntReference _hpPerLevel;
+    [SerializeField] private EnemyType _type;
   }
 }
