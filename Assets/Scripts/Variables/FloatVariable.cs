@@ -4,13 +4,13 @@ using UnityEngine;
 namespace ua.org.gdg.devfest
 {
   [CreateAssetMenu]
-  public class IntVariable : ScriptableObject, ISerializationCallbackReceiver
+  public class FloatVariable : ScriptableObject, ISerializationCallbackReceiver
   {
-    [SerializeField] private int _initialValue;
+    [SerializeField] private float _initialValue;
 
-    [NonSerialized] public int RuntimeValue;
+    [NonSerialized] public float RuntimeValue;
 
-    public int InitialValue
+    public float InitialValue
     {
       get { return _initialValue; }
     }
