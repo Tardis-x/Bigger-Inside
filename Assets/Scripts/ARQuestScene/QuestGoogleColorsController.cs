@@ -7,45 +7,45 @@ using UnityEngine.UI;
 public class QuestGoogleColorsController : MonoBehaviour
 {
 	readonly string _answerCheck = "314321";
-	
+
 	QuestManager _questManager;
 
 	[SerializeField]
 	GameObject _colorsPanel;
 
-	[SerializeField] 
+	[SerializeField]
 	Button _letterButton1;
-	
-	[SerializeField] 
+
+	[SerializeField]
 	Button _letterButton2;
-	
-	[SerializeField] 
+
+	[SerializeField]
 	Button _letterButton3;
-	
-	[SerializeField] 
+
+	[SerializeField]
 	Button _letterButton4;
-	
-	[SerializeField] 
+
+	[SerializeField]
 	Button _letterButton5;
-	
-	[SerializeField] 
+
+	[SerializeField]
 	Button _letterButton6;
 
-	[SerializeField] 
+	[SerializeField]
 	Button _submitResultButton;
-	
+
 	Dictionary<int, Button> _buttons;
-		
+
 	Dictionary<int, Color> _colors;
-	
-	int[] _userColors = {0,0,0,0,0,0};
-	
+
+	int[] _userColors = {0, 0, 0, 0, 0, 0};
+
 	int _buttonIndex;
-	
+
 	bool _isWrongAnswerSubmitted;
 
 	Color _color;
-	
+
 	void Awake()
 	{
 		Debug.Log("QuestUI.Awake()");
@@ -54,10 +54,10 @@ public class QuestGoogleColorsController : MonoBehaviour
 		QuestManagerReferenceInitialization();
 		_colors = new Dictionary<int, Color>
 		{
-			{1, new Color(204/256f, 45/256f, 45/256f)},
-			{2, new Color(42/256f, 176/256f, 34/256f)},
-			{3, new Color(55/256f, 74/256f, 190/256f)},
-			{4, new Color(202/256f, 199/256f, 37/256f)}
+			{1, new Color(204 / 256f, 45 / 256f, 45 / 256f)},
+			{2, new Color(42 / 256f, 176 / 256f, 34 / 256f)},
+			{3, new Color(55 / 256f, 74 / 256f, 190 / 256f)},
+			{4, new Color(202 / 256f, 199 / 256f, 37 / 256f)}
 		};
 		_buttons = new Dictionary<int, Button>
 		{
@@ -69,14 +69,16 @@ public class QuestGoogleColorsController : MonoBehaviour
 			{5, _letterButton6}
 		};
 	}
-	
+
 	void FixedUpdate()
-     	{
-     		if (_isWrongAnswerSubmitted)
-     		{
-     			
-     		}
-     	}
+	{
+		if (_isWrongAnswerSubmitted)
+		{
+			_color.g += 0.02f;
+			_color.b += 0.02f;
+			_submitResultButton.GetComponentInChildren<Text>().color = _color;
+		}
+	}
 
 	void QuestManagerReferenceInitialization()
 	{
@@ -102,7 +104,7 @@ public class QuestGoogleColorsController : MonoBehaviour
 		_userColors[_buttonIndex] = colorIndex;
 		_buttons[_buttonIndex].GetComponentInChildren<Text>().color = _colors[colorIndex];
 	}
-	
+
 	public void OnSubmitColorsButtonClicked()
 	{
 		var checkString = "";
@@ -110,6 +112,7 @@ public class QuestGoogleColorsController : MonoBehaviour
 		{
 			checkString += x.ToString();
 		}
+
 		if (checkString == _answerCheck)
 		{
 			_questManager.CompleteGoogleColorsRiddle();
@@ -117,6 +120,9 @@ public class QuestGoogleColorsController : MonoBehaviour
 		else
 		{
 			_isWrongAnswerSubmitted = true;
+			StopAllCoroutines();
+			_color = Color.red;
+			_submitResultButton.GetComponentInChildren<Text>().color = _color;
 			StartCoroutine(WrongAnswerHighlight());
 		}
 	}
@@ -134,11 +140,12 @@ public class QuestGoogleColorsController : MonoBehaviour
 		Debug.Log("Selected color index is: " + colorIndex);
 		UpdateLetterColor(colorIndex);
 	}
-	
+
 	IEnumerator WrongAnswerHighlight()
 	{
 		yield return new WaitForSeconds(1);
 		_isWrongAnswerSubmitted = false;
-		
+		_color = Color.white;
+		_submitResultButton.GetComponentInChildren<Text>().color = _color;
 	}
 }
