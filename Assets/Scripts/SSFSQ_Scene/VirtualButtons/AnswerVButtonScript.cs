@@ -1,14 +1,15 @@
-﻿namespace ua.org.gdg.devfest
+﻿using UnityEngine;
+
+namespace ua.org.gdg.devfest
 {
   public class AnswerVButtonScript : VirtualButtonOnClick
   {
+    [Header("Events")] 
+    [SerializeField] private GameEvent _onAnswer;
+    
     public override void OnClick()
     {
-      if (GameManager.Instance.GameActive)
-      {
-        GameManager.Instance.Answer();
-        UIManager.Instance.ToAnswerMode();
-      }
+        _onAnswer.Raise();
     }
   }
 }

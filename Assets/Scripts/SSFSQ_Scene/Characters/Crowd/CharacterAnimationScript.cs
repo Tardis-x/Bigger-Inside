@@ -54,7 +54,6 @@ namespace ua.org.gdg.devfest
 
     public void GetHit()
     {
-      AnimationManager.Instance.BoxingGlove.HitObject(GetComponent<Transform>());
       _animator.SetTrigger("GetHit");
     }
 

@@ -7,7 +7,7 @@ namespace ua.org.gdg.devfest
 		// OnStateMachineExit is called when entering a statemachine via its Exit Node
 		override public void OnStateMachineEnter(Animator animator, int stateMachinePathHash) 
 		{
-			AnimationManager.Instance.SpeakerAnimation.SetBusy(false);
+			animator.gameObject.GetComponent<SpeakerAnimationScript>().SetBusy(false);
 			animator.SetBool("Hit", false);
 			animator.SetBool("Answer", false);
 			animator.SetBool("Yell", false);

@@ -1,14 +1,15 @@
-﻿namespace ua.org.gdg.devfest
+﻿using UnityEngine;
+
+namespace ua.org.gdg.devfest
 {
 	public class HitVButtonScript : VirtualButtonOnClick
 	{
+		[Header("Events")]
+		[SerializeField] private GameEvent _onHit;
+		
 		public override void OnClick()
 		{
-			if (GameManager.Instance.GameActive)
-			{
-				GameManager.Instance.Hit();
-				UIManager.Instance.ToAnswerMode();
-			}
+			_onHit.Raise();
 		}
 	}
 }

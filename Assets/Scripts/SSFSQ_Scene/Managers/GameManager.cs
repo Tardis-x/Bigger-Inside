@@ -1,12 +1,26 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 using Random = System.Random;
 
 namespace ua.org.gdg.devfest
 {
-  public class GameManager : Singleton<GameManager>
+  public class GameManager : MonoBehaviour
   {
+    private PlayerChoice _playerChoice;
+    
+    //Questions
+    private readonly QuestionModel[] _questions = {new QuestionModel
+      {
+        IsGood = true,
+        Text = "Good question"
+      }, 
+      new QuestionModel
+      {
+        IsGood = false,
+        Text = "Bad question"
+      }
+    };
+    
     //---------------------------------------------------------------------
     // Property
     //---------------------------------------------------------------------
@@ -16,10 +30,96 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     // Editor
     //---------------------------------------------------------------------
+    
+    [Header("Public Variables")]
+    [SerializeField] private IntVariable _score;
+    [SerializeField] private IntVariable _brainsCount;
+    [SerializeField] private IntVariable _starsCount;
+    [SerializeField] private QuestionVariable _currentQuestion;
 
-    [SerializeField] private int _maxBrains;
-    [SerializeField] private int _maxStars;
+    [Header("Submanagers")] 
+    [SerializeField] private UIManager _uiManager;
+
+    [Space]
+    [Header("Events")] 
+    [SerializeField] private GameEvent _onGameOver;
+    [SerializeField] private GameEvent _onNewQuestion;
+    
+    [Space]
+    [Header("Values")]
     [SerializeField] private float _timeForAnswer;
+
+    [Space] 
+    [Header("Prefabs")] 
+    [SerializeField] private GameObject _environment;
+
+    [Space]
+    [Header("Targets")]
+    [SerializeField] private GameObject _imageTarget;
+    [SerializeField] private GameObject _planeFinder;
+
+    [Space]
+    [Header("Debug")]
+    [SerializeField] private Text _text;
+    
+    //---------------------------------------------------------------------
+    // Messages
+    //---------------------------------------------------------------------
+
+    private void Start()
+    {
+      var arCoreSupport = ARCoreHelper.CheckArCoreSupport();
+      PrepareScene(arCoreSupport);
+      
+      _text.text = "ARCore support: " + arCoreSupport;
+    }
+
+    public void OnContentPlaced(GameObject environment)
+    {
+      _planeFinder.SetActive(false);
+      _uiManager.ShowARCorePanel(true);
+    }
+    
+    //---------------------------------------------------------------------
+    // Events
+    //---------------------------------------------------------------------
+
+    public void OnGameStart()
+    {
+      Invoke("NewGame", 0.1f);
+    }
+
+    public void OnAnswer()
+    {
+      _playerChoice = PlayerChoice.Answer;
+    }
+
+    public void OnHit()
+    {
+      _playerChoice = PlayerChoice.Hit;
+    }
+
+    public void OnSpeakerAnimationEnd()
+    {
+      switch (_playerChoice)
+      {
+          case PlayerChoice.Answer:
+            Answer();
+            break;
+          case PlayerChoice.Hit:
+            Hit();
+            break;
+          default:
+            return;
+      }
+    }
+
+    public void OnTimeout()
+    {
+      SubtractStar();
+      SubtractBrain();
+      AskQuestion();
+    }
 
     //---------------------------------------------------------------------
     // Public
@@ -31,165 +131,108 @@ namespace ua.org.gdg.devfest
       
       GameActive = true;
 
-      ResetUI();
       ResetHealthAndScore();
-      
-      StartCoroutine(AwaitSpeakerReady(AskQuestion));
+
+      AskQuestion();
     }
 
     public void Answer()
     {
-      AnimationManager.Instance.SpeakerAnimation.Answer(_currentQuestion.Good);
+      if(!_currentQuestion.Value.IsGood) SubtractBrain();
+      else _score.RuntimeValue++;
       
-      if(GameActive) StartCoroutine(AwaitSpeakerReady(OnAnswer));
+      AskQuestion();
     }
 
     public void Hit()
     {
-      AnimationManager.Instance.SpeakerAnimation.Hit();
+      if(_currentQuestion.Value.IsGood) SubtractStar();
+      else _score.RuntimeValue++;
       
-      if(GameActive) StartCoroutine(AwaitSpeakerReady(OnHit));
+      if(_starsCount.RuntimeValue <= 0) return;
+      
+      AskQuestion();
     }
 
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
 
-    private int _starsCount;
-    private int _brainsCount;
-    private int _score;
-    private QuestionModel _currentQuestion;
-    
-    //Questions
-    private readonly QuestionModel[] _questions = {new QuestionModel
+    private void PrepareScene(bool arCoreSupport)
     {
-      Good = true,
-      Text = "Good question"
-    }, 
-      new QuestionModel
+      _planeFinder.gameObject.SetActive(arCoreSupport);
+      
+      _imageTarget.SetActive(!arCoreSupport);
+      
+      if (!arCoreSupport)
       {
-        Good = false,
-        Text = "Bad question"
+        Instantiate(_environment, _imageTarget.transform);        
       }
-    };
-
-    private void ResetUI()
-    {
-      UIManager.Instance.GameOverPanel.HidePanel();
-      UIManager.Instance.HealthTimePanel.ResetPanel();
-      UIManager.Instance.HealthTimePanel.ShowPanel();
-      UIManager.Instance.ButtonsToPlayMode();
     }
 
     private void ResetHealthAndScore()
     {
       ResetBrains();
       ResetStars();
-      _score = 0;
-    }
-
-    private void OnTimeout()
-    {
-      SubtractStar();
-      SubtractBrain();
-      StartCoroutine(AwaitSpeakerReady(AskQuestion));
+      _score.ResetValue();
     }
 
     private void AskQuestion()
     {
-      if(!GameActive) return;
+      if(_brainsCount.RuntimeValue <= 0 || _starsCount.RuntimeValue <= 0) return;
       
-      _currentQuestion = GetQuestion();
-      UIManager.Instance.ScreenQuestionText.text = _currentQuestion.Text;
-      UIManager.Instance.HealthTimePanel.StartCountdown(_timeForAnswer, OnTimeout);
-      UIManager.Instance.ButtonsToPlayMode();
-      AnimationManager.Instance.CrowdControl.AskQuestion();
-    }
-
-    private IEnumerator AwaitSpeakerReady(Action onSpeakerReady)
-    {
-      while (AnimationManager.Instance.SpeakerAnimation.AnimationBusy)
-      {
-        yield return false;
-      }
-
-      onSpeakerReady();
-    }
-    
-    private void OnHit()
-    {
-      if(_currentQuestion.Good) SubtractStar();
-      else _score++;
-      AskQuestion();
-    }
-
-    private void OnAnswer()
-    {
-      if(!_currentQuestion.Good) SubtractBrain();
-      else _score++;
-      AskQuestion();
+      _currentQuestion.Value = GetQuestion();
+      _onNewQuestion.Raise();
     }
     
     private void SubtractStar()
     {
-      if (_starsCount > 0)
+      if (_starsCount.RuntimeValue > 0)
       {
-        UIManager.Instance.HealthTimePanel.SubtractStar();
-        _starsCount--;
+        _starsCount.RuntimeValue--;
+        _uiManager.SubstractStar();
       }
 
-      if (_starsCount <= 0)
+      if (_starsCount.RuntimeValue <= 0)
       {
         GameOver();
-        AnimationManager.Instance.CrowdControl.StartThrowing();
-        AnimationManager.Instance.SpeakerAnimation.StartBeingScared();
       }
     }
 
     private void SubtractBrain()
     {
-      if (_brainsCount > 0)
+      if (_brainsCount.RuntimeValue > 0)
       {
-        UIManager.Instance.HealthTimePanel.SubtractBrain();
-        _brainsCount--;
+        _brainsCount.RuntimeValue--;
+        _uiManager.SubstractBrain();
       }
 
-      if (_brainsCount <= 0)
+      if (_brainsCount.RuntimeValue <= 0)
       {
         GameOver();
-        AnimationManager.Instance.SpeakerAnimation.Die();
-        
-        if(_starsCount == 0) AnimationManager.Instance.CrowdControl.StartThrowing();
       }
     }
     
     private QuestionModel GetQuestion()
     {
-      int index = new Random().Next(_questions.Length);
+      var index = new Random().Next(_questions.Length);
       return _questions[index];
     }
 
     private void GameOver()
     {
       GameActive = false;
-      UIManager.Instance.GameOverPanel.SetScore(_score);
-      UIManager.Instance.GameOverPanel.ShowPanel();
-      UIManager.Instance.HealthTimePanel.HidePanel();
-      UIManager.Instance.ScreenQuestionTextSetActive(false);
-      AnimationManager.Instance.ShowSneaker(true);
-      UIManager.Instance.ButtonsToPauseMode();
+      _onGameOver.Raise();
     }
 
     private void ResetBrains()
     {
-      UIManager.Instance.HealthTimePanel.SetBrainsCount(_maxBrains);
-      _brainsCount = _maxBrains;
+      _brainsCount.ResetValue();
     }
 
     private void ResetStars()
     {
-      UIManager.Instance.HealthTimePanel.SetStarsCount(_maxStars);
-      _starsCount = _maxStars;
+      _starsCount.ResetValue();
     }
   }
 }

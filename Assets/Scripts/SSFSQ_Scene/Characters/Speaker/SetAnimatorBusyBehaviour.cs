@@ -7,7 +7,7 @@ namespace ua.org.gdg.devfest
 	{
 		public override void OnStateMachineEnter(Animator animator, int stateMachinePathHash)
 		{
-			AnimationManager.Instance.SpeakerAnimation.SetBusy(true);
+			animator.gameObject.GetComponent<SpeakerAnimationScript>().SetBusy(true);
 		}
 
 		public override void OnStateMachineExit(Animator animator, int stateMachinePathHash)

@@ -8,7 +8,7 @@ namespace ua.org.gdg.devfest
 		// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
 		override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
-			AnimationManager.Instance.SpeakerAnimation.GoToCurrentDestination();
+			animator.gameObject.GetComponent<SpeakerAnimationScript>().GoToCurrentDestination();
 		}
 
 		private void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)

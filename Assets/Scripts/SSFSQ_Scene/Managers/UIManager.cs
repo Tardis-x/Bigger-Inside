@@ -1,32 +1,37 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 namespace ua.org.gdg.devfest
 {
-  public class UIManager : Singleton<UIManager>
+  public class UIManager : MonoBehaviour
   {
     //---------------------------------------------------------------------
     // Editor
     //---------------------------------------------------------------------
-    [Header("Overlay UI")] public HealthTimePanelScript HealthTimePanel;
-    public GameOverPanelScript GameOverPanel;
 
-    [Space] [Header("Virtual Buttons")] public VirtualButtonEventHandler PlayVirtualButton;
-    public VirtualButtonEventHandler AnswerVirtualButton;
-    public VirtualButtonEventHandler HitVirtualButton;
+    [Header("Variables")] 
+    [SerializeField] private IntVariable _score;
+    [SerializeField] private IntVariable _brainsCount;
+    [SerializeField] private IntVariable _starsCount;
+    [SerializeField] private int _timeForAnswer = 5;
+    
+    [Space]
+    [Header("Overlay UI")] 
+    [SerializeField] private HealthTimePanelScript _healthTimePanel;
+    [SerializeField] private ARCorePanelScript _arCorePanel;
 
-    [Space] [Header("Environment Screen")] public Text ScreenQuestionText;
+    [Space] 
+    [Header("Virtual Buttons")] 
+    [SerializeField] private VirtualButtonEventHandler _playVirtualButton;
+    [SerializeField] private VirtualButtonEventHandler _answerVirtualButton;
+    [SerializeField] private VirtualButtonEventHandler _hitVirtualButton;
 
-    [Space] [Header("VirtualButtonsMaterials")] [SerializeField]
-    private Material _playButtonMaterial;
-
+    [Space] 
+    [Header("VirtualButtonsMaterials")] 
+    [SerializeField] private Material _playButtonMaterial;
     [SerializeField] private Material _hitButtonMaterial;
     [SerializeField] private Material _answerButtonMaterial;
     [SerializeField] private Material _transparentButtonMaterial;
-    [SerializeField] private Text _getReadyText;
-    [SerializeField] private int _getReadyTime = 3;
+    
 
     //-----------------------------------------------
     // Messages
@@ -36,127 +41,131 @@ namespace ua.org.gdg.devfest
     {
       ButtonsToPauseMode();
     }
+    
+    //---------------------------------------------------------------------
+    // Events
+    //---------------------------------------------------------------------
+
+    public void OnGameOver()
+    {
+      _healthTimePanel.HidePanel();
+      ButtonsToPauseMode();
+    }
+
+    public void OnCountdownStart()
+    {
+      HidePlayButton();
+    }
+
+    public void OnGameStart()
+    {
+      ResetUI();
+    }
+
+    public void OnAnswerAndHit()
+    {
+      ToAnswerMode();
+    }
+
+    public void OnNewQuestion()
+    {
+      ButtonsToPlayMode();
+      _healthTimePanel.StartCountdown(_timeForAnswer);
+    }
 
     //-----------------------------------------------
     // Public
     //-----------------------------------------------
 
+    private void ResetUI()
+    {
+      _healthTimePanel.ResetPanel();
+      _healthTimePanel.SetBrainsCount(_brainsCount.InitialValue);
+      _healthTimePanel.SetStarsCount(_starsCount.InitialValue);
+      _healthTimePanel.ShowPanel();
+      ButtonsToPlayMode();
+    }
+
     public void ButtonsToPlayMode()
     {
-      Instance.HidePlayButton();
-      Instance.ShowAnswerButton();
-      Instance.ShowHitButton();
+      HidePlayButton();
+      ShowAnswerButton();
+      ShowHitButton();
     }
 
     public void ButtonsToPauseMode()
     {
-      Instance.ShowPlayButton();
-      Instance.HideAnswerButton();
-      Instance.HideHitButton();
+      ShowPlayButton();
+      HideAnswerButton();
+      HideHitButton();
     }
 
     public void ToAnswerMode()
     {
       HideAnswerButton();
       HideHitButton();
-      HealthTimePanel.PauseCountDown(true);
+      _healthTimePanel.PauseCountDown(true);
     }
 
-    public void StartGetReadyCountdown(Action onCountdownFinished)
+    public void SubstractBrain()
     {
-      if (_countdown) return;
-
-      _countdown = true;
-      GetReadyTextSetActive(true);
-      ScreenQuestionTextSetActive(false);
-      GameOverPanel.HidePanel();
-      HidePlayButton();
-      _timeLeft = _getReadyTime;
-      StartCoroutine(GetReadyCountDown(onCountdownFinished));
+      _healthTimePanel.SubtractBrain();
     }
-    
-    public void ScreenQuestionTextSetActive(bool value)
+
+    public void SubstractStar()
     {
-      ScreenQuestionText.gameObject.SetActive(value);
+      _healthTimePanel.SubtractStar();
+    }
+
+    public void ShowARCorePanel(bool value)
+    {
+      _arCorePanel.gameObject.SetActive(value);
     }
 
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
 
-    private int _timeLeft;
-    private bool _countdown;
-
-    private IEnumerator GetReadyCountDown(Action onCountdownFinished)
-    {
-      while (_timeLeft >= -1)
-      {
-        if (_timeLeft > 0)
-        {
-          _getReadyText.text = "GET READY!\n" + _timeLeft;
-        }
-        else if (_timeLeft == 0)
-        {
-          _getReadyText.text = "GET READY!\nGO!";
-        }
-        else
-        {
-          EndGetReadyCountdown(onCountdownFinished);
-        }
-        
-        yield return new WaitForSeconds(1);
-        _timeLeft--;
-      }
-    }
-
-    private void EndGetReadyCountdown(Action onCountdownFinished)
-    {
-      _countdown = false;
-      ScreenQuestionTextSetActive(true);
-      GetReadyTextSetActive(false);
-      StopCoroutine(GetReadyCountDown(onCountdownFinished));
-      onCountdownFinished();
-    }
-
-    private void GetReadyTextSetActive(bool value)
-    {
-      _getReadyText.gameObject.SetActive(value);
-    }
-
     private void HideHitButton()
     {
-      Instance.HitVirtualButton.SetVirtualButtonMaterial(_transparentButtonMaterial);
-      Instance.HitVirtualButton.SetButtonEnabled(false);
+      _hitVirtualButton.SetVirtualButtonMaterial(_transparentButtonMaterial);
+      _hitVirtualButton.SetButtonEnabled(false);
+      _arCorePanel.ShowHitButton(false);
     }
 
     private void ShowHitButton()
     {
-      Instance.HitVirtualButton.SetVirtualButtonMaterial(_hitButtonMaterial);
-      Instance.HitVirtualButton.SetButtonEnabled(true);
+      _hitVirtualButton.SetVirtualButtonMaterial(_hitButtonMaterial);
+      _hitVirtualButton.SetButtonEnabled(true);
+      _arCorePanel.ShowHitButton(true);
     }
 
     private void HideAnswerButton()
     {
-      Instance.AnswerVirtualButton.SetVirtualButtonMaterial(_transparentButtonMaterial);
-      Instance.AnswerVirtualButton.SetButtonEnabled(false);
+      _answerVirtualButton.SetVirtualButtonMaterial(_transparentButtonMaterial);
+      _answerVirtualButton.SetButtonEnabled(false);
+      _arCorePanel.ShowAnswerButton(false);
     }
 
     private void ShowAnswerButton()
     {
-      Instance.AnswerVirtualButton.SetVirtualButtonMaterial(_answerButtonMaterial);
-      Instance.AnswerVirtualButton.SetButtonEnabled(true);
+      _answerVirtualButton.SetVirtualButtonMaterial(_answerButtonMaterial);
+      _answerVirtualButton.SetButtonEnabled(true);
+      _arCorePanel.ShowAnswerButton(true);
     }
 
     private void HidePlayButton()
     {
-      Instance.PlayVirtualButton.SetVirtualButtonMaterial(_transparentButtonMaterial);
-      Instance.PlayVirtualButton.SetButtonEnabled(false);
+      _playVirtualButton.SetVirtualButtonMaterial(_transparentButtonMaterial);
+      _playVirtualButton.SetButtonEnabled(false);
+      _arCorePanel.ShowPlayButton(false);
     }
 
     private void ShowPlayButton()
     {
-      Instance.PlayVirtualButton.SetVirtualButtonMaterial(_playButtonMaterial);
-      Instance.PlayVirtualButton.SetButtonEnabled(true);
+      _playVirtualButton.SetVirtualButtonMaterial(_playButtonMaterial);
+      _playVirtualButton.SetButtonEnabled(true);
+      _arCorePanel.ShowPlayButton(true);
     }
   }
 }

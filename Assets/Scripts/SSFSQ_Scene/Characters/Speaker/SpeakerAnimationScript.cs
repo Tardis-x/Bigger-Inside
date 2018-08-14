@@ -8,12 +8,18 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     // Editor
     //---------------------------------------------------------------------
+    [Header("Events")]
+    [SerializeField] private IntVariable _brainsCount;
+    [SerializeField] private IntVariable _starsCount;
+    [SerializeField] private QuestionVariable _currentQuestion;
 
+    [Space]
     [SerializeField] private Animator _animator;
     [SerializeField] private Transform _speakerTransform;
     [SerializeField] private Transform _startPosition;
     [SerializeField] private Transform _endPosition;
     [SerializeField] private float _moveSpeed;
+    [SerializeField] private Transform _lookingPoint;
 
     //---------------------------------------------------------------------
     // Messages
@@ -22,6 +28,39 @@ namespace ua.org.gdg.devfest
     private void Start()
     {
       DestinateToStart();
+    }
+    
+    //---------------------------------------------------------------------
+    // Events
+    //---------------------------------------------------------------------
+
+    public void OnGameOver()
+    {
+      if (_starsCount.RuntimeValue == 0)
+      {
+        StartBeingScared();
+      }
+      
+      if(_brainsCount.RuntimeValue == 0)
+      {
+        Die();
+      }
+    }
+
+    public void OnCountdownStart()
+    {
+      StopBeingScared();
+      StopBeingDead();
+    }
+
+    public void OnAnswer()
+    {
+      Answer(_currentQuestion.Value.IsGood);
+    }
+
+    public void OnHit()
+    {
+      Hit();
     }
 
     //---------------------------------------------------------------------
@@ -63,7 +102,7 @@ namespace ua.org.gdg.devfest
 
       _speakerTransform.LookAt(_currentDestination.position);
       _speakerTransform.transform.position =
-        Vector3.MoveTowards(_speakerTransform.transform.position, _currentDestination.position, _moveSpeed);
+        Vector3.MoveTowards(_speakerTransform.transform.position, _currentDestination.position, _moveSpeed * Time.deltaTime);
     }
 
     public void StartBeingScared()
@@ -121,7 +160,7 @@ namespace ua.org.gdg.devfest
 
     public void LookAtTheCrowd()
     {
-      _speakerTransform.LookAt(new Vector3(0, .001f, 1));
+      _speakerTransform.LookAt(_lookingPoint.transform);
     }
   }
 }

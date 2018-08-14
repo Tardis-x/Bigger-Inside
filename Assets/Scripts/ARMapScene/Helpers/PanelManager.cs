@@ -1,10 +1,12 @@
-﻿using ua.org.gdg.devfest;
-public class PanelManager : Singleton<PanelManager>
+﻿namespace ua.org.gdg.devfest
 {
-  //---------------------------------------------------------------------
-  // Editor
-  //---------------------------------------------------------------------
+	public class PanelManager : Singleton<PanelManager>
+	{
+		//---------------------------------------------------------------------
+		// Editor
+		//---------------------------------------------------------------------
 
-	public ScrollableListScript SchedulePanel;
-	public DescriptionPanelScript SpeechDescriptionPanel;
+		public ScrollableListScript SchedulePanel;
+		public DescriptionPanelScript SpeechDescriptionPanel;
+	}
 }

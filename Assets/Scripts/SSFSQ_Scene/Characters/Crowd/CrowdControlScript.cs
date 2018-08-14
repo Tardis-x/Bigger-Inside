@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,6 +7,13 @@ namespace ua.org.gdg.devfest
 
 	public class CrowdControlScript : MonoBehaviour
 	{
+		[Header("Events")]
+		[SerializeField] private IntVariable _starsCount;
+
+		[Space] 
+		[Header("Game Objects")]
+		[SerializeField] private BoxingGloveScript _boxingGlove;
+		
 		//---------------------------------------------------------------------
 		// Internal
 		//---------------------------------------------------------------------
@@ -15,12 +21,43 @@ namespace ua.org.gdg.devfest
 		private CharacterAnimationScript[] _characters;
 		
 		//---------------------------------------------------------------------
-		// Messages
+		// Message
 		//---------------------------------------------------------------------
 
 		private void Start()
 		{
 			_characters = GetComponentsInChildren<CharacterAnimationScript>();
+		}
+		
+		//---------------------------------------------------------------------
+		// Events
+		//---------------------------------------------------------------------
+
+		public void OnGameOver()
+		{
+			if(_starsCount.RuntimeValue == 0) StartThrowing();
+		}
+
+		public void OnCountdownStart()
+		{
+			StopThrowing();
+			StopBeingScared();
+		}
+
+		public void OnSpeakerDied()
+		{
+			StartBeingScared();
+		}
+
+		public void OnSpeakerHit()
+		{
+			_boxingGlove.HitObject(CurrentCharacter.transform);
+			CurrentCharacter.GetHit();
+		}
+
+		public void OnNewQuestion()
+		{
+			AskQuestion();
 		}
 
 		//---------------------------------------------------------------------

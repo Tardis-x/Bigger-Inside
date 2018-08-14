@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
@@ -11,7 +10,11 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     // Editor
     //---------------------------------------------------------------------
+    [Header("Events")]
+    [SerializeField] private GameEvent _onTimeout;
 
+    [Space]
+    [Header("Values")]
     [SerializeField] private Image _timerImage;
     [SerializeField] private float _timerRefreshRate;
     [SerializeField] private RectTransform _brainsContainer;
@@ -35,7 +38,6 @@ namespace ua.org.gdg.devfest
     private float _timeLeft;
     private float _countdownTime;
     private Coroutine _countdown;
-    private Action _onTimeout;
     private bool _countDownPaused;
 
     private IEnumerator Countdown()
@@ -47,8 +49,9 @@ namespace ua.org.gdg.devfest
         if(!_countDownPaused) _timeLeft -= Time.deltaTime;
       }
       
-      Debug.Log("TimeOut");
-      if (_onTimeout != null) _onTimeout();
+      SubtractStar();
+      SubtractBrain();
+      _onTimeout.Raise();
     }
     
     private void ClearStarsContainer()
@@ -99,12 +102,11 @@ namespace ua.org.gdg.devfest
       ClearStarsContainer();
     }
     
-    public void StartCountdown(float time, Action onTimeout)
+    public void StartCountdown(float time)
     {
       ResetCountdown();
       _countdownTime = time;
       _timeLeft = _countdownTime;
-      _onTimeout = onTimeout;
       _countDownPaused = false;
       _countdown = StartCoroutine(Countdown());
     }
@@ -126,7 +128,7 @@ namespace ua.org.gdg.devfest
     public void SubtractStar()
     {
       var star = _starsContainer.GetComponentsInChildren<RectTransform>().First(x => x.parent == _starsContainer);
-      Destroy(star.gameObject);
+      if(star != null)Destroy(star.gameObject);
     }
 
     public void SetBrainsCount(int count)
@@ -141,7 +143,7 @@ namespace ua.org.gdg.devfest
     public void SubtractBrain()
     {
       var brain = _brainsContainer.GetComponentsInChildren<RectTransform>().First(x => x.parent == _brainsContainer);
-      Destroy(brain.gameObject);
+      if(brain != null) Destroy(brain.gameObject);
     }
   }
 }
