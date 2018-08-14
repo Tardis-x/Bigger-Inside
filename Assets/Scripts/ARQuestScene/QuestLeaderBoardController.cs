@@ -56,7 +56,8 @@ public class QuestLeaderBoardController : MonoBehaviour
 			userInfo.text = String.Format("   {0}. {1} \n    Score: {2} point(s).", i, pair.Key, pair.Value);
 			if (pair.Key == _questManager.currentUserUserId)
 			{
-				userInfo.color = Color.black;
+				Color color = new Color(0.359f, 0.672f, 0.93f);
+				userInfo.color = color;
 				scoreText.text = i + ". Your score is: " + _questManager.questProgress.globalScore;
 			}
 			i++;

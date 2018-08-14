@@ -32,7 +32,7 @@ public class QuestGoogleColorsController : MonoBehaviour
 	Button _letterButton6;
 
 	[SerializeField] 
-	Text _submitResultText;
+	Button _submitResultButton;
 	
 	Dictionary<int, Button> _buttons;
 		
@@ -41,6 +41,10 @@ public class QuestGoogleColorsController : MonoBehaviour
 	int[] _userColors = {0,0,0,0,0,0};
 	
 	int _buttonIndex;
+	
+	bool _isWrongAnswerSubmitted;
+
+	Color _color;
 	
 	void Awake()
 	{
@@ -65,6 +69,14 @@ public class QuestGoogleColorsController : MonoBehaviour
 			{5, _letterButton6}
 		};
 	}
+	
+	void FixedUpdate()
+     	{
+     		if (_isWrongAnswerSubmitted)
+     		{
+     			
+     		}
+     	}
 
 	void QuestManagerReferenceInitialization()
 	{
@@ -104,8 +116,8 @@ public class QuestGoogleColorsController : MonoBehaviour
 		}
 		else
 		{
-			_submitResultText.text = "You picked wrong colors.\nPlease, try again";
-			StartCoroutine(ClearText());
+			_isWrongAnswerSubmitted = true;
+			StartCoroutine(WrongAnswerHighlight());
 		}
 	}
 
@@ -122,10 +134,11 @@ public class QuestGoogleColorsController : MonoBehaviour
 		Debug.Log("Selected color index is: " + colorIndex);
 		UpdateLetterColor(colorIndex);
 	}
-
-	IEnumerator ClearText()
+	
+	IEnumerator WrongAnswerHighlight()
 	{
-		yield return new WaitForSeconds(2);
-		_submitResultText.text = "";
+		yield return new WaitForSeconds(1);
+		_isWrongAnswerSubmitted = false;
+		
 	}
 }

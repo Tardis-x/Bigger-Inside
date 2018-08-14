@@ -42,8 +42,6 @@ public class QuestRiddlesController : MonoBehaviour
 	
 	bool _isCorrectAnswerSubmitted;
 	
-	ColorBlock _colors;
-	
 	Color _color;
 	
 	void Awake()
