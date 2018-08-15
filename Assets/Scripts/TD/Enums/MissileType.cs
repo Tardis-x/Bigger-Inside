@@ -1,8 +1,10 @@
-﻿namespace ua.org.gdg.devfest
+﻿using UnityEngine;
+
+namespace ua.org.gdg.devfest
 {
-  public enum MissileType
+  [CreateAssetMenu(menuName = "TowerDefence/MissileType")]
+  public class MissileType : ScriptableObject
   {
-    Meat,
-    Vegetable
+    
   }
 }

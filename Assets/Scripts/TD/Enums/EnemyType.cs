@@ -1,8 +1,10 @@
-﻿namespace ua.org.gdg.devfest
+﻿using UnityEngine;
+
+namespace ua.org.gdg.devfest
 {
-  public enum EnemyType
+  [CreateAssetMenu(menuName = "TowerDefence/EnemyType")]
+  public class EnemyType : ScriptableObject
   {
-    Vegan,
-    Normal
+    
   }
 }
