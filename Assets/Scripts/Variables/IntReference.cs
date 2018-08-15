@@ -21,6 +21,11 @@ namespace ua.org.gdg.devfest
 		public int Value
 		{
 			get { return UseConstant ? ConstantValue : Variable.RuntimeValue; }
+			set
+			{
+				if (UseConstant) ConstantValue = value;
+				else Variable.RuntimeValue = value;
+			}
 		}
 
 		public static implicit operator int(IntReference reference)
