@@ -3,12 +3,10 @@ using UnityEngine;
 
 namespace ua.org.gdg.devfest
 {
-#if UNITY_EDITOR
-  [CustomPropertyDrawer(typeof(Resistance))]
+  [CustomPropertyDrawer(typeof(Resistances.Resistance))]
   public class ResistancePropertyDrawer : PropertyDrawer 
   {
-
-    private const float space = 5;
+    private const float SPACE = 5;
 
     public override void OnGUI(Rect rect, SerializedProperty property, GUIContent label) 
     {
@@ -23,9 +21,9 @@ namespace ua.org.gdg.devfest
 
     private void DrawMainProperties(Rect rect, SerializedProperty resistance)
     {
-      rect.width = (rect.width - 2 * space) / 2; 
+      rect.width = (rect.width - 2 * SPACE) / 2; 
       DrawProperty(rect, resistance.FindPropertyRelative("Type"));
-      rect.x += rect.width + space;
+      rect.x += rect.width + SPACE;
       DrawProperty(rect, resistance.FindPropertyRelative("Amount"));
     }
 
@@ -34,5 +32,4 @@ namespace ua.org.gdg.devfest
       EditorGUI.PropertyField(rect, property, GUIContent.none);
     }
   }
-#endif
 }

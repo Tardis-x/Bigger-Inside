@@ -11,7 +11,6 @@ namespace ua.org.gdg.devfest
     [SerializeField] private FloatReference _speed;
     [SerializeField] private IntReference _moneyPerLevel;
     [SerializeField] private IntReference _hpPerLevel;
-    [SerializeField] private EnemyType _type;
-    [SerializeField] private List<Resistance> _resistances;
+    [SerializeField] private Resistances _resistances;
   }
 }
