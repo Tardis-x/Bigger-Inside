@@ -13,12 +13,13 @@ public class QuestUI : MonoBehaviour
 	[SerializeField] GameObject _riddlesPanel;
 	[SerializeField] GameObject _leaderBoardPanel;
 	[SerializeField] GameObject _googleColorsPanel;
-	[SerializeField] GameObject _colorsPanel;
 	[SerializeField] GameObject _infoPanel;
 	[SerializeField] Text _shortDescription;
 	[SerializeField] Text _longDescription;
 	[SerializeField] Button _changeInfoButton;
 	[SerializeField] Button _proceedButton;
+	[SerializeField] Image _swordImage;
+	[SerializeField] Image _partyImage;
 
 	public GameObject usersList;
 
@@ -79,6 +80,8 @@ public class QuestUI : MonoBehaviour
 		_activePanel.SetActive(false);
 		_activePanel = _infoPanel;
 		_infoPanel.SetActive(true);
+		_proceedButton.gameObject.SetActive(true);
+		_changeInfoButton.gameObject.SetActive(false);
 	}
 
 	public void FadeQuestScreenIn()
@@ -162,7 +165,9 @@ public class QuestUI : MonoBehaviour
 		{
 			ShowInfoPanel("Congratulations!",
 				"You have completed all the steps in the quest. Press the button to look at the Leaderboards.");
-			_proceedButton.GetComponentInChildren<Text>().text = "Show Leaderboard";
+			_swordImage.gameObject.SetActive(false);
+			_partyImage.gameObject.SetActive(true);
+			_proceedButton.GetComponentInChildren<Text>().text = "SCORES";
 		}
 	}
 
@@ -213,6 +218,7 @@ public class QuestUI : MonoBehaviour
 		//Switch the buttons
 		_changeInfoButton.gameObject.SetActive(true);
 		_proceedButton.gameObject.SetActive(false);
+		
 		_infoPanel.SetActive(false);
 	}
 

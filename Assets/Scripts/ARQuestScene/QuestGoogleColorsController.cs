@@ -77,6 +77,7 @@ public class QuestGoogleColorsController : MonoBehaviour
 			_color.g += 0.02f;
 			_color.b += 0.02f;
 			_submitResultButton.GetComponentInChildren<Text>().color = _color;
+			_submitResultButton.image.color = _color;
 		}
 	}
 
@@ -123,6 +124,7 @@ public class QuestGoogleColorsController : MonoBehaviour
 			StopAllCoroutines();
 			_color = Color.red;
 			_submitResultButton.GetComponentInChildren<Text>().color = _color;
+			_submitResultButton.image.color = _color;
 			StartCoroutine(WrongAnswerHighlight());
 		}
 	}
@@ -147,5 +149,6 @@ public class QuestGoogleColorsController : MonoBehaviour
 		_isWrongAnswerSubmitted = false;
 		_color = Color.white;
 		_submitResultButton.GetComponentInChildren<Text>().color = _color;
+		_submitResultButton.image.color = _color;
 	}
 }

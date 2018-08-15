@@ -90,6 +90,9 @@ public class QuestManager : MonoBehaviour
 #if UNITY_ANDROID
 						spinner.Dismiss();
 #endif
+						Debug.Log("Default info screen");
+						_questUi.ShowInfoPanel("Welcome to the DevFest Quest Adventure!",
+							"You will have to complete different tasks in order to proceed with the Quest. Are you ready?");
 					});
 			}
 			else
