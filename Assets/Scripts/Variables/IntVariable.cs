@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ua.org.gdg.devfest
 {
-  [CreateAssetMenu]
+  [CreateAssetMenu(menuName = "Variables/IntVariable")]
   public class IntVariable : ScriptableObject, ISerializationCallbackReceiver
   {
     [SerializeField] private int _initialValue;

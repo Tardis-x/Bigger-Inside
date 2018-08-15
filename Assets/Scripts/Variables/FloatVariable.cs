@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ua.org.gdg.devfest
 {
-  [CreateAssetMenu]
+  [CreateAssetMenu(fileName = "FloatVariable", menuName = "Variables/FloatVariable")]
   public class FloatVariable : ScriptableObject, ISerializationCallbackReceiver
   {
     [SerializeField] private float _initialValue;
