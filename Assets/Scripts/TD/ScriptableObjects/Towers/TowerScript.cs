@@ -13,6 +13,7 @@ namespace ua.org.gdg.devfest
 		
 		[SerializeField] private Tower _tower;
 		[SerializeField] private Transform _gun;
+		[SerializeField] private List<GameObject> _levels;
 		
 		//---------------------------------------------------------------------
 		// Messages
@@ -23,6 +24,9 @@ namespace ua.org.gdg.devfest
 			var rangeCollider = GetComponent<SphereCollider>();
 			rangeCollider.radius = _tower.Range;
 			StartCoroutine(Shoot());
+			_level = _tower.Level;
+			_currentMesh = _levels[_level];
+			_cooldown = _tower.Cooldown;
 		}
 		
 		private void OnTriggerEnter(Collider other)
@@ -63,6 +67,9 @@ namespace ua.org.gdg.devfest
 
 		private EnemyScript _target;
 		private List<EnemyScript> _targetsInRange = new List<EnemyScript>();
+		private int _level = 0;
+		private GameObject _currentMesh;
+		private float _cooldown;
 
 		private void AquireNewTarget()
 		{
@@ -84,7 +91,7 @@ namespace ua.org.gdg.devfest
 						// Shoot it
 						_tower.Projectile.Shoot(_target, _gun);
 						// And cooldown
-						yield return new WaitForSeconds(_tower.Cooldown.Value);
+						yield return new WaitForSeconds(_cooldown);
 					}
 					// If it's dead
 					else
@@ -97,6 +104,25 @@ namespace ua.org.gdg.devfest
 				}
 				yield return new WaitForSeconds(.1f);
 			}
+		}
+
+		private void SetLevelMesh(int level)
+		{
+			_currentMesh.SetActive(false);
+			_currentMesh = _levels[level];
+			_currentMesh.SetActive(true);
+		}
+		
+		//---------------------------------------------------------------------
+		// Public
+		//---------------------------------------------------------------------
+
+		public void LevelUp()
+		{
+			_level++;
+			SetLevelMesh(_level);
+			_cooldown -= _tower.CDRPerLevel.Value;
+			_tower.Projectile.LevelUp();
 		}
 	}
 }

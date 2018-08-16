@@ -955,7 +955,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1129776600011500}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: -2.082, y: -0.0000000026609217, z: 3.6308193}
+  m_LocalPosition: {x: -2.211, y: 0, z: 3.493}
   m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_Children:
   - {fileID: 4071437504855084}
@@ -1058,12 +1058,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _points:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 4918249762343694, guid: 50e25d498fe7ee74fb1e52b7c645f98c, type: 2}
+  - {fileID: 4272648154441436, guid: 50e25d498fe7ee74fb1e52b7c645f98c, type: 2}
+  - {fileID: 4155100621571650, guid: 50e25d498fe7ee74fb1e52b7c645f98c, type: 2}
+  - {fileID: 4278208789958176, guid: 50e25d498fe7ee74fb1e52b7c645f98c, type: 2}
+  - {fileID: 4877098073774814, guid: 50e25d498fe7ee74fb1e52b7c645f98c, type: 2}
+  - {fileID: 4813345281367540, guid: 50e25d498fe7ee74fb1e52b7c645f98c, type: 2}
 --- !u!114 &114497746177629984
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1104,6 +1104,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemy: {fileID: 11400000, guid: db59d67985f4b9d48922656462bf0015, type: 2}
+  HP: 0
+  Money: 0
 --- !u!136 &136149704688841544
 CapsuleCollider:
   m_ObjectHideFlags: 1

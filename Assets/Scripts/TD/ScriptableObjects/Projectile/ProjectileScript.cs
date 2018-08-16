@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace ua.org.gdg.devfest
 {
@@ -8,7 +9,7 @@ namespace ua.org.gdg.devfest
 		// Editor
 		//---------------------------------------------------------------------
 		
-		[SerializeField] private Projectile _projectile;
+		[SerializeField] private List<Projectile> _projectiles;
 		
 		//---------------------------------------------------------------------
 		// Messages
@@ -31,7 +32,7 @@ namespace ua.org.gdg.devfest
 			
 			if (enemy == _target)
 			{
-				_target.GetShot(_projectile);
+				_target.GetShot(Projectile);
 				SelfDestroy();
 			}
 		}
@@ -40,12 +41,19 @@ namespace ua.org.gdg.devfest
 		// Internal
 		//---------------------------------------------------------------------
 
-		[SerializeField] private EnemyScript _target;
+		private EnemyScript _target;
+
+		private Projectile Projectile
+		{
+			get { return _projectiles[_level]; }
+		}
+		
+		private int _level = 0;
 
 		private void MoveToTarget()
 		{
 			transform.position =
-				Vector3.MoveTowards(transform.position, _target.transform.position, Time.deltaTime * _projectile.Speed);
+				Vector3.MoveTowards(transform.position, _target.transform.position, Time.deltaTime * Projectile.Speed);
 		}
 
 		private void SelfDestroy()
@@ -67,6 +75,11 @@ namespace ua.org.gdg.devfest
 			var projectile = GetInstance(position);
 			projectile._target = target;
 		}
+
+		public void LevelUp()
+		{
+			if(_level < _projectiles.Count) _level++;
+		}
 		
 		//---------------------------------------------------------------------
 		// Properties
@@ -74,12 +87,12 @@ namespace ua.org.gdg.devfest
 
 		public float Damage
 		{
-			get { return _projectile.Damage.Value; }
+			get { return Projectile.Damage.Value; }
 		}
 
 		public ProjectileType Type
 		{
-			get { return _projectile.Type; }
+			get { return Projectile.Type; }
 		}
 	}
 }

@@ -8,8 +8,10 @@ namespace ua.org.gdg.devfest
 	public class Tower : ScriptableObject
 	{
 		[SerializeField] public FloatReference Cooldown;
+		[SerializeField] public FloatReference CDRPerLevel;
 		[SerializeField] public FloatReference Range;
 		[SerializeField] public ProjectileScript Projectile;
+		[SerializeField] public IntReference Level;
 		[SerializeField] public IntReference Cost;
 		[SerializeField] public IntReference UpgradeCost;
 	}
