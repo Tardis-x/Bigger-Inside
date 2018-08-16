@@ -49,9 +49,9 @@ namespace ua.org.gdg.devfest
       return instance;
     }
 
-    public void GetShot(Missile missile)
+    public void GetShot(Projectile projectile)
     {
-      HP -= (int) Mathf.Round(missile.Damage);
+      HP -= (int) Mathf.Round(projectile.Damage);
       if (HP <= 0) Die();
     }
     

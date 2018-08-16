@@ -12,6 +12,7 @@ namespace ua.org.gdg.devfest
 		//---------------------------------------------------------------------
 		
 		[SerializeField] private Tower _tower;
+		[SerializeField] private Transform _gun;
 		
 		//---------------------------------------------------------------------
 		// Messages
@@ -60,8 +61,8 @@ namespace ua.org.gdg.devfest
 		// Internal
 		//---------------------------------------------------------------------
 
-		[SerializeField] private EnemyScript _target;
-		[SerializeField] private List<EnemyScript> _targetsInRange = new List<EnemyScript>();
+		private EnemyScript _target;
+		private List<EnemyScript> _targetsInRange = new List<EnemyScript>();
 
 		private void AquireNewTarget()
 		{
@@ -81,7 +82,7 @@ namespace ua.org.gdg.devfest
 					if (!_target.IsDead)
 					{
 						// Shoot it
-						_target.GetShot(_tower.Missile);
+						_tower.Projectile.Shoot(_target, _gun);
 						// And cooldown
 						yield return new WaitForSeconds(_tower.Cooldown.Value);
 					}
