@@ -15,6 +15,12 @@ namespace ua.org.gdg.devfest
 		// Messages
 		//---------------------------------------------------------------------
 
+		private void Awake()
+		{
+			var rangeCollider = GetComponent<SphereCollider>();
+			rangeCollider.radius = _tower.Range;
+		}
+		
 		private void OnTriggerEnter(Collider other)
 		{
 			// Get enemy script
@@ -51,8 +57,8 @@ namespace ua.org.gdg.devfest
 		// Internal
 		//---------------------------------------------------------------------
 
-		private EnemyScript _target;
-		private List<EnemyScript> _targetsInRange = new List<EnemyScript>();
+		[SerializeField] private EnemyScript _target;
+		[SerializeField] private List<EnemyScript> _targetsInRange = new List<EnemyScript>();
 
 		private void AquireNewTarget()
 		{

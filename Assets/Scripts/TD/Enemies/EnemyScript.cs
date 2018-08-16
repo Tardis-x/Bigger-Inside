@@ -23,8 +23,8 @@ namespace ua.org.gdg.devfest
 
     private void Awake()
     {
-      _hp = _enemy.HP.Value;
-      _money = _enemy.Money.Value;
+      HP = _enemy.HP.Value;
+      Money = _enemy.Money.Value;
     }
     
     //---------------------------------------------------------------------
@@ -33,16 +33,32 @@ namespace ua.org.gdg.devfest
     
     public void LevelUp()
     {
-      _hp += _enemy.HPPerLevel;
-      _money += _enemy.MoneyPerLevel;
+      HP += _enemy.HPPerLevel;
+      Money += _enemy.MoneyPerLevel;
     }
 
     public EnemyScript GetInstance(int level, Transform parent)
     {
       var instance = Instantiate(this, parent);
-      instance._hp += _enemy.HPPerLevel.Value * level;
-      instance._money += _enemy.MoneyPerLevel.Value * level;
+      instance.HP += _enemy.HPPerLevel.Value * level;
+      instance.Money += _enemy.MoneyPerLevel.Value * level;
       return instance;
+    }
+    
+    //---------------------------------------------------------------------
+    // Properties
+    //---------------------------------------------------------------------
+
+    public int HP
+    {
+      get { return _hp; }
+      private set { _hp = value; }
+    }
+    
+    public int Money
+    {
+      get { return _money; }
+      private set { _money = value; }
     }
   }
 }

@@ -9,7 +9,7 @@ namespace ua.org.gdg.devfest
 	{
 		[SerializeField] public FloatReference Cooldown;
 		[SerializeField] public FloatReference Range;
-		[SerializeField] public Missile Missile;
+		[SerializeField] public MissileScript Missile;
 		[SerializeField] public IntReference Cost;
 		[SerializeField] public IntReference UpgradeCost;
 	}
