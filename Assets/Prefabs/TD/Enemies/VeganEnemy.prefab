@@ -117,6 +117,7 @@ GameObject:
   - component: {fileID: 114029732657203818}
   - component: {fileID: 114777364430720778}
   - component: {fileID: 114497746177629984}
+  - component: {fileID: 136149704688841544}
   m_Layer: 0
   m_Name: VeganEnemy
   m_TagString: Untagged
@@ -953,7 +954,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1129776600011500}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -2.082, y: -0.0000000026609217, z: 3.6308193}
   m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_Children:
   - {fileID: 4071437504855084}
@@ -1087,6 +1088,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemy: {fileID: 11400000, guid: db59d67985f4b9d48922656462bf0015, type: 2}
+--- !u!136 &136149704688841544
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1129776600011500}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.03
+  m_Height: 0.27
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!137 &137029091700391634
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
