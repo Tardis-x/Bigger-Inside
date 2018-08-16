@@ -11,27 +11,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 322b12b9daab2344aa219ab737d6e515, type: 3}
   m_Name: Normal
   m_EditorClassIdentifier: 
-  _hp:
+  HP:
     UseConstant: 1
     ConstantValue: 100
     Variable: {fileID: 0}
-  _money:
+  Money:
     UseConstant: 1
     ConstantValue: 20
     Variable: {fileID: 0}
-  _speed:
+  MoveSpeed:
     UseConstant: 1
     ConstantValue: 5
     Variable: {fileID: 0}
-  _moneyPerLevel:
+  MoneyPerLevel:
     UseConstant: 1
     ConstantValue: 5
     Variable: {fileID: 0}
-  _hpPerLevel:
+  HPPerLevel:
     UseConstant: 1
     ConstantValue: 10
     Variable: {fileID: 0}
-  _resistances:
+  Resistances:
     ResistancesList:
     - Type: {fileID: 11400000, guid: ab7d4e0be929bdc47a3bf7392a928a1c, type: 2}
       Amount:

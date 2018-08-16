@@ -2,7 +2,7 @@
 
 namespace ua.org.gdg.devfest
 {
-  [CreateAssetMenu(menuName = "TowerDefence/EnemyType")]
+  [CreateAssetMenu(menuName = "TowerDefence/Enemies/EnemyType")]
   public class EnemyType : ScriptableObject
   {
     
