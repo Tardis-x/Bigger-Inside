@@ -14,8 +14,10 @@ namespace ua.org.gdg.devfest
     // Internal
     //---------------------------------------------------------------------
 
-    private int _hp;
-    private int _money;
+    private void Die()
+    {
+      Destroy(gameObject);
+    }
     
     //---------------------------------------------------------------------
     // Messages
@@ -44,21 +46,19 @@ namespace ua.org.gdg.devfest
       instance.Money += _enemy.MoneyPerLevel.Value * level;
       return instance;
     }
+
+    public void GetShot(Missile missile)
+    {
+      HP -= (int) Mathf.Round(missile.Damage);
+      if (HP <= 0) Die();
+    }
     
     //---------------------------------------------------------------------
     // Properties
     //---------------------------------------------------------------------
 
-    public int HP
-    {
-      get { return _hp; }
-      private set { _hp = value; }
-    }
-    
-    public int Money
-    {
-      get { return _money; }
-      private set { _money = value; }
-    }
+    public int HP; //{ get; private set; }
+
+    public int Money;// { get; private set; }
   }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ua.org.gdg.devfest
@@ -19,6 +20,7 @@ namespace ua.org.gdg.devfest
 		{
 			var rangeCollider = GetComponent<SphereCollider>();
 			rangeCollider.radius = _tower.Range;
+			StartCoroutine(Shoot());
 		}
 		
 		private void OnTriggerEnter(Collider other)
@@ -65,6 +67,23 @@ namespace ua.org.gdg.devfest
 			// If there are enemies in range shoot first to enter
 			// If not - no target can be aquired
 			_target = _targetsInRange.Count > 0 ? _targetsInRange[0] : null;
+		}
+
+		private IEnumerator Shoot()
+		{
+			while (true)
+			{
+				// If there's valid target
+				if (_target != null)
+				{
+					// Shoot it
+					_target.GetShot(_tower.Missile);
+					// And cooldown
+					yield return new WaitForSeconds(_tower.Cooldown.Value);
+				}
+				
+				yield return new WaitForSeconds(.1f);
+			}
 		}
 	}
 }

@@ -23,7 +23,7 @@ namespace ua.org.gdg.devfest
 		// Properties
 		//---------------------------------------------------------------------
 
-		public int Damage
+		public float Damage
 		{
 			get { return _missile.Damage.Value; }
 		}
