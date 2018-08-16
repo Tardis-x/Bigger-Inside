@@ -5,17 +5,22 @@ namespace ua.org.gdg.devfest
 {
 	public class EnemyBehaviour : MonoBehaviour
 	{
-		
 		private int _destPoint = 0;
 		private NavMeshAgent _agent;
+		private bool _isDead = false;
 
 		//---------------------------------------------------------------------
 		// Editor
 		//---------------------------------------------------------------------
 		
 		[SerializeField] private Transform[] _points;
+		[SerializeField] private Animator _animator;
+		
+		//---------------------------------------------------------------------
+		// Messages
+		//---------------------------------------------------------------------
 
-		void Start()
+		private void Start()
 		{
 			_agent = GetComponent<NavMeshAgent>();
 
@@ -28,26 +33,34 @@ namespace ua.org.gdg.devfest
 		}
 
 
-		void GotoNextPoint()
+		private void GotoNextPoint()
 		{
 			// Returns if no points have been set up
 			if (_points.Length == 0)
 				return;
+			
+			if (_destPoint >= _points.Length)
+			{
+				_isDead = true;
+				_animator.SetTrigger("isDying");
+				_agent.isStopped = true;
+				return;
+			}
 
 			// Set the agent to go to the currently selected destination.
 			_agent.destination = _points[_destPoint].position;
 
 			// Choose the next point in the array as the destination,
 			// cycling to the start if necessary.
-			_destPoint = (_destPoint + 1) % _points.Length;
+			_destPoint = (_destPoint + 1);
 		}
 
 
-		void Update()
+		private void Update()
 		{
 			// Choose the next destination point when the agent gets
 			// close to the current one.
-			if (!_agent.pathPending && _agent.remainingDistance < 0.5f)
+			if (!_agent.pathPending && _agent.remainingDistance < 0.5f && !_isDead)
 				GotoNextPoint();
 		}
 	}
