@@ -31,10 +31,10 @@ namespace ua.org.gdg.devfest
     
     private IEnumerator Spawn(EnemyScript enemy, float frequency)
     {
-      while (_keepSpawning)
+      while (true)
       {
         yield return new WaitForSeconds(frequency);
-        enemy.GetInstance(_level.Value, transform);
+        if(_keepSpawning) enemy.GetInstance(_level.Value, transform);
       }
     }
   }

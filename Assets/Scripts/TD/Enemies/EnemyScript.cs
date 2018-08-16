@@ -41,9 +41,9 @@ namespace ua.org.gdg.devfest
       Money += _enemy.MoneyPerLevel;
     }
 
-    public EnemyScript GetInstance(int level, Transform parent)
+    public EnemyScript GetInstance(int level, Transform position)
     {
-      var instance = Instantiate(this, parent);
+      var instance = Instantiate(this, position.position, position.rotation, position.parent);
       instance.HP += _enemy.HPPerLevel.Value * level;
       instance.Money += _enemy.MoneyPerLevel.Value * level;
       return instance;
