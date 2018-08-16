@@ -17,6 +17,7 @@ namespace ua.org.gdg.devfest
     private void Die()
     {
       Destroy(gameObject);
+      IsDead = true;
     }
     
     //---------------------------------------------------------------------
@@ -27,6 +28,7 @@ namespace ua.org.gdg.devfest
     {
       HP = _enemy.HP.Value;
       Money = _enemy.Money.Value;
+      IsDead = false;
     }
     
     //---------------------------------------------------------------------
@@ -60,5 +62,7 @@ namespace ua.org.gdg.devfest
     public int HP; //{ get; private set; }
 
     public int Money;// { get; private set; }
+    
+    public bool IsDead { get; private set; }
   }
 }

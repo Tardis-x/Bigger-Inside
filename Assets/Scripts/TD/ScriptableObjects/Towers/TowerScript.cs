@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace ua.org.gdg.devfest
@@ -76,12 +77,23 @@ namespace ua.org.gdg.devfest
 				// If there's valid target
 				if (_target != null)
 				{
-					// Shoot it
-					_target.GetShot(_tower.Missile);
-					// And cooldown
-					yield return new WaitForSeconds(_tower.Cooldown.Value);
+					// And it's not dead
+					if (!_target.IsDead)
+					{
+						// Shoot it
+						_target.GetShot(_tower.Missile);
+						// And cooldown
+						yield return new WaitForSeconds(_tower.Cooldown.Value);
+					}
+					// If it's dead
+					else
+					{
+						// It's not target anymore, therefore it's not in range
+						_targetsInRange.Remove(_target);
+						// So, need to aquire new target
+						AquireNewTarget();
+					}
 				}
-				
 				yield return new WaitForSeconds(.1f);
 			}
 		}
