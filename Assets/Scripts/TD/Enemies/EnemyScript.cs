@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 
 namespace ua.org.gdg.devfest
 {
@@ -10,6 +11,7 @@ namespace ua.org.gdg.devfest
 
     [SerializeField] private Enemy _enemy;
     [SerializeField] private InstanceGameEvent _dieEvent;
+    [SerializeField] private Agent _agent;
 
     //---------------------------------------------------------------------
     // Internal
@@ -18,7 +20,7 @@ namespace ua.org.gdg.devfest
     private void Die()
     {
       _dieEvent.Raise(gameObject);
-      Destroy(gameObject);
+      _agent.Die();
     }
 
     //---------------------------------------------------------------------
@@ -29,6 +31,7 @@ namespace ua.org.gdg.devfest
     {
       HP = _enemy.HP.Value;
       Money = _enemy.Money.Value;
+      _agent.SetSpeed(_enemy.MoveSpeed.Value);
     }
 
     //---------------------------------------------------------------------
@@ -41,11 +44,12 @@ namespace ua.org.gdg.devfest
       Money += _enemy.MoneyPerLevel;
     }
 
-    public EnemyScript GetInstance(int level, Transform position)
+    public EnemyScript GetInstance(int level, Transform position, Node startDestinationNode)
     {
       var instance = Instantiate(this, position.position, position.rotation, position.parent);
       instance.HP += _enemy.HPPerLevel.Value * level;
       instance.Money += _enemy.MoneyPerLevel.Value * level;
+      instance._agent.Initialize(startDestinationNode);
       return instance;
     }
 
