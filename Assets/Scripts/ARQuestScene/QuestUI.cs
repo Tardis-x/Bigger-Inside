@@ -14,6 +14,7 @@ public class QuestUI : MonoBehaviour
 	[SerializeField] GameObject _leaderBoardPanel;
 	[SerializeField] GameObject _googleColorsPanel;
 	[SerializeField] GameObject _infoPanel;
+	[SerializeField] GameObject _userScorePanel;
 	[SerializeField] Text _shortDescription;
 	[SerializeField] Text _longDescription;
 	[SerializeField] Button _changeInfoButton;
@@ -34,17 +35,6 @@ public class QuestUI : MonoBehaviour
 
 		// obtain reference to object that represents quest manager
 		QuestManagerReferenceInitialization();
-		//Show Info panel with custom content
-		
-		_infoPanel.SetActive(true);
-		_proceedButton.gameObject.SetActive(false);
-		_changeInfoButton.gameObject.SetActive(true);
-
-		// hide quest screens with tasks
-		_photoPanel.SetActive(false);
-		_vrGamePanel.SetActive(false);
-		_riddlesPanel.SetActive(false);
-		_googleColorsPanel.SetActive(false);
 	}
 
 	void QuestManagerReferenceInitialization()
@@ -82,6 +72,7 @@ public class QuestUI : MonoBehaviour
 		_infoPanel.SetActive(true);
 		_proceedButton.gameObject.SetActive(true);
 		_changeInfoButton.gameObject.SetActive(false);
+		_userScorePanel.gameObject.SetActive(false);
 	}
 
 	public void FadeQuestScreenIn()
@@ -99,8 +90,9 @@ public class QuestUI : MonoBehaviour
 		Debug.Log("QuestUI.OnBackButtonClicked");
 
 		_activePanel.SetActive(false);
-		_activePanel = _infoPanel;
-		_infoPanel.SetActive(true);
+		_activePanel = _userScorePanel;
+		_userScorePanel.SetActive(true);
+		
 		foreach (Transform child in usersList.transform)
 		{
 			Destroy(child.gameObject);
@@ -110,18 +102,16 @@ public class QuestUI : MonoBehaviour
 	public void OnChangeInfoButtonClicked()
 	{
 		//Disable previous panels
-		_photoPanel.SetActive(false);
-		_vrGamePanel.SetActive(false);
-		_riddlesPanel.SetActive(false);
-		_googleColorsPanel.SetActive(false);
-		//Switch the buttons
-		_changeInfoButton.gameObject.SetActive(false);
-		_proceedButton.gameObject.SetActive(true);
+		_activePanel.SetActive(false);
+		_activePanel = _infoPanel;
 		//Google Riddle Info
 		if (!_questManager.questProgress.isGoogleColorsCompleted)
 		{
 			ShowInfoPanel("Test of worthiness",
 				"In order to begin the Quest you have to solve a riddle to prove your capability for the future tasks");
+			//Switch the buttons
+			_changeInfoButton.gameObject.SetActive(false);
+			_proceedButton.gameObject.SetActive(true);
 		}
 		//Photo Panel
 		else if (!_questManager.questProgress.photoData.state)
@@ -131,6 +121,9 @@ public class QuestUI : MonoBehaviour
 				"- Take a crazy photo with your friend(s) in front of Press Wall;\n" +
 				"- Share those photos with hashtags #dfua, #devfest and #dfua_gate1;\n" +
 				"- Show Quest guys your post(s) for confirmation.");
+			//Switch the buttons
+			_changeInfoButton.gameObject.SetActive(false);
+			_proceedButton.gameObject.SetActive(true);
 		}
 		//VR Game Panel
 		else if (!_questManager.questProgress.vrGameData.state)
@@ -140,6 +133,9 @@ public class QuestUI : MonoBehaviour
 				"- Find a stand with Beat Saber Game demo;\n" +
 				"- Play the game and achieve a minimum of 50000 points;\n" +
 				"- Show Quest Guys your result for confirmation.");
+			//Switch the buttons
+			_changeInfoButton.gameObject.SetActive(false);
+			_proceedButton.gameObject.SetActive(true);
 		}
 		//Riddles Panel
 		else if (!_questManager.questProgress.allRiddlesCompleted)
@@ -151,6 +147,9 @@ public class QuestUI : MonoBehaviour
 					"You will have to answer different questions about Google " +
 					"and its technologies and find the cyphered technologies logos, " +
 					"hidden in Planeta Kino.\n Good luck, friend!");
+				//Switch the buttons
+				_changeInfoButton.gameObject.SetActive(false);
+				_proceedButton.gameObject.SetActive(true);
 			}
 			else
 			{
@@ -160,14 +159,14 @@ public class QuestUI : MonoBehaviour
 				_changeInfoButton.gameObject.SetActive(false);
 			}
 		}
-		//Leaderboard Panel
+		//User Score Panel
 		else
 		{
-			ShowInfoPanel("Congratulations!",
-				"You have completed all the steps in the quest. Press the button to look at the Leaderboards.");
-			_swordImage.gameObject.SetActive(false);
-			_partyImage.gameObject.SetActive(true);
-			_proceedButton.GetComponentInChildren<Text>().text = "SCORES";
+			_activePanel = _userScorePanel;
+			_userScorePanel.gameObject.SetActive(true);
+			//Switch the buttons
+			_changeInfoButton.gameObject.SetActive(false);
+			_proceedButton.gameObject.SetActive(true);
 		}
 	}
 
@@ -212,6 +211,7 @@ public class QuestUI : MonoBehaviour
 		//Leaderboard Panel
 		else
 		{
+			_activePanel.SetActive(false);
 			_activePanel = _leaderBoardPanel;
 			_leaderBoardPanel.SetActive(true);
 		}
@@ -224,8 +224,21 @@ public class QuestUI : MonoBehaviour
 
 	public void ShowInfoPanel(string shortDescription, string longDescription)
 	{
+		if (_activePanel != null)
+		{
+			_activePanel.SetActive(false);
+		}
+		_activePanel = _infoPanel;
 		_infoPanel.SetActive(true);
 		_shortDescription.text = shortDescription;
 		_longDescription.text = longDescription;
+		_proceedButton.gameObject.SetActive(false);
+		_changeInfoButton.gameObject.SetActive(true);
+	}
+
+	public void ShowUserScorePanel()
+	{
+		_activePanel = _userScorePanel;
+		_userScorePanel.SetActive(true);
 	}
 }

@@ -107,29 +107,23 @@ public class QuestRiddlesController : MonoBehaviour
 				_currentRiddle = riddle.Key;
 				if (riddle.Value.isText)
 				{
-					_descriptionText.text = "Type the correct answer and press Submit";
+					_descriptionText.text = "";
 					_riddleText.text = riddle.Value.description;
 					_scanButton.gameObject.SetActive(false);
 					_submitButton.gameObject.SetActive(true);
 					_inputField.gameObject.SetActive(true);
-					//Making Image field invisible
-					Color color = _riddleImageHolder.color;
-					color.a = 0;
-					_riddleImageHolder.color = color;
+					_riddleImageHolder.gameObject.SetActive(false);
 				}
 				else if(!riddle.Value.isText)
 				{
-					_riddleText.text = "";
-					_descriptionText.text = "Guess the technology, shown on the picture, and find the right mark";
+					_riddleText.text = "Knowledge";
+					_descriptionText.text = "* you have to find and scan a stamp hidden around the venue";
 					_riddleImageHolder.sprite = Sprite.Create(riddle.Value.texture, new Rect(0.0f, 0.0f, 
 						riddle.Value.texture.width, riddle.Value.texture.height), new Vector2(0f, 0f), 100.0f);
 					_submitButton.gameObject.SetActive(false);
 					_inputField.gameObject.SetActive(false);
 					_scanButton.gameObject.SetActive(true);
-					//Making Image field visible
-					Color color = _riddleImageHolder.color;
-					color.a = 1;
-					_riddleImageHolder.color = color;
+					_riddleImageHolder.gameObject.SetActive(true);
 				}
 				anyRiddles = true;
 				break;
@@ -137,7 +131,7 @@ public class QuestRiddlesController : MonoBehaviour
 		}
 		if (!anyRiddles)
 		{
-			_descriptionText.text = "You completed all riddles!";
+			_descriptionText.text = "";
 			
 			//Mark completion of third quest step for UI
 			_questManager.CompleteAllRiddles();

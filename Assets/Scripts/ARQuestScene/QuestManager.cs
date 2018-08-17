@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using DeadMosquito.AndroidGoodies;
 using Firebase;
 using Firebase.Auth;
@@ -10,9 +12,12 @@ using UnityEngine.UI;
 
 public class QuestManager : MonoBehaviour
 {
+	const int maxRiddleScore = 5000;
+	const int maxVRGameScore = 40000;
+	
 	QuestProgress _questProgress;
 	Dictionary<string, QuestRiddleDataFull> _questRiddlesDataFull;
-	Dictionary<string, int> _questleaderboardData;
+	Dictionary<string, QuestLeaderboardEntry> _questleaderboardData;
 	QuestUI _questUi;
 	DatabaseReference _database;
 	FirebaseAuth _auth;
@@ -25,7 +30,7 @@ public class QuestManager : MonoBehaviour
 	{
 		get { return _questProgress.riddlesData; }
 	}
-	public Dictionary<string, int> QuestLeaderboardData
+	public Dictionary<string, QuestLeaderboardEntry> QuestLeaderboardData
 	{
 		get { return _questleaderboardData; }
 	}
@@ -37,6 +42,8 @@ public class QuestManager : MonoBehaviour
 	int _timesCompleted;
 	public string currentUserUserId;
 	public Texture2D[] riddleImages;
+	public Uri userPhotoUrl;
+	public Image userPhotoImage;
 
 	void Awake()
 	{
@@ -48,6 +55,8 @@ public class QuestManager : MonoBehaviour
 		Debug.Log("QuestManager.Awake:Database");
 		currentUserUserId = _auth.CurrentUser.DisplayName;
 		Debug.Log("QuestManager.Awake.Username");
+		userPhotoUrl = _auth.CurrentUser.PhotoUrl;
+		Debug.Log("QuestManager.Awake.PhotoURL");
 		// Set up the Editor before calling into the realtime database.
 		FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://hoverboard-v2-dev.firebaseio.com/");
 		Debug.Log("QuestManager.Awake.URL");
@@ -116,7 +125,7 @@ public class QuestManager : MonoBehaviour
 					Debug.Log("Updating Info screen");
 					if (questProgress.allRiddlesCompleted)
 					{
-						_questUi.OnChangeInfoButtonClicked();
+						_questUi.ShowUserScorePanel();
 					}
 					else
 					{
@@ -133,6 +142,7 @@ public class QuestManager : MonoBehaviour
 			CheckIfQuestIsActivated();
 		});
 		UpdateUserScoreInLeaderBoard();
+		StartCoroutine(LoadUserImageFromUrl());
 	}
 
 	void UiReferenceInitialization()
@@ -156,11 +166,11 @@ public class QuestManager : MonoBehaviour
 	
 	void RiddleDataInitizalization()
 	{
-		_questProgress = new QuestProgress();
-		
+		_questProgress = new QuestProgress {userPhotoUrl = userPhotoUrl};
+
 		_questRiddlesDataFull = new Dictionary<string, QuestRiddleDataFull>();
 		Debug.Log("RiddleDataInitialization");
-		QuestRiddleDataFull riddle1 = new QuestRiddleDataFull(true, "How are Google newcomers called?");
+		QuestRiddleDataFull riddle1 = new QuestRiddleDataFull(true, "How are new comers called in Google?");
 		_questRiddlesDataFull.Add("Noogler", riddle1);
 		QuestRiddleDataFull riddle5 = new QuestRiddleDataFull(false, riddleImages[0]);
         		_questRiddlesDataFull.Add("Angular", riddle5);
@@ -182,7 +192,7 @@ public class QuestManager : MonoBehaviour
 
 	void LeaderBoardInitialization()
 	{
-		_questleaderboardData = new Dictionary<string, int>();
+		_questleaderboardData = new Dictionary<string, QuestLeaderboardEntry>();
 	}
 
 	
@@ -195,7 +205,7 @@ public class QuestManager : MonoBehaviour
 			DataSnapshot snapshot = task.Result;
 			_timesCompleted = JsonConvert.DeserializeObject<int>(snapshot.GetRawJsonValue());
 			//Calculate and write the score
-			_questProgress.vrGameData.score = 8000 - _timesCompleted * 8;
+			_questProgress.vrGameData.score = maxVRGameScore - _timesCompleted * 8;
 			_questProgress.globalScore += _questProgress.vrGameData.score;
 			_timesCompleted++;
 			// update VR progress data in database
@@ -267,8 +277,8 @@ public class QuestManager : MonoBehaviour
 			DataSnapshot snapshot = task.Result;
             _timesCompleted = JsonConvert.DeserializeObject<int>(snapshot.GetRawJsonValue());
 			//Update quest riddle progress data locally
-			_questRiddlesDataFull[riddleKey].score = 1000 - _timesCompleted;
-			_questProgress.riddlesData[riddleKey].score = 1000 - _timesCompleted;
+			_questRiddlesDataFull[riddleKey].score = maxRiddleScore - _timesCompleted;
+			_questProgress.riddlesData[riddleKey].score = maxRiddleScore - _timesCompleted;
 			_questProgress.globalScore += _questProgress.riddlesData[riddleKey].score;
 			_timesCompleted++;
 			// mark riddle as completed in local storage
@@ -374,7 +384,7 @@ public class QuestManager : MonoBehaviour
 				{
 					// retrieve current leaderboard from firebase
 					DataSnapshot snapshot = readTask.Result;
-					_questleaderboardData = JsonConvert.DeserializeObject<Dictionary<string, int>>
+					_questleaderboardData = JsonConvert.DeserializeObject<Dictionary<string, QuestLeaderboardEntry>>
 						(snapshot.GetRawJsonValue());
 					Debug.Log("QuestManager: Leaderboard data was successfully updated!");
 				}
@@ -390,11 +400,11 @@ public class QuestManager : MonoBehaviour
 		GetLeaderboardDataFromFirebase();
 		if (!_questleaderboardData.ContainsKey(currentUserUserId))
 		{
-			_questleaderboardData.Add(currentUserUserId, _questProgress.globalScore);
+			_questleaderboardData.Add(currentUserUserId, new QuestLeaderboardEntry(_questProgress.userPhotoUrl, _questProgress.globalScore));
 		}
 		else
 		{
-			_questleaderboardData[currentUserUserId] = _questProgress.globalScore;
+			_questleaderboardData[currentUserUserId] = new QuestLeaderboardEntry(_questProgress.userPhotoUrl, _questProgress.globalScore);
 		}
 	}
 
@@ -485,5 +495,12 @@ public class QuestManager : MonoBehaviour
 				Debug.LogError("QuestManager: Cancel updating quest data in firebase realtime database!");
 			}
 		});
+	}
+
+	IEnumerator LoadUserImageFromUrl()
+	{
+		WWW www = new WWW(userPhotoUrl.ToString());
+		yield return www;
+		userPhotoImage.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0, 0));
 	}
 }

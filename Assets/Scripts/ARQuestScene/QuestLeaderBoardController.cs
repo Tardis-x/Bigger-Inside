@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,11 +7,11 @@ using UnityEngine.UI;
 
 public class QuestLeaderBoardController : MonoBehaviour
 {
-	public Text scoreText;
-	public Text textPrefab;
+	public GameObject leaderboardEntryPrefab;
 	public Transform gridForList;
 	QuestManager _questManager;
 	public Scrollbar _scrollbar;
+	public Sprite currentUserSprite;
 	
 	void Awake()
 	{
@@ -19,7 +20,7 @@ public class QuestLeaderBoardController : MonoBehaviour
 		QuestManagerReferenceInitialization();
 	}
 
-	private void OnEnable()
+	void OnEnable()
 	{
 		Debug.Log("QuestLeaderBoardController.OnEnable");
 		_questManager.UpdateUserScoreInLeaderBoard();
@@ -28,7 +29,7 @@ public class QuestLeaderBoardController : MonoBehaviour
 
 	void QuestManagerReferenceInitialization()
 	{
-		GameObject questManagerTemp = GameObject.Find("QuestManager");
+		var questManagerTemp = GameObject.Find("QuestManager");
 
 		if (questManagerTemp != null)
 		{
@@ -47,22 +48,56 @@ public class QuestLeaderBoardController : MonoBehaviour
 	
 	void UpdateLeaderBoard()
 	{
-		//Update player global score
-		scoreText.text = "Your score is: " + _questManager.questProgress.globalScore;
-		int i = 1;
-		foreach (KeyValuePair<string, int> pair in _questManager.QuestLeaderboardData.OrderByDescending(key => key.Value))
+		var i = 1;
+		foreach (var pair in _questManager.QuestLeaderboardData.OrderByDescending(entry => entry.Value.globalScore))
 		{
-			Text userInfo = Instantiate(textPrefab, transform.position, Quaternion.identity, gridForList);
-			userInfo.text = String.Format("   {0}. {1} \n    Score: {2} point(s).", i, pair.Key, pair.Value);
+			var userInfo = Instantiate(leaderboardEntryPrefab, transform.position, Quaternion.identity, gridForList);
+			
+			Text[] texts = userInfo.GetComponentsInChildren<Text>();
+
+			foreach (var text in texts)
+			{
+				if (text.CompareTag("PositionText"))
+				{
+					text.text = i.ToString();
+				}
+				else if (text.CompareTag("UserNameText"))
+				{
+					text.text = pair.Key;
+				}
+				else if (text.CompareTag("UserScoreText"))
+				{
+					text.text = pair.Value.globalScore.ToString();
+				}
+			}
+			
+			Image[] images = userInfo.GetComponentsInChildren<Image>();
+
+			foreach (var image in images)
+			{
+				if (image.CompareTag("UserImage"))
+				{
+					StartCoroutine(LoadUserImageFromUrl(pair.Value.userPhotoUrl.ToString(), image));
+				}
+			}
+			
+			//Extra for current user
 			if (pair.Key == _questManager.currentUserUserId)
 			{
-				Color color = new Color(0.359f, 0.672f, 0.93f);
-				userInfo.color = color;
-				scoreText.text = i + ". Your score is: " + _questManager.questProgress.globalScore;
+				Color color = Color.white;
+				color.a = 1;
+				userInfo.GetComponent<Image>().color = color;
+				userInfo.GetComponent<Image>().sprite = currentUserSprite;
 			}
 			i++;
 		}
-
 		_scrollbar.value = 1;
+	}
+	
+	IEnumerator LoadUserImageFromUrl(string url, Image image)
+	{
+		var www = new WWW(url);
+		yield return www;
+		image.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0, 0));
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 public class QuestProgress
 {
@@ -16,4 +17,5 @@ public class QuestProgress
 	public int globalScore;
 	public bool isGoogleColorsCompleted;
 	public bool allRiddlesCompleted;
+	public Uri userPhotoUrl;
 }
