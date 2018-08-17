@@ -25,8 +25,8 @@ namespace ua.org.gdg.devfest
 			rangeCollider.radius = _tower.Range;
 			StartCoroutine(Shoot());
 			_level = _tower.Level;
-			_currentMesh = _levels[_level];
-			_cooldown = _tower.Cooldown;
+			_cooldown = _tower.Cooldown.Value;
+			SetLevelMesh(_level);
 		}
 		
 		private void OnTriggerEnter(Collider other)
@@ -54,10 +54,7 @@ namespace ua.org.gdg.devfest
 			if (enemy != null)
 			{
 				// It's got out of range
-				_targetsInRange.Remove(enemy);
-				
-				// If current target left the range need to aquire anuther one
-				if(enemy == _target) AquireNewTarget();
+				RemoveTarget(enemy);
 			}
 		}
 
@@ -65,8 +62,8 @@ namespace ua.org.gdg.devfest
 		// Internal
 		//---------------------------------------------------------------------
 
-		private EnemyScript _target;
-		private List<EnemyScript> _targetsInRange = new List<EnemyScript>();
+		[SerializeField] private EnemyScript _target;
+		[SerializeField] private List<EnemyScript> _targetsInRange = new List<EnemyScript>();
 		private int _level = 0;
 		private GameObject _currentMesh;
 		private float _cooldown;
@@ -78,6 +75,18 @@ namespace ua.org.gdg.devfest
 			_target = _targetsInRange.Count > 0 ? _targetsInRange[0] : null;
 		}
 
+		private void RemoveTarget(EnemyScript target)
+		{
+			// If target is in range
+			if (_targetsInRange.Contains(target))
+			{
+				// Remove it
+				_targetsInRange.Remove(target);
+				// If it's also current target need to aquire a new one
+				if(target == _target) AquireNewTarget();
+			}
+		}
+
 		private IEnumerator Shoot()
 		{
 			while (true)
@@ -85,22 +94,10 @@ namespace ua.org.gdg.devfest
 				// If there's valid target
 				if (_target != null)
 				{
-					// And it's not dead
-					if (!_target.IsDead)
-					{
 						// Shoot it
 						_tower.Projectile.Shoot(_target, _gun);
 						// And cooldown
 						yield return new WaitForSeconds(_cooldown);
-					}
-					// If it's dead
-					else
-					{
-						// It's not target anymore, therefore it's not in range
-						_targetsInRange.Remove(_target);
-						// So, need to aquire new target
-						AquireNewTarget();
-					}
 				}
 				yield return new WaitForSeconds(.1f);
 			}
@@ -108,7 +105,9 @@ namespace ua.org.gdg.devfest
 
 		private void SetLevelMesh(int level)
 		{
-			_currentMesh.SetActive(false);
+			if (level > _tower.MaxLevel.Value) return;
+			
+			if(_currentMesh != null) _currentMesh.SetActive(false);
 			_currentMesh = _levels[level];
 			_currentMesh.SetActive(true);
 		}
@@ -123,6 +122,12 @@ namespace ua.org.gdg.devfest
 			SetLevelMesh(_level);
 			_cooldown -= _tower.CDRPerLevel.Value;
 			_tower.Projectile.LevelUp();
+		}
+
+		public void OnEnemyDie(GameObject enemy)
+		{
+			var enemyScript = enemy.GetComponent<EnemyScript>();
+			RemoveTarget(enemyScript);
 		}
 	}
 }

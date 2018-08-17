@@ -9,17 +9,18 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     [SerializeField] private Enemy _enemy;
-    
+    [SerializeField] private InstanceGameEvent _dieEvent;
+
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
 
     private void Die()
     {
+      _dieEvent.Raise(gameObject);
       Destroy(gameObject);
-      IsDead = true;
     }
-    
+
     //---------------------------------------------------------------------
     // Messages
     //---------------------------------------------------------------------
@@ -28,13 +29,12 @@ namespace ua.org.gdg.devfest
     {
       HP = _enemy.HP.Value;
       Money = _enemy.Money.Value;
-      IsDead = false;
     }
-    
+
     //---------------------------------------------------------------------
     // Public
     //---------------------------------------------------------------------
-    
+
     public void LevelUp()
     {
       HP += _enemy.HPPerLevel;
@@ -54,15 +54,13 @@ namespace ua.org.gdg.devfest
       HP -= (int) Mathf.Round(projectile.Damage);
       if (HP <= 0) Die();
     }
-    
+
     //---------------------------------------------------------------------
     // Properties
     //---------------------------------------------------------------------
 
-    public int HP; //{ get; private set; }
+    public int HP { get; private set; }
 
-    public int Money;// { get; private set; }
-    
-    public bool IsDead { get; private set; }
+    public int Money { get; private set; }
   }
 }

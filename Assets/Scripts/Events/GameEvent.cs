@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ua.org.gdg.devfest
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(menuName = "Events/GameEvent")]
     public class GameEvent : ScriptableObject
     {
         private List<GameEventListener> _listeners = new List<GameEventListener>();
