@@ -9,10 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eca4337a9e788c04cb778cb68a2c365a, type: 3}
-  m_Name: VeganBurger
+  m_Name: VeganBurger_1
   m_EditorClassIdentifier: 
-  _damage:
+  Damage:
     UseConstant: 1
-    ConstantValue: 30
+    ConstantValue: 45
     Variable: {fileID: 0}
-  _type: 1
+  Speed:
+    UseConstant: 1
+    ConstantValue: 5
+    Variable: {fileID: 0}
+  Type: {fileID: 11400000, guid: ab7d4e0be929bdc47a3bf7392a928a1c, type: 2}

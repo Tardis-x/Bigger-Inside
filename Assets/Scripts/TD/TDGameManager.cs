@@ -3,38 +3,36 @@ using UnityEngine;
 
 namespace ua.org.gdg.devfest
 {
-  public class SpawnPointScript : MonoBehaviour
+  public class TDGameManager : MonoBehaviour
   {
     //---------------------------------------------------------------------
     // Editor
     //---------------------------------------------------------------------
     
-    [SerializeField] private SpawnPoint _spawnPoint;
-    [SerializeField] private bool _keepSpawning;
+    [SerializeField] private GameEvent _levelUp;
+    [SerializeField] private FloatReference _timing;
     [SerializeField] private IntReference _level;
-
+    
     //---------------------------------------------------------------------
     // Messages
     //---------------------------------------------------------------------
-    
+
     private void Start()
     {
-      foreach (var spawn in _spawnPoint.SpawnList.EnemySpawns)
-      {
-        StartCoroutine(Spawn(spawn.Enemy, spawn.Frequency));
-      }
+      StartCoroutine(LevelUpCoroutine(_timing));
     }
     
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
-    
-    private IEnumerator Spawn(EnemyScript enemy, float frequency)
+
+    private IEnumerator LevelUpCoroutine(FloatReference timing)
     {
       while (true)
       {
-        yield return new WaitForSeconds(frequency);
-        if(_keepSpawning) enemy.GetInstance(_level.Value, transform);
+        yield return new WaitForSeconds(timing.Value);
+        _levelUp.Raise();
+        _level.Value++;
       }
     }
   }

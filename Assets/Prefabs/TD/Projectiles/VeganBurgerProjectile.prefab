@@ -9,46 +9,46 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1026829648677342}
+  m_RootGameObject: {fileID: 1182607167125366}
   m_IsPrefabAsset: 1
---- !u!1 &1026829648677342
+--- !u!1 &1182607167125366
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4838716598758898}
-  - component: {fileID: 33414719444905428}
-  - component: {fileID: 23391942133367786}
-  - component: {fileID: 135270431263740892}
-  - component: {fileID: 114558565012397554}
+  - component: {fileID: 4451922508927312}
+  - component: {fileID: 33087809226636256}
+  - component: {fileID: 23041774486660430}
+  - component: {fileID: 135845271576237884}
+  - component: {fileID: 114548167109958216}
   m_Layer: 0
-  m_Name: Vegan
+  m_Name: VeganBurgerProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4838716598758898
+--- !u!4 &4451922508927312
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1026829648677342}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_GameObject: {fileID: 1182607167125366}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.19999999, y: 0.19999999, z: 0.19999999}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23391942133367786
+--- !u!23 &23041774486660430
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1026829648677342}
+  m_GameObject: {fileID: 1182607167125366}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -58,7 +58,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ce7a25604c3727247aee300ef1d8059f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -78,31 +78,34 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33414719444905428
+--- !u!33 &33087809226636256
 MeshFilter:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1026829648677342}
+  m_GameObject: {fileID: 1182607167125366}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114558565012397554
+--- !u!114 &114548167109958216
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1026829648677342}
+  m_GameObject: {fileID: 1182607167125366}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 978404d6734814942be6e363018ad474, type: 3}
+  m_Script: {fileID: 11500000, guid: 4babde0f0ee6a74428150a4493255139, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemy: {fileID: 11400000, guid: db59d67985f4b9d48922656462bf0015, type: 2}
---- !u!135 &135270431263740892
+  _projectiles:
+  - {fileID: 11400000, guid: 677fd35944a66124dbd8645153693686, type: 2}
+  - {fileID: 11400000, guid: f8dd23bc86bfa0347a83ff46ac595459, type: 2}
+  - {fileID: 11400000, guid: ae2454be891ef974d8b36400c33f98ef, type: 2}
+--- !u!135 &135845271576237884
 SphereCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1026829648677342}
+  m_GameObject: {fileID: 1182607167125366}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1

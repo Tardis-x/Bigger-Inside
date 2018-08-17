@@ -11,13 +11,58 @@ namespace ua.org.gdg.devfest
     [SerializeField] private Enemy _enemy;
     
     //---------------------------------------------------------------------
-    // Public
+    // Internal
     //---------------------------------------------------------------------
 
-    public void SetLevel(int level)
+    private void Die()
     {
-      _enemy.HP.Value += _enemy.HPPerLevel * level;
-      _enemy.Money.Value += _enemy.MoneyPerLevel * level;
+      Destroy(gameObject);
+      IsDead = true;
     }
+    
+    //---------------------------------------------------------------------
+    // Messages
+    //---------------------------------------------------------------------
+
+    private void Awake()
+    {
+      HP = _enemy.HP.Value;
+      Money = _enemy.Money.Value;
+      IsDead = false;
+    }
+    
+    //---------------------------------------------------------------------
+    // Public
+    //---------------------------------------------------------------------
+    
+    public void LevelUp()
+    {
+      HP += _enemy.HPPerLevel;
+      Money += _enemy.MoneyPerLevel;
+    }
+
+    public EnemyScript GetInstance(int level, Transform position)
+    {
+      var instance = Instantiate(this, position.position, position.rotation, position.parent);
+      instance.HP += _enemy.HPPerLevel.Value * level;
+      instance.Money += _enemy.MoneyPerLevel.Value * level;
+      return instance;
+    }
+
+    public void GetShot(Projectile projectile)
+    {
+      HP -= (int) Mathf.Round(projectile.Damage);
+      if (HP <= 0) Die();
+    }
+    
+    //---------------------------------------------------------------------
+    // Properties
+    //---------------------------------------------------------------------
+
+    public int HP; //{ get; private set; }
+
+    public int Money;// { get; private set; }
+    
+    public bool IsDead { get; private set; }
   }
 }

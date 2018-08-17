@@ -11,27 +11,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 322b12b9daab2344aa219ab737d6e515, type: 3}
   m_Name: Vegan
   m_EditorClassIdentifier: 
-  _hp:
+  HP:
     UseConstant: 1
     ConstantValue: 70
     Variable: {fileID: 0}
-  _money:
+  Money:
     UseConstant: 1
     ConstantValue: 25
     Variable: {fileID: 0}
-  _speed:
+  MoveSpeed:
     UseConstant: 1
     ConstantValue: 7
     Variable: {fileID: 0}
-  _moneyPerLevel:
+  MoneyPerLevel:
     UseConstant: 1
     ConstantValue: 7
     Variable: {fileID: 0}
-  _hpPerLevel:
+  HPPerLevel:
     UseConstant: 1
     ConstantValue: 7
     Variable: {fileID: 0}
-  _resistances:
+  Resistances:
     ResistancesList:
     - Type: {fileID: 11400000, guid: bd39eacc145138b4cb9b131f9ec9317f, type: 2}
       Amount:
