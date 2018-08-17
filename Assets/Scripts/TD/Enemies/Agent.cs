@@ -6,7 +6,6 @@ namespace ua.org.gdg.devfest
 	public class Agent : MonoBehaviour
 	{
 		private int _destPoint = 0;
-		private bool _isDead = false;
 		public Node _currentNode;
 		private Vector3 _destination;
 
@@ -61,9 +60,7 @@ namespace ua.org.gdg.devfest
 
 			if (nextNode == null)
 			{
-				_isDead = true;
-				_animator.SetTrigger("isDying");
-				_navMeshAgent.isStopped = true;
+				Die();
 				return;
 			}
 
@@ -82,6 +79,12 @@ namespace ua.org.gdg.devfest
 			nodePosition.y = _currentNode.transform.position.y;
 			_destination = nodePosition;
 			NavigateTo(_destination);
+		}
+
+		public void Die()
+		{
+			_animator.SetTrigger("isDying");
+			_navMeshAgent.isStopped = true;
 		}
 		
 		//---------------------------------------------------------------------
