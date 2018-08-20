@@ -10,6 +10,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] public FloatReference MoveSpeed;
     [SerializeField] public IntReference MoneyPerLevel;
     [SerializeField] public IntReference HPPerLevel;
+    [SerializeField] public EnemyType Type;
     [SerializeField] public Resistances Resistances;
   }
 }

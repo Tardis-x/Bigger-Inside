@@ -90,5 +90,9 @@ namespace ua.org.gdg.devfest
 
     public int Money { get; private set; }
     
+    public EnemyType Type
+    {
+      get { return _enemy.Type; }
+    }
   }
 }
