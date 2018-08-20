@@ -10,15 +10,42 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     
     [SerializeField] private SpawnPoint _spawnPoint;
-    [SerializeField] private bool _keepSpawning;
-    [SerializeField] private IntReference _level;
+    [SerializeField] private IntReference _gameLevel;
     [SerializeField] private Node _startNode;
+
+    //---------------------------------------------------------------------
+    // Internal
+    //---------------------------------------------------------------------
+
+    [SerializeField] private bool _unlocked;
+    
+    //---------------------------------------------------------------------
+    // Public
+    //---------------------------------------------------------------------
+
+    public void Unlock()
+    {
+      if (_unlocked) return;
+      
+      _unlocked = _gameLevel >= _spawnPoint.Level;
+      
+      if(_unlocked) StartSpawning();
+    }
 
     //---------------------------------------------------------------------
     // Messages
     //---------------------------------------------------------------------
-    
+
     private void Start()
+    {
+      Unlock();
+    }
+
+    //---------------------------------------------------------------------
+    // Helpers
+    //---------------------------------------------------------------------
+    
+    private void StartSpawning()
     {
       foreach (var spawn in _spawnPoint.SpawnList.EnemySpawns)
       {
@@ -26,16 +53,12 @@ namespace ua.org.gdg.devfest
       }
     }
     
-    //---------------------------------------------------------------------
-    // Helpers
-    //---------------------------------------------------------------------
-    
     private IEnumerator Spawn(EnemyScript enemy, float frequency)
     {
       while (true)
       {
         yield return new WaitForSeconds(frequency);
-        if(_keepSpawning) enemy.GetInstance(_level.Value, transform, _startNode);
+        enemy.GetInstance(_gameLevel.Value, transform, _startNode);
       }
     }
   }
