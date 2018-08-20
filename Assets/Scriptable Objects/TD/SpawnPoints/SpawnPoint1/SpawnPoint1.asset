@@ -13,15 +13,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnList:
     EnemySpawns:
-    - Enemy: {fileID: 114100977965534566, guid: 8a510611f0e9596409b1019d311f75dd,
+    - Enemy: {fileID: 114385205466099618, guid: 8a510611f0e9596409b1019d311f75dd,
         type: 2}
       Frequency:
         UseConstant: 0
         ConstantValue: 0
         Variable: {fileID: 11400000, guid: 27016a8e57e1ee746b9b2d452d81c658, type: 2}
-    - Enemy: {fileID: 114659352800888072, guid: 8bf1895d490c90f4fa855a1644c8b96e,
+    - Enemy: {fileID: 114202104040181574, guid: 8bf1895d490c90f4fa855a1644c8b96e,
         type: 2}
       Frequency:
         UseConstant: 0
         ConstantValue: 0
         Variable: {fileID: 11400000, guid: f35204ede3499cb4a92cbeb6139e692d, type: 2}
+    - Enemy: {fileID: 114035653083518018, guid: 8385ba6b71b827b42a8ef6c682203124,
+        type: 2}
+      Frequency:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 11400000, guid: eb83c3c3056d61545ac982472a4789d3, type: 2}
