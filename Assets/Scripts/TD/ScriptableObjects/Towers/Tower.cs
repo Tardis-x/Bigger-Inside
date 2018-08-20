@@ -10,7 +10,6 @@ namespace ua.org.gdg.devfest
 		[SerializeField] public FloatReference Cooldown;
 		[SerializeField] public FloatReference CDRPerLevel;
 		[SerializeField] public FloatReference Range;
-		[SerializeField] public ProjectileScript Projectile;
 		[SerializeField] public IntReference Level;
 		[SerializeField] public IntReference MaxLevel;
 		[SerializeField] public IntReference Cost;

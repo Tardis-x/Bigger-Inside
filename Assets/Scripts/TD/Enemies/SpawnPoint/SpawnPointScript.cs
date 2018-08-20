@@ -27,7 +27,7 @@ namespace ua.org.gdg.devfest
     }
     
     //---------------------------------------------------------------------
-    // Internal
+    // Helpers
     //---------------------------------------------------------------------
     
     private IEnumerator Spawn(EnemyScript enemy, float frequency)

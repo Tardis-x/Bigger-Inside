@@ -20,11 +20,6 @@ namespace ua.org.gdg.devfest
 		// Messages
 		//---------------------------------------------------------------------
 
-		private void Awake()
-		{
-			
-		}
-
 		private void Update()
 		{
 			var squareStoppingDistance = _navMeshAgent.stoppingDistance * _navMeshAgent.stoppingDistance;
@@ -102,7 +97,7 @@ namespace ua.org.gdg.devfest
 		}
 		
 		//---------------------------------------------------------------------
-		// Internal
+		// Helpers
 		//---------------------------------------------------------------------
 
 		private void NavigateTo(Vector3 nextPoint)

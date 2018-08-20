@@ -37,7 +37,7 @@ namespace ua.org.gdg.devfest
 		}
 		
 		//---------------------------------------------------------------------
-		// Internal
+		// Helpers
 		//---------------------------------------------------------------------
 		
 		private IEnumerator Shoot()
@@ -50,7 +50,7 @@ namespace ua.org.gdg.devfest
 					// Shoot each of them
 					foreach (var target in TargetsInRange)
 					{
-						Tower.Projectile.Shoot(target, Gun);
+						Projectile.Shoot(target, Gun);
 					}
 					
 					// And cooldown

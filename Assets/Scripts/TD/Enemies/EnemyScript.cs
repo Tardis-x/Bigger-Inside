@@ -14,7 +14,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] private Agent _agent;
 
     //---------------------------------------------------------------------
-    // Internal
+    // Heplers
     //---------------------------------------------------------------------
 
     private void Die()

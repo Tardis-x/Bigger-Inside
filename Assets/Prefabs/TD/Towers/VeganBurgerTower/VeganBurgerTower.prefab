@@ -139,8 +139,8 @@ GameObject:
   - component: {fileID: 4531080505659850}
   - component: {fileID: 135046354332512390}
   - component: {fileID: 54895317743397368}
-  - component: {fileID: 114248308492625580}
   - component: {fileID: 114384025604381294}
+  - component: {fileID: 114832095295551268}
   m_Layer: 0
   m_Name: VeganBurgerTower
   m_TagString: Untagged
@@ -763,7 +763,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &114248308492625580
+--- !u!114 &114384025604381294
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1780499264665094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f79f5da5beb19e141a9a962a895e2ac3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Tower: {fileID: 11400000, guid: 8908aac27efa49d42854ca338ed8caff, type: 2}
+  Gun: {fileID: 4933879511567964}
+  _levelMeshes:
+  - {fileID: 1718052625811904}
+  - {fileID: 1330250523913184}
+  - {fileID: 1130064847989602}
+  Projectile: {fileID: 114548167109958216, guid: 62e26d42951b3dd439182adaf1e55b17,
+    type: 2}
+  TargetsInRange: []
+--- !u!114 &114832095295551268
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -778,12 +798,12 @@ MonoBehaviour:
   Response:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 114384025604381294}
         m_MethodName: OnEnemyDie
-        m_Mode: 0
+        m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -791,23 +811,6 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: ua.org.gdg.devfest.UnityEventWithGameObject, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114384025604381294
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1780499264665094}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f79f5da5beb19e141a9a962a895e2ac3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Tower: {fileID: 11400000, guid: 8908aac27efa49d42854ca338ed8caff, type: 2}
-  Gun: {fileID: 4933879511567964}
-  _levels:
-  - {fileID: 1718052625811904}
-  - {fileID: 1330250523913184}
-  - {fileID: 1130064847989602}
 --- !u!135 &135046354332512390
 SphereCollider:
   m_ObjectHideFlags: 1

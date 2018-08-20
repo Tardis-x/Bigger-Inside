@@ -14,7 +14,8 @@ namespace ua.org.gdg.devfest
 		
 		[SerializeField] protected Tower Tower;
 		[SerializeField] protected Transform Gun;
-		[SerializeField] protected List<GameObject> _levels;
+		[SerializeField] protected List<GameObject> _levelMeshes;
+		[SerializeField] protected ProjectileScript Projectile;
 		
 		//---------------------------------------------------------------------
 		// Messages
@@ -33,11 +34,15 @@ namespace ua.org.gdg.devfest
 		// Internal
 		//---------------------------------------------------------------------
 
-		[SerializeField] protected List<EnemyScript> TargetsInRange = new List<EnemyScript>();
+		protected List<EnemyScript> TargetsInRange = new List<EnemyScript>();
 		private int _level;
 		private GameObject _currentMesh;
 		protected float Cooldown;
 
+		//---------------------------------------------------------------------
+		// Helpers
+		//---------------------------------------------------------------------
+		
 		protected void RemoveTarget(EnemyScript target)
 		{
 			if (TargetsInRange.Contains(target)) TargetsInRange.Remove(target);
@@ -48,7 +53,7 @@ namespace ua.org.gdg.devfest
 			if (level > Tower.MaxLevel.Value) return;
 			
 			if(_currentMesh != null) _currentMesh.SetActive(false);
-			_currentMesh = _levels[level];
+			_currentMesh = _levelMeshes[level];
 			_currentMesh.SetActive(true);
 		}
 		
@@ -61,7 +66,7 @@ namespace ua.org.gdg.devfest
 			_level++;
 			SetLevelMesh(_level);
 			Cooldown -= Tower.CDRPerLevel.Value;
-			Tower.Projectile.LevelUp();
+			Projectile.LevelUp();
 		}
 
 		public void OnEnemyDie(GameObject enemy)

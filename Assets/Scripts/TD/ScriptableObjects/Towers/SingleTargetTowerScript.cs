@@ -41,7 +41,11 @@ namespace ua.org.gdg.devfest
 		// Internal
 		//---------------------------------------------------------------------
 		
-		[SerializeField] private EnemyScript _target;
+		private EnemyScript _target;
+		
+		//---------------------------------------------------------------------
+		// Helpers
+		//---------------------------------------------------------------------
 		
 		private void AquireNewTarget()
 		{
@@ -63,7 +67,7 @@ namespace ua.org.gdg.devfest
 			{
 				if (_target != null)
 				{
-					Tower.Projectile.Shoot(_target, Gun);
+					Projectile.Shoot(_target, Gun);
 					yield return new WaitForSeconds(Cooldown);
 				}
 				yield return new WaitForSeconds(.1f);
