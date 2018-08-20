@@ -73,5 +73,15 @@ namespace ua.org.gdg.devfest
 				yield return new WaitForSeconds(.1f);
 			}
 		}
+		
+		//---------------------------------------------------------------------
+		// Public
+		//---------------------------------------------------------------------
+		
+		public new void OnEnemyDie(GameObject enemy)
+		{
+			var enemyScript = enemy.GetComponent<EnemyScript>();
+			RemoveTarget(enemyScript);
+		}
 	}
 }

@@ -34,7 +34,7 @@ namespace ua.org.gdg.devfest
 		// Internal
 		//---------------------------------------------------------------------
 
-		protected List<EnemyScript> TargetsInRange = new List<EnemyScript>();
+		[SerializeField] protected List<EnemyScript> TargetsInRange = new List<EnemyScript>();
 		private int _level;
 		private GameObject _currentMesh;
 		protected float Cooldown;

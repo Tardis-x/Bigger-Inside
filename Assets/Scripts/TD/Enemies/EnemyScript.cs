@@ -12,6 +12,12 @@ namespace ua.org.gdg.devfest
     [SerializeField] private Enemy _enemy;
     [SerializeField] private InstanceGameEvent _dieEvent;
     [SerializeField] private Agent _agent;
+    
+    //---------------------------------------------------------------------
+    // Internal
+    //---------------------------------------------------------------------
+
+    private const int DEAD_ENEMIES_LAYER = 11;
 
     //---------------------------------------------------------------------
     // Heplers
@@ -20,6 +26,7 @@ namespace ua.org.gdg.devfest
     private void Die()
     {
       _dieEvent.Raise(gameObject);
+      gameObject.layer = DEAD_ENEMIES_LAYER;
       _agent.Die();
     }
 
