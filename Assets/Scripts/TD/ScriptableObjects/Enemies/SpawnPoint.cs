@@ -8,5 +8,6 @@ namespace ua.org.gdg.devfest
   public class SpawnPoint : ScriptableObject
   {
     [SerializeField] public SpawnList SpawnList;
+    [SerializeField] public IntReference Level;
   }
 }

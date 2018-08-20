@@ -5,7 +5,7 @@ namespace ua.org.gdg.devfest
 	public class InstanceGameEventListener : MonoBehaviour
 	{
 		public InstanceGameEvent Event;
-		public UnityEventWithGameObject Response;
+		public UnityEventWithInstance Response;
 
 		private void OnEnable()
 		{
