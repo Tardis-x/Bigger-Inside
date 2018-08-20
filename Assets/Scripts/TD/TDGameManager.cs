@@ -31,8 +31,8 @@ namespace ua.org.gdg.devfest
       while (true)
       {
         yield return new WaitForSeconds(timing.Value);
-        _levelUp.Raise();
         _level.Value++;
+        _levelUp.Raise();
       }
     }
   }

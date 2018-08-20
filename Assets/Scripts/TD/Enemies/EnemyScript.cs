@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 
 namespace ua.org.gdg.devfest
 {
@@ -9,17 +10,19 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     [SerializeField] private Enemy _enemy;
-    
+    [SerializeField] private InstanceGameEvent _dieEvent;
+    [SerializeField] private Agent _agent;
+
     //---------------------------------------------------------------------
-    // Internal
+    // Heplers
     //---------------------------------------------------------------------
 
     private void Die()
     {
-      Destroy(gameObject);
-      IsDead = true;
+      _dieEvent.Raise(gameObject);
+      _agent.Die();
     }
-    
+
     //---------------------------------------------------------------------
     // Messages
     //---------------------------------------------------------------------
@@ -28,24 +31,25 @@ namespace ua.org.gdg.devfest
     {
       HP = _enemy.HP.Value;
       Money = _enemy.Money.Value;
-      IsDead = false;
+      _agent.SetSpeed(_enemy.MoveSpeed.Value);
     }
-    
+
     //---------------------------------------------------------------------
     // Public
     //---------------------------------------------------------------------
-    
+
     public void LevelUp()
     {
       HP += _enemy.HPPerLevel;
       Money += _enemy.MoneyPerLevel;
     }
 
-    public EnemyScript GetInstance(int level, Transform position)
+    public EnemyScript GetInstance(int level, Transform position, Node startDestinationNode)
     {
       var instance = Instantiate(this, position.position, position.rotation, position.parent);
       instance.HP += _enemy.HPPerLevel.Value * level;
       instance.Money += _enemy.MoneyPerLevel.Value * level;
+      instance._agent.Initialize(startDestinationNode);
       return instance;
     }
 
@@ -54,15 +58,13 @@ namespace ua.org.gdg.devfest
       HP -= (int) Mathf.Round(projectile.Damage);
       if (HP <= 0) Die();
     }
-    
+
     //---------------------------------------------------------------------
     // Properties
     //---------------------------------------------------------------------
 
-    public int HP; //{ get; private set; }
+    public int HP { get; private set; }
 
-    public int Money;// { get; private set; }
-    
-    public bool IsDead { get; private set; }
+    public int Money { get; private set; }
   }
 }

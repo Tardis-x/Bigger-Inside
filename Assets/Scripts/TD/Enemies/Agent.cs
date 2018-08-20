@@ -20,11 +20,6 @@ namespace ua.org.gdg.devfest
 		// Messages
 		//---------------------------------------------------------------------
 
-		private void Awake()
-		{
-			MoveToNode();
-		}
-
 		private void Update()
 		{
 			var squareStoppingDistance = _navMeshAgent.stoppingDistance * _navMeshAgent.stoppingDistance;
@@ -73,6 +68,14 @@ namespace ua.org.gdg.devfest
 			_currentNode = node;
 		}
 
+		public void SetSpeed(float speed)
+		{
+			// Cannot set negative speed
+			if(speed < 0) return;
+			
+			_navMeshAgent.speed = speed;
+		}
+
 		public void MoveToNode()
 		{
 			var nodePosition = _currentNode.transform.position;
@@ -86,9 +89,15 @@ namespace ua.org.gdg.devfest
 			_animator.SetTrigger("isDying");
 			_navMeshAgent.isStopped = true;
 		}
+
+		public void Initialize(Node startNode)
+		{
+			SetNode(startNode);
+			MoveToNode();
+		}
 		
 		//---------------------------------------------------------------------
-		// Internal
+		// Helpers
 		//---------------------------------------------------------------------
 
 		private void NavigateTo(Vector3 nextPoint)

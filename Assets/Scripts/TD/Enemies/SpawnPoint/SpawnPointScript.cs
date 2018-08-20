@@ -12,6 +12,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] private SpawnPoint _spawnPoint;
     [SerializeField] private bool _keepSpawning;
     [SerializeField] private IntReference _level;
+    [SerializeField] private Node _startNode;
 
     //---------------------------------------------------------------------
     // Messages
@@ -26,7 +27,7 @@ namespace ua.org.gdg.devfest
     }
     
     //---------------------------------------------------------------------
-    // Internal
+    // Helpers
     //---------------------------------------------------------------------
     
     private IEnumerator Spawn(EnemyScript enemy, float frequency)
@@ -34,7 +35,7 @@ namespace ua.org.gdg.devfest
       while (true)
       {
         yield return new WaitForSeconds(frequency);
-        if(_keepSpawning) enemy.GetInstance(_level.Value, transform);
+        if(_keepSpawning) enemy.GetInstance(_level.Value, transform, _startNode);
       }
     }
   }

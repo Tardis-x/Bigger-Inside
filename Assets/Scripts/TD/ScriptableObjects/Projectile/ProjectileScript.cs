@@ -9,7 +9,8 @@ namespace ua.org.gdg.devfest
 		// Editor
 		//---------------------------------------------------------------------
 		
-		[SerializeField] private List<Projectile> _projectiles;
+		[SerializeField] private List<Projectile> _levelParameters;
+		[SerializeField] private int _maxLevel;
 		
 		//---------------------------------------------------------------------
 		// Messages
@@ -45,10 +46,14 @@ namespace ua.org.gdg.devfest
 
 		private Projectile Projectile
 		{
-			get { return _projectiles[_level]; }
+			get { return _levelParameters[_level]; }
 		}
 		
-		private int _level = 0;
+		private int _level;
+		
+		//---------------------------------------------------------------------
+		// Helpers
+		//---------------------------------------------------------------------
 
 		private void MoveToTarget()
 		{
@@ -78,7 +83,7 @@ namespace ua.org.gdg.devfest
 
 		public void LevelUp()
 		{
-			if(_level < _projectiles.Count) _level++;
+			if(_level < _maxLevel) _level++;
 		}
 		
 		//---------------------------------------------------------------------
