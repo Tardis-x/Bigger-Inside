@@ -20,7 +20,7 @@ namespace ua.org.gdg.devfest
 		{
 			var enemy = other.GetComponent<EnemyScript>();
 
-			if (enemy != null && !Tower.IgnoredEnemyTypes.Contains(enemy.Type))
+			if (enemy != null && !Tower.IgnoredEnemies.Contains(enemy.Type))
 			{
 				TargetsInRange.Add(enemy);
 			}

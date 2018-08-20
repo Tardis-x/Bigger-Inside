@@ -16,6 +16,6 @@ namespace ua.org.gdg.devfest
 		[SerializeField] public IntReference MaxLevel;
 		[SerializeField] public IntReference Cost;
 		[SerializeField] public IntReference UpgradeCost;
-		[SerializeField] public List<EnemyType> IgnoredEnemyTypes;
+		[SerializeField] public List<Enemy> IgnoredEnemies;
 	}
 }

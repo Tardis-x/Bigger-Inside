@@ -89,10 +89,10 @@ namespace ua.org.gdg.devfest
     public int HP { get; private set; }
 
     public int Money { get; private set; }
-    
-    public EnemyType Type
+
+    public Enemy Type
     {
-      get { return _enemy.Type; }
+      get { return _enemy; }
     }
   }
 }
