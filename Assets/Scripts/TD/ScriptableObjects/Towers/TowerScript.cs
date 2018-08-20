@@ -14,7 +14,7 @@ namespace ua.org.gdg.devfest
 		
 		[SerializeField] protected Tower Tower;
 		[SerializeField] protected Transform Gun;
-		[SerializeField] protected List<GameObject> _levelMeshes;
+		[SerializeField] protected List<GameObject> LevelMeshes;
 		[SerializeField] protected ProjectileScript Projectile;
 		
 		//---------------------------------------------------------------------
@@ -57,10 +57,10 @@ namespace ua.org.gdg.devfest
 
 		private void SetLevelMesh(int level)
 		{
-			if (level > Tower.MaxLevel.Value) return;
+			if (level > Tower.MaxLevel) return;
 			
 			if(_currentMesh != null) _currentMesh.SetActive(false);
-			_currentMesh = _levelMeshes[level];
+			_currentMesh = LevelMeshes[level];
 			_currentMesh.SetActive(true);
 		}
 		
@@ -70,9 +70,10 @@ namespace ua.org.gdg.devfest
 
 		public void LevelUp()
 		{
+			if (_level >= Tower.MaxLevel) return;
 			_level++;
 			SetLevelMesh(_level);
-			Cooldown -= Tower.CDRPerLevel.Value;
+			Cooldown -= Tower.CDRPerLevel;
 			SetRange(Range + Tower.RangePerLevel);
 			Projectile.LevelUp();
 		}
