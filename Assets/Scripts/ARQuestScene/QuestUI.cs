@@ -19,8 +19,6 @@ public class QuestUI : MonoBehaviour
 	[SerializeField] Text _longDescription;
 	[SerializeField] Button _changeInfoButton;
 	[SerializeField] Button _proceedButton;
-	[SerializeField] Image _swordImage;
-	[SerializeField] Image _partyImage;
 
 	public GameObject usersList;
 

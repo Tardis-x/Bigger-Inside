@@ -170,22 +170,22 @@ public class QuestManager : MonoBehaviour
 
 		_questRiddlesDataFull = new Dictionary<string, QuestRiddleDataFull>();
 		Debug.Log("RiddleDataInitialization");
-		QuestRiddleDataFull riddle1 = new QuestRiddleDataFull(true, "How are new comers called in Google?");
+		var riddle1 = new QuestRiddleDataFull(true, "How are new comers called in Google?");
 		_questRiddlesDataFull.Add("Noogler", riddle1);
-		QuestRiddleDataFull riddle5 = new QuestRiddleDataFull(false, riddleImages[0]);
+		var riddle5 = new QuestRiddleDataFull(false, riddleImages[0]);
         		_questRiddlesDataFull.Add("Angular", riddle5);
-		QuestRiddleDataFull riddle2 = new QuestRiddleDataFull(true, "What was the first google doodle in 1998?");
+		var riddle2 = new QuestRiddleDataFull(true, "What was the first google doodle in 1998?");
 		_questRiddlesDataFull.Add("BurningMan", riddle2);
-		QuestRiddleDataFull riddle6 = new QuestRiddleDataFull(false, riddleImages[1]);
+		var riddle6 = new QuestRiddleDataFull(false, riddleImages[1]);
         		_questRiddlesDataFull.Add("Firebase", riddle6);
-		QuestRiddleDataFull riddle3 = new QuestRiddleDataFull(true,
+		var riddle3 = new QuestRiddleDataFull(true,
 			"One day a computer failure stumped Grace Hopper and her team until she opened the machine and found THIS inside!");
 		_questRiddlesDataFull.Add("Bug", riddle3);
-		QuestRiddleDataFull riddle7 = new QuestRiddleDataFull(false, riddleImages[2]);
+		var riddle7 = new QuestRiddleDataFull(false, riddleImages[2]);
         		_questRiddlesDataFull.Add("GoogleSearch", riddle7);
-		QuestRiddleDataFull riddle8 = new QuestRiddleDataFull(false, riddleImages[3]);
+		var riddle8 = new QuestRiddleDataFull(false, riddleImages[3]);
 		_questRiddlesDataFull.Add("Snap", riddle8);
-		QuestRiddleDataFull riddle4 = new QuestRiddleDataFull(true, "The most important thing in the programming language is THIS. A language will not succeed without a good THIS. I have recently invented a very good THIS and now I am looking for a suitable language. -- Donald Knuth");
+		var riddle4 = new QuestRiddleDataFull(true, "The most important thing in the programming language is THIS. A language will not succeed without a good THIS. I have recently invented a very good THIS and now I am looking for a suitable language. -- Donald Knuth");
 		_questRiddlesDataFull.Add("Name", riddle4);
 		WriteRiddleDataInQuestProgress();
 	}
@@ -202,7 +202,7 @@ public class QuestManager : MonoBehaviour
 		Dictionary<string, System.Object> childUpdates = new Dictionary<string, System.Object>();
 		_database.Child("GlobalQuestData/VRGame").GetValueAsync().ContinueWith(task =>
 		{
-			DataSnapshot snapshot = task.Result;
+			var snapshot = task.Result;
 			_timesCompleted = JsonConvert.DeserializeObject<int>(snapshot.GetRawJsonValue());
 			//Calculate and write the score
 			_questProgress.vrGameData.score = maxVRGameScore - _timesCompleted * 8;
@@ -274,7 +274,7 @@ public class QuestManager : MonoBehaviour
 		//Check, how many times before riddle was completed and assign a score
 		_database.Child("GlobalQuestData/" + riddleKey).GetValueAsync().ContinueWith(task =>
 		{
-			DataSnapshot snapshot = task.Result;
+			var snapshot = task.Result;
             _timesCompleted = JsonConvert.DeserializeObject<int>(snapshot.GetRawJsonValue());
 			//Update quest riddle progress data locally
 			_questRiddlesDataFull[riddleKey].score = maxRiddleScore - _timesCompleted;
@@ -356,7 +356,7 @@ public class QuestManager : MonoBehaviour
 			if (readTask.Result == null)
 			{
 				//Create data in firebase
-				string json = JsonConvert.SerializeObject(_questleaderboardData);
+				var json = JsonConvert.SerializeObject(_questleaderboardData);
 				_database.Child("GlobalQuestData/Leaderboards")
 					.SetRawJsonValueAsync(json).ContinueWith(writeTask => {
 						if (writeTask.IsFaulted)
@@ -383,7 +383,7 @@ public class QuestManager : MonoBehaviour
 				else if (readTask.IsCompleted) 
 				{
 					// retrieve current leaderboard from firebase
-					DataSnapshot snapshot = readTask.Result;
+					var snapshot = readTask.Result;
 					_questleaderboardData = JsonConvert.DeserializeObject<Dictionary<string, QuestLeaderboardEntry>>
 						(snapshot.GetRawJsonValue());
 					Debug.Log("QuestManager: Leaderboard data was successfully updated!");
@@ -410,7 +410,7 @@ public class QuestManager : MonoBehaviour
 
 	void UpdateFirebaseLeaderboard()
 	{
-		string json = JsonConvert.SerializeObject(_questleaderboardData);
+		var json = JsonConvert.SerializeObject(_questleaderboardData);
 		_database.Child("GlobalQuestData/Leaderboards").SetRawJsonValueAsync(json);
 	}
 	
@@ -454,7 +454,7 @@ public class QuestManager : MonoBehaviour
 		Debug.Log("RiddleDataInitialization2");
 		foreach (var fullRiddle in _questRiddlesDataFull)
 		{
-			QuestRiddleData riddle = new QuestRiddleData(fullRiddle.Value.isCompleted, fullRiddle.Value.score);
+			var riddle = new QuestRiddleData(fullRiddle.Value.isCompleted, fullRiddle.Value.score);
 			_questProgress.riddlesData.Add(fullRiddle.Key, riddle);
 		}
 		Debug.Log("RiddleDataInitialization3");
@@ -499,7 +499,7 @@ public class QuestManager : MonoBehaviour
 
 	IEnumerator LoadUserImageFromUrl()
 	{
-		WWW www = new WWW(userPhotoUrl.ToString());
+		var www = new WWW(userPhotoUrl.ToString());
 		yield return www;
 		userPhotoImage.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0, 0));
 	}

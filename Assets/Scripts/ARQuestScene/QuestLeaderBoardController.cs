@@ -10,7 +10,7 @@ public class QuestLeaderBoardController : MonoBehaviour
 	public GameObject leaderboardEntryPrefab;
 	public Transform gridForList;
 	QuestManager _questManager;
-	public Scrollbar _scrollbar;
+	public Scrollbar scrollbar;
 	public Sprite currentUserSprite;
 	
 	void Awake()
@@ -84,17 +84,17 @@ public class QuestLeaderBoardController : MonoBehaviour
 			//Extra for current user
 			if (pair.Key == _questManager.currentUserUserId)
 			{
-				Color color = Color.white;
+				var color = Color.white;
 				color.a = 1;
 				userInfo.GetComponent<Image>().color = color;
 				userInfo.GetComponent<Image>().sprite = currentUserSprite;
 			}
 			i++;
 		}
-		_scrollbar.value = 1;
+		scrollbar.value = 1;
 	}
-	
-	IEnumerator LoadUserImageFromUrl(string url, Image image)
+
+	static IEnumerator LoadUserImageFromUrl(string url, Image image)
 	{
 		var www = new WWW(url);
 		yield return www;
