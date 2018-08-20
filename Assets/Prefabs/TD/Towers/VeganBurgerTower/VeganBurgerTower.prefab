@@ -782,7 +782,6 @@ MonoBehaviour:
   - {fileID: 1130064847989602}
   Projectile: {fileID: 114548167109958216, guid: 62e26d42951b3dd439182adaf1e55b17,
     type: 2}
-  TargetsInRange: []
 --- !u!114 &114832095295551268
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -800,16 +799,16 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 114384025604381294}
         m_MethodName: OnEnemyDie
-        m_Mode: 2
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: ua.org.gdg.devfest.UnityEventWithGameObject, Assembly-CSharp, Version=0.0.0.0,
+    m_TypeName: ua.org.gdg.devfest.UnityEventWithInstance, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!135 &135046354332512390
 SphereCollider:

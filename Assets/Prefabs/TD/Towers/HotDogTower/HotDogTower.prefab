@@ -104,8 +104,8 @@ GameObject:
   - component: {fileID: 4794688473822566}
   - component: {fileID: 135065377360429920}
   - component: {fileID: 54709246069891548}
-  - component: {fileID: 114829812767087110}
   - component: {fileID: 114983965277601946}
+  - component: {fileID: 114829812767087110}
   m_Layer: 0
   m_Name: HotDogTower
   m_TagString: Untagged
@@ -663,16 +663,16 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 114983965277601946}
         m_MethodName: OnEnemyDie
-        m_Mode: 2
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: ua.org.gdg.devfest.UnityEventWithGameObject, Assembly-CSharp, Version=0.0.0.0,
+    m_TypeName: ua.org.gdg.devfest.UnityEventWithInstance, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114983965277601946
 MonoBehaviour:
@@ -693,8 +693,6 @@ MonoBehaviour:
   - {fileID: 1720550048495500}
   Projectile: {fileID: 114667608551178116, guid: c7c767cefa38b494e9447f73f8ab6b76,
     type: 2}
-  TargetsInRange: []
-  _target: {fileID: 0}
 --- !u!135 &135065377360429920
 SphereCollider:
   m_ObjectHideFlags: 1
