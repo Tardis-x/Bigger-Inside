@@ -19,7 +19,7 @@ namespace ua.org.gdg.devfest
 		{
 			var enemy = other.GetComponent<EnemyScript>();
 
-			if (enemy != null)
+			if (enemy != null && !Tower.IgnoredEnemyTypes.Contains(enemy.Type))
 			{
 				TargetsInRange.Add(enemy);
 
@@ -72,6 +72,16 @@ namespace ua.org.gdg.devfest
 				}
 				yield return new WaitForSeconds(.1f);
 			}
+		}
+		
+		//---------------------------------------------------------------------
+		// Public
+		//---------------------------------------------------------------------
+		
+		public new void OnEnemyDie(GameObject enemy)
+		{
+			var enemyScript = enemy.GetComponent<EnemyScript>();
+			RemoveTarget(enemyScript);
 		}
 	}
 }

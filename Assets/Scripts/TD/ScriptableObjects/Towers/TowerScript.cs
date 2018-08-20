@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace ua.org.gdg.devfest
@@ -14,7 +11,7 @@ namespace ua.org.gdg.devfest
 		
 		[SerializeField] protected Tower Tower;
 		[SerializeField] protected Transform Gun;
-		[SerializeField] protected List<GameObject> _levelMeshes;
+		[SerializeField] protected List<GameObject> LevelMeshes;
 		[SerializeField] protected ProjectileScript Projectile;
 		
 		//---------------------------------------------------------------------
@@ -23,10 +20,9 @@ namespace ua.org.gdg.devfest
 
 		protected void Awake()
 		{
-			var rangeCollider = GetComponent<SphereCollider>();
-			rangeCollider.radius = Tower.Range;
+			SetRange(Tower.Range);
 			_level = Tower.Level;
-			Cooldown = Tower.Cooldown.Value;
+			Cooldown = Tower.Cooldown;
 			SetLevelMesh(_level);
 		}
 
@@ -38,6 +34,8 @@ namespace ua.org.gdg.devfest
 		private int _level;
 		private GameObject _currentMesh;
 		protected float Cooldown;
+		protected float Range;
+		
 
 		//---------------------------------------------------------------------
 		// Helpers
@@ -48,12 +46,18 @@ namespace ua.org.gdg.devfest
 			if (TargetsInRange.Contains(target)) TargetsInRange.Remove(target);
 		}
 
+		private void SetRange(float range)
+		{
+			var rangeCollider = GetComponent<SphereCollider>();
+			rangeCollider.radius = Range = range;
+		}
+
 		private void SetLevelMesh(int level)
 		{
-			if (level > Tower.MaxLevel.Value) return;
+			if (level > Tower.MaxLevel) return;
 			
 			if(_currentMesh != null) _currentMesh.SetActive(false);
-			_currentMesh = _levelMeshes[level];
+			_currentMesh = LevelMeshes[level];
 			_currentMesh.SetActive(true);
 		}
 		
@@ -63,9 +67,11 @@ namespace ua.org.gdg.devfest
 
 		public void LevelUp()
 		{
+			if (_level >= Tower.MaxLevel) return;
 			_level++;
 			SetLevelMesh(_level);
-			Cooldown -= Tower.CDRPerLevel.Value;
+			Cooldown -= Tower.CDRPerLevel;
+			SetRange(Range + Tower.RangePerLevel);
 			Projectile.LevelUp();
 		}
 
