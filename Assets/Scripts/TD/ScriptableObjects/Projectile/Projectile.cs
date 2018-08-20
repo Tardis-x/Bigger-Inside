@@ -6,6 +6,7 @@ namespace ua.org.gdg.devfest
   public class Projectile : ScriptableObject
   {
     [SerializeField] public FloatReference Damage;
+    [SerializeField] public FloatReference DamagePerLevel;
     [SerializeField] public FloatReference Speed;
     [SerializeField] public ProjectileType Type;
   }

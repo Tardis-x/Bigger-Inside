@@ -23,10 +23,9 @@ namespace ua.org.gdg.devfest
 
 		protected void Awake()
 		{
-			var rangeCollider = GetComponent<SphereCollider>();
-			rangeCollider.radius = Tower.Range;
+			SetRange(Tower.Range);
 			_level = Tower.Level;
-			Cooldown = Tower.Cooldown.Value;
+			Cooldown = Tower.Cooldown;
 			SetLevelMesh(_level);
 		}
 
@@ -34,10 +33,12 @@ namespace ua.org.gdg.devfest
 		// Internal
 		//---------------------------------------------------------------------
 
-		[SerializeField] protected List<EnemyScript> TargetsInRange = new List<EnemyScript>();
+		protected List<EnemyScript> TargetsInRange = new List<EnemyScript>();
 		private int _level;
 		private GameObject _currentMesh;
 		protected float Cooldown;
+		protected float Range;
+		
 
 		//---------------------------------------------------------------------
 		// Helpers
@@ -46,6 +47,12 @@ namespace ua.org.gdg.devfest
 		protected void RemoveTarget(EnemyScript target)
 		{
 			if (TargetsInRange.Contains(target)) TargetsInRange.Remove(target);
+		}
+
+		private void SetRange(float range)
+		{
+			var rangeCollider = GetComponent<SphereCollider>();
+			rangeCollider.radius = Range = range;
 		}
 
 		private void SetLevelMesh(int level)
@@ -66,6 +73,7 @@ namespace ua.org.gdg.devfest
 			_level++;
 			SetLevelMesh(_level);
 			Cooldown -= Tower.CDRPerLevel.Value;
+			SetRange(Range + Tower.RangePerLevel);
 			Projectile.LevelUp();
 		}
 

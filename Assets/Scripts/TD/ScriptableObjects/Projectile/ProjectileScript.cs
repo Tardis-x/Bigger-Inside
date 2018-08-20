@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ua.org.gdg.devfest
 {
@@ -9,12 +8,16 @@ namespace ua.org.gdg.devfest
 		// Editor
 		//---------------------------------------------------------------------
 		
-		[SerializeField] private List<Projectile> _levelParameters;
-		[SerializeField] private int _maxLevel;
+		[SerializeField] private Projectile _projectile;
 		
 		//---------------------------------------------------------------------
 		// Messages
 		//---------------------------------------------------------------------
+
+		private void OnEnable()
+		{
+			_damage = Projectile.Damage.Value;
+		}
 
 		private void FixedUpdate()
 		{
@@ -43,13 +46,11 @@ namespace ua.org.gdg.devfest
 		//---------------------------------------------------------------------
 
 		private EnemyScript _target;
-
+		private float _damage;
 		private Projectile Projectile
 		{
-			get { return _levelParameters[_level]; }
+			get { return _projectile; }
 		}
-		
-		private int _level;
 		
 		//---------------------------------------------------------------------
 		// Helpers
@@ -83,7 +84,7 @@ namespace ua.org.gdg.devfest
 
 		public void LevelUp()
 		{
-			if(_level < _maxLevel) _level++;
+			_damage += Projectile.DamagePerLevel.Value;
 		}
 		
 		//---------------------------------------------------------------------

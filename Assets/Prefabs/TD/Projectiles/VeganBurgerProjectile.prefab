@@ -112,11 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4babde0f0ee6a74428150a4493255139, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _levelParameters:
-  - {fileID: 11400000, guid: 677fd35944a66124dbd8645153693686, type: 2}
-  - {fileID: 11400000, guid: f8dd23bc86bfa0347a83ff46ac595459, type: 2}
-  - {fileID: 11400000, guid: ae2454be891ef974d8b36400c33f98ef, type: 2}
-  _maxLevel: 2
+  _projectile: {fileID: 11400000, guid: 677fd35944a66124dbd8645153693686, type: 2}
 --- !u!135 &135845271576237884
 SphereCollider:
   m_ObjectHideFlags: 1

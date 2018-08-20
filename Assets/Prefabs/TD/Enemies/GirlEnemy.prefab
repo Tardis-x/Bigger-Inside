@@ -176,6 +176,7 @@ GameObject:
   - component: {fileID: 54920579158573690}
   - component: {fileID: 136397082221799720}
   - component: {fileID: 114035653083518018}
+  - component: {fileID: 114178689344070730}
   m_Layer: 0
   m_Name: GirlEnemy
   m_TagString: Untagged
@@ -849,6 +850,34 @@ MonoBehaviour:
   _enemy: {fileID: 11400000, guid: 9a74bb7f2a792d344b8af746db40d4f8, type: 2}
   _dieEvent: {fileID: 11400000, guid: 6063daf3cbf10084ea29336ca3ca815b, type: 2}
   _agent: {fileID: 114801883150625500}
+--- !u!114 &114178689344070730
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1384727380351316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3318b37b5a34577429583f0b3833dd78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 63da5472a04ec30408bf68f541e860c8, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114035653083518018}
+        m_MethodName: LevelUp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114801883150625500
 MonoBehaviour:
   m_ObjectHideFlags: 1
