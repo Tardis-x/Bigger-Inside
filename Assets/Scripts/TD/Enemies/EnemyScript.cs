@@ -77,7 +77,7 @@ namespace ua.org.gdg.devfest
       
       HP -= (int) Mathf.Round(dmg);
       
-      Debug.Log(gameObject.name + " taken " + dmg + " damage from " + projectile.Type + " projectile");
+      Debug.Log(gameObject.name + " taken " + dmg + " damage from " + projectile.Type + " projectile. HP left: " + HP);
       
       if (HP <= 0) Die();
     }

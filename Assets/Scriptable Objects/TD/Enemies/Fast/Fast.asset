@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 322b12b9daab2344aa219ab737d6e515, type: 3}
+  m_Name: Fast
+  m_EditorClassIdentifier: 
+  HP:
+    UseConstant: 1
+    ConstantValue: 60
+    Variable: {fileID: 0}
+  Money:
+    UseConstant: 1
+    ConstantValue: 20
+    Variable: {fileID: 0}
+  MoveSpeed:
+    UseConstant: 1
+    ConstantValue: 3
+    Variable: {fileID: 0}
+  MoneyPerLevel:
+    UseConstant: 1
+    ConstantValue: 5
+    Variable: {fileID: 0}
+  HPPerLevel:
+    UseConstant: 1
+    ConstantValue: 6
+    Variable: {fileID: 0}
+  Resistances:
+    ResistancesList:
+    - Type: {fileID: 11400000, guid: ab7d4e0be929bdc47a3bf7392a928a1c, type: 2}
+      Amount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 11400000, guid: 4799a3d14006a04459278a5f4ac29f59, type: 2}

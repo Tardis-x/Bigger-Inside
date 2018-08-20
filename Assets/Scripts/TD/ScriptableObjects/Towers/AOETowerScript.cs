@@ -44,16 +44,13 @@ namespace ua.org.gdg.devfest
 		{
 			while (true)
 			{
-				// If there are any targets in range
 				if(TargetsInRange.Count > 0)
 				{
-					// Shoot each of them
 					foreach (var target in TargetsInRange)
 					{
 						Projectile.Shoot(target, Gun);
 					}
 					
-					// And cooldown
 					yield return new WaitForSeconds(Cooldown);
 				}
 				yield return new WaitForSeconds(.1f);
