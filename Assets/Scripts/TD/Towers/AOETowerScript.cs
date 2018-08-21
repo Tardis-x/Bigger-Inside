@@ -18,7 +18,7 @@ namespace ua.org.gdg.devfest
 		private new void Awake()
 		{
 			base.Awake();
-			_slowAmount = (Tower as AOETower).SlowAmount;
+			_slowAmount = ((AOETower) Tower).SlowAmount;
 			StartCoroutine(Shoot());
 		}
 		
@@ -51,7 +51,7 @@ namespace ua.org.gdg.devfest
 		public new void LevelUp()
 		{
 			base.LevelUp();
-			_slowAmount += (Tower as AOETower).SlowAmouontPerLevel;
+			_slowAmount += ((AOETower) Tower).SlowAmouontPerLevel;
 		}
 		
 		//---------------------------------------------------------------------

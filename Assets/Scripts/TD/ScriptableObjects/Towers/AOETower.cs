@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ua.org.gdg.devfest
 {
 	[Serializable]
-	[CreateAssetMenu(menuName = "TowerDefence/AOE Tower")]
+	[CreateAssetMenu(menuName = "TowerDefence/Towers/AOE Tower")]
 	public class AOETower : Tower
 	{
 		[SerializeField] public FloatReference SlowAmount;
