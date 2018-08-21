@@ -276,11 +276,17 @@ public class QuestPhotoController : MonoBehaviour
         pictureNameInStorage = "/Pictures/" + userID + _photoComment + ".jpeg";
         pictureReference = storageRef.Child(pictureNameInStorage);
         //Uploading image
-        var pictureMetadata = new MetadataChange();
-        pictureMetadata.ContentType = "image/jpeg";
-        //Saving picture progress for quest
+	    var pictureMetadata = new MetadataChange {ContentType = "image/jpeg"};
+	    //Saving picture progress for quest
         imageUrl = "gs://hoverboard-v2-dev.appspot.com" + pictureNameInStorage;
-        _questManager.questProgress.photoData.imgUrl = imageUrl;
+	    if (_photoComment == "_speaker")
+	    {
+		    _questManager.questProgress.photoData.imgUrlSpeaker = imageUrl;
+	    }
+	    else if (_photoComment == "_friend")
+	    {
+		    _questManager.questProgress.photoData.imgUrlFriend = imageUrl;
+	    }
         _questManager.CheckInPhoto(this);
         var task = pictureReference.PutFileAsync(picturePath, pictureMetadata);
         task.ContinueWith(resultTask =>
