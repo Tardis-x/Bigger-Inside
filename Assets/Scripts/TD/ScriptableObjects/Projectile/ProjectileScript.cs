@@ -16,7 +16,7 @@ namespace ua.org.gdg.devfest
 
 		private void OnEnable()
 		{
-			_damage = Projectile.Damage.Value;
+			_damage = Projectile.Damage;
 		}
 
 		private void FixedUpdate()
@@ -36,7 +36,7 @@ namespace ua.org.gdg.devfest
 			
 			if (enemy == _target)
 			{
-				_target.GetShot(Projectile);
+				_target.GetShot(this);
 				SelfDestroy();
 			}
 		}
@@ -47,6 +47,7 @@ namespace ua.org.gdg.devfest
 
 		private EnemyScript _target;
 		private float _damage;
+		private int _level;
 		private Projectile Projectile
 		{
 			get { return _projectile; }
@@ -71,20 +72,22 @@ namespace ua.org.gdg.devfest
 		// Public
 		//---------------------------------------------------------------------
 
-		public ProjectileScript GetInstance(Transform position)
+		public ProjectileScript GetInstance(Transform position, int level)
 		{
-			return Instantiate(this, position.position, position.rotation);
+			var instance = Instantiate(this, position.position, position.rotation);
+			instance._level = level;
+			return instance;
 		}
 
 		public void Shoot(EnemyScript target, Transform position)
 		{
-			var projectile = GetInstance(position);
+			var projectile = GetInstance(position, _level);
 			projectile._target = target;
 		}
 
 		public void LevelUp()
 		{
-			_damage += Projectile.DamagePerLevel.Value;
+			_level++;
 		}
 		
 		//---------------------------------------------------------------------
@@ -93,7 +96,7 @@ namespace ua.org.gdg.devfest
 
 		public float Damage
 		{
-			get { return Projectile.Damage.Value; }
+			get { return _damage + Projectile.DamagePerLevel * _level; }
 		}
 
 		public ProjectileType Type

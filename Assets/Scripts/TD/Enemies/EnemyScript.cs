@@ -65,7 +65,7 @@ namespace ua.org.gdg.devfest
       return instance;
     }
 
-    public void GetShot(Projectile projectile)
+    public void GetShot(ProjectileScript projectile)
     {
       float dmg = projectile.Damage;
       var resist = _enemy.Resistances.ResistancesList.FirstOrDefault(x => x.Type == projectile.Type);
