@@ -10,6 +10,7 @@ public class QuestLeaderBoardController : MonoBehaviour
 	public GameObject leaderboardEntryPrefab;
 	public Transform gridForList;
 	QuestManager _questManager;
+	public QuestFirebaseData firebaseData;
 	public Scrollbar scrollbar;
 	public Sprite currentUserSprite;
 	
@@ -96,7 +97,7 @@ public class QuestLeaderBoardController : MonoBehaviour
 			}
 			
 			//Extra for current user
-			if (pair.Key == _questManager.currentUserUserId)
+			if (pair.Key == firebaseData.currentUserUserId)
 			{
 				var color = Color.white;
 				color.a = 1;

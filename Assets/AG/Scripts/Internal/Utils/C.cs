@@ -4,7 +4,14 @@ namespace DeadMosquito.AndroidGoodies.Internal
 {
 	public static class C
 	{
+		public const string AndroidAppNotification = "android.app.Notification";
+		public const string AndroidAppNotificationCompatActionBuilder = "android.support.v4.app.NotificationCompat$Action$Builder";
+		public const string AndroidAppNotificationCompatBuilder = "android.support.v4.app.NotificationCompat$Builder";
+		public const string AndroidAppNotificationChannel = "android.app.NotificationChannel";
+		public const string AndroidAppNotificationChannelGroup = "android.app.NotificationChannelGroup";
 		public const string AndroidAppNotificationManager = "android.app.NotificationManager";
+		public const string AndroidAppNotificationManagerPolicy = "android.app.NotificationManager$Policy";
+		public const string AndroidAppNotificationManagerCompat = "android.support.v4.app.NotificationManagerCompat";
 		public const string AndroidAppPendingIntent = "android.app.PendingIntent";
 		public const string AndroidAppWallpaperManager = "android.app.WallpaperManager";
 		public const string AndroidContentClipData = "android.content.ClipData";
@@ -17,6 +24,7 @@ namespace DeadMosquito.AndroidGoodies.Internal
 		public const string AndroidHardwareCamera = "android.hardware.Camera";
 		public const string AndroidHardwareCamera2CameraManager = "android.hardware.camera2.CameraManager";
 		public const string AndroidLocaltionLocationManager = "android.location.LocationManager";
+		public const string AndroidMediaAudioAttributesBuilder = "android.media.AudioAttributes$Builder";
 		public const string AndroidMediaExifinterface = "android.media.ExifInterface";
 		public const string AndroidMediaMediaScannerConnection = "android.media.MediaScannerConnection";
 		public const string AndroidMediaMediaRecorder = "android.media.MediaRecorder";
@@ -27,6 +35,7 @@ namespace DeadMosquito.AndroidGoodies.Internal
 		public const string AndroidOsBuildVersion = "android.os.Build$VERSION";
 		public const string AndroidOsEnvironment = "android.os.Environment";
 		public const string AndroidOsVibrator = "android.os.Vibrator";
+		public const string AndroidOsVibrationEffect = "android.os.VibrationEffect";
 		public const string AndroidProviderCalendarContract = "android.provider.CalendarContract";
 		public const string AndroidProviderCalendarContractEvents = "android.provider.CalendarContract$Events";
 		public const string AndroidProviderSettingsSecure = "android.provider.Settings$Secure";

@@ -16,8 +16,8 @@ public class QuestManager : MonoBehaviour
 	const int maxVRGameScore = 40000;
 
 	QuestUI _questUi;
-	DatabaseReference _database;
-	FirebaseAuth _auth;
+	public QuestFirebaseData firebaseData;
+	
 	public QuestProgress questProgress { get; set; }
 
 	public Dictionary<string, QuestLeaderboardEntry> QuestLeaderboardData { get; set; }
@@ -25,23 +25,11 @@ public class QuestManager : MonoBehaviour
 	public Dictionary<string, QuestRiddleDataFull> QuestRiddlesDataFull { get; set; }
 	public bool isQuestActivated;
 	int _timesCompleted;
-	public string currentUserUserId;
 	public Texture2D[] riddleImages;
-	public Uri userPhotoUrl;
 	public Image userPhotoImage;
 
 	void Awake()
 	{
-		Debug.Log("QuestManager.Awake");
-		// Get the root reference location of the database.
-		_auth = FirebaseAuth.DefaultInstance;
-		Debug.Log("QuestManager.Awake.Auth");
-		_database = FirebaseDatabase.DefaultInstance.RootReference;
-		Debug.Log("QuestManager.Awake:Database");
-		currentUserUserId = _auth.CurrentUser.DisplayName;
-		Debug.Log("QuestManager.Awake.Username");
-		userPhotoUrl = _auth.CurrentUser.PhotoUrl;
-		Debug.Log("QuestManager.Awake.PhotoURL");
 		// Set up the Editor before calling into the realtime database.
 		FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://hoverboard-v2-dev.firebaseio.com/");
 		Debug.Log("QuestManager.Awake.URL");
@@ -65,11 +53,11 @@ public class QuestManager : MonoBehaviour
 		spinner.Show();
 #endif
 		_questUi.FadeQuestScreenIn();
-		_database.Child("users").Child(currentUserUserId).GetValueAsync().ContinueWith(readTask => {
+		firebaseData.database.Child("users").Child(firebaseData.currentUserUserId).GetValueAsync().ContinueWith(readTask => {
 			if (readTask.Result == null)
 			{
 				var json = JsonConvert.SerializeObject(questProgress);
-				_database.Child("users").Child(currentUserUserId)
+				firebaseData.database.Child("users").Child(firebaseData.currentUserUserId)
 					.SetRawJsonValueAsync(json).ContinueWith(writeTask => {
 						if (writeTask.IsFaulted)
 						{
@@ -151,7 +139,7 @@ public class QuestManager : MonoBehaviour
 	
 	void RiddleDataInitizalization()
 	{
-		questProgress = new QuestProgress {userPhotoUrl = userPhotoUrl};
+		questProgress = new QuestProgress {userPhotoUrl = firebaseData.userPhotoUrl};
 
 		QuestRiddlesDataFull = new Dictionary<string, QuestRiddleDataFull>();
 		Debug.Log("RiddleDataInitialization");
@@ -178,12 +166,6 @@ public class QuestManager : MonoBehaviour
 	void LeaderBoardInitialization()
 	{
 		QuestLeaderboardData = new Dictionary<string, QuestLeaderboardEntry>();
-		var url = _auth.CurrentUser.PhotoUrl;
-		for (var i = 0; i < 500; i++)
-		{
-			var entry = new QuestLeaderboardEntry(url, i*5);
-			QuestLeaderboardData.Add(i.ToString(), entry);
-		}
 	}
 
 	
@@ -191,7 +173,7 @@ public class QuestManager : MonoBehaviour
 	{	
 		//Get the global data from FireBase
 		Dictionary<string, System.Object> childUpdates = new Dictionary<string, System.Object>();
-		_database.Child("GlobalQuestData/VRGame").GetValueAsync().ContinueWith(task =>
+		firebaseData.database.Child("GlobalQuestData/VRGame").GetValueAsync().ContinueWith(task =>
 		{
 			var snapshot = task.Result;
 			_timesCompleted = JsonConvert.DeserializeObject<int>(snapshot.GetRawJsonValue());
@@ -201,11 +183,11 @@ public class QuestManager : MonoBehaviour
 			_timesCompleted++;
 			// update VR progress data in database
 			childUpdates["GlobalQuestData/VRGame"] = _timesCompleted;
-			childUpdates["users/" + _auth.CurrentUser.DisplayName + "/vrGameData/score"] = questProgress.vrGameData.score;
-			childUpdates["users/" + _auth.CurrentUser.DisplayName + "/vrGameData/gameScore"] = score;
-			childUpdates["users/" + _auth.CurrentUser.DisplayName + "/vrGameData/state"] = true;
-			childUpdates["users/" + _auth.CurrentUser.DisplayName + "/globalScore"] = questProgress.globalScore;
-			_database.UpdateChildrenAsync(childUpdates).ContinueWith(task1 => {
+			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/vrGameData/score"] = questProgress.vrGameData.score;
+			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/vrGameData/gameScore"] = score;
+			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/vrGameData/state"] = true;
+			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/globalScore"] = questProgress.globalScore;
+			firebaseData.database.UpdateChildrenAsync(childUpdates).ContinueWith(task1 => {
 				if (task1.IsCompleted)
 				{
 					// mark VR game as completed in local storage
@@ -238,9 +220,9 @@ public class QuestManager : MonoBehaviour
 		questProgress.photoData.state = true;
 		//Refresh the info panel
 		_questUi.OnChangeInfoButtonClicked();
-		childUpdates["users/" + currentUserUserId + "/photoData/state"] = true;
+		childUpdates["users/" + firebaseData.currentUserUserId + "/photoData/state"] = true;
 		// mark photo step as completed in firebase
-		_database.UpdateChildrenAsync(childUpdates).ContinueWith(task => 
+		firebaseData.database.UpdateChildrenAsync(childUpdates).ContinueWith(task => 
 		{
 			if (task.IsCompleted)
 			{
@@ -263,7 +245,7 @@ public class QuestManager : MonoBehaviour
 		Dictionary<string, System.Object> childUpdates = new Dictionary<string, System.Object>();
 		
 		//Check, how many times before riddle was completed and assign a score
-		_database.Child("GlobalQuestData/" + riddleKey).GetValueAsync().ContinueWith(task =>
+		firebaseData.database.Child("GlobalQuestData/" + riddleKey).GetValueAsync().ContinueWith(task =>
 		{
 			var snapshot = task.Result;
             _timesCompleted = JsonConvert.DeserializeObject<int>(snapshot.GetRawJsonValue());
@@ -282,11 +264,11 @@ public class QuestManager : MonoBehaviour
 			
 			// update quest riddle progress data in database
 			childUpdates["GlobalQuestData/" + riddleKey] = _timesCompleted;
-			childUpdates["users/" + _auth.CurrentUser.DisplayName + "/riddlesData/" + riddleKey + "/isCompleted"] = true;
-            childUpdates["users/" + _auth.CurrentUser.DisplayName + "/riddlesData/" + riddleKey + "/score"] = 
+			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/riddlesData/" + riddleKey + "/isCompleted"] = true;
+            childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/riddlesData/" + riddleKey + "/score"] = 
 	            questProgress.riddlesData[riddleKey].score;
-			childUpdates["users/" + _auth.CurrentUser.DisplayName + "/globalScore"] = questProgress.globalScore;
-			_database.UpdateChildrenAsync(childUpdates).ContinueWith(task1 => 
+			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/globalScore"] = questProgress.globalScore;
+			firebaseData.database.UpdateChildrenAsync(childUpdates).ContinueWith(task1 => 
 			{
 				if (task1.IsCompleted)
 				{
@@ -316,8 +298,8 @@ public class QuestManager : MonoBehaviour
 		//Refresh the info panel
 		_questUi.OnChangeInfoButtonClicked();
 		
-		childUpdates["users/" + _auth.CurrentUser.DisplayName + "/allRiddlesCompleted"] = true;
-		_database.UpdateChildrenAsync(childUpdates).ContinueWith(task => 
+		childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/allRiddlesCompleted"] = true;
+		firebaseData.database.UpdateChildrenAsync(childUpdates).ContinueWith(task => 
 		{
 			if (task.IsCompleted)
 			{
@@ -342,13 +324,13 @@ public class QuestManager : MonoBehaviour
 		spinner.Show();
 #endif
 		//Try to get data from firebase
-		_database.Child("GlobalQuestData/Leaderboards").GetValueAsync().ContinueWith(readTask =>
+		firebaseData.database.Child("GlobalQuestData/Leaderboards").GetValueAsync().ContinueWith(readTask =>
 		{
 			if (readTask.Result == null)
 			{
 				//Create data in firebase
 				var json = JsonConvert.SerializeObject(QuestLeaderboardData);
-				_database.Child("GlobalQuestData/Leaderboards")
+				firebaseData.database.Child("GlobalQuestData/Leaderboards")
 					.SetRawJsonValueAsync(json).ContinueWith(writeTask => {
 						if (writeTask.IsFaulted)
 						{
@@ -389,31 +371,31 @@ public class QuestManager : MonoBehaviour
 	public void UpdateUserScoreInLeaderBoard()
 	{
 		GetLeaderboardDataFromFirebase();
-		if (!QuestLeaderboardData.ContainsKey(currentUserUserId))
+		if (!QuestLeaderboardData.ContainsKey(firebaseData.currentUserUserId))
 		{
-			QuestLeaderboardData.Add(currentUserUserId, new QuestLeaderboardEntry(questProgress.userPhotoUrl, questProgress.globalScore));
+			QuestLeaderboardData.Add(firebaseData.currentUserUserId, new QuestLeaderboardEntry(questProgress.userPhotoUrl, questProgress.globalScore));
 		}
 		else
 		{
-			QuestLeaderboardData[currentUserUserId] = new QuestLeaderboardEntry(questProgress.userPhotoUrl, questProgress.globalScore);
+			QuestLeaderboardData[firebaseData.currentUserUserId] = new QuestLeaderboardEntry(questProgress.userPhotoUrl, questProgress.globalScore);
 		}
 	}
 
 	void UpdateFirebaseLeaderboard()
 	{
 		var json = JsonConvert.SerializeObject(QuestLeaderboardData);
-		_database.Child("GlobalQuestData/Leaderboards").SetRawJsonValueAsync(json);
+		firebaseData.database.Child("GlobalQuestData/Leaderboards").SetRawJsonValueAsync(json);
 	}
 	
 	public void CheckInPhoto(QuestPhotoController photoController)
 	{
 		Dictionary<string, System.Object> childUpdates = new Dictionary<string, System.Object>();
 		
-		childUpdates["users/" + _auth.CurrentUser.DisplayName + "/photoData/imageURLSpeaker"] = questProgress.photoData.imgUrlSpeaker;
+		childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/photoData/imageURLSpeaker"] = questProgress.photoData.imgUrlSpeaker;
 		
-		childUpdates["users/" + _auth.CurrentUser.DisplayName + "/photoData/imageURLFriend"] = questProgress.photoData.imgUrlFriend;
+		childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/photoData/imageURLFriend"] = questProgress.photoData.imgUrlFriend;
 		
-		_database.UpdateChildrenAsync(childUpdates).ContinueWith(task => {
+		firebaseData.database.UpdateChildrenAsync(childUpdates).ContinueWith(task => {
 			if (task.IsCompleted)
 			{
 				
@@ -432,7 +414,7 @@ public class QuestManager : MonoBehaviour
 
 	public void CheckIfQuestIsActivated()
 	{
-		_database.Child("GlobalQuestData/QuestActivation").GetValueAsync().ContinueWith(task =>
+		firebaseData.database.Child("GlobalQuestData/QuestActivation").GetValueAsync().ContinueWith(task =>
 		{
 			DataSnapshot snapshot = task.Result;
 			isQuestActivated = JsonConvert.DeserializeObject<bool>(snapshot.GetRawJsonValue());
@@ -468,9 +450,9 @@ public class QuestManager : MonoBehaviour
 		//Refresh the info panel
 		_questUi.OnChangeInfoButtonClicked();
 		
-		childUpdates["users/" + _auth.CurrentUser.DisplayName + "/isGoogleColorsCompleted"] = true;
+		childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/isGoogleColorsCompleted"] = true;
 		
-		_database.UpdateChildrenAsync(childUpdates).ContinueWith(task1 => 
+		firebaseData.database.UpdateChildrenAsync(childUpdates).ContinueWith(task1 => 
 		{
 			if (task1.IsCompleted)
 			{
@@ -490,7 +472,7 @@ public class QuestManager : MonoBehaviour
 
 	IEnumerator LoadUserImageFromUrl()
 	{
-		var www = new WWW(userPhotoUrl.ToString());
+		var www = new WWW(firebaseData.userPhotoUrl.ToString());
 		yield return www;
 		userPhotoImage.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0, 0));
 	}

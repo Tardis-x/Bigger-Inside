@@ -1,10 +1,14 @@
 ﻿
+using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
+
 #if UNITY_ANDROID
 namespace DeadMosquito.AndroidGoodies.Internal
 {
 	using System;
 	using UnityEngine;
-
+	
+	[SuppressMessage("ReSharper", "InconsistentNaming")]
 	class OnScanCompletedListener : AndroidJavaProxy
 	{
 		const string InterfaceSignature = "android.media.MediaScannerConnection$OnScanCompletedListener";
@@ -17,7 +21,8 @@ namespace DeadMosquito.AndroidGoodies.Internal
 			_onScanCompleted = onScanCompleted;
 		}
 
-		public void onScanCompleted(String path, AndroidJavaObject uri)
+		[UsedImplicitly]
+		public void onScanCompleted(string path, AndroidJavaObject uri)
 		{
 			if (uri.IsJavaNull())
 			{

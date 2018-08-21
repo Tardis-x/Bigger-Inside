@@ -1,10 +1,14 @@
 ﻿
+using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
+
 #if UNITY_ANDROID
 namespace DeadMosquito.AndroidGoodies.Internal
 {
 	using System;
 	using UnityEngine;
-
+	
+	[SuppressMessage("ReSharper", "InconsistentNaming")]
 	class DialogOnMultiChoiceClickListenerProxy : AndroidJavaProxy
 	{
 		readonly Action<int, bool> _onClick;
@@ -15,6 +19,7 @@ namespace DeadMosquito.AndroidGoodies.Internal
 			_onClick = onClick;
 		}
 
+		[UsedImplicitly]
 		void onClick(AndroidJavaObject dialog, int which, bool isChecked)
 		{
 			GoodiesSceneHelper.Queue(() => _onClick(which, isChecked));

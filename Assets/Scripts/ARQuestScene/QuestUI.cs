@@ -21,6 +21,7 @@ public class QuestUI : MonoBehaviour
 	[SerializeField] Button _proceedButton;
 
 	public GameObject usersList;
+	public QuestFirebaseData firebaseData;
 
 	GameObject _activePanel;
 
@@ -57,7 +58,7 @@ public class QuestUI : MonoBehaviour
 	public void OnMainMenuButtonClicked()
 	{
 		Debug.Log("QuestUI.OnMainMenuButtonClicked");
-		DontDestroyOnLoad(_questManager);
+		DontDestroyOnLoad(firebaseData);
 		SceneManager.LoadScene("MenuScene");
 	}
 

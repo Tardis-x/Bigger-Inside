@@ -1,5 +1,4 @@
-﻿
-#if UNITY_ANDROID
+﻿#if UNITY_ANDROID
 namespace DeadMosquito.AndroidGoodies.Internal
 {
 	using System;
@@ -27,104 +26,53 @@ namespace DeadMosquito.AndroidGoodies.Internal
 
 		const string CAMERA_SERVICE = "camera";
 		static AndroidJavaObject _cameraService;
-		
+
 		const string CLIPBOARD_SERVICE = "clipboard";
 		static AndroidJavaObject _clipboardService;
 
 		public static AndroidJavaObject VibratorService
 		{
-			get
-			{
-				if (_vibratorService == null)
-				{
-					_vibratorService = GetSystemService(VIBRATOR_SERVICE, C.AndroidOsVibrator);
-				}
-				return _vibratorService;
-			}
+			get { return _vibratorService ?? (_vibratorService = GetSystemService(VIBRATOR_SERVICE, C.AndroidOsVibrator)); }
 		}
 
 		public static AndroidJavaObject LocationService
 		{
-			get
-			{
-				if (_locationService == null)
-				{
-					_locationService = GetSystemService(LOCATION_SERVICE, C.AndroidLocaltionLocationManager);
-				}
-				return _locationService;
-			}
+			get { return _locationService ?? (_locationService = GetSystemService(LOCATION_SERVICE, C.AndroidLocaltionLocationManager)); }
 		}
 
 		public static AndroidJavaObject ConnectivityService
 		{
-			get
-			{
-				if (_connectivityService == null)
-				{
-					_connectivityService = GetSystemService(CONNECTIVITY_SERVICE, C.AndroidNetConnectivityManager);
-				}
-				return _connectivityService;
-			}
+			get { return _connectivityService ?? (_connectivityService = GetSystemService(CONNECTIVITY_SERVICE, C.AndroidNetConnectivityManager)); }
 		}
 
 		public static AndroidJavaObject WifiService
 		{
-			get
-			{
-				if (_wifiService == null)
-				{
-					_wifiService = GetSystemService(WIFI_SERVICE, C.AndroidNetWifiManager);
-				}
-				return _wifiService;
-			}
+			get { return _wifiService ?? (_wifiService = GetSystemService(WIFI_SERVICE, C.AndroidNetWifiManager)); }
 		}
 
 		public static AndroidJavaObject TelephonyService
 		{
-			get
-			{
-				if (_telephonyService == null)
-				{
-					_telephonyService = GetSystemService(TELEPHONY_SERVICE, C.AndroidTelephonyTelephonyManager);
-				}
-				return _telephonyService;
-			}
+			get { return _telephonyService ?? (_telephonyService = GetSystemService(TELEPHONY_SERVICE, C.AndroidTelephonyTelephonyManager)); }
 		}
 
 		public static AndroidJavaObject NotificationService
 		{
-			get
-			{
-				if (_notificationService == null)
-				{
-					_notificationService = GetSystemService(NOTIFICATION_SERVICE, C.AndroidAppNotificationManager);
-				}
-				return _notificationService;
-			}
+			get { return _notificationService ?? (_notificationService = GetSystemService(NOTIFICATION_SERVICE, C.AndroidAppNotificationManager)); }
+		}
+
+		public static AndroidJavaObject NotificationServiceCompat
+		{
+			get { return _notificationService ?? (_notificationService = C.AndroidAppNotificationManagerCompat.AJCCallStaticOnceAJO("from", AGUtils.Activity)); }
 		}
 
 		public static AndroidJavaObject CameraService
 		{
-			get
-			{
-				if (_cameraService == null)
-				{
-					_cameraService = GetSystemService(CAMERA_SERVICE, C.AndroidHardwareCamera2CameraManager);
-				}
-				return _cameraService;
-			}
+			get { return _cameraService ?? (_cameraService = GetSystemService(CAMERA_SERVICE, C.AndroidHardwareCamera2CameraManager)); }
 		}
-		
+
 		public static AndroidJavaObject ClipboardService
 		{
-			get
-			{
-				if (_clipboardService == null)
-				{
-					_clipboardService = GetSystemService(CLIPBOARD_SERVICE, C.AndroidContentClipboardManager);
-				}
-				return _clipboardService;
-			}
+			get { return _clipboardService ?? (_clipboardService = GetSystemService(CLIPBOARD_SERVICE, C.AndroidContentClipboardManager)); }
 		}
 
 		static AndroidJavaObject GetSystemService(string name, string serviceClass)
@@ -140,6 +88,7 @@ namespace DeadMosquito.AndroidGoodies.Internal
 				{
 					Debug.LogWarning("Failed to get " + name + " service. Error: " + e.Message);
 				}
+
 				return null;
 			}
 		}

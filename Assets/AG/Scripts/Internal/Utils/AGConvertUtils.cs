@@ -71,10 +71,48 @@ namespace DeadMosquito.AndroidGoodies.Internal
 			}
 			return boxedValueAjo;
 		}
+		
+		static int AndroidColor(int alpha,
+			int red,
+			int green,
+			int blue)
+		{
+			if (AGUtils.IsNotAndroidCheck())
+			{
+				return 0;
+			}
 
+			using (var c = new AndroidJavaClass("android.graphics.Color"))
+			{
+				return c.CallStaticInt("argb", alpha, red, green, blue);
+			}
+		}
+		
 		public static int ToAndroidColor(this Color32 color32)
 		{
-			return color32.r * 65536 + color32.g * 256 + color32.b;
+			Color color = color32;
+			return ToAndroidColor(color);
+		}
+		
+		public static int ToAndroidColor(this Color color)
+		{
+			if (AGUtils.IsNotAndroidCheck())
+			{
+				return 0;
+			}
+
+			Color32 c = color;
+			return AndroidColor(c.a, c.r, c.g, c.b);
+		}
+		
+		public static Color ToUnityColor(this int aCol)
+		{
+			Color32 c = Color.clear;
+			c.b = (byte) (aCol & 0xFF);
+			c.g = (byte) ((aCol >> 8) & 0xFF);
+			c.r = (byte) ((aCol >> 16) & 0xFF);
+			c.a = (byte) ((aCol >> 24) & 0xFF);
+			return c;
 		}
 	}
 }

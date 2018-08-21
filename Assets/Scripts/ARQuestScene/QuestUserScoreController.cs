@@ -7,6 +7,7 @@ public class QuestUserScoreController : MonoBehaviour
 {
 	QuestManager _questManager;
 
+	public QuestFirebaseData firebaseData;
 	public Text scoreText;
 	public Text positionInfoText;
 	public Text gate2ScoreText;
@@ -74,7 +75,7 @@ public class QuestUserScoreController : MonoBehaviour
 		var i = 1;
 		foreach (var pair in _questManager.QuestLeaderboardData.OrderByDescending(entry => entry.Value.globalScore))
 		{
-			if (pair.Key == _questManager.currentUserUserId)
+			if (pair.Key == firebaseData.currentUserUserId)
 			{
 				pos = i;
 			}

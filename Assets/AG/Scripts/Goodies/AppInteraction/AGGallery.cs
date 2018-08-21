@@ -45,27 +45,6 @@ namespace DeadMosquito.AndroidGoodies
 			AGActivityUtils.PickPhotoFromGallery(maxSize, shouldGenerateThumbnails);
 		}
 
-		// Invoked by UnityPlayer.SendMessage
-		/// <summary>
-		/// Saves the image to android gallery.
-		/// </summary>
-		/// <returns>The image to save to the gallery.</returns>
-		/// <param name="texture2D">Texture2D to save.</param>
-		/// <param name="title">Title.</param>
-		/// <param name="folder">Inner folder in Pictures directory. Must be a valid folder name</param>
-		/// <param name="imageFormat">Image format.</param>
-		[PublicAPI]
-		public static void SaveImageToGallery([NotNull] Texture2D texture2D, [NotNull] string title, string folder = null,
-			ImageFormat imageFormat = ImageFormat.PNG)
-		{
-			if (AGUtils.IsNotAndroidCheck())
-			{
-				return;
-			}
-
-			AGFileUtils.SaveImageToGallery(texture2D, title, folder, imageFormat);
-		}
-
 		/// <summary>
 		/// Call this method after you have saved the image for it to appear in gallery applications
 		/// </summary>

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.5748171, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -834,7 +834,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &168554655
 GameObject:
@@ -1493,6 +1493,47 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 302880744}
+--- !u!1 &319769396
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 319769398}
+  - component: {fileID: 319769397}
+  m_Layer: 0
+  m_Name: FirebaseDataHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &319769397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 319769396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60725cb960498d94b8b6780c464f0d29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentUserUserId: 
+--- !u!4 &319769398
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 319769396}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &326530976
 GameObject:
   m_ObjectHideFlags: 0
@@ -1634,7 +1675,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -1.8300171, y: 669.55005}
+  m_AnchoredPosition: {x: -1.829956, y: 669.55005}
   m_SizeDelta: {x: -76.099976, y: 99.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &327122096
@@ -5539,6 +5580,7 @@ MonoBehaviour:
   leaderboardEntryPrefab: {fileID: 1689652662952570, guid: f62e53cbdf87a484f853d23d4c7292ec,
     type: 2}
   gridForList: {fileID: 975973359}
+  firebaseData: {fileID: 319769397}
   scrollbar: {fileID: 1078612840}
   currentUserSprite: {fileID: 21300000, guid: 650b3bac5893fe14985834cfac4fb81a, type: 3}
 --- !u!114 &791767247
@@ -6719,7 +6761,7 @@ Transform:
   - {fileID: 2123787434}
   - {fileID: 786313138}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &959850459
 GameObject:
@@ -7516,6 +7558,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c00ad29df834424eb965c9b9c3a5564, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firebaseData: {fileID: 319769397}
   scoreText: {fileID: 373063660}
   positionInfoText: {fileID: 1709534875}
   gate2ScoreText: {fileID: 1265797624}
@@ -10643,7 +10686,7 @@ RectTransform:
   - {fileID: 1093464600}
   - {fileID: 1355434901}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -10674,6 +10717,7 @@ MonoBehaviour:
   _changeInfoButton: {fileID: 214968339}
   _proceedButton: {fileID: 479896754}
   usersList: {fileID: 975973358}
+  firebaseData: {fileID: 319769397}
 --- !u!222 &1881586088
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11831,7 +11875,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2043295926
 MonoBehaviour:
@@ -11844,8 +11888,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f1688b8e8b4d5c48ad940acffef0c0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firebaseData: {fileID: 319769397}
   isQuestActivated: 0
-  currentUserUserId: 
   riddleImages:
   - {fileID: 2800000, guid: aa6f3af7d93bbcb48bb42265c920ebbc, type: 3}
   - {fileID: 2800000, guid: 2ff6bedf4824b6d41adf1a61b1d8bf61, type: 3}

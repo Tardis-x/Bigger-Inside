@@ -11,8 +11,8 @@ namespace DeadMosquito.AndroidGoodies.Internal
 	class GoodiesSceneHelper : MonoBehaviour
 	{
 		static GoodiesSceneHelper _instance;
-		static readonly object InitLock = new Object();
-		readonly object _queueLock = new Object();
+		static readonly object InitLock = new object();
+		readonly object _queueLock = new object();
 		readonly List<Action> _queuedActions = new List<Action>();
 		readonly List<Action> _executingActions = new List<Action>();
 
@@ -163,92 +163,12 @@ namespace DeadMosquito.AndroidGoodies.Internal
 			AGCamera.OnErrorTrigger(message);
 		}
 
-		public void OnPickContactSuccess(string message)
-		{
-			AGContacts.OnSuccessTrigger(message);
-		}
-
-		public void OnPickContactError(string message)
-		{
-			AGContacts.OnErrorTrigger(message);
-		}
-
 		public void OnRequestPermissionsResult(string message)
 		{
 			AGPermissions.OnRequestPermissionsResult(message);
 		}
 
-		public void OnPickAudioSuccess(string message)
-		{
-			if (Debug.isDebugBuild)
-			{
-				Debug.Log("Audio picker success: " + message);
-			}
-			AGFilePicker.OnAudioSuccessTrigger(message);
-		}
-
-		public void OnPickAudioError(string message)
-		{
-			if (Debug.isDebugBuild)
-			{
-				Debug.Log("Audio picker error: " + message);
-			}
-			AGFilePicker.OnAudioErrorTrigger(message);
-		}
-
-		public void OnPickVideoSuccess(string message)
-		{
-			if (Debug.isDebugBuild)
-			{
-				Debug.Log("Video picker success: " + message);
-			}
-			AGFilePicker.OnVideoSuccessTrigger(message);
-		}
-
-		public void OnPickVideoError(string message)
-		{
-			if (Debug.isDebugBuild)
-			{
-				Debug.Log("Video picker error: " + message);
-			}
-			AGFilePicker.OnVideoErrorTrigger(message);
-		}
 		
-		public void OnRecordVideoSuccess(string message)
-		{
-			if (Debug.isDebugBuild)
-			{
-				Debug.Log("Video picker success: " + message);
-			}
-			AGCamera.OnVideoSuccessTrigger(message);
-		}
-
-		public void OnRecordVideoError(string message)
-		{
-			if (Debug.isDebugBuild)
-			{
-				Debug.Log("Video picker error: " + message);
-			}
-			AGCamera.OnVideoErrorTrigger(message);
-		}
-		
-		public void OnPickFileError(string message)
-		{
-			if (Debug.isDebugBuild)
-			{
-				Debug.Log("File picker error: " + message);
-			}
-			AGFilePicker.OnFileErrorTrigger(message);
-		}
-
-		public void OnPickFileSuccess(string message)
-		{
-			if (Debug.isDebugBuild)
-			{
-				Debug.Log("File picker success: " + message);
-			}
-			AGFilePicker.OnFileSuccessTrigger(message);
-		}
 
 		#endregion
 	}

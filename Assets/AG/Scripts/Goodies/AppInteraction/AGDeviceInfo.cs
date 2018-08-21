@@ -184,6 +184,18 @@ namespace DeadMosquito.AndroidGoodies
 			/// </summary>
 			[PublicAPI]
 			public const int O = 26;
+			
+			/// <summary>
+			/// Android 8.1
+			/// </summary>
+			[PublicAPI]
+			public const int O_MR1 = 27;
+			
+			/// <summary>
+			/// Android P
+			/// </summary>
+			[PublicAPI]
+			public const int P = 28;
 		}
 
 		/// <summary>

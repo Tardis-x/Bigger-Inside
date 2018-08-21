@@ -1,10 +1,14 @@
 ﻿
+using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
+
 #if UNITY_ANDROID
 namespace DeadMosquito.AndroidGoodies.Internal
 {
 	using System;
 	using UnityEngine;
 
+	[SuppressMessage("ReSharper", "InconsistentNaming")]
 	class DialogOnClickListenerProxy : AndroidJavaProxy
 	{
 		const string InterfaceSignature = "android.content.DialogInterface$OnClickListener";
@@ -26,6 +30,7 @@ namespace DeadMosquito.AndroidGoodies.Internal
 			_dismissOnClick = dismissOnClick;
 		}
 
+		[UsedImplicitly]
 		public void onClick(AndroidJavaObject dialog, int which)
 		{
 			if (_onClickVoid != null)
