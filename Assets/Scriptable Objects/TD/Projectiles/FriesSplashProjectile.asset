@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c547fc34f767de84b816f782c4629d91, type: 3}
+  m_Name: FriesSplashProjectile
+  m_EditorClassIdentifier: 
+  Damage:
+    UseConstant: 1
+    ConstantValue: 20
+    Variable: {fileID: 0}
+  DamagePerLevel:
+    UseConstant: 1
+    ConstantValue: 5
+    Variable: {fileID: 0}
+  Speed:
+    UseConstant: 1
+    ConstantValue: 5
+    Variable: {fileID: 0}
+  Type: {fileID: 11400000, guid: ab7d4e0be929bdc47a3bf7392a928a1c, type: 2}
+  SplashRadius:
+    UseConstant: 1
+    ConstantValue: 1
+    Variable: {fileID: 0}
+  SplashRadiusPerLevel:
+    UseConstant: 1
+    ConstantValue: 0.2
+    Variable: {fileID: 0}

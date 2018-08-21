@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ua.org.gdg.devfest
 {
 	[Serializable]
-	[CreateAssetMenu(menuName = "TowerDefence/Tower")]
+	[CreateAssetMenu(menuName = "TowerDefence/Towers/Tower")]
 	public class Tower : ScriptableObject
 	{
 		[SerializeField] public FloatReference Cooldown;
