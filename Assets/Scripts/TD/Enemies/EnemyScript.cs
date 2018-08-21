@@ -70,16 +70,18 @@ namespace ua.org.gdg.devfest
       float dmg = projectile.Damage;
       var resist = _enemy.Resistances.ResistancesList.FirstOrDefault(x => x.Type == projectile.Type);
       
-      if (resist != null)
-      {
-        dmg *= CalculateDamageCoefficient(resist.Amount);
-      }
+      if (resist != null) dmg *= CalculateDamageCoefficient(resist.Amount);
       
       HP -= (int) Mathf.Round(dmg);
       
       Debug.Log(gameObject.name + " taken " + dmg + " damage from " + projectile.Type + " projectile. HP left: " + HP);
       
       if (HP <= 0) Die();
+    }
+
+    public void SetSpeed(float speed)
+    {
+      _agent.SetSpeed(speed);
     }
 
     //---------------------------------------------------------------------
@@ -89,6 +91,11 @@ namespace ua.org.gdg.devfest
     public int HP { get; private set; }
 
     public int Money { get; private set; }
+    
+    public float Speed
+    {
+      get { return _enemy.MoveSpeed; }
+    }
 
     public Enemy Type
     {

@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace ua.org.gdg.devfest
@@ -7,12 +6,19 @@ namespace ua.org.gdg.devfest
 	public class AOETowerScript : TowerScript
 	{
 		//---------------------------------------------------------------------
+		// Internal
+		//---------------------------------------------------------------------
+
+		private float _slowAmount;
+		
+		//---------------------------------------------------------------------
 		// Messages
 		//---------------------------------------------------------------------
 		
 		private new void Awake()
 		{
 			base.Awake();
+			_slowAmount = (Tower as AOETower).SlowAmount;
 			StartCoroutine(Shoot());
 		}
 		
@@ -23,6 +29,8 @@ namespace ua.org.gdg.devfest
 			if (enemy != null && !Tower.IgnoredEnemies.Contains(enemy.Type))
 			{
 				TargetsInRange.Add(enemy);
+				
+				enemy.SetSpeed(ReduceSpeed(enemy.Speed, _slowAmount));
 			}
 		}
 
@@ -37,9 +45,24 @@ namespace ua.org.gdg.devfest
 		}
 		
 		//---------------------------------------------------------------------
+		// Public
+		//---------------------------------------------------------------------
+
+		public new void LevelUp()
+		{
+			base.LevelUp();
+			_slowAmount += (Tower as AOETower).SlowAmouontPerLevel;
+		}
+		
+		//---------------------------------------------------------------------
 		// Helpers
 		//---------------------------------------------------------------------
-		
+
+		private float ReduceSpeed(float speed, float amount)
+		{
+			return speed * (1 - amount * .01f);
+		}
+
 		private IEnumerator Shoot()
 		{
 			while (true)

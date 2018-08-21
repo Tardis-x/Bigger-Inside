@@ -8,24 +8,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d49377d948bd74418a36c19a2378910, type: 3}
-  m_Name: VeganBurgerTower
+  m_Script: {fileID: 11500000, guid: 762c7258d0492064b9e39d05b9679be7, type: 3}
+  m_Name: WaterAOETower
   m_EditorClassIdentifier: 
   Cooldown:
     UseConstant: 1
-    ConstantValue: 2
+    ConstantValue: 0
     Variable: {fileID: 0}
   CDRPerLevel:
     UseConstant: 1
-    ConstantValue: 0.5
+    ConstantValue: 0
     Variable: {fileID: 0}
   Range:
     UseConstant: 1
-    ConstantValue: 3
+    ConstantValue: 0
     Variable: {fileID: 0}
   RangePerLevel:
     UseConstant: 1
-    ConstantValue: 0.5
+    ConstantValue: 0
     Variable: {fileID: 0}
   Level:
     UseConstant: 1
@@ -33,13 +33,22 @@ MonoBehaviour:
     Variable: {fileID: 0}
   MaxLevel:
     UseConstant: 1
-    ConstantValue: 2
+    ConstantValue: 0
     Variable: {fileID: 0}
   Cost:
     UseConstant: 1
-    ConstantValue: 100
+    ConstantValue: 0
     Variable: {fileID: 0}
   UpgradeCost:
     UseConstant: 1
-    ConstantValue: 100
+    ConstantValue: 0
+    Variable: {fileID: 0}
+  IgnoredEnemies: []
+  SlowAmount:
+    UseConstant: 1
+    ConstantValue: 0
+    Variable: {fileID: 0}
+  SlowAmouontPerLevel:
+    UseConstant: 1
+    ConstantValue: 0
     Variable: {fileID: 0}
