@@ -66,7 +66,9 @@ namespace ua.org.gdg.devfest
             if (_activeSlot != null)
             {
                 Vector3 quadCentre = GetQuadCentre(_activeSlot);
-                Instantiate(_towerPrefab, quadCentre, Quaternion.identity, _environment.transform);
+                var tower = Instantiate(_towerPrefab, quadCentre, Quaternion.identity, _environment.transform);
+                var towerPosition = tower.transform.position;
+                tower.transform.position = new Vector3(towerPosition.x - .35f, towerPosition.y, towerPosition.z - 0.35f);
                 _activeSlot.SetActive(false);
             }
 
@@ -138,7 +140,7 @@ namespace ua.org.gdg.devfest
                 vertRealWorldPositions[i] = quad.transform.TransformPoint(meshVerts[i]);
             }
 
-            Vector3 midPoint = Vector3.Slerp(vertRealWorldPositions[0], vertRealWorldPositions[1], 0.5f);
+            Vector3 midPoint = Vector3.Slerp(vertRealWorldPositions[0], vertRealWorldPositions[1], 0.1f);
             return midPoint;
         }
     }
