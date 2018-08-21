@@ -14,7 +14,6 @@ namespace ua.org.gdg.devfest
     // Internal
     //---------------------------------------------------------------------
 
-    private const int ENEMIES_LAYER_INDEX = 12;
     private float _splashRadius;
 
     private float SplashRadius
