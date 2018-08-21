@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cooldown:
     UseConstant: 1
-    ConstantValue: 0
+    ConstantValue: 0.5
     Variable: {fileID: 0}
   CDRPerLevel:
     UseConstant: 1
@@ -21,11 +21,11 @@ MonoBehaviour:
     Variable: {fileID: 0}
   Range:
     UseConstant: 1
-    ConstantValue: 0
+    ConstantValue: 2
     Variable: {fileID: 0}
   RangePerLevel:
     UseConstant: 1
-    ConstantValue: 0
+    ConstantValue: 0.5
     Variable: {fileID: 0}
   Level:
     UseConstant: 1
@@ -33,22 +33,23 @@ MonoBehaviour:
     Variable: {fileID: 0}
   MaxLevel:
     UseConstant: 1
-    ConstantValue: 0
+    ConstantValue: 2
     Variable: {fileID: 0}
   Cost:
     UseConstant: 1
-    ConstantValue: 0
+    ConstantValue: 60
     Variable: {fileID: 0}
   UpgradeCost:
     UseConstant: 1
-    ConstantValue: 0
+    ConstantValue: 40
     Variable: {fileID: 0}
-  IgnoredEnemies: []
+  IgnoredEnemies:
+  - {fileID: 11400000, guid: db59d67985f4b9d48922656462bf0015, type: 2}
   SlowAmount:
     UseConstant: 1
-    ConstantValue: 0
+    ConstantValue: 30
     Variable: {fileID: 0}
   SlowAmouontPerLevel:
     UseConstant: 1
-    ConstantValue: 0
+    ConstantValue: 10
     Variable: {fileID: 0}
