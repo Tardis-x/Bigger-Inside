@@ -57,7 +57,7 @@ public class QuestUI : MonoBehaviour
 	public void OnMainMenuButtonClicked()
 	{
 		Debug.Log("QuestUI.OnMainMenuButtonClicked");
-
+		DontDestroyOnLoad(_questManager);
 		SceneManager.LoadScene("MenuScene");
 	}
 
