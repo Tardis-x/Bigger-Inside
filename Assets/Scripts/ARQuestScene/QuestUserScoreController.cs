@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,7 +19,9 @@ public class QuestUserScoreController : MonoBehaviour
 
 	void OnEnable()
 	{
+		_questManager.UpdateUserScoreInLeaderBoard();
 		UpdateUserInfo();
+		StartCoroutine(LateUpdateUserInfo());
 	}
 
 	void QuestManagerReferenceInitialization()
@@ -82,5 +82,11 @@ public class QuestUserScoreController : MonoBehaviour
 		}
 
 		return pos;
+	}
+
+	IEnumerator LateUpdateUserInfo()
+	{
+		yield return new WaitForSeconds(1);
+		UpdateUserInfo();
 	}
 }

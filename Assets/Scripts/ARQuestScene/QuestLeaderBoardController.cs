@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using Application = UnityEngine.Application;
 
 public class QuestLeaderBoardController : MonoBehaviour
 {
@@ -73,11 +73,25 @@ public class QuestLeaderBoardController : MonoBehaviour
 			
 			Image[] images = userInfo.GetComponentsInChildren<Image>();
 
+			CreateImageFolder();
+			
+			var path = Application.persistentDataPath + "/UserImages/" + pair.Key.Replace(" ", string.Empty) + ".png";
+			Debug.Log("QuestLeaderboard: filepath - " + path);
+			
 			foreach (var image in images)
 			{
 				if (image.CompareTag("UserImage"))
 				{
-					StartCoroutine(LoadUserImageFromUrl(pair.Value.userPhotoUrl.ToString(), image));
+					if (!File.Exists(path))
+					{
+						Debug.Log("QuestLeaderboard: Loading Image from URL.");
+						StartCoroutine(LoadUserImageFromUrl(pair.Value.userPhotoUrl.ToString(), image, path));
+					}
+					else
+					{
+						Debug.Log("QuestLeaderboard: Loading Image from folder.");
+						LoadUserImageFromFolder(image, path);
+					}
 				}
 			}
 			
@@ -94,10 +108,28 @@ public class QuestLeaderBoardController : MonoBehaviour
 		scrollbar.value = 1;
 	}
 
-	static IEnumerator LoadUserImageFromUrl(string url, Image image)
+	static IEnumerator LoadUserImageFromUrl(string url, Image image, string filePath)
 	{
 		var www = new WWW(url);
 		yield return www;
 		image.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0, 0));
+		//Saving texture to file
+		File.WriteAllBytes(filePath, www.texture.EncodeToPNG());
+	}
+	
+	static void LoadUserImageFromFolder(Image image, string filePath)
+	{
+		var texture = new Texture2D(image.mainTexture.width, image.mainTexture.height, TextureFormat.ARGB32, false);
+		texture.LoadImage(File.ReadAllBytes(filePath));
+		image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0));
+	}
+
+	static void CreateImageFolder()
+	{
+		var path = Application.persistentDataPath + "/UserImages";
+		if (!Directory.Exists(path))
+		{
+			Directory.CreateDirectory(path);
+		}
 	}
 }

@@ -14,30 +14,15 @@ public class QuestManager : MonoBehaviour
 {
 	const int maxRiddleScore = 5000;
 	const int maxVRGameScore = 40000;
-	
-	QuestProgress _questProgress;
-	Dictionary<string, QuestRiddleDataFull> _questRiddlesDataFull;
-	Dictionary<string, QuestLeaderboardEntry> _questleaderboardData;
+
 	QuestUI _questUi;
 	DatabaseReference _database;
 	FirebaseAuth _auth;
-	public QuestProgress questProgress
-	{
-		get { return _questProgress; }
-	}
+	public QuestProgress questProgress { get; set; }
 
-	public Dictionary<string, QuestRiddleData> QuestRiddlesProgress
-	{
-		get { return _questProgress.riddlesData; }
-	}
-	public Dictionary<string, QuestLeaderboardEntry> QuestLeaderboardData
-	{
-		get { return _questleaderboardData; }
-	}
-	public Dictionary<string, QuestRiddleDataFull> QuestRiddlesDataFull
-	{
-		get { return _questRiddlesDataFull; }
-	}
+	public Dictionary<string, QuestLeaderboardEntry> QuestLeaderboardData { get; set; }
+
+	public Dictionary<string, QuestRiddleDataFull> QuestRiddlesDataFull { get; set; }
 	public bool isQuestActivated;
 	int _timesCompleted;
 	public string currentUserUserId;
@@ -83,7 +68,7 @@ public class QuestManager : MonoBehaviour
 		_database.Child("users").Child(currentUserUserId).GetValueAsync().ContinueWith(readTask => {
 			if (readTask.Result == null)
 			{
-				string json = JsonConvert.SerializeObject(_questProgress);
+				var json = JsonConvert.SerializeObject(questProgress);
 				_database.Child("users").Child(currentUserUserId)
 					.SetRawJsonValueAsync(json).ContinueWith(writeTask => {
 						if (writeTask.IsFaulted)
@@ -116,8 +101,8 @@ public class QuestManager : MonoBehaviour
 				else if (readTask.IsCompleted) 
 				{
 					// retrieve user quest progress
-					DataSnapshot snapshot = readTask.Result;
-					_questProgress = JsonConvert.DeserializeObject<QuestProgress>(snapshot.GetRawJsonValue());
+					var snapshot = readTask.Result;
+					questProgress = JsonConvert.DeserializeObject<QuestProgress>(snapshot.GetRawJsonValue());
 					
 					Debug.Log("QuestManager: Quest data was successfully set up!");
 					_questUi.FadeScreenOut();
@@ -166,33 +151,39 @@ public class QuestManager : MonoBehaviour
 	
 	void RiddleDataInitizalization()
 	{
-		_questProgress = new QuestProgress {userPhotoUrl = userPhotoUrl};
+		questProgress = new QuestProgress {userPhotoUrl = userPhotoUrl};
 
-		_questRiddlesDataFull = new Dictionary<string, QuestRiddleDataFull>();
+		QuestRiddlesDataFull = new Dictionary<string, QuestRiddleDataFull>();
 		Debug.Log("RiddleDataInitialization");
 		var riddle1 = new QuestRiddleDataFull(true, "How are new comers called in Google?");
-		_questRiddlesDataFull.Add("Noogler", riddle1);
+		QuestRiddlesDataFull.Add("Noogler", riddle1);
 		var riddle5 = new QuestRiddleDataFull(false, riddleImages[0]);
-        		_questRiddlesDataFull.Add("Angular", riddle5);
+        		QuestRiddlesDataFull.Add("Angular", riddle5);
 		var riddle2 = new QuestRiddleDataFull(true, "What was the first google doodle in 1998?");
-		_questRiddlesDataFull.Add("BurningMan", riddle2);
+		QuestRiddlesDataFull.Add("BurningMan", riddle2);
 		var riddle6 = new QuestRiddleDataFull(false, riddleImages[1]);
-        		_questRiddlesDataFull.Add("Firebase", riddle6);
+        		QuestRiddlesDataFull.Add("Firebase", riddle6);
 		var riddle3 = new QuestRiddleDataFull(true,
 			"One day a computer failure stumped Grace Hopper and her team until she opened the machine and found THIS inside!");
-		_questRiddlesDataFull.Add("Bug", riddle3);
+		QuestRiddlesDataFull.Add("Bug", riddle3);
 		var riddle7 = new QuestRiddleDataFull(false, riddleImages[2]);
-        		_questRiddlesDataFull.Add("GoogleSearch", riddle7);
+        		QuestRiddlesDataFull.Add("GoogleSearch", riddle7);
 		var riddle8 = new QuestRiddleDataFull(false, riddleImages[3]);
-		_questRiddlesDataFull.Add("Snap", riddle8);
+		QuestRiddlesDataFull.Add("Snap", riddle8);
 		var riddle4 = new QuestRiddleDataFull(true, "The most important thing in the programming language is THIS. A language will not succeed without a good THIS. I have recently invented a very good THIS and now I am looking for a suitable language. -- Donald Knuth");
-		_questRiddlesDataFull.Add("Name", riddle4);
+		QuestRiddlesDataFull.Add("Name", riddle4);
 		WriteRiddleDataInQuestProgress();
 	}
 
 	void LeaderBoardInitialization()
 	{
-		_questleaderboardData = new Dictionary<string, QuestLeaderboardEntry>();
+		QuestLeaderboardData = new Dictionary<string, QuestLeaderboardEntry>();
+		var url = _auth.CurrentUser.PhotoUrl;
+		for (var i = 0; i < 500; i++)
+		{
+			var entry = new QuestLeaderboardEntry(url, i*5);
+			QuestLeaderboardData.Add(i.ToString(), entry);
+		}
 	}
 
 	
@@ -205,26 +196,26 @@ public class QuestManager : MonoBehaviour
 			var snapshot = task.Result;
 			_timesCompleted = JsonConvert.DeserializeObject<int>(snapshot.GetRawJsonValue());
 			//Calculate and write the score
-			_questProgress.vrGameData.score = maxVRGameScore - _timesCompleted * 8;
-			_questProgress.globalScore += _questProgress.vrGameData.score;
+			questProgress.vrGameData.score = maxVRGameScore - _timesCompleted * 8;
+			questProgress.globalScore += questProgress.vrGameData.score;
 			_timesCompleted++;
 			// update VR progress data in database
 			childUpdates["GlobalQuestData/VRGame"] = _timesCompleted;
-			childUpdates["users/" + _auth.CurrentUser.DisplayName + "/vrGameData/score"] = _questProgress.vrGameData.score;
+			childUpdates["users/" + _auth.CurrentUser.DisplayName + "/vrGameData/score"] = questProgress.vrGameData.score;
 			childUpdates["users/" + _auth.CurrentUser.DisplayName + "/vrGameData/gameScore"] = score;
 			childUpdates["users/" + _auth.CurrentUser.DisplayName + "/vrGameData/state"] = true;
-			childUpdates["users/" + _auth.CurrentUser.DisplayName + "/globalScore"] = _questProgress.globalScore;
+			childUpdates["users/" + _auth.CurrentUser.DisplayName + "/globalScore"] = questProgress.globalScore;
 			_database.UpdateChildrenAsync(childUpdates).ContinueWith(task1 => {
 				if (task1.IsCompleted)
 				{
 					// mark VR game as completed in local storage
-					_questProgress.vrGameData.gameScore = score;
-					_questProgress.vrGameData.state = true;
+					questProgress.vrGameData.gameScore = score;
+					questProgress.vrGameData.state = true;
 					//Refresh the info panel
 					_questUi.OnChangeInfoButtonClicked();
 					//Update local leaderboard
 					UpdateUserScoreInLeaderBoard();
-					//Update Firebase Leaderboard
+					
 					UpdateFirebaseLeaderboard();
 				}
 				else if (task1.IsFaulted)
@@ -244,7 +235,7 @@ public class QuestManager : MonoBehaviour
 	{	
 		Dictionary<string, System.Object> childUpdates = new Dictionary<string, System.Object>();
 		
-		_questProgress.photoData.state = true;
+		questProgress.photoData.state = true;
 		//Refresh the info panel
 		_questUi.OnChangeInfoButtonClicked();
 		childUpdates["users/" + currentUserUserId + "/photoData/state"] = true;
@@ -277,13 +268,13 @@ public class QuestManager : MonoBehaviour
 			var snapshot = task.Result;
             _timesCompleted = JsonConvert.DeserializeObject<int>(snapshot.GetRawJsonValue());
 			//Update quest riddle progress data locally
-			_questRiddlesDataFull[riddleKey].score = maxRiddleScore - _timesCompleted;
-			_questProgress.riddlesData[riddleKey].score = maxRiddleScore - _timesCompleted;
-			_questProgress.globalScore += _questProgress.riddlesData[riddleKey].score;
+			QuestRiddlesDataFull[riddleKey].score = maxRiddleScore - _timesCompleted;
+			questProgress.riddlesData[riddleKey].score = maxRiddleScore - _timesCompleted;
+			questProgress.globalScore += questProgress.riddlesData[riddleKey].score;
 			_timesCompleted++;
 			// mark riddle as completed in local storage
-			_questRiddlesDataFull[riddleKey].isCompleted = true;
-			_questProgress.riddlesData[riddleKey].isCompleted = true;
+			QuestRiddlesDataFull[riddleKey].isCompleted = true;
+			questProgress.riddlesData[riddleKey].isCompleted = true;
 			
 			//Update riddle screen
 			ReadRiddleDataFromQuestProgress();
@@ -293,15 +284,15 @@ public class QuestManager : MonoBehaviour
 			childUpdates["GlobalQuestData/" + riddleKey] = _timesCompleted;
 			childUpdates["users/" + _auth.CurrentUser.DisplayName + "/riddlesData/" + riddleKey + "/isCompleted"] = true;
             childUpdates["users/" + _auth.CurrentUser.DisplayName + "/riddlesData/" + riddleKey + "/score"] = 
-	            _questProgress.riddlesData[riddleKey].score;
-			childUpdates["users/" + _auth.CurrentUser.DisplayName + "/globalScore"] = _questProgress.globalScore;
+	            questProgress.riddlesData[riddleKey].score;
+			childUpdates["users/" + _auth.CurrentUser.DisplayName + "/globalScore"] = questProgress.globalScore;
 			_database.UpdateChildrenAsync(childUpdates).ContinueWith(task1 => 
 			{
 				if (task1.IsCompleted)
 				{
 					//Update local score
 					UpdateUserScoreInLeaderBoard();
-					//Update Firebase Leaderboard
+					
 					UpdateFirebaseLeaderboard();
 				}
 				else if (task1.IsFaulted)
@@ -321,7 +312,7 @@ public class QuestManager : MonoBehaviour
 	{
 		Dictionary<string, System.Object> childUpdates = new Dictionary<string, System.Object>();
 		
-		_questProgress.allRiddlesCompleted = true;
+		questProgress.allRiddlesCompleted = true;
 		//Refresh the info panel
 		_questUi.OnChangeInfoButtonClicked();
 		
@@ -356,7 +347,7 @@ public class QuestManager : MonoBehaviour
 			if (readTask.Result == null)
 			{
 				//Create data in firebase
-				var json = JsonConvert.SerializeObject(_questleaderboardData);
+				var json = JsonConvert.SerializeObject(QuestLeaderboardData);
 				_database.Child("GlobalQuestData/Leaderboards")
 					.SetRawJsonValueAsync(json).ContinueWith(writeTask => {
 						if (writeTask.IsFaulted)
@@ -384,7 +375,7 @@ public class QuestManager : MonoBehaviour
 				{
 					// retrieve current leaderboard from firebase
 					var snapshot = readTask.Result;
-					_questleaderboardData = JsonConvert.DeserializeObject<Dictionary<string, QuestLeaderboardEntry>>
+					QuestLeaderboardData = JsonConvert.DeserializeObject<Dictionary<string, QuestLeaderboardEntry>>
 						(snapshot.GetRawJsonValue());
 					Debug.Log("QuestManager: Leaderboard data was successfully updated!");
 				}
@@ -398,19 +389,19 @@ public class QuestManager : MonoBehaviour
 	public void UpdateUserScoreInLeaderBoard()
 	{
 		GetLeaderboardDataFromFirebase();
-		if (!_questleaderboardData.ContainsKey(currentUserUserId))
+		if (!QuestLeaderboardData.ContainsKey(currentUserUserId))
 		{
-			_questleaderboardData.Add(currentUserUserId, new QuestLeaderboardEntry(_questProgress.userPhotoUrl, _questProgress.globalScore));
+			QuestLeaderboardData.Add(currentUserUserId, new QuestLeaderboardEntry(questProgress.userPhotoUrl, questProgress.globalScore));
 		}
 		else
 		{
-			_questleaderboardData[currentUserUserId] = new QuestLeaderboardEntry(_questProgress.userPhotoUrl, _questProgress.globalScore);
+			QuestLeaderboardData[currentUserUserId] = new QuestLeaderboardEntry(questProgress.userPhotoUrl, questProgress.globalScore);
 		}
 	}
 
 	void UpdateFirebaseLeaderboard()
 	{
-		var json = JsonConvert.SerializeObject(_questleaderboardData);
+		var json = JsonConvert.SerializeObject(QuestLeaderboardData);
 		_database.Child("GlobalQuestData/Leaderboards").SetRawJsonValueAsync(json);
 	}
 	
@@ -452,10 +443,10 @@ public class QuestManager : MonoBehaviour
 	void WriteRiddleDataInQuestProgress()
 	{
 		Debug.Log("RiddleDataInitialization2");
-		foreach (var fullRiddle in _questRiddlesDataFull)
+		foreach (var fullRiddle in QuestRiddlesDataFull)
 		{
 			var riddle = new QuestRiddleData(fullRiddle.Value.isCompleted, fullRiddle.Value.score);
-			_questProgress.riddlesData.Add(fullRiddle.Key, riddle);
+			questProgress.riddlesData.Add(fullRiddle.Key, riddle);
 		}
 		Debug.Log("RiddleDataInitialization3");
 	}
@@ -464,8 +455,8 @@ public class QuestManager : MonoBehaviour
 	{
 		foreach (var riddle in questProgress.riddlesData)
 		{
-			_questRiddlesDataFull[riddle.Key].score = riddle.Value.score;
-			_questRiddlesDataFull[riddle.Key].isCompleted = riddle.Value.isCompleted;
+			QuestRiddlesDataFull[riddle.Key].score = riddle.Value.score;
+			QuestRiddlesDataFull[riddle.Key].isCompleted = riddle.Value.isCompleted;
 		}
 	}
 
@@ -473,7 +464,7 @@ public class QuestManager : MonoBehaviour
 	{
 		Dictionary<string, System.Object> childUpdates = new Dictionary<string, System.Object>();
 		
-		_questProgress.isGoogleColorsCompleted = true;
+		questProgress.isGoogleColorsCompleted = true;
 		//Refresh the info panel
 		_questUi.OnChangeInfoButtonClicked();
 		

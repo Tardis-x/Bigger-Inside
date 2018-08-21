@@ -155,7 +155,7 @@ public class QuestRiddlesController : MonoBehaviour
 	{
 		Debug.Log("QuestRiddlesController.OnImageScanned:" + scannedMarker);
 		scannedMarker = scannedMarker.ToLower().Replace(" ", String.Empty);
-		string answer = _currentRiddle.ToLower().Replace(" ", String.Empty);
+		var answer = _currentRiddle.ToLower().Replace(" ", String.Empty);
 		if (!_questManager.questProgress.riddlesData[_currentRiddle].isCompleted)
 		{
 			if (scannedMarker == answer)
@@ -188,7 +188,7 @@ public class QuestRiddlesController : MonoBehaviour
 			_inputField.text = "";
 			_inputField.image.color = Color.green;
 			_isCorrectAnswerSubmitted = true;
-			
+			StopAllCoroutines();
 			StartCoroutine(CorrectAnswerHighlight());
 			
 			_questManager.CompleteRiddle(_currentRiddle, this);
@@ -197,6 +197,7 @@ public class QuestRiddlesController : MonoBehaviour
 		{
 			_inputField.image.color = Color.red;
 			_isWrongAnswerSubmitted = true;
+			StopAllCoroutines();
 			StartCoroutine(WrongAnswerHighlight());
 		}
 	}

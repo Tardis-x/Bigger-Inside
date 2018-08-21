@@ -129,12 +129,9 @@ public class QuestPhotoController : MonoBehaviour
 	{
 		// Load received image into Texture2D
 		var imageTexture2D = selectedImage.LoadTexture2D();
-//                    string msg = string.Format("{0} was taken from camera with size {1}x{2}",
-//                        selectedImage.DisplayName, imageTexture2D.width, imageTexture2D.height);
-//                    AGUIMisc.ShowToast(msg);
 		picturePath = AndroidUri.FromFile(selectedImage.OriginalPath).JavaToString();
 		photoTextureHolder.sprite = SpriteFromTex2D(imageTexture2D);
-		string galleryPath =
+		var galleryPath =
 			AGFileUtils.SaveImageToGallery(imageTexture2D, selectedImage.DisplayName, "ARQuest", ImageFormat.JPEG);
 		AGGallery.RefreshFile(galleryPath);
 		OnAndroidUploadButtonClick();
