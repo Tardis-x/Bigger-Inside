@@ -144,7 +144,7 @@ public class QuestUI : MonoBehaviour
 				ShowInfoPanel("Third task is Knowledge Gate",
 					"You will have to answer different questions about Google " +
 					"and its technologies and find the cyphered technologies logos, " +
-					"hidden in Planeta Kino.\n Good luck, friend!");
+					"hidden in Planeta Kino.\nGood luck, friend!");
 				//Switch the buttons
 				_changeInfoButton.gameObject.SetActive(false);
 				_proceedButton.gameObject.SetActive(true);
