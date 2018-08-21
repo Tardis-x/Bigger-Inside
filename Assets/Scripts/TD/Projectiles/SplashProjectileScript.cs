@@ -8,7 +8,7 @@ namespace ua.org.gdg.devfest
     // Editor
     //---------------------------------------------------------------------
 
-    [SerializeField] private LayerMask enemiesLayer;
+    [SerializeField] private LayerMask _enemiesLayer;
     
     //---------------------------------------------------------------------
     // Internal
@@ -52,7 +52,7 @@ namespace ua.org.gdg.devfest
  
     private Collider[] GetHitEnemies(float radius)
     {
-      return Physics.OverlapSphere(transform.localPosition, radius, enemiesLayer);
+      return Physics.OverlapSphere(transform.localPosition, radius, _enemiesLayer);
     }
   }
 }
