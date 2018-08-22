@@ -12,6 +12,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] private Enemy _enemy;
     [SerializeField] private InstanceGameEvent _dieEvent;
     [SerializeField] private Agent _agent;
+    [SerializeField] private ParticleSystem _slowEffect;
     
     //---------------------------------------------------------------------
     // Internal
@@ -82,6 +83,8 @@ namespace ua.org.gdg.devfest
     public void SetSpeed(float speed)
     {
       _agent.SetSpeed(speed);
+      if(speed < _enemy.MoveSpeed) _slowEffect.Play();
+      else _slowEffect.Stop();
     }
 
     //---------------------------------------------------------------------

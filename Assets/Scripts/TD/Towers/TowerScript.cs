@@ -21,9 +21,9 @@ namespace ua.org.gdg.devfest
 		protected void Awake()
 		{
 			SetRange(Tower.Range);
-			_level = Tower.Level;
+			Level = Tower.Level;
 			Cooldown = Tower.Cooldown;
-			SetLevelMesh(_level);
+			SetLevelMesh(Level);
 		}
 
 		//---------------------------------------------------------------------
@@ -31,7 +31,7 @@ namespace ua.org.gdg.devfest
 		//---------------------------------------------------------------------
 
 		protected List<EnemyScript> TargetsInRange = new List<EnemyScript>();
-		private int _level;
+		protected int Level;
 		private GameObject _currentMesh;
 		protected float Cooldown;
 		protected float Range;
@@ -67,9 +67,9 @@ namespace ua.org.gdg.devfest
 
 		public void LevelUp()
 		{
-			if (_level >= Tower.MaxLevel) return;
-			_level++;
-			SetLevelMesh(_level);
+			if (Level >= Tower.MaxLevel) return;
+			Level++;
+			SetLevelMesh(Level);
 			Cooldown -= Tower.CDRPerLevel;
 			SetRange(Range + Tower.RangePerLevel);
 			Projectile.LevelUp();

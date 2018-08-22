@@ -14,11 +14,6 @@ namespace ua.org.gdg.devfest
 		// Messages
 		//---------------------------------------------------------------------
 
-		protected void OnEnable()
-		{
-			Damage = Projectile.Damage;
-		}
-
 		private void FixedUpdate()
 		{
 			if(Target != null) MoveToTarget();
@@ -30,7 +25,6 @@ namespace ua.org.gdg.devfest
 		//---------------------------------------------------------------------
 
 		protected EnemyScript Target;
-		private float _damage;
 		protected int Level;
 		protected Projectile Projectile
 		{
@@ -80,6 +74,13 @@ namespace ua.org.gdg.devfest
 			instance.Level = level;
 			return instance;
 		}
+		
+		public ProjectileScript GetInstance(int level)
+		{
+			var instance = Instantiate(this);
+			instance.Level = level;
+			return instance;
+		}
 
 		public void Shoot(EnemyScript target, Transform position)
 		{
@@ -98,8 +99,7 @@ namespace ua.org.gdg.devfest
 
 		public float Damage
 		{
-			get { return _damage + Projectile.DamagePerLevel * Level; }
-			protected set { _damage = value; }
+			get { return Projectile.Damage + Projectile.DamagePerLevel * Level; }
 		}
 
 		public ProjectileType Type

@@ -14,23 +14,15 @@ namespace ua.org.gdg.devfest
     // Internal
     //---------------------------------------------------------------------
 
-    private float _splashRadius;
-
     private float SplashRadius
     {
-      get { return _splashRadius + ((SplashProjectile) Projectile).SplashRadiusPerLevel * Level; }
-      set { _splashRadius = value; }
+      get { return ((SplashProjectile) Projectile).SplashRadius
+                   + ((SplashProjectile) Projectile).SplashRadiusPerLevel * Level; }
     }
 
     //---------------------------------------------------------------------
     // Messages
     //---------------------------------------------------------------------
-
-    private new void OnEnable()
-    {
-      base.OnEnable();
-      SplashRadius = ((SplashProjectile) Projectile).SplashRadius;
-    }
 
     private void OnTriggerEnter(Collider other)
     {
