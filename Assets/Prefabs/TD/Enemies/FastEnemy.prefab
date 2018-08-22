@@ -850,6 +850,9 @@ MonoBehaviour:
   _enemy: {fileID: 11400000, guid: 9a74bb7f2a792d344b8af746db40d4f8, type: 2}
   _dieEvent: {fileID: 11400000, guid: 6063daf3cbf10084ea29336ca3ca815b, type: 2}
   _agent: {fileID: 114801883150625500}
+  _animator: {fileID: 95757577495822394}
+  _renderer: {fileID: 137585967336581956}
+  _fadeMaterial: {fileID: 2100000, guid: 0217ef0e707799343979c46bd393e98f, type: 2}
 --- !u!114 &114178689344070730
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -891,7 +894,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentNode: {fileID: 0}
   _navMeshAgent: {fileID: 195331278782526614}
-  _animator: {fileID: 95757577495822394}
 --- !u!136 &136397082221799720
 CapsuleCollider:
   m_ObjectHideFlags: 1

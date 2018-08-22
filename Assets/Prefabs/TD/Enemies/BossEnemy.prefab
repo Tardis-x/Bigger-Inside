@@ -1058,6 +1058,9 @@ MonoBehaviour:
   _enemy: {fileID: 11400000, guid: b56221d993e89e54cbf59ff52d21f56f, type: 2}
   _dieEvent: {fileID: 11400000, guid: 6063daf3cbf10084ea29336ca3ca815b, type: 2}
   _agent: {fileID: 114127886880146594}
+  _animator: {fileID: 95493122966702728}
+  _renderer: {fileID: 0}
+  _fadeMaterial: {fileID: 0}
 --- !u!114 &114127886880146594
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1071,7 +1074,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentNode: {fileID: 0}
   _navMeshAgent: {fileID: 195342500403695952}
-  _animator: {fileID: 95493122966702728}
 --- !u!114 &114892921039746322
 MonoBehaviour:
   m_ObjectHideFlags: 1
