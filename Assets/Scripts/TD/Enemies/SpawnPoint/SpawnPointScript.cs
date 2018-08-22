@@ -12,6 +12,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] private SpawnPoint _spawnPoint;
     [SerializeField] private IntReference _gameLevel;
     [SerializeField] private Node _startNode;
+    [SerializeField] private Node _happyExitNode;
 
     //---------------------------------------------------------------------
     // Internal
@@ -58,7 +59,7 @@ namespace ua.org.gdg.devfest
       while (true)
       {
         yield return new WaitForSeconds(frequency);
-        enemy.GetInstance(_gameLevel.Value, transform, _startNode);
+        enemy.GetInstance(_gameLevel.Value, transform, _startNode, _happyExitNode);
       }
     }
   }

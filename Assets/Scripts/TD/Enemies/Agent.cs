@@ -1,10 +1,15 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.AI;
 
 namespace ua.org.gdg.devfest
 {
 	public class Agent : MonoBehaviour
 	{
+		//---------------------------------------------------------------------
+		// Internal
+		//---------------------------------------------------------------------
+
 		private int _destPoint = 0;
 		public Node _currentNode;
 		private Vector3 _destination;
@@ -12,10 +17,15 @@ namespace ua.org.gdg.devfest
 		//---------------------------------------------------------------------
 		// Editor
 		//---------------------------------------------------------------------
-		
+
 		[SerializeField] private NavMeshAgent _navMeshAgent;
-		[SerializeField] private Animator _animator;
-		
+
+		//---------------------------------------------------------------------
+		// Property
+		//---------------------------------------------------------------------
+
+		public Node HappyExitNode { get; set; }
+
 		//---------------------------------------------------------------------
 		// Messages
 		//---------------------------------------------------------------------
@@ -33,7 +43,7 @@ namespace ua.org.gdg.devfest
 				_navMeshAgent.SetDestination(_destination);
 			}
 		}
-		
+
 		//---------------------------------------------------------------------
 		// Public
 		//---------------------------------------------------------------------
@@ -55,7 +65,8 @@ namespace ua.org.gdg.devfest
 
 			if (nextNode == null)
 			{
-				Die();
+				_navMeshAgent.isStopped = true;
+				GetComponent<EnemyScript>().Disappear();
 				return;
 			}
 
@@ -71,8 +82,8 @@ namespace ua.org.gdg.devfest
 		public void SetSpeed(float speed)
 		{
 			// Cannot set negative speed
-			if(speed < 0) return;
-			
+			if (speed < 0) return;
+
 			_navMeshAgent.speed = speed;
 		}
 
@@ -86,8 +97,8 @@ namespace ua.org.gdg.devfest
 
 		public void Die()
 		{
-			_animator.SetTrigger("isDying");
-			_navMeshAgent.isStopped = true;
+			SetNode(HappyExitNode);
+			MoveToNode();
 		}
 
 		public void Initialize(Node startNode)
@@ -95,7 +106,7 @@ namespace ua.org.gdg.devfest
 			SetNode(startNode);
 			MoveToNode();
 		}
-		
+
 		//---------------------------------------------------------------------
 		// Helpers
 		//---------------------------------------------------------------------

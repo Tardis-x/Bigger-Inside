@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 namespace ua.org.gdg.devfest
@@ -12,7 +13,9 @@ namespace ua.org.gdg.devfest
     [SerializeField] private Enemy _enemy;
     [SerializeField] private InstanceGameEvent _dieEvent;
     [SerializeField] private Agent _agent;
-    [SerializeField] private ParticleSystem _slowEffect;
+    [SerializeField] private Animator _animator;
+    [SerializeField] private Renderer _renderer;
+    [SerializeField] private Material _fadeMaterial;
     
     //---------------------------------------------------------------------
     // Internal
@@ -35,6 +38,43 @@ namespace ua.org.gdg.devfest
     {
       return 1 - resist * .01f;
     }
+    
+    private void ChangeMaterialToFade()
+    {
+      _renderer.material = _fadeMaterial;
+    }
+		
+    private IEnumerator LerpMeshRendererColor(Renderer targetMeshRender, float lerpDuration, 
+      Color startLerp, Color targetLerp)
+    {
+      var lerpStartTime = Time.time;
+      var lerping = true;
+      while (lerping)
+      {
+        yield return new WaitForEndOfFrame();
+        var lerpProgress = Time.time - lerpStartTime;
+        if (targetMeshRender != null)
+        {
+          targetMeshRender.material.color = Color.Lerp(startLerp, targetLerp, lerpProgress / lerpDuration);
+        }
+        else
+        {
+          lerping = false;
+        }
+				
+        if (lerpProgress >= lerpDuration)
+        {
+          lerping = false;
+        }
+      }
+      DestroyGameObject();
+    }
+
+    private void DestroyGameObject()
+    {
+      Destroy(gameObject);
+    }
+  
 
     //---------------------------------------------------------------------
     // Messages
@@ -57,12 +97,13 @@ namespace ua.org.gdg.devfest
       Money += _enemy.MoneyPerLevel;
     }
 
-    public EnemyScript GetInstance(int level, Transform position, Node startDestinationNode)
+    public EnemyScript GetInstance(int level, Transform position, Node startDestinationNode, Node happyExitNode)
     {
       var instance = Instantiate(this, position.position, position.rotation, position.parent);
       instance.HP += _enemy.HPPerLevel.Value * level;
       instance.Money += _enemy.MoneyPerLevel.Value * level;
       instance._agent.Initialize(startDestinationNode);
+      instance._agent.HappyExitNode = happyExitNode;
       return instance;
     }
 
@@ -83,8 +124,27 @@ namespace ua.org.gdg.devfest
     public void SetSpeed(float speed)
     {
       _agent.SetSpeed(speed);
-      if(speed < _enemy.MoveSpeed) _slowEffect.Play();
-      else _slowEffect.Stop();
+    }
+    
+    public void Disappear()
+    {
+      gameObject.layer = DEAD_ENEMIES_LAYER;
+      
+      _animator.SetTrigger("Idle");
+
+      if (_renderer == null)
+      {
+        DestroyGameObject();
+        return;
+      }
+			
+      ChangeMaterialToFade();
+			
+      var meshColor = _renderer.material.color;
+      var invisibleColor = meshColor;
+      invisibleColor.a = 0;
+
+      StartCoroutine(LerpMeshRendererColor(_renderer, 1.5f, meshColor, invisibleColor));
     }
 
     //---------------------------------------------------------------------

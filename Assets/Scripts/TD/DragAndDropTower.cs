@@ -10,7 +10,6 @@ namespace ua.org.gdg.devfest
         //---------------------------------------------------------------------
         
         [SerializeField] private GameObject _towerPrefab;
-        [SerializeField] private GameObject _environment;
         [SerializeField] private int _ghostTowerScaleFactor;
         
         //---------------------------------------------------------------------
@@ -39,17 +38,17 @@ namespace ua.org.gdg.devfest
 
         public void OnDrag(PointerEventData eventData)
         {
-            RaycastHit[] hits;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            hits = Physics.RaycastAll(ray, 50f);
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            var hits = Physics.RaycastAll(ray, 50f);
+            
             if (hits != null && hits.Length > 0)
             {
                 MaybeShowHoverPrefab(hits);
 
-                int slotIndex = GetSlotIndex(hits);
+                var slotIndex = GetSlotIndex(hits);
                 if (slotIndex != -1)
                 {
-                    GameObject slotQuad = hits[slotIndex].collider.gameObject;
+                    var slotQuad = hits[slotIndex].collider.gameObject;
                     _activeSlot = slotQuad;
                     ChangeMaterialColor(true);
                 }
@@ -65,10 +64,10 @@ namespace ua.org.gdg.devfest
         {
             if (_activeSlot != null)
             {
-                Vector3 quadCentre = GetQuadCentre(_activeSlot);
-                var tower = Instantiate(_towerPrefab, quadCentre, Quaternion.identity, _environment.transform);
+                var quadCentre = GetQuadCentre(_activeSlot);
+                var tower = Instantiate(_towerPrefab, quadCentre, Quaternion.identity, _activeSlot.transform.parent.transform);
                 var towerPosition = tower.transform.position;
-                tower.transform.position = new Vector3(towerPosition.x - .35f, towerPosition.y, towerPosition.z - 0.35f);
+                tower.transform.position = new Vector3(towerPosition.x, towerPosition.y, towerPosition.z);
                 _activeSlot.SetActive(false);
             }
 
@@ -82,8 +81,8 @@ namespace ua.org.gdg.devfest
         
         private void ChangeMaterialColor(bool value)
         {
-            MeshRenderer[] meshRenderers = _hoverPrefab.GetComponentsInChildren<MeshRenderer>();
-            for (int i = 0; i < meshRenderers.Length; i++)
+            var meshRenderers = _hoverPrefab.GetComponentsInChildren<MeshRenderer>();
+            for (var i = 0; i < meshRenderers.Length; i++)
             {
                 meshRenderers[i].material.color = value ? Color.green : Color.red;
             }
@@ -91,7 +90,7 @@ namespace ua.org.gdg.devfest
 
         private void MaybeShowHoverPrefab(RaycastHit[] hits)
         {
-            int terrainCollderQuadIndex = GetTerrainColliderQuadIndex(hits);
+            var terrainCollderQuadIndex = GetTerrainColliderQuadIndex(hits);
             if (terrainCollderQuadIndex != -1)
             {
                 _hoverPrefab.transform.position = hits[terrainCollderQuadIndex].point;
@@ -105,7 +104,7 @@ namespace ua.org.gdg.devfest
 
         private int GetTerrainColliderQuadIndex(RaycastHit[] hits)
         {
-            for (int i = 0; i < hits.Length; i++)
+            for (var i = 0; i < hits.Length; i++)
             {
                 if (hits[i].collider.gameObject.name.Equals("Environment"))
                 {
@@ -118,7 +117,7 @@ namespace ua.org.gdg.devfest
 
         private int GetSlotIndex(RaycastHit[] hits)
         {
-            for (int i = 0; i < hits.Length; i++)
+            for (var i = 0; i < hits.Length; i++)
             {
                 if (hits[i].collider.gameObject.name.StartsWith("Slot"))
                 {
@@ -132,15 +131,15 @@ namespace ua.org.gdg.devfest
 
         private Vector3 GetQuadCentre(GameObject quad)
         {
-            Vector3[] meshVerts = quad.GetComponent<MeshFilter>().mesh.vertices;
-            Vector3[] vertRealWorldPositions = new Vector3[meshVerts.Length];
+            var meshVerts = quad.GetComponent<MeshFilter>().mesh.vertices;
+            var vertRealWorldPositions = new Vector3[meshVerts.Length];
 
             for (int i = 0; i < meshVerts.Length; i++)
             {
                 vertRealWorldPositions[i] = quad.transform.TransformPoint(meshVerts[i]);
             }
 
-            Vector3 midPoint = Vector3.Slerp(vertRealWorldPositions[0], vertRealWorldPositions[1], 0.1f);
+            var midPoint = Vector3.Slerp(vertRealWorldPositions[0], vertRealWorldPositions[1], 0.5f);
             return midPoint;
         }
     }
