@@ -3,85 +3,95 @@ using UnityEngine;
 
 namespace ua.org.gdg.devfest
 {
-	public class SingleTargetTowerScript : TowerScript
-	{
-		//---------------------------------------------------------------------
-		// Messages
-		//---------------------------------------------------------------------
+  public class SingleTargetTowerScript : TowerScript
+  {
+    //---------------------------------------------------------------------
+    // Messages
+    //---------------------------------------------------------------------
 
-		private new void Awake()
-		{
-			base.Awake();
-			StartCoroutine(Shoot());
-		}
+    private new void Awake()
+    {
+      base.Awake();
+      StartCoroutine(Shoot());
+    }
 
-		private void OnTriggerEnter(Collider other)
-		{
-			var enemy = other.GetComponent<EnemyScript>();
+    private void Update()
+    {
+      if (_target != null) transform.LookAt(_target.transform);
+    }
 
-			if (enemy != null && !Tower.IgnoredEnemies.Contains(enemy.Type))
-			{
-				TargetsInRange.Add(enemy);
+    private void OnTriggerEnter(Collider other)
+    {
+      var enemy = other.GetComponent<EnemyScript>();
 
-				if (_target == null) _target = enemy;
-			}
-		}
+      if (enemy != null && !Tower.IgnoredEnemies.Contains(enemy.Type))
+      {
+        TargetsInRange.Add(enemy);
 
-		private void OnTriggerExit(Collider other)
-		{
-			var enemy = other.GetComponent<EnemyScript>();
-			
-			if (enemy != null)
-			{
-				RemoveTarget(enemy);
-			}
-		}
-		
-		//---------------------------------------------------------------------
-		// Internal
-		//---------------------------------------------------------------------
-		
-		private EnemyScript _target;
-		
-		//---------------------------------------------------------------------
-		// Helpers
-		//---------------------------------------------------------------------
-		
-		private void AquireNewTarget()
-		{
-			_target = TargetsInRange.Count > 0 ? TargetsInRange[0] : null;
-		}
+        if (_target == null) _target = enemy;
+      }
+    }
 
-		private new void RemoveTarget(EnemyScript target)
-		{
-			if (TargetsInRange.Contains(target))
-			{
-				TargetsInRange.Remove(target);
-				if(target == _target) AquireNewTarget();
-			}
-		}
+    private void OnTriggerExit(Collider other)
+    {
+      var enemy = other.GetComponent<EnemyScript>();
 
-		private IEnumerator Shoot()
-		{
-			while(true)
-			{
-				if (_target != null)
-				{
-					Projectile.Shoot(_target, Gun);
-					yield return new WaitForSeconds(Cooldown);
-				}
-				yield return new WaitForSeconds(.1f);
-			}
-		}
-		
-		//---------------------------------------------------------------------
-		// Public
-		//---------------------------------------------------------------------
-		
-		public new void OnEnemyDie(GameObject enemy)
-		{
-			var enemyScript = enemy.GetComponent<EnemyScript>();
-			RemoveTarget(enemyScript);
-		}
-	}
+      if (enemy != null)
+      {
+        RemoveTarget(enemy);
+      }
+    }
+
+    //---------------------------------------------------------------------
+    // Internal
+    //---------------------------------------------------------------------
+
+    private EnemyScript _target;
+
+    //---------------------------------------------------------------------
+    // Helpers
+    //---------------------------------------------------------------------
+
+    private void AquireNewTarget()
+    {
+      _target = TargetsInRange.Count > 0 ? TargetsInRange[0] : null;
+    }
+
+    private new void RemoveTarget(EnemyScript target)
+    {
+      if (TargetsInRange.Contains(target))
+      {
+        TargetsInRange.Remove(target);
+        if (target == _target) AquireNewTarget();
+      }
+    }
+
+    private IEnumerator Shoot()
+    {
+      while (true)
+      {
+        if (_target != null)
+        {
+          var mask = 1 << 12;
+          
+          Debug.Log(Physics.Raycast(Gun.position, _target.transform.position - Gun.position, mask));
+          
+          Projectile.Shoot(_target, Gun);
+          yield return new WaitForSeconds(Cooldown);
+        }
+
+        yield return new WaitForSeconds(.1f);
+      }
+    }
+
+    //---------------------------------------------------------------------
+    // Public
+    //---------------------------------------------------------------------
+
+    public new void OnEnemyDie(GameObject enemy)
+    {
+      var enemyScript = enemy.GetComponent<EnemyScript>();
+      RemoveTarget(enemyScript);
+    }
+  }
 }

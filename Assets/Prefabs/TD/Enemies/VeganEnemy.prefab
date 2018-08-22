@@ -825,7 +825,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1984150013969462}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 50.170944, y: 0.75852937, z: -81.44773}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4155114710816186}
@@ -881,6 +881,7 @@ MonoBehaviour:
   _enemy: {fileID: 11400000, guid: db59d67985f4b9d48922656462bf0015, type: 2}
   _dieEvent: {fileID: 11400000, guid: 6063daf3cbf10084ea29336ca3ca815b, type: 2}
   _agent: {fileID: 114722498572299354}
+  _slowEffect: {fileID: 198680162323077932}
 --- !u!114 &114722498572299354
 MonoBehaviour:
   m_ObjectHideFlags: 1

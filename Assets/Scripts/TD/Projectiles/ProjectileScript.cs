@@ -37,11 +37,15 @@ namespace ua.org.gdg.devfest
 
 		protected bool TryToShoot(Collider target)
 		{
-			if(Target == null) return false;
+			if (Target == null) return false;
 			
 			var enemy = target.GetComponent<EnemyScript>();
-			
-			if(enemy == null) return false;
+
+			if (enemy == null)
+			{
+				SelfDestroy();
+				return false;
+			} 
 			
 			if (enemy == Target)
 			{
