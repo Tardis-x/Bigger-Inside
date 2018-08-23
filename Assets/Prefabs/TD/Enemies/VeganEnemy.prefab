@@ -402,6 +402,7 @@ GameObject:
   - component: {fileID: 136128809347177454}
   - component: {fileID: 114202104040181574}
   - component: {fileID: 114955008756708166}
+  - component: {fileID: 114006781440998178}
   m_Layer: 12
   m_Name: VeganEnemy
   m_TagString: Untagged
@@ -836,6 +837,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114006781440998178
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1984150013969462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9734df76e8c87c84ab9a9bc8be7e2f78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _offset: 0.3
+  _hpBarPrefab: {fileID: 1280261314441224, guid: 77d4d66c2254ba24e995e7838fd27c6c,
+    type: 2}
 --- !u!114 &114202104040181574
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -848,11 +863,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemy: {fileID: 11400000, guid: db59d67985f4b9d48922656462bf0015, type: 2}
-  _dieEvent: {fileID: 11400000, guid: 6063daf3cbf10084ea29336ca3ca815b, type: 2}
   _agent: {fileID: 114722498572299354}
   _animator: {fileID: 95388913732979544}
   _renderer: {fileID: 137945248617506676}
+  _hpBarHandler: {fileID: 114006781440998178}
   _fadeMaterial: {fileID: 2100000, guid: 4d20573bed75e8643a55f95d3e4b50fc, type: 2}
+  _dieEvent: {fileID: 11400000, guid: 6063daf3cbf10084ea29336ca3ca815b, type: 2}
 --- !u!114 &114722498572299354
 MonoBehaviour:
   m_ObjectHideFlags: 1

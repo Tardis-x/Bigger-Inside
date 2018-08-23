@@ -161,6 +161,7 @@ GameObject:
   - component: {fileID: 136480852422463536}
   - component: {fileID: 114385205466099618}
   - component: {fileID: 114993269467711328}
+  - component: {fileID: 114487383185674160}
   m_Layer: 12
   m_Name: NormalEnemy
   m_TagString: Untagged
@@ -860,11 +861,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemy: {fileID: 11400000, guid: a508f9f983777ed458051767d2001199, type: 2}
-  _dieEvent: {fileID: 11400000, guid: 6063daf3cbf10084ea29336ca3ca815b, type: 2}
   _agent: {fileID: 114214867992605568}
   _animator: {fileID: 95551515512287766}
   _renderer: {fileID: 137055518907033068}
+  _hpBarHandler: {fileID: 114487383185674160}
   _fadeMaterial: {fileID: 2100000, guid: 9955528c7c69ee64eae62f16ff92454f, type: 2}
+  _dieEvent: {fileID: 11400000, guid: 6063daf3cbf10084ea29336ca3ca815b, type: 2}
+--- !u!114 &114487383185674160
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1300070677741926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9734df76e8c87c84ab9a9bc8be7e2f78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _offset: 0.3
+  _hpBarPrefab: {fileID: 1280261314441224, guid: 77d4d66c2254ba24e995e7838fd27c6c,
+    type: 2}
 --- !u!114 &114993269467711328
 MonoBehaviour:
   m_ObjectHideFlags: 1

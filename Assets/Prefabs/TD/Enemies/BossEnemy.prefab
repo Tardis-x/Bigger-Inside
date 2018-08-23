@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 136129469791284072}
   - component: {fileID: 114085727505838718}
   - component: {fileID: 114892921039746322}
+  - component: {fileID: 114729078297206626}
   m_Layer: 12
   m_Name: BossEnemy
   m_TagString: Untagged
@@ -1056,11 +1057,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemy: {fileID: 11400000, guid: b56221d993e89e54cbf59ff52d21f56f, type: 2}
-  _dieEvent: {fileID: 11400000, guid: 6063daf3cbf10084ea29336ca3ca815b, type: 2}
   _agent: {fileID: 114127886880146594}
   _animator: {fileID: 95493122966702728}
   _renderer: {fileID: 0}
+  _hpBarHandler: {fileID: 114729078297206626}
   _fadeMaterial: {fileID: 0}
+  _dieEvent: {fileID: 11400000, guid: 6063daf3cbf10084ea29336ca3ca815b, type: 2}
 --- !u!114 &114127886880146594
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1074,6 +1076,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentNode: {fileID: 0}
   _navMeshAgent: {fileID: 195342500403695952}
+--- !u!114 &114729078297206626
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1263409279131298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9734df76e8c87c84ab9a9bc8be7e2f78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _offset: 0.3
+  _hpBarPrefab: {fileID: 1280261314441224, guid: 77d4d66c2254ba24e995e7838fd27c6c,
+    type: 2}
 --- !u!114 &114892921039746322
 MonoBehaviour:
   m_ObjectHideFlags: 1

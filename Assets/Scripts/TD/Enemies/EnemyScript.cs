@@ -10,12 +10,20 @@ namespace ua.org.gdg.devfest
     // Editor
     //---------------------------------------------------------------------
 
+    [Header("Components")]
     [SerializeField] private Enemy _enemy;
-    [SerializeField] private InstanceGameEvent _dieEvent;
     [SerializeField] private Agent _agent;
     [SerializeField] private Animator _animator;
     [SerializeField] private Renderer _renderer;
+    [SerializeField] private HpBarHandler _hpBarHandler;
+    
+    [Space]
+    [Header("Materials")]
     [SerializeField] private Material _fadeMaterial;
+    
+    [Space]
+    [Header("Events")]
+    [SerializeField] private InstanceGameEvent _dieEvent;
     
     //---------------------------------------------------------------------
     // Internal
@@ -42,6 +50,12 @@ namespace ua.org.gdg.devfest
     private void ChangeMaterialToFade()
     {
       _renderer.material = _fadeMaterial;
+    }
+
+    private void UpdateHPBar()
+    {
+      var normalizedHP = 1 - HP / _enemy.HP;
+      _hpBarHandler.SetValue(normalizedHP);
     }
 		
     private IEnumerator LerpMeshRendererColor(Renderer targetMeshRender, float lerpDuration, 
