@@ -70,9 +70,9 @@ namespace ua.org.gdg.devfest
 			{
 				if(TargetsInRange.Count > 0)
 				{
-					foreach (var target in TargetsInRange)
+					for (int i = TargetsInRange.Count - 1; i >= 0; i--)
 					{
-						target.GetShot(Projectile);
+						TargetsInRange[i].GetShot(Projectile);
 					}
 					
 					yield return new WaitForSeconds(Cooldown);
