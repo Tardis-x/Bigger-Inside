@@ -15,11 +15,6 @@ namespace ua.org.gdg.devfest
       StartCoroutine(Shoot());
     }
 
-    private void Update()
-    {
-      if (_target != null) transform.LookAt(_target.transform);
-    }
-
     private void OnTriggerEnter(Collider other)
     {
       var enemy = other.GetComponent<EnemyScript>();
