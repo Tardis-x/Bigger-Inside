@@ -45,7 +45,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1096026115847442
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,6 +242,8 @@ MonoBehaviour:
   _towerPrefab: {fileID: 1691257096188118, guid: 4abd1b978a5e46a47a6b739bba3af8f8,
     type: 2}
   _ghostTowerScaleFactor: 3
+  _onBeginDrag: {fileID: 11400000, guid: 0f86f5c579d952c44af3518abbe8a7c5, type: 2}
+  _onEndDrag: {fileID: 11400000, guid: eeee206a31745bb4e8104fad526d7617, type: 2}
 --- !u!114 &114194750848378006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -256,6 +258,8 @@ MonoBehaviour:
   _towerPrefab: {fileID: 1522661320420016, guid: d4cf4632bf4c1fb458c3070f0219cd99,
     type: 2}
   _ghostTowerScaleFactor: 3
+  _onBeginDrag: {fileID: 11400000, guid: 0f86f5c579d952c44af3518abbe8a7c5, type: 2}
+  _onEndDrag: {fileID: 11400000, guid: eeee206a31745bb4e8104fad526d7617, type: 2}
 --- !u!114 &114212021985515836
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -334,7 +338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -363,6 +367,8 @@ MonoBehaviour:
   _towerPrefab: {fileID: 1780499264665094, guid: 4c28644440734604b9582c31e46ca7ab,
     type: 2}
   _ghostTowerScaleFactor: 3
+  _onBeginDrag: {fileID: 11400000, guid: 0f86f5c579d952c44af3518abbe8a7c5, type: 2}
+  _onEndDrag: {fileID: 11400000, guid: eeee206a31745bb4e8104fad526d7617, type: 2}
 --- !u!114 &114514717549266592
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -375,7 +381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -404,6 +410,8 @@ MonoBehaviour:
   _towerPrefab: {fileID: 1691257096188118, guid: 4abd1b978a5e46a47a6b739bba3af8f8,
     type: 2}
   _ghostTowerScaleFactor: 3
+  _onBeginDrag: {fileID: 11400000, guid: 0f86f5c579d952c44af3518abbe8a7c5, type: 2}
+  _onEndDrag: {fileID: 11400000, guid: eeee206a31745bb4e8104fad526d7617, type: 2}
 --- !u!114 &114659340607786980
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -476,7 +484,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -536,7 +544,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
