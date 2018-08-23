@@ -15,11 +15,6 @@ namespace ua.org.gdg.devfest
       StartCoroutine(Shoot());
     }
 
-    private void Update()
-    {
-      if (_target != null) transform.LookAt(_target.transform);
-    }
-
     private void OnTriggerEnter(Collider other)
     {
       var enemy = other.GetComponent<EnemyScript>();
@@ -72,10 +67,6 @@ namespace ua.org.gdg.devfest
       {
         if (_target != null)
         {
-          var mask = 1 << 12;
-          
-          Debug.Log(Physics.Raycast(Gun.position, _target.transform.position - Gun.position, mask));
-          
           Projectile.Shoot(_target, Gun);
           yield return new WaitForSeconds(Cooldown);
         }
