@@ -53,7 +53,6 @@ GameObject:
   - component: {fileID: 4263821431630782}
   - component: {fileID: 33152673497920288}
   - component: {fileID: 23856034465387716}
-  - component: {fileID: 95944820089028898}
   m_Layer: 0
   m_Name: FriesTower_2
   m_TagString: Untagged
@@ -157,7 +156,6 @@ GameObject:
   - component: {fileID: 4346287850792834}
   - component: {fileID: 33803402160971044}
   - component: {fileID: 23625632414573218}
-  - component: {fileID: 95491617125492260}
   m_Layer: 0
   m_Name: FriesTower_0
   m_TagString: Untagged
@@ -281,7 +279,6 @@ GameObject:
   - component: {fileID: 4942647692476518}
   - component: {fileID: 33781936358788074}
   - component: {fileID: 23790898912255552}
-  - component: {fileID: 95960872701941864}
   m_Layer: 0
   m_Name: FriesTower_1
   m_TagString: Untagged
@@ -447,7 +444,7 @@ Transform:
   - {fileID: 4969636639390938}
   m_Father: {fileID: 4346287850792834}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 228, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4806677730274970
 Transform:
   m_ObjectHideFlags: 1
@@ -1225,24 +1222,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!95 &95491617125492260
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1457030956237992}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 5a21a3f7bd3c644fb9b36035645566b9, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!95 &95933879644486456
 Animator:
   serializedVersion: 3
@@ -1253,42 +1232,6 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 110e9e091984f1a418768c87cc7eb7ff, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!95 &95944820089028898
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1081238471069338}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 5a21a3f7bd3c644fb9b36035645566b9, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!95 &95960872701941864
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1846187584473866}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 5a21a3f7bd3c644fb9b36035645566b9, type: 3}
-  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1316,9 +1259,6 @@ MonoBehaviour:
   - {fileID: 1081238471069338}
   Projectile: {fileID: 114446554977625370, guid: 796da85792ac86543a1a79285289accb,
     type: 2}
-  EnemiesLevel:
-    serializedVersion: 2
-    m_Bits: 4096
 --- !u!114 &114574160865832082
 MonoBehaviour:
   m_ObjectHideFlags: 1

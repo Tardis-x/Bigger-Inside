@@ -41,11 +41,7 @@ namespace ua.org.gdg.devfest
 			
 			var enemy = target.GetComponent<EnemyScript>();
 
-			if (enemy == null)
-			{
-				SelfDestroy();
-				return false;
-			} 
+			if (enemy == null) return false;
 			
 			if (enemy == Target)
 			{

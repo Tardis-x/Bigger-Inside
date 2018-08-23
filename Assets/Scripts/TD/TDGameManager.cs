@@ -12,6 +12,10 @@ namespace ua.org.gdg.devfest
     [SerializeField] private GameEvent _levelUp;
     [SerializeField] private FloatReference _timing;
     [SerializeField] private IntReference _level;
+
+    [Space]
+    [Header("Events")]
+    [SerializeField] private GameEvent _onEndDrag;
     
     //---------------------------------------------------------------------
     // Public
@@ -30,6 +34,10 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     // Messages
     //---------------------------------------------------------------------
+
+    private void Awake()
+    {
+    }
 
     private void Start()
     {
