@@ -16,6 +16,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] private Animator _animator;
     [SerializeField] private Renderer _renderer;
     [SerializeField] private Material _fadeMaterial;
+    [SerializeField] private ParticleSystem _slowEffect;
     
     //---------------------------------------------------------------------
     // Internal
@@ -124,6 +125,8 @@ namespace ua.org.gdg.devfest
     public void SetSpeed(float speed)
     {
       _agent.SetSpeed(speed);
+      if(speed < _enemy.MoveSpeed) _slowEffect.Play();
+      else _slowEffect.Stop();
     }
     
     public void Disappear()
