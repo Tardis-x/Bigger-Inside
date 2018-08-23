@@ -9,10 +9,18 @@ namespace ua.org.gdg.devfest
     // Editor
     //---------------------------------------------------------------------
     
+    [Header("Scriptable Objects")]
     [SerializeField] private SpawnPoint _spawnPoint;
     [SerializeField] private IntReference _gameLevel;
+    
+    [Space]
+    [Header("Nodes")]
     [SerializeField] private Node _startNode;
     [SerializeField] private Node _happyExitNode;
+
+    [Space] 
+    [Header("UI")] 
+    [SerializeField] private Canvas _canvas;
 
     //---------------------------------------------------------------------
     // Internal
@@ -59,7 +67,8 @@ namespace ua.org.gdg.devfest
       while (true)
       {
         yield return new WaitForSeconds(frequency);
-        enemy.GetInstance(_gameLevel.Value, transform, _startNode, _happyExitNode);
+        var instance = enemy.GetInstance(_gameLevel.Value, transform, _startNode, _happyExitNode);
+        instance.GetComponent<HpBarHandler>().Canvas = _canvas;
       }
     }
   }

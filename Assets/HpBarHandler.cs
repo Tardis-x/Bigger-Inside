@@ -27,11 +27,6 @@ namespace ua.org.gdg.devfest
 		// Messages
 		//---------------------------------------------------------------------
 
-		private void Start()
-		{
-			Canvas = FindObjectOfType<Canvas>();
-		}
-
 		private void OnDestroy()
 		{
 			if(_hpBarInstance != null) Destroy(_hpBarInstance.gameObject);

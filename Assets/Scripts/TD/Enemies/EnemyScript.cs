@@ -30,6 +30,7 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     private const int DEAD_ENEMIES_LAYER = 11;
+    private float _maxHP;
 
     //---------------------------------------------------------------------
     // Heplers
@@ -54,7 +55,7 @@ namespace ua.org.gdg.devfest
 
     private void UpdateHPBar()
     {
-      var normalizedHP = 1 - HP / _enemy.HP;
+      var normalizedHP = 1 - HP / _maxHP;
       _hpBarHandler.SetValue(normalizedHP);
     }
 		
@@ -97,6 +98,7 @@ namespace ua.org.gdg.devfest
     private void Awake()
     {
       HP = _enemy.HP.Value;
+      _maxHP = _enemy.HP.Value;
       Money = _enemy.Money.Value;
       _agent.SetSpeed(_enemy.MoveSpeed.Value);
     }
@@ -109,6 +111,7 @@ namespace ua.org.gdg.devfest
     {
       HP += _enemy.HPPerLevel;
       Money += _enemy.MoneyPerLevel;
+      _maxHP += _enemy.HPPerLevel;
     }
 
     public EnemyScript GetInstance(int level, Transform position, Node startDestinationNode, Node happyExitNode)
@@ -129,6 +132,7 @@ namespace ua.org.gdg.devfest
       if (resist != null) dmg *= CalculateDamageCoefficient(resist.Amount);
       
       HP -= (int) Mathf.Round(dmg);
+      UpdateHPBar();
       
       Debug.Log(gameObject.name + " taken " + dmg + " damage from " + projectile.Type + " projectile. HP left: " + HP);
       
