@@ -40,6 +40,7 @@ namespace ua.org.gdg.devfest
 			
 			if (enemy != null)
 			{
+				enemy.SetSpeed(enemy.Speed);
 				RemoveTarget(enemy);
 			}
 		}
@@ -71,7 +72,7 @@ namespace ua.org.gdg.devfest
 				{
 					foreach (var target in TargetsInRange)
 					{
-						Projectile.Shoot(target, Gun);
+						target.GetShot(Projectile);
 					}
 					
 					yield return new WaitForSeconds(Cooldown);
