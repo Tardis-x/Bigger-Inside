@@ -95,7 +95,7 @@ namespace ua.org.gdg.devfest
 			NavigateTo(_destination);
 		}
 
-		public void Die()
+		public void Fed()
 		{
 			SetNode(HappyExitNode);
 			MoveToNode();

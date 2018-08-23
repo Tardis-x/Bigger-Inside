@@ -36,11 +36,12 @@ namespace ua.org.gdg.devfest
     // Heplers
     //---------------------------------------------------------------------
 
-    private void Die()
+    private void Fed()
     {
       _dieEvent.Raise(gameObject);
       gameObject.layer = DEAD_ENEMIES_LAYER;
-      _agent.Die();
+      _agent.Fed();
+      _hpBarHandler.Fed();
     }
 
     private float CalculateDamageCoefficient(float resist)
@@ -136,7 +137,7 @@ namespace ua.org.gdg.devfest
       
       Debug.Log(gameObject.name + " taken " + dmg + " damage from " + projectile.Type + " projectile. HP left: " + HP);
       
-      if (HP <= 0) Die();
+      if (HP <= 0) Fed();
     }
 
     public void SetSpeed(float speed)
