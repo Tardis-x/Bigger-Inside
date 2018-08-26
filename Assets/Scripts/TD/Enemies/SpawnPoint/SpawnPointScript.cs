@@ -21,12 +21,14 @@ namespace ua.org.gdg.devfest
     [Space] 
     [Header("UI")] 
     [SerializeField] private Canvas _canvas;
+    [SerializeField] private IntReference _hallNumber;
+    [SerializeField] private IntGameEvent _hallUnlockedGameEvent;
 
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
 
-    [SerializeField] private bool _unlocked;
+    private bool _unlocked;
     
     //---------------------------------------------------------------------
     // Public
@@ -37,8 +39,12 @@ namespace ua.org.gdg.devfest
       if (_unlocked) return;
       
       _unlocked = _gameLevel >= _spawnPoint.Level;
-      
-      if(_unlocked) StartSpawning();
+
+      if (_unlocked)
+      {
+        _hallUnlockedGameEvent.Raise(_hallNumber);
+        StartSpawning();
+      }
     }
 
     //---------------------------------------------------------------------

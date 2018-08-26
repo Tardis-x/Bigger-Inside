@@ -35,10 +35,6 @@ namespace ua.org.gdg.devfest
     // Messages
     //---------------------------------------------------------------------
 
-    private void Awake()
-    {
-    }
-
     private void Start()
     {
       StartCoroutine(LevelUpCoroutine(_timing));
