@@ -25,6 +25,8 @@ namespace ua.org.gdg.devfest
 
 		public void OnHallUnlocked(int hall)
 		{
+			if (hall == 1) return;
+			
 			_pauseGameEvent.Raise();
 			_hallUnlockedMessage.text = "SPEECH IN HALL #" + hall + " FINISHED";
 		}
