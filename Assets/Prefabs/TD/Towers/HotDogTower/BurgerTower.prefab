@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4684314153936262}
   - component: {fileID: 33047267772545504}
   - component: {fileID: 23144889284935602}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: level_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4004765278416822}
   - component: {fileID: 33343678474627486}
   - component: {fileID: 23919137695509142}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 4815733500020446}
   - component: {fileID: 33191731559397328}
   - component: {fileID: 23666765121648988}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 4664167364732026}
   - component: {fileID: 198527358102370026}
   - component: {fileID: 199745305220173962}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: 01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 4075472497735766}
   - component: {fileID: 33528850728976470}
   - component: {fileID: 23206177436922898}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Base_MachineGun_L01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4774313768445358}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,8 @@ GameObject:
   - component: {fileID: 114983965277601946}
   - component: {fileID: 114829812767087110}
   - component: {fileID: 114115381282573242}
-  m_Layer: 0
+  - component: {fileID: 136858137395345318}
+  m_Layer: 14
   m_Name: BurgerTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,7 +142,7 @@ GameObject:
   - component: {fileID: 4136725673778990}
   - component: {fileID: 198184950351927944}
   - component: {fileID: 199588828922174476}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: 03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,7 +160,7 @@ GameObject:
   - component: {fileID: 33436513393176898}
   - component: {fileID: 23588616851036726}
   - component: {fileID: 95557195344785348}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Burger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,7 +177,7 @@ GameObject:
   - component: {fileID: 4990189698469088}
   - component: {fileID: 198535410168068036}
   - component: {fileID: 199965172684842992}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: 02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -193,7 +194,7 @@ GameObject:
   - component: {fileID: 4317994827664896}
   - component: {fileID: 198810908771990312}
   - component: {fileID: 199992209572484486}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: 01_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -210,7 +211,7 @@ GameObject:
   - component: {fileID: 4757307509907490}
   - component: {fileID: 33129515911492682}
   - component: {fileID: 23906662696060134}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: level_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -227,7 +228,7 @@ GameObject:
   - component: {fileID: 4925251910655980}
   - component: {fileID: 33269921921631160}
   - component: {fileID: 23649796157162894}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -244,7 +245,7 @@ GameObject:
   - component: {fileID: 4190832399011120}
   - component: {fileID: 198605041526309664}
   - component: {fileID: 199484692569557636}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: 02_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -259,7 +260,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4371924649859046}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: BurgerTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -276,7 +277,7 @@ GameObject:
   - component: {fileID: 4667483103142256}
   - component: {fileID: 198671517893585502}
   - component: {fileID: 199514035249162212}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: magic_ring_01 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -907,6 +908,10 @@ MonoBehaviour:
   - {fileID: 1720550048495500}
   Projectile: {fileID: 114667608551178116, guid: c7c767cefa38b494e9447f73f8ab6b76,
     type: 2}
+  TowerSelectParticles: {fileID: 198671517893585502}
+  TowerSelectedEvent: {fileID: 11400000, guid: 6d27ffacae90d1f4f8933d478bed387a, type: 2}
+  TowerDeselectedEvent: {fileID: 11400000, guid: b82c4c2775b3ac84dad3f9bbfb6274b6,
+    type: 2}
 --- !u!135 &135065377360429920
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -919,6 +924,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 3
   m_Center: {x: -0.0000037550926, y: -0.00000011920929, z: 0.0000075399876}
+--- !u!136 &136858137395345318
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1522661320420016}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.11
+  m_Height: 0.48
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.12, z: 0}
 --- !u!198 &198184950351927944
 ParticleSystem:
   m_ObjectHideFlags: 1
