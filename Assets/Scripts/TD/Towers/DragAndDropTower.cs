@@ -71,7 +71,8 @@ namespace ua.org.gdg.devfest
             if (_activeSlot != null)
             {
                 var quadCentre = GetQuadCentre(_activeSlot);
-                Instantiate(_towerPrefab, quadCentre, Quaternion.identity, _activeSlot.transform.parent.transform);
+                var tower = Instantiate(_towerPrefab, quadCentre, Quaternion.identity, _activeSlot.transform.parent.transform);
+                tower.GetComponent<CapsuleCollider>().enabled = true;
                 _activeSlot.SetActive(false);
             }
 
