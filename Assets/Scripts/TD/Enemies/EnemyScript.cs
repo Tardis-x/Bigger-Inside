@@ -21,10 +21,12 @@ namespace ua.org.gdg.devfest
     [Header("Materials")]
     [SerializeField] private Material _fadeMaterial;
     [SerializeField] private ParticleSystem _slowEffect;
+    [SerializeField] private ParticleSystem _coinsParticleSystem;
     
     [Space]
     [Header("Events")]
     [SerializeField] private InstanceGameEvent _dieEvent;
+    [SerializeField] private InstanceGameEvent _onCreepDisappeared;
     
     //---------------------------------------------------------------------
     // Internal
@@ -41,6 +43,7 @@ namespace ua.org.gdg.devfest
     {
       _dieEvent.Raise(gameObject);
       gameObject.layer = DEAD_ENEMIES_LAYER;
+      Happy = true;
       _agent.Fed();
       _hpBarHandler.Fed();
     }
@@ -102,7 +105,13 @@ namespace ua.org.gdg.devfest
       HP = _enemy.HP.Value;
       _maxHP = _enemy.HP.Value;
       Money = _enemy.Money.Value;
+      Happy = false;
       _agent.SetSpeed(_enemy.MoveSpeed.Value);
+    }
+
+    private void OnDestroy()
+    {
+      _onCreepDisappeared.Raise(gameObject);
     }
 
     //---------------------------------------------------------------------
@@ -153,10 +162,12 @@ namespace ua.org.gdg.devfest
       gameObject.layer = DEAD_ENEMIES_LAYER;
       
       _animator.SetTrigger("Idle");
+      
+      if(Happy) _coinsParticleSystem.Play();
 
       if (_renderer == null)
       {
-        DestroyGameObject();
+        Destroy(gameObject, 1.1f);
         return;
       }
 			
@@ -176,6 +187,8 @@ namespace ua.org.gdg.devfest
     public int HP { get; private set; }
 
     public int Money { get; private set; }
+
+    public bool Happy { get; private set; }
     
     public float Speed
     {
