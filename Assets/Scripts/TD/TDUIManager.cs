@@ -12,9 +12,6 @@ namespace ua.org.gdg.devfest
 
 		public void OnHallUnlocked(int hallNumber)
 		{
-			// Don't show first hall announcement
-			if (hallNumber == 1) return;
-			
 			_hallUnlockPanel.gameObject.SetActive(true);
 			_hallUnlockPanel.OnHallUnlocked(hallNumber);
 		}

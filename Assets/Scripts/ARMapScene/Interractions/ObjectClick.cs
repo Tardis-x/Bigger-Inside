@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Runtime.Serialization.Formatters;
+using UnityEngine;
 
 namespace ua.org.gdg.devfest
 {
@@ -16,7 +17,7 @@ namespace ua.org.gdg.devfest
 
     private bool _fingerMoved;
     private InteractableObject _lastInterracted;
-    
+
     //---------------------------------------------------------------------
     // Property
     //---------------------------------------------------------------------
@@ -30,8 +31,8 @@ namespace ua.org.gdg.devfest
     // Update is called once per frame
     void Update()
     {
-      if(!IsInteractable) return;
-      
+      if (!IsInteractable) return;
+
       Touch touch = new Touch();
 
       try
@@ -52,17 +53,15 @@ namespace ua.org.gdg.devfest
         var ray = Camera.main.ScreenPointToRay(touch.position);
         RaycastHit hit = new RaycastHit();
 
-        if (Physics.Raycast(ray, out hit, _clicableObjects))
+        if (Physics.Raycast(ray, out hit, 100, _clicableObjects, QueryTriggerInteraction.Ignore))
         {
-          {
-            InteractableObject obj = hit.transform.gameObject.GetComponent<InteractableObject>(); //get interraction
+          InteractableObject obj = hit.transform.gameObject.GetComponent<InteractableObject>(); //get interraction
 
-            if (obj != null) //if obj is interactable
-            {
-              if (_lastInterracted != null) _lastInterracted.Disable();
-              _lastInterracted = obj;
-              obj.Interact();
-            }
+          if (obj != null) //if obj is interactable
+          {
+            if (_lastInterracted != null) _lastInterracted.Disable();
+            _lastInterracted = obj;
+            obj.Interact();
           }
         }
       }

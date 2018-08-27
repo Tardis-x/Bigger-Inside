@@ -21,8 +21,17 @@ namespace ua.org.gdg.devfest
     [Space] 
     [Header("UI")] 
     [SerializeField] private Canvas _canvas;
+    
+    [Space] 
+    [Header("Parameters")] 
     [SerializeField] private IntReference _hallNumber;
     [SerializeField] private IntGameEvent _hallUnlockedGameEvent;
+
+    [Space] 
+    [Header("Crowd")] 
+    [SerializeField] private GameObject _lockedCrowd;
+    [SerializeField] private GameObject _unlockedCrowd;
+    [SerializeField] private Animator _speaker;
 
     //---------------------------------------------------------------------
     // Internal
@@ -43,6 +52,8 @@ namespace ua.org.gdg.devfest
       if (_unlocked)
       {
         _hallUnlockedGameEvent.Raise(_hallNumber);
+        _lockedCrowd.SetActive(false);
+        _unlockedCrowd.SetActive(true);
         StartSpawning();
       }
     }
@@ -53,6 +64,7 @@ namespace ua.org.gdg.devfest
 
     private void Start()
     {
+      _speaker.Play("Talking", -1, Random.value);
       Unlock();
     }
 
