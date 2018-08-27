@@ -127,7 +127,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1637248307847760
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,6 +334,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _towerDeselected: {fileID: 11400000, guid: b82c4c2775b3ac84dad3f9bbfb6274b6, type: 2}
+  _moneyEvent: {fileID: 11400000, guid: 537d6b784b8c02f499fa9518c21341fa, type: 2}
+  _upgradeCostText: {fileID: 114229343481579582}
+  _sellCostText: {fileID: 114590302251155138}
 --- !u!114 &114490224622297460
 MonoBehaviour:
   m_ObjectHideFlags: 1

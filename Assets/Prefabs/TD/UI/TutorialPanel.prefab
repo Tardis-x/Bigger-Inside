@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 114080011712807502}
   - component: {fileID: 114864501877184020}
   m_Layer: 5
-  m_Name: Button_Okay
+  m_Name: Button_Next
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143,7 +143,7 @@ GameObject:
   - component: {fileID: 114299774381005950}
   - component: {fileID: 114140197485249410}
   m_Layer: 5
-  m_Name: Button_Okay
+  m_Name: Button_Next
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -354,7 +354,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1698993863317450
 GameObject:
   m_ObjectHideFlags: 1
@@ -892,8 +892,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: OKButtonOnClick
+      - m_Target: {fileID: 114999937027999738}
+        m_MethodName: ShowVeganTip
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1244,9 +1244,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: OKButtonOnClick
-        m_Mode: 1
+      - m_Target: {fileID: 114999937027999738}
+        m_MethodName: ShowPanel
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1623,8 +1623,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: OKButtonOnClick
+      - m_Target: {fileID: 114999937027999738}
+        m_MethodName: ShowEnemyTip
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
