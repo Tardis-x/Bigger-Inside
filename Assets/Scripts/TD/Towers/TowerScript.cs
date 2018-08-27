@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ua.org.gdg.devfest
 {
-	public class TowerScript : MonoBehaviour
+	public class TowerScript : InteractableObject
 	{
 		//---------------------------------------------------------------------
 		// Editor
@@ -13,6 +13,9 @@ namespace ua.org.gdg.devfest
 		[SerializeField] protected Transform Gun;
 		[SerializeField] protected List<GameObject> LevelMeshes;
 		[SerializeField] protected ProjectileScript Projectile;
+		[SerializeField] protected ParticleSystem TowerSelectParticles;
+		[SerializeField] protected InstanceGameEvent TowerSelectedEvent;
+		[SerializeField] protected GameEvent TowerDeselectedEvent;
 		
 		//---------------------------------------------------------------------
 		// Messages
@@ -35,6 +38,7 @@ namespace ua.org.gdg.devfest
 		private GameObject _currentMesh;
 		protected float Cooldown;
 		protected float Range;
+		private bool _selected;
 		
 
 		//---------------------------------------------------------------------
@@ -79,6 +83,22 @@ namespace ua.org.gdg.devfest
 		{
 			var enemyScript = enemy.GetComponent<EnemyScript>();
 			RemoveTarget(enemyScript);
+		}
+
+		public override void Interact()
+		{
+			if(_selected) return;
+			
+			_selected = true;
+			TowerSelectParticles.Play();
+			TowerSelectedEvent.Raise(gameObject);
+		}
+
+		public override void Disable()
+		{
+			_selected = false;
+			TowerSelectParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+			TowerDeselectedEvent.Raise();
 		}
 	}
 }

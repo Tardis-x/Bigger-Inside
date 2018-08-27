@@ -12,6 +12,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] private GameEvent _levelUp;
     [SerializeField] private FloatReference _timing;
     [SerializeField] private IntReference _level;
+    [SerializeField] private ObjectClick _objectClick;
 
     [Space]
     [Header("Events")]
@@ -38,6 +39,7 @@ namespace ua.org.gdg.devfest
     private void Start()
     {
       StartCoroutine(LevelUpCoroutine(_timing));
+      _objectClick.IsInteractable = true;
     }
     
     //---------------------------------------------------------------------
