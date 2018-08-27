@@ -78,6 +78,7 @@ namespace ua.org.gdg.devfest
 		{
 			var hpBar = Instantiate(_hpBarPrefab);
 			hpBar.transform.SetParent(Canvas.transform, false);
+			hpBar.transform.SetAsFirstSibling();
 			hpBar.transform.position = Camera.main.WorldToScreenPoint(Vector3.up * _offset + transform.position);
 			_hpBarInstance = hpBar.GetComponent<Slider>();
 		}
@@ -86,6 +87,7 @@ namespace ua.org.gdg.devfest
 		{
 			_happyIconInstance = Instantiate(_happyIconPrefab);
 			_happyIconInstance.transform.SetParent(Canvas.transform, false);
+			_happyIconInstance.transform.SetAsFirstSibling();
 			_happyIconInstance.transform.position = Camera.main.WorldToScreenPoint(
 				Vector3.up * _offset + transform.position);
 		}
