@@ -15,7 +15,6 @@ namespace ua.org.gdg.devfest
 		[SerializeField] protected ProjectileScript Projectile;
 		[SerializeField] protected ParticleSystem TowerSelectParticles;
 		[SerializeField] protected InstanceGameEvent TowerSelectedEvent;
-		[SerializeField] protected GameEvent TowerDeselectedEvent;
 		
 		//---------------------------------------------------------------------
 		// Messages
@@ -98,7 +97,25 @@ namespace ua.org.gdg.devfest
 		{
 			_selected = false;
 			TowerSelectParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-			TowerDeselectedEvent.Raise();
+		}
+		
+		//---------------------------------------------------------------------
+		// Properties
+		//---------------------------------------------------------------------
+
+		public int Cost
+		{
+			get { return Tower.Cost; }
+		}
+		
+		public int UpgradeCost
+		{
+			get { return Tower.UpgradeCost; }
+		}
+
+		public int SellCost
+		{
+			get { return Tower.Cost / 2; }
 		}
 	}
 }

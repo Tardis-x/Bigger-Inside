@@ -444,7 +444,7 @@ Transform:
   m_GameObject: {fileID: 1130064847989602}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.05, z: 0.1}
   m_Children:
   - {fileID: 4638165584983312}
   m_Father: {fileID: 4531080505659850}
@@ -583,7 +583,7 @@ Transform:
   m_GameObject: {fileID: 1330250523913184}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.67635, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.05, z: 0.1}
   m_Children:
   - {fileID: 4049303971760108}
   m_Father: {fileID: 4531080505659850}
@@ -1157,8 +1157,6 @@ MonoBehaviour:
     type: 2}
   TowerSelectParticles: {fileID: 198841465854318854}
   TowerSelectedEvent: {fileID: 11400000, guid: 6d27ffacae90d1f4f8933d478bed387a, type: 2}
-  TowerDeselectedEvent: {fileID: 11400000, guid: b82c4c2775b3ac84dad3f9bbfb6274b6,
-    type: 2}
 --- !u!114 &114493212208279102
 MonoBehaviour:
   m_ObjectHideFlags: 1

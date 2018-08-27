@@ -9,14 +9,16 @@ namespace ua.org.gdg.devfest
     // Editor
     //---------------------------------------------------------------------
     
-    [SerializeField] private GameEvent _levelUp;
     [SerializeField] private FloatReference _timing;
     [SerializeField] private IntReference _level;
+    [SerializeField] private IntReference _money;
     [SerializeField] private ObjectClick _objectClick;
 
     [Space]
     [Header("Events")]
     [SerializeField] private GameEvent _onEndDrag;
+    [SerializeField] private GameEvent _levelUp;
+    [SerializeField] private GameEvent _moneyChanged;
     
     //---------------------------------------------------------------------
     // Public
@@ -30,6 +32,12 @@ namespace ua.org.gdg.devfest
     public void OnResume()
     {
       Time.timeScale = 1;
+    }
+
+    public void OnMoneyChanged(int amount)
+    {
+      _money.Value += amount;
+      _moneyChanged.Raise();
     }
     
     //---------------------------------------------------------------------
