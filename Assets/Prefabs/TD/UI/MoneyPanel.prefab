@@ -54,13 +54,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 224662472949605236}
+  - component: {fileID: 114658806630755228}
   m_Layer: 5
   m_Name: MoneyPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &114083789091863810
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -137,6 +138,19 @@ MonoBehaviour:
   _ghostTowerScaleFactor: 3
   _onBeginDrag: {fileID: 11400000, guid: 0f86f5c579d952c44af3518abbe8a7c5, type: 2}
   _onEndDrag: {fileID: 11400000, guid: eeee206a31745bb4e8104fad526d7617, type: 2}
+  _moneyChangedForAmount: {fileID: 0}
+--- !u!114 &114658806630755228
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1995437847000058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58b0adc52239aa54b9516cc9cd7dc0d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: {fileID: 114083789091863810}
 --- !u!222 &222438219706448408
 CanvasRenderer:
   m_ObjectHideFlags: 1
