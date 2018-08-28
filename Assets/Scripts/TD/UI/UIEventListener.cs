@@ -72,6 +72,11 @@ namespace ua.org.gdg.devfest
       _hallUnlockPanel.gameObject.SetActive(true);
       _hallUnlockPanel.OnHallUnlocked(hallNumber);
     }
+
+    public void OnTrackableFound()
+    {
+      _playButton.gameObject.SetActive(true);
+    }
     
     public void OnGameStart()
     {
@@ -88,6 +93,13 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     private void UIToPlayMode()
+    {
+      ShowStats();
+      _towerPanel.gameObject.SetActive(true);
+      _playButton.gameObject.SetActive(false);
+    }
+
+    private void ShowStats()
     {
       _moneyPanel.SetActive(true);
       _scorePanel.SetActive(true);

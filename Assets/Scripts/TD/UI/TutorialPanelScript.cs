@@ -40,6 +40,7 @@ namespace ua.org.gdg.devfest
 			_towersTip.SetActive(false);
 			_enemyTip.SetActive(false);
 			_veganTip.SetActive(true);
+			PlayerPrefsHandler.SetTutorState(true);
 		}
 
 		public void ShowPanel(bool value)
