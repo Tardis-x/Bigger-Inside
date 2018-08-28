@@ -10,19 +10,44 @@ namespace ua.org.gdg.devfest
 		// Editor
 		//---------------------------------------------------------------------
 
+		
+		[Header("Events")]
 		[SerializeField] private GameEvent _towerDeselected;
 		[SerializeField] private IntGameEvent _moneyEvent;
+
+		[Space]
+		[Header("UI")]
 		[SerializeField] private Text _upgradeCostText;
 		[SerializeField] private Text _sellCostText;
+		[SerializeField] private Button _upgradeButon;
+
+		[Space]
+		[Header("Variables")]
+		[SerializeField]
+		private IntReference _money;
 		
 		//---------------------------------------------------------------------
-		// Public
+		// Messages
 		//---------------------------------------------------------------------
 
-		[NonSerialized] public TowerScript SelectedTower;
+		private void OnEnable()
+		{
+			UpdatePanel();
+		}
 
+		//---------------------------------------------------------------------
+		// Events
+		//---------------------------------------------------------------------
+
+		public void OnUIUpdateRequested()
+		{
+			UpdatePanel();
+		}
+		
 		public void OnUpgradeButtonClick()
 		{
+			if (!_canUpgrade) return;
+			
 			SelectedTower.LevelUp();
 			_moneyEvent.Raise(-SelectedTower.UpgradeCost);
 		}
@@ -42,7 +67,13 @@ namespace ua.org.gdg.devfest
 			SelectedTower = null;
 			_towerDeselected.Raise();
 		}
+		
+		//---------------------------------------------------------------------
+		// Public
+		//---------------------------------------------------------------------
 
+		[NonSerialized] public TowerScript SelectedTower;
+		
 		public void SetUpgradeCostText(int cost)
 		{
 			_upgradeCostText.text = cost.ToString();
@@ -52,5 +83,22 @@ namespace ua.org.gdg.devfest
 		{
 			_sellCostText.text = cost.ToString();
 		}
+		
+		//---------------------------------------------------------------------
+		// Helpers
+		//---------------------------------------------------------------------
+
+		private void UpdatePanel()
+		{
+			bool canAfford = _money.Value >= SelectedTower.UpgradeCost;
+			_canUpgrade = canAfford;
+			_upgradeCostText.color = canAfford ? Color.white : Color.red;
+		}
+		
+		//---------------------------------------------------------------------
+		// Internal
+		//---------------------------------------------------------------------
+
+		private bool _canUpgrade;
 	}
 }
