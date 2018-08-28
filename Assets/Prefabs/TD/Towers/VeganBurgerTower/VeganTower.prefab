@@ -287,10 +287,9 @@ GameObject:
   - component: {fileID: 4531080505659850}
   - component: {fileID: 135046354332512390}
   - component: {fileID: 54895317743397368}
-  - component: {fileID: 114384025604381294}
   - component: {fileID: 114832095295551268}
-  - component: {fileID: 114493212208279102}
   - component: {fileID: 136345760170396348}
+  - component: {fileID: 114934964493795872}
   m_Layer: 14
   m_Name: VeganTower
   m_TagString: Untagged
@@ -1136,54 +1135,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &114384025604381294
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1780499264665094}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f79f5da5beb19e141a9a962a895e2ac3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Tower: {fileID: 11400000, guid: f307fca14ca723149b1b328f9d18d7f6, type: 2}
-  Gun: {fileID: 4933879511567964}
-  LevelMeshes:
-  - {fileID: 1423722926655478}
-  - {fileID: 1330250523913184}
-  - {fileID: 1130064847989602}
-  Projectile: {fileID: 114697489344677676, guid: 62e26d42951b3dd439182adaf1e55b17,
-    type: 2}
-  TowerSelectParticles: {fileID: 198841465854318854}
-  TowerSelectedEvent: {fileID: 11400000, guid: 6d27ffacae90d1f4f8933d478bed387a, type: 2}
---- !u!114 &114493212208279102
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1780499264665094}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32608faebd18cc3419f24b212d9c18fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ButtonPressedEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114384025604381294}
-        m_MethodName: LevelUp
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114832095295551268
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1199,7 +1150,7 @@ MonoBehaviour:
   Response:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114384025604381294}
+      - m_Target: {fileID: 0}
         m_MethodName: OnEnemyDie
         m_Mode: 0
         m_Arguments:
@@ -1212,6 +1163,27 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: ua.org.gdg.devfest.UnityEventWithInstance, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114934964493795872
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1780499264665094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ea5a6ce3a4b40c4fbc738ff1c5a7da9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Tower: {fileID: 11400000, guid: adc2419f85b888848bed28b6d2acf7f9, type: 2}
+  Gun: {fileID: 4933879511567964}
+  LevelMeshes:
+  - {fileID: 1423722926655478}
+  - {fileID: 1330250523913184}
+  - {fileID: 1130064847989602}
+  Projectile: {fileID: 114697489344677676, guid: 62e26d42951b3dd439182adaf1e55b17,
+    type: 2}
+  TowerSelectParticles: {fileID: 198841465854318854}
+  TowerSelectedEvent: {fileID: 11400000, guid: 6d27ffacae90d1f4f8933d478bed387a, type: 2}
 --- !u!135 &135046354332512390
 SphereCollider:
   m_ObjectHideFlags: 1
