@@ -27,25 +27,6 @@ namespace ua.org.gdg.devfest
     // Events
     //---------------------------------------------------------------------
 
-    public void OnCreepDisappeared(GameObject creep)
-    {
-      var creepEnemyScript = creep.GetComponent<EnemyScript>();
-
-      if (creepEnemyScript.Happy)
-      {
-        var score = int.Parse(_scoreText.text) + 1;
-        var money = int.Parse(_moneyText.text) + creepEnemyScript.Money;
-
-        _scoreText.text = score.ToString();
-        _moneyText.text = money.ToString();
-      }
-      else
-      {
-        var enemiesLeft = int.Parse(_enemiesLeftText.text) - 1;
-        _enemiesLeftText.text = enemiesLeft.ToString();
-      }
-    }
-
     public void OnTowerSelected(GameObject tower)
     {
       var towerScript = tower.GetComponent<TowerScript>();

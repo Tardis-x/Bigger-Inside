@@ -39,6 +39,25 @@ namespace ua.org.gdg.devfest
       SetMoney(_money + amount);
     }
     
+    public void OnCreepDisappeared(GameObject creep)
+    {
+      var creepEnemyScript = creep.GetComponent<EnemyScript>();
+
+      if (creepEnemyScript.Happy)
+      {
+        //var score = int.Parse(_scoreText.text) + 1;
+        SetMoney(_money + creepEnemyScript.Money);
+
+        //_scoreText.text = score.ToString();
+        //_moneyText.text = money.ToString();
+      }
+      else
+      {
+        //var enemiesLeft = int.Parse(_enemiesLeftText.text) - 1;
+        //_enemiesLeftText.text = enemiesLeft.ToString();
+      }
+    }
+    
     //---------------------------------------------------------------------
     // Messages
     //---------------------------------------------------------------------
