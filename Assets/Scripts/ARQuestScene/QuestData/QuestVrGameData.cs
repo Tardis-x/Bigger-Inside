@@ -1,6 +1,6 @@
 ﻿public class QuestVrGameData
 {
-	public bool state { get; set; }
-	public int gameScore { get; set; }
-	public int score {get; set;}
+	public bool State { get; set; }
+	public int GameScore { get; set; }
+	public int Score {get; set;}
 }

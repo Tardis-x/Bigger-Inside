@@ -10,6 +10,7 @@ public class QuestUserScoreController : MonoBehaviour
 	public QuestFirebaseData firebaseData;
 	public Text scoreText;
 	public Text positionInfoText;
+	public Text gate1ScoreText;
 	public Text gate2ScoreText;
 	public Text gate3ScoreText;
 	
@@ -46,7 +47,7 @@ public class QuestUserScoreController : MonoBehaviour
 
 	void UpdateUserInfo()
 	{
-		scoreText.text = _questManager.questProgress.globalScore.ToString();
+		scoreText.text = _questManager.QuestProgress.globalScore.ToString();
 		var userRank = FindUserPositionInRankings().ToString();
 		var lastNumber = userRank[userRank.Length - 1];
 		switch (lastNumber)
@@ -65,8 +66,9 @@ public class QuestUserScoreController : MonoBehaviour
 				break;
 		}
 		positionInfoText.text = string.Format("The {0} in the ranking", userRank);
-		gate2ScoreText.text = string.Format("+{0}",_questManager.questProgress.vrGameData.score);
-		gate3ScoreText.text = string.Format("+{0}",_questManager.questProgress.globalScore - _questManager.questProgress.vrGameData.score);
+		gate1ScoreText.text = string.Format("+{0}",_questManager.QuestProgress.PhotoData.Score);
+		gate2ScoreText.text = string.Format("+{0}",_questManager.QuestProgress.VrGameData.Score);
+		gate3ScoreText.text = string.Format("+{0}",_questManager.QuestProgress.globalScore - _questManager.QuestProgress.VrGameData.Score - _questManager.QuestProgress.PhotoData.Score);
 	}
 
 	int FindUserPositionInRankings()

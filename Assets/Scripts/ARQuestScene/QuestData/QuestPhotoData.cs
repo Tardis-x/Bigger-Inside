@@ -1,6 +1,7 @@
 ﻿public class QuestPhotoData
 {
-	public bool state { get; set; }
-	public string imgUrlSpeaker { get; set; }
-	public string imgUrlFriend { get; set; }
+	public bool State { get; set; }
+	public string ImgUrlSpeaker { get; set; }
+	public string ImgUrlFriend { get; set; }
+	public int Score { get; set; }
 }

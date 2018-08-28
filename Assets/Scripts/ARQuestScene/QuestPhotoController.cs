@@ -246,11 +246,11 @@ public class QuestPhotoController : MonoBehaviour
 			imageUrl = "gs://hoverboard-v2-dev.appspot.com" + pictureNameInStorage;
 			if (_photoComment == "_speaker")
 			{
-				_questManager.questProgress.photoData.imgUrlSpeaker = imageUrl;
+				_questManager.QuestProgress.PhotoData.ImgUrlSpeaker = imageUrl;
 			}
 			else if (_photoComment == "_friend")
 			{
-				_questManager.questProgress.photoData.imgUrlFriend = imageUrl;
+				_questManager.QuestProgress.PhotoData.ImgUrlFriend = imageUrl;
 			}
 			_questManager.CheckInPhoto(this);
 			if (!resultTask.IsFaulted && !resultTask.IsCanceled)
@@ -316,7 +316,7 @@ public class QuestPhotoController : MonoBehaviour
 	{
 		Debug.Log("QuestPhotoController.OnImageScanned");
 
-		if (!_questManager.questProgress.photoData.state)
+		if (!_questManager.QuestProgress.PhotoData.State)
 		{
 			if (scannedMarker == "Photo")
 			{

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using DeadMosquito.AndroidGoodies;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -54,7 +52,7 @@ public class QuestRiddlesController : MonoBehaviour
 	
 	void QuestManagerReferenceInitialization()
 	{
-		GameObject questManagerTemp = GameObject.Find("QuestManager");
+		var questManagerTemp = GameObject.Find("QuestManager");
 
 		if (questManagerTemp != null)
 		{
@@ -98,7 +96,7 @@ public class QuestRiddlesController : MonoBehaviour
 	public void UpdateRiddlesScreen()
 	{
 		_questManager.ReadRiddleDataFromQuestProgress();
-		bool anyRiddles = false;
+		var anyRiddles = false;
 		
 		foreach (KeyValuePair<string, QuestRiddleDataFull> riddle in _questManager.QuestRiddlesDataFull)
 		{
@@ -117,7 +115,7 @@ public class QuestRiddlesController : MonoBehaviour
 				else if(!riddle.Value.isText)
 				{
 					_riddleText.text = "Knowledge";
-					_descriptionText.text = "* you have to find and scan a stamp hidden around the venue";
+					_descriptionText.text = "* you have to find and scan a marker, hidden around the venue";
 					_riddleImageHolder.sprite = Sprite.Create(riddle.Value.texture, new Rect(0.0f, 0.0f, 
 						riddle.Value.texture.width, riddle.Value.texture.height), new Vector2(0f, 0f), 100.0f);
 					_submitButton.gameObject.SetActive(false);
@@ -132,7 +130,7 @@ public class QuestRiddlesController : MonoBehaviour
 		if (!anyRiddles)
 		{
 			_descriptionText.text = "";
-			
+			_questManager.QuestProgress.allRiddlesCompleted = true;
 			//Mark completion of third quest step for UI
 			_questManager.CompleteAllRiddles();
 			
@@ -154,9 +152,9 @@ public class QuestRiddlesController : MonoBehaviour
 	public void OnImageScanned(string scannedMarker)
 	{
 		Debug.Log("QuestRiddlesController.OnImageScanned:" + scannedMarker);
-		scannedMarker = scannedMarker.ToLower().Replace(" ", String.Empty);
-		var answer = _currentRiddle.ToLower().Replace(" ", String.Empty);
-		if (!_questManager.questProgress.riddlesData[_currentRiddle].isCompleted)
+		scannedMarker = scannedMarker.ToLower().Replace(" ", string.Empty);
+		var answer = _currentRiddle.ToLower().Replace(" ", string.Empty);
+		if (!_questManager.QuestProgress.RiddlesData[_currentRiddle].isCompleted)
 		{
 			if (scannedMarker == answer)
 			{
@@ -180,9 +178,9 @@ public class QuestRiddlesController : MonoBehaviour
 	{
 		Debug.Log("QuestRiddlesController.OnAnswerSubmitted");
 		
-		string answer = _inputField.text;
-		answer = answer.ToLower().Replace(" ", String.Empty);
-		string correctAnswer = _currentRiddle.ToLower().Replace(" ", String.Empty);
+		var answer = _inputField.text;
+		answer = answer.ToLower().Replace(" ", string.Empty);
+		var correctAnswer = _currentRiddle.ToLower().Replace(" ", string.Empty);
 		if (answer == correctAnswer)
 		{
 			_inputField.text = "";

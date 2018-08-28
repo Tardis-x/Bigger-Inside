@@ -60,11 +60,11 @@ public class QuestVrGameController : MonoBehaviour
 
 	public void UpdateVrGameScreen()
 	{
-		if (_questManager.questProgress.vrGameData.state)
+		if (_questManager.QuestProgress.VrGameData.State)
 		{
 			_descriptionText.text = "";
 			_statusText.gameObject.SetActive(true);
-			_statusText.text = string.Format("You have completed VR game with score: {0} points!",_questManager.questProgress.vrGameData.gameScore);
+			_statusText.text = string.Format("You have completed VR game with score: {0} points!",_questManager.QuestProgress.VrGameData.GameScore);
 			_scoreInputField.gameObject.SetActive(false);
 			_scanButton.gameObject.SetActive(false);
 		}
@@ -88,7 +88,7 @@ public class QuestVrGameController : MonoBehaviour
 	{
 		Debug.Log("QuestVrGameController.OnImageScanned");
 		
-		if (!_questManager.questProgress.vrGameData.state)
+		if (!_questManager.QuestProgress.VrGameData.State)
 		{
 			if (scannedMarker == "vrGame")
             {
