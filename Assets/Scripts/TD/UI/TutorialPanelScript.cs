@@ -14,8 +14,7 @@ namespace ua.org.gdg.devfest
 		[SerializeField] private GameObject _veganTip;
 
 		[Space] 
-		[Header("Events")] 
-		[SerializeField] private GameEvent _pause;
+		[Header("Events")]
 		[SerializeField] private GameEvent _gameStart;
 		
 		//---------------------------------------------------------------------
@@ -47,7 +46,6 @@ namespace ua.org.gdg.devfest
 		public void ShowPanel(bool value)
 		{
 			gameObject.SetActive(value);
-			_pause.Raise();
 		}
 	}
 }
