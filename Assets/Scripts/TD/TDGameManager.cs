@@ -27,9 +27,19 @@ namespace ua.org.gdg.devfest
     
     
     //---------------------------------------------------------------------
-    // Public
+    // Events
     //---------------------------------------------------------------------
 
+    public void OnGameStart()
+    {
+      StartCoroutine(LevelUpCoroutine(_timing));
+    }
+
+    public void OnGameOver()
+    {
+      
+    }
+    
     public void OnPause()
     {
       Time.timeScale = 0;
@@ -39,10 +49,6 @@ namespace ua.org.gdg.devfest
     {
       Time.timeScale = 1;
     }
-    
-    //---------------------------------------------------------------------
-    // Events
-    //---------------------------------------------------------------------
 
     public void OnMoneyEvent(int amount)
     {
@@ -73,7 +79,6 @@ namespace ua.org.gdg.devfest
 
     private void Start()
     {
-      StartCoroutine(LevelUpCoroutine(_timing));
       _objectClick.IsInteractable = true;
       SetMoney(_money);
     }

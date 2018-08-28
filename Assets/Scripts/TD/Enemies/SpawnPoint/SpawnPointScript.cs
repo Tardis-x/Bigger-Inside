@@ -51,7 +51,7 @@ namespace ua.org.gdg.devfest
 
       if (_unlocked)
       {
-        _hallUnlockedGameEvent.Raise(_hallNumber);
+        if(_hallNumber > 1) _hallUnlockedGameEvent.Raise(_hallNumber);
         _lockedCrowd.SetActive(false);
         _unlockedCrowd.SetActive(true);
         StartSpawning();
@@ -65,9 +65,8 @@ namespace ua.org.gdg.devfest
     private void Start()
     {
       _speaker.Play("Talking", -1, Random.value);
-      Unlock();
     }
-
+    
     //---------------------------------------------------------------------
     // Helpers
     //---------------------------------------------------------------------

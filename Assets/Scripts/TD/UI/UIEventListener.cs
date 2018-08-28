@@ -19,6 +19,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] private TowerUpgradePanelScript _upgradePanel;
     [SerializeField] private RectTransform _towerPanel;
     [SerializeField] private HallUnlockPanelScript _hallUnlockPanel;
+    [SerializeField] private TutorialPanelScript _tutorialPanel;
 
     [Space]
     [Header("Buttons")]
