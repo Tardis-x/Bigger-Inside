@@ -104,9 +104,6 @@ namespace ua.org.gdg.devfest
       _moneyPanel.SetActive(true);
       _scorePanel.SetActive(true);
       _enemiesLeftPanel.SetActive(true);
-      _towerPanel.gameObject.SetActive(true);
-      _playButton.gameObject.SetActive(false);
-      _tutorialPanel.ShowPanel(true);
     }
   }
 }

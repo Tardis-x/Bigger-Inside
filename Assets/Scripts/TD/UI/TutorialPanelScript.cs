@@ -12,10 +12,6 @@ namespace ua.org.gdg.devfest
 		[SerializeField] private GameObject _towersTip;
 		[SerializeField] private GameObject _enemyTip;
 		[SerializeField] private GameObject _veganTip;
-
-		[Space] 
-		[Header("Events")]
-		[SerializeField] private GameEvent _gameStart;
 		
 		//---------------------------------------------------------------------
 		// Public
@@ -45,7 +41,6 @@ namespace ua.org.gdg.devfest
 
 		public void ShowPanel(bool value)
 		{
-			if(!value) _gameStart.Raise();
 			gameObject.SetActive(value);
 		}
 	}

@@ -103,6 +103,11 @@ namespace ua.org.gdg.devfest
     // Helpers
     //---------------------------------------------------------------------
 
+    public void ClearPrefs()
+    {
+      PlayerPrefs.DeleteAll();
+    }
+    
     private void PauseGame()
     {
       Time.timeScale = 0;
