@@ -33,7 +33,7 @@ namespace ua.org.gdg.devfest
 		
 		public void OnMoneyChanged()
 		{
-			bool canAfford = _money.Value > _towerPrice.Value;
+			bool canAfford = _money.Value >= _towerPrice.Value;
 			_buyButton.Interactable = canAfford;
 			_priceText.color = canAfford ? Color.white : Color.red;
 		}

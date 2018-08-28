@@ -36,8 +36,7 @@ namespace ua.org.gdg.devfest
 
     public void OnMoneyEvent(int amount)
     {
-      _money.Value += amount;
-      _moneyChanged.Raise();
+      SetMoney(_money + amount);
     }
     
     //---------------------------------------------------------------------

@@ -12,10 +12,11 @@ namespace ua.org.gdg.devfest
     [SerializeField] private GameObject _towerPrefab;
     [SerializeField] private int _ghostTowerScaleFactor;
 
-    [Space] [Header("Events")] [SerializeField]
-    private GameEvent _onBeginDrag;
-
+    [Space]
+    [Header("Events")] 
+    [SerializeField] private GameEvent _onBeginDrag;
     [SerializeField] private GameEvent _onEndDrag;
+    [SerializeField] private IntGameEvent _moneyChangedForAmount;
 
     //---------------------------------------------------------------------
     // Internal
@@ -72,12 +73,15 @@ namespace ua.org.gdg.devfest
 
     public void OnEndDrag(PointerEventData eventData)
     {
+      if (!Interactable) return;
+      
       if (_activeSlot != null)
       {
         var quadCentre = GetQuadCentre(_activeSlot);
         var tower = Instantiate(_towerPrefab, quadCentre, Quaternion.identity, _activeSlot.transform.parent.transform);
         tower.GetComponent<CapsuleCollider>().enabled = true;
         _activeSlot.SetActive(false);
+        _moneyChangedForAmount.Raise(-_towerPrefab.GetComponent<TowerScript>().Cost);
       }
 
       _hoverPrefab.SetActive(false);
