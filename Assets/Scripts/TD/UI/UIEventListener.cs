@@ -36,11 +36,7 @@ namespace ua.org.gdg.devfest
 
     public void OnStart()
     {
-      _moneyPanel.SetActive(true);
-      _scorePanel.SetActive(true);
-      _enemiesLeftPanel.SetActive(true);
-      _towerPanel.gameObject.SetActive(true);
-      _playButton.gameObject.SetActive(false);
+      UIToPlayMode();
     }
 
     public void OnTowerSelected(GameObject tower)
@@ -71,6 +67,19 @@ namespace ua.org.gdg.devfest
     {
       _hallUnlockPanel.gameObject.SetActive(true);
       _hallUnlockPanel.OnHallUnlocked(hallNumber);
+    }
+    
+    //---------------------------------------------------------------------
+    // Helpers
+    //---------------------------------------------------------------------
+
+    private void UIToPlayMode()
+    {
+      _moneyPanel.SetActive(true);
+      _scorePanel.SetActive(true);
+      _enemiesLeftPanel.SetActive(true);
+      _towerPanel.gameObject.SetActive(true);
+      _playButton.gameObject.SetActive(false);
     }
   }
 }
