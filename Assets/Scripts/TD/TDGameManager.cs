@@ -34,7 +34,7 @@ namespace ua.org.gdg.devfest
       Time.timeScale = 1;
     }
 
-    public void OnMoneyChanged(int amount)
+    public void OnMoneyEvent(int amount)
     {
       _money.Value += amount;
       _moneyChanged.Raise();
@@ -48,10 +48,11 @@ namespace ua.org.gdg.devfest
     {
       StartCoroutine(LevelUpCoroutine(_timing));
       _objectClick.IsInteractable = true;
+      SetMoney(_money);
     }
     
     //---------------------------------------------------------------------
-    // Internal
+    // Helpers
     //---------------------------------------------------------------------
 
     private IEnumerator LevelUpCoroutine(FloatReference timing)
@@ -62,6 +63,12 @@ namespace ua.org.gdg.devfest
         _level.Value++;
         _levelUp.Raise();
       }
+    }
+
+    private void SetMoney(int amount)
+    {
+      _money.Value = amount;
+      _moneyChanged.Raise();
     }
   }
 }
