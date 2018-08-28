@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace ua.org.gdg.devfest
 {
@@ -18,6 +19,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] private GameEvent _onEndDrag;
     [SerializeField] private GameEvent _levelUp;
     [SerializeField] private GameEvent _uiUpdateRequested;
+    [SerializeField] private GameEvent _gameOver;
 
     [Space] 
     [Header("Public Variables")] 
@@ -37,17 +39,17 @@ namespace ua.org.gdg.devfest
 
     public void OnGameOver()
     {
-      
+      PauseGame();
     }
     
     public void OnPause()
     {
-      Time.timeScale = 0;
+      PauseGame();
     }
 
     public void OnResume()
     {
-      Time.timeScale = 1;
+      ResumeGame();
     }
 
     public void OnMoneyEvent(int amount)
@@ -70,7 +72,14 @@ namespace ua.org.gdg.devfest
         _enemiesLeft.Value -= 1;
       }
       
+      if(_enemiesLeft == 0) _gameOver.Raise();
+      
       _uiUpdateRequested.Raise();
+    }
+
+    public void OnRestart()
+    {
+      SceneManager.LoadScene("TDScene");
     }
     
     //---------------------------------------------------------------------
@@ -87,6 +96,16 @@ namespace ua.org.gdg.devfest
     // Helpers
     //---------------------------------------------------------------------
 
+    private void PauseGame()
+    {
+      Time.timeScale = 0;
+    }
+
+    private void ResumeGame()
+    {
+      Time.timeScale = 1;
+    }
+    
     private IEnumerator LevelUpCoroutine(FloatReference timing)
     {
       while (true)

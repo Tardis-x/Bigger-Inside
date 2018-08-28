@@ -20,10 +20,12 @@ namespace ua.org.gdg.devfest
     [SerializeField] private RectTransform _towerPanel;
     [SerializeField] private HallUnlockPanelScript _hallUnlockPanel;
     [SerializeField] private TutorialPanelScript _tutorialPanel;
+    [SerializeField] private TDGameOverPanelScript _gameOverPanel;
 
     [Space]
     [Header("Buttons")]
     [SerializeField] private Button _playButton;
+    [SerializeField] private Button _replayButton;
     
     [Space]
     [Header("Public Variables")]
@@ -35,11 +37,12 @@ namespace ua.org.gdg.devfest
     // Events
     //---------------------------------------------------------------------
 
-    public void OnStart()
+    public void OnPlayButtonClick()
     {
-      UIToPlayMode();
+      _tutorialPanel.ShowPanel(true);
+      _playButton.gameObject.SetActive(false);
     }
-
+    
     public void OnTowerSelected(GameObject tower)
     {
       var towerScript = tower.GetComponent<TowerScript>();
@@ -68,6 +71,16 @@ namespace ua.org.gdg.devfest
     {
       _hallUnlockPanel.gameObject.SetActive(true);
       _hallUnlockPanel.OnHallUnlocked(hallNumber);
+    }
+    
+    public void OnGameStart()
+    {
+      UIToPlayMode();
+    }
+
+    public void OnGameOver()
+    {
+     _gameOverPanel.ShowPanel(_score);
     }
     
     //---------------------------------------------------------------------

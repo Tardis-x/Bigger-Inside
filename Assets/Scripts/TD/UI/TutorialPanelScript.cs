@@ -40,11 +40,11 @@ namespace ua.org.gdg.devfest
 			_towersTip.SetActive(false);
 			_enemyTip.SetActive(false);
 			_veganTip.SetActive(true);
-			_gameStart.Raise();
 		}
 
 		public void ShowPanel(bool value)
 		{
+			if(!value) _gameStart.Raise();
 			gameObject.SetActive(value);
 		}
 	}
