@@ -35,10 +35,9 @@ namespace ua.org.gdg.devfest
     // Events
     //---------------------------------------------------------------------
 
-    public void OnStart()
+    public void OnGameStart()
     {
       UIToPlayMode();
-      PlayerPrefs.DeleteAll();
     }
 
     public void OnTowerSelected(GameObject tower)
