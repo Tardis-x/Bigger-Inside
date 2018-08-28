@@ -8,6 +8,7 @@ namespace ua.org.gdg.devfest
 		// Editor
 		//---------------------------------------------------------------------
 		
+		[Header("UI")]
 		[SerializeField] private GameObject _towersTip;
 		[SerializeField] private GameObject _enemyTip;
 		[SerializeField] private GameObject _veganTip;
@@ -35,6 +36,7 @@ namespace ua.org.gdg.devfest
 			_towersTip.SetActive(false);
 			_enemyTip.SetActive(false);
 			_veganTip.SetActive(true);
+			PlayerPrefsHandler.SetTutorState(true);
 		}
 
 		public void ShowPanel(bool value)
