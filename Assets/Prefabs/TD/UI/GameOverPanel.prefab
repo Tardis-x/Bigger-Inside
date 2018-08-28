@@ -88,8 +88,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 224595612234179462}
-  - component: {fileID: 114361953038744298}
-  - component: {fileID: 114801297172767980}
+  - component: {fileID: 114093707452883198}
   m_Layer: 5
   m_Name: GameOverPanel
   m_TagString: Untagged
@@ -109,7 +108,7 @@ GameObject:
   - component: {fileID: 114432624850923626}
   - component: {fileID: 114036567149074320}
   m_Layer: 5
-  m_Name: Button_Okay
+  m_Name: Button_Replay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -154,8 +153,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114361953038744298}
-        m_MethodName: OKButtonOnClick
+      - m_Target: {fileID: 11400000, guid: bcd4982dc6030aa4b81d5e331ea21dc9, type: 2}
+        m_MethodName: Raise
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -167,6 +166,19 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114093707452883198
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1463617739746090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d59d10354c1998040aa9e112f01d5e46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scoreText: {fileID: 114866884666458084}
+  _restart: {fileID: 11400000, guid: bcd4982dc6030aa4b81d5e331ea21dc9, type: 2}
 --- !u!114 &114213000022243244
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -194,20 +206,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114361953038744298
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1463617739746090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4714c625fa0bc64cb940b76d4c2cc5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _hallUnlockedMessage: {fileID: 0}
-  _pauseGameEvent: {fileID: 11400000, guid: 900cdd310dfae094ca9ba5bd14a64e5a, type: 2}
-  _resumeGameEvent: {fileID: 11400000, guid: 81beb6d910f281745afb9df9f85855fd, type: 2}
 --- !u!114 &114432624850923626
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -262,34 +260,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114801297172767980
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1463617739746090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac369d564858eb24da8848f6b3628e31, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 8371bf3294ed2724595b423cda83681c, type: 2}
-  Response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114361953038744298}
-        m_MethodName: OnHallUnlocked
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: ua.org.gdg.devfest.IntUnityEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114824159050679550
 MonoBehaviour:
   m_ObjectHideFlags: 1
