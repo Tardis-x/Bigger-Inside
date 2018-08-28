@@ -12,7 +12,7 @@ namespace ua.org.gdg.devfest
 
 		public void OnHallUnlocked(int hallNumber)
 		{
-			_hallUnlockPanel.gameObject.SetActive(true);
+			if(hallNumber > 0)	_hallUnlockPanel.gameObject.SetActive(true);
 			_hallUnlockPanel.OnHallUnlocked(hallNumber);
 		}
 

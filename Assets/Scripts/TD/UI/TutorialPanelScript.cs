@@ -8,9 +8,15 @@ namespace ua.org.gdg.devfest
 		// Editor
 		//---------------------------------------------------------------------
 		
+		[Header("UI")]
 		[SerializeField] private GameObject _towersTip;
 		[SerializeField] private GameObject _enemyTip;
 		[SerializeField] private GameObject _veganTip;
+
+		[Space] 
+		[Header("Events")] 
+		[SerializeField] private GameEvent _pause;
+		[SerializeField] private GameEvent _gameStart;
 		
 		//---------------------------------------------------------------------
 		// Public
@@ -35,11 +41,13 @@ namespace ua.org.gdg.devfest
 			_towersTip.SetActive(false);
 			_enemyTip.SetActive(false);
 			_veganTip.SetActive(true);
+			_gameStart.Raise();
 		}
 
 		public void ShowPanel(bool value)
 		{
 			gameObject.SetActive(value);
+			_pause.Raise();
 		}
 	}
 }
