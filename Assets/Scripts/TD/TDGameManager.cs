@@ -11,14 +11,20 @@ namespace ua.org.gdg.devfest
     
     [SerializeField] private FloatReference _timing;
     [SerializeField] private IntReference _level;
-    [SerializeField] private IntReference _money;
     [SerializeField] private ObjectClick _objectClick;
 
     [Space]
     [Header("Events")]
     [SerializeField] private GameEvent _onEndDrag;
     [SerializeField] private GameEvent _levelUp;
-    [SerializeField] private GameEvent _moneyChanged;
+    [SerializeField] private GameEvent _uiUpdateRequested;
+
+    [Space] 
+    [Header("Public Variables")] 
+    [SerializeField] private IntReference _money;
+    [SerializeField] private IntReference _score;
+    [SerializeField] private IntReference _enemiesLeft;
+    
     
     //---------------------------------------------------------------------
     // Public
@@ -33,11 +39,32 @@ namespace ua.org.gdg.devfest
     {
       Time.timeScale = 1;
     }
+    
+    //---------------------------------------------------------------------
+    // Events
+    //---------------------------------------------------------------------
 
     public void OnMoneyEvent(int amount)
     {
       _money.Value += amount;
-      _moneyChanged.Raise();
+      _uiUpdateRequested.Raise();
+    }
+
+    public void OnCreepDisappeared(GameObject creep)
+    {
+      var creepEnemyScript = creep.GetComponent<EnemyScript>();
+
+      if (creepEnemyScript.Happy)
+      {
+        _score.Value += 1;
+        _money.Value += creepEnemyScript.Money;
+      }
+      else
+      {
+        _enemiesLeft.Value -= 1;
+      }
+      
+      _uiUpdateRequested.Raise();
     }
     
     //---------------------------------------------------------------------
@@ -68,7 +95,7 @@ namespace ua.org.gdg.devfest
     private void SetMoney(int amount)
     {
       _money.Value = amount;
-      _moneyChanged.Raise();
+      _uiUpdateRequested.Raise();
     }
   }
 }

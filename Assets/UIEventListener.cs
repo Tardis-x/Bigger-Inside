@@ -16,18 +16,20 @@ namespace ua.org.gdg.devfest
 
     [Space] 
     [Header("Panels")] 
-    [SerializeField]
-    private TowerUpgradePanelScript _upgradePanel;
-
+    [SerializeField] private TowerUpgradePanelScript _upgradePanel;
     [SerializeField] private RectTransform _towerPanel;
-
+    
+    [Space]
+    [Header("Public Variables")]
     [SerializeField] private IntReference _money;
+    [SerializeField] private IntReference _score;
+    [SerializeField] private IntReference _enemiesLeft;
 
     //---------------------------------------------------------------------
     // Events
     //---------------------------------------------------------------------
 
-    public void OnCreepDisappeared(GameObject creep)
+    /*public void OnCreepDisappeared(GameObject creep)
     {
       var creepEnemyScript = creep.GetComponent<EnemyScript>();
 
@@ -44,7 +46,7 @@ namespace ua.org.gdg.devfest
         var enemiesLeft = int.Parse(_enemiesLeftText.text) - 1;
         _enemiesLeftText.text = enemiesLeft.ToString();
       }
-    }
+    }*/
 
     public void OnTowerSelected(GameObject tower)
     {
@@ -63,9 +65,11 @@ namespace ua.org.gdg.devfest
       _upgradePanel.gameObject.SetActive(false);
     }
 
-    public void OnMoneyChanged()
+    public void OnUIUpdateRequested()
     {
       _moneyText.text = _money.Value.ToString();
+      _scoreText.text = _score.Value.ToString();
+      _enemiesLeftText.text = _enemiesLeft.Value.ToString();
     }
   }
 }
