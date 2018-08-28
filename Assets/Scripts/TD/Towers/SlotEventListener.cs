@@ -20,11 +20,16 @@ namespace ua.org.gdg.devfest
 		// Messages
 		//---------------------------------------------------------------------
 
-		private void Start()
+		private void Awake()
 		{
 			_materialColor = _meshRenderer.material.color;
 		}
-		
+
+		private void OnEnable()
+		{
+			_meshRenderer.material.color = new Color(_materialColor.r, _materialColor.g, _materialColor.b, 0);
+		}
+
 		//---------------------------------------------------------------------
 		// Events
 		//---------------------------------------------------------------------

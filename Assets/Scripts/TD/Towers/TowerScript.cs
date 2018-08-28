@@ -28,13 +28,6 @@ namespace ua.org.gdg.devfest
 			SetLevelMesh(Level);
 		}
 
-		private void OnDestroy()
-		{
-			if (Slot == null) return;
-
-			Slot.SetActive(true);
-		}
-
 		//---------------------------------------------------------------------
 		// Internal
 		//---------------------------------------------------------------------
@@ -108,6 +101,7 @@ namespace ua.org.gdg.devfest
 
 		public void Sell()
 		{
+			Slot.SetActive(true);
 			Destroy(gameObject);
 		}
 		
