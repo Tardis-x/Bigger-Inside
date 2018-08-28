@@ -20,6 +20,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] private GameEvent _levelUp;
     [SerializeField] private GameEvent _uiUpdateRequested;
     [SerializeField] private GameEvent _gameOver;
+    [SerializeField] private GameEvent _gameStart;
 
     [Space] 
     [Header("Public Variables")] 
@@ -35,6 +36,7 @@ namespace ua.org.gdg.devfest
     public void OnGameStart()
     {
       StartCoroutine(LevelUpCoroutine(_timing));
+      ResumeGame();
     }
 
     public void OnGameOver()
@@ -80,6 +82,11 @@ namespace ua.org.gdg.devfest
     public void OnRestart()
     {
       SceneManager.LoadScene("TDScene");
+      _score.Variable.ResetValue();
+      _money.Variable.ResetValue();
+      _enemiesLeft.Variable.ResetValue();
+      _level.Variable.ResetValue();
+      _gameStart.Raise();
     }
     
     //---------------------------------------------------------------------
