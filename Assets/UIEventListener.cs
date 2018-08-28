@@ -16,11 +16,11 @@ namespace ua.org.gdg.devfest
 
     [Space] 
     [Header("Panels")] 
-    [SerializeField]
-    private TowerUpgradePanelScript _upgradePanel;
-
+    [SerializeField] private TowerUpgradePanelScript _upgradePanel;
     [SerializeField] private RectTransform _towerPanel;
-
+    
+    [Space]
+    [Header("Variables")]
     [SerializeField] private IntReference _money;
 
     //---------------------------------------------------------------------

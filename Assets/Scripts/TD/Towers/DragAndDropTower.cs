@@ -80,6 +80,7 @@ namespace ua.org.gdg.devfest
         var quadCentre = GetQuadCentre(_activeSlot);
         var tower = Instantiate(_towerPrefab, quadCentre, Quaternion.identity, _activeSlot.transform.parent.transform);
         tower.GetComponent<CapsuleCollider>().enabled = true;
+        tower.GetComponent<TowerScript>().Slot = _activeSlot;
         _activeSlot.SetActive(false);
         _moneyChangedForAmount.Raise(-_towerPrefab.GetComponent<TowerScript>().Cost);
       }
