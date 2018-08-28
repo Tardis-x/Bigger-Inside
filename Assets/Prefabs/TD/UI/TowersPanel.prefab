@@ -55,6 +55,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224844794097477890}
   - component: {fileID: 114834372590408560}
+  - component: {fileID: 114941179577050138}
   m_Layer: 5
   m_Name: VeganPlaceholder
   m_TagString: Untagged
@@ -71,6 +72,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224974818926387568}
   - component: {fileID: 114950471878513258}
+  - component: {fileID: 114991414996509550}
   m_Layer: 5
   m_Name: FriesPlaceholder
   m_TagString: Untagged
@@ -87,6 +89,8 @@ GameObject:
   m_Component:
   - component: {fileID: 224517599689438986}
   - component: {fileID: 114962920028869918}
+  - component: {fileID: 114912350912661922}
+  - component: {fileID: 114179793643853856}
   m_Layer: 5
   m_Name: BurgerPlaceholder
   m_TagString: Untagged
@@ -190,6 +194,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224548121478239118}
   - component: {fileID: 114887920945545962}
+  - component: {fileID: 114513681702655132}
   m_Layer: 5
   m_Name: SodaPlaceholder
   m_TagString: Untagged
@@ -232,6 +237,34 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &114179793643853856
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1412568276999548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3318b37b5a34577429583f0b3833dd78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: eeee206a31745bb4e8104fad526d7617, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114962920028869918}
+        m_MethodName: OnEndDrag
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114182355511837970
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -248,6 +281,8 @@ MonoBehaviour:
   _ghostTowerScaleFactor: 3
   _onBeginDrag: {fileID: 11400000, guid: 0f86f5c579d952c44af3518abbe8a7c5, type: 2}
   _onEndDrag: {fileID: 11400000, guid: eeee206a31745bb4e8104fad526d7617, type: 2}
+  _moneyChangedForAmount: {fileID: 11400000, guid: 537d6b784b8c02f499fa9518c21341fa,
+    type: 2}
 --- !u!114 &114194750848378006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -264,6 +299,8 @@ MonoBehaviour:
   _ghostTowerScaleFactor: 3
   _onBeginDrag: {fileID: 11400000, guid: 0f86f5c579d952c44af3518abbe8a7c5, type: 2}
   _onEndDrag: {fileID: 11400000, guid: eeee206a31745bb4e8104fad526d7617, type: 2}
+  _moneyChangedForAmount: {fileID: 11400000, guid: 537d6b784b8c02f499fa9518c21341fa,
+    type: 2}
 --- !u!114 &114212021985515836
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -373,6 +410,36 @@ MonoBehaviour:
   _ghostTowerScaleFactor: 3
   _onBeginDrag: {fileID: 11400000, guid: 0f86f5c579d952c44af3518abbe8a7c5, type: 2}
   _onEndDrag: {fileID: 11400000, guid: eeee206a31745bb4e8104fad526d7617, type: 2}
+  _moneyChangedForAmount: {fileID: 11400000, guid: 537d6b784b8c02f499fa9518c21341fa,
+    type: 2}
+--- !u!114 &114513681702655132
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1879218194733004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3318b37b5a34577429583f0b3833dd78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: ba48ea060e340164dbc153e4bdb11f5c, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114887920945545962}
+        m_MethodName: OnMoneyChanged
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114514717549266592
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -416,6 +483,8 @@ MonoBehaviour:
   _ghostTowerScaleFactor: 3
   _onBeginDrag: {fileID: 11400000, guid: 0f86f5c579d952c44af3518abbe8a7c5, type: 2}
   _onEndDrag: {fileID: 11400000, guid: eeee206a31745bb4e8104fad526d7617, type: 2}
+  _moneyChangedForAmount: {fileID: 11400000, guid: 537d6b784b8c02f499fa9518c21341fa,
+    type: 2}
 --- !u!114 &114659340607786980
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -578,6 +647,62 @@ MonoBehaviour:
     UseConstant: 0
     ConstantValue: 0
     Variable: {fileID: 11400000, guid: 7d7483300b305b04d80c6e7aa12ccf8a, type: 2}
+--- !u!114 &114912350912661922
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1412568276999548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3318b37b5a34577429583f0b3833dd78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: ba48ea060e340164dbc153e4bdb11f5c, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114962920028869918}
+        m_MethodName: OnMoneyChanged
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &114941179577050138
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1096026115847442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3318b37b5a34577429583f0b3833dd78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: ba48ea060e340164dbc153e4bdb11f5c, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114834372590408560}
+        m_MethodName: OnMoneyChanged
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114950471878513258
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -620,6 +745,34 @@ MonoBehaviour:
     UseConstant: 0
     ConstantValue: 0
     Variable: {fileID: 11400000, guid: 7d7483300b305b04d80c6e7aa12ccf8a, type: 2}
+--- !u!114 &114991414996509550
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1129900844247442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3318b37b5a34577429583f0b3833dd78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: ba48ea060e340164dbc153e4bdb11f5c, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114950471878513258}
+        m_MethodName: OnMoneyChanged
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114996000151419868
 MonoBehaviour:
   m_ObjectHideFlags: 1

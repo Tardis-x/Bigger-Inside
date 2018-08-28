@@ -28,6 +28,13 @@ namespace ua.org.gdg.devfest
 			SetLevelMesh(Level);
 		}
 
+		private void OnDestroy()
+		{
+			if (Slot == null) return;
+
+			Slot.SetActive(true);
+		}
+
 		//---------------------------------------------------------------------
 		// Internal
 		//---------------------------------------------------------------------
@@ -98,6 +105,11 @@ namespace ua.org.gdg.devfest
 			_selected = false;
 			TowerSelectParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
 		}
+
+		public void Sell()
+		{
+			Destroy(gameObject);
+		}
 		
 		//---------------------------------------------------------------------
 		// Properties
@@ -117,5 +129,7 @@ namespace ua.org.gdg.devfest
 		{
 			get { return Tower.Cost / 2; }
 		}
+		
+		public GameObject Slot { get; set; }
 	}
 }

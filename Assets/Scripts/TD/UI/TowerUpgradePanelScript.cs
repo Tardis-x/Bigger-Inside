@@ -29,8 +29,11 @@ namespace ua.org.gdg.devfest
 
 		public void OnrSellButtonClick()
 		{
-			//TODO: Sell tower
 			_moneyEvent.Raise(SelectedTower.SellCost);
+			SelectedTower.Disable();
+			SelectedTower.Sell();
+			SelectedTower = null;
+			_towerDeselected.Raise();
 		}
 
 		public void OnCancelButtonClick()
