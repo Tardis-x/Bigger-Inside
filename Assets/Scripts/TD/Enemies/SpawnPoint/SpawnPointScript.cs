@@ -65,7 +65,6 @@ namespace ua.org.gdg.devfest
     private void Start()
     {
       _speaker.Play("Talking", -1, Random.value);
-      Unlock();
     }
 
     //---------------------------------------------------------------------
