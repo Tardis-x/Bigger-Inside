@@ -136,19 +136,19 @@ namespace ua.org.gdg.devfest
     // Messages
     //---------------------------------------------------------------------
 
-    private static bool _created;
-    
-    private void Awake()
-    {
-      if (!_created)
-      {
-        DontDestroyOnLoad(_canvas);
-        _created = true;
-      }
-      else
-      {
-        Destroy(gameObject);       
-      }
-    }
+//    private static bool _created;
+//    
+//    private void Awake()
+//    {
+//      if (!_created)
+//      {
+//        DontDestroyOnLoad(_canvas);
+//        _created = true;
+//      }
+//      else
+//      {
+//        Destroy(gameObject);       
+//      }
+//    }
   }
 }
