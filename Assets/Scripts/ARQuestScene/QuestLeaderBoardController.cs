@@ -13,6 +13,9 @@ public class QuestLeaderBoardController : MonoBehaviour
 	public QuestFirebaseData firebaseData;
 	public Scrollbar scrollbar;
 	public Sprite currentUserSprite;
+	public GameObject position1Holder;
+	public GameObject position2Holder;
+	public GameObject position3Holder;
 	
 	void Awake()
 	{
@@ -50,11 +53,33 @@ public class QuestLeaderBoardController : MonoBehaviour
 	void UpdateLeaderBoard()
 	{
 		var i = 1;
+		
+		CreateImageFolder();
+		
 		foreach (var pair in _questManager.QuestLeaderboardData.OrderByDescending(entry => entry.Value.globalScore))
 		{
-			var userInfo = Instantiate(leaderboardEntryPrefab, transform.position, Quaternion.identity, gridForList);
+			var userInfo = new GameObject();
+			if (i == 1)
+			{
+				position1Holder.gameObject.SetActive(true);
+				userInfo = position1Holder;
+			}
+			else if (i == 2)
+			{
+				position2Holder.gameObject.SetActive(true);
+				userInfo = position2Holder;
+			}
+			else if (i == 3)
+			{
+				position3Holder.gameObject.SetActive(true);
+				userInfo = position3Holder;
+			}
+			else
+			{
+				userInfo = Instantiate(leaderboardEntryPrefab, transform.position, Quaternion.identity, gridForList);
+			}
 			
-			Text[] texts = userInfo.GetComponentsInChildren<Text>();
+			var texts = userInfo.GetComponentsInChildren<Text>();
 
 			foreach (var text in texts)
 			{
@@ -72,9 +97,7 @@ public class QuestLeaderBoardController : MonoBehaviour
 				}
 			}
 			
-			Image[] images = userInfo.GetComponentsInChildren<Image>();
-
-			CreateImageFolder();
+			var images = userInfo.GetComponentsInChildren<Image>();
 			
 			var path = Application.persistentDataPath + "/UserImages/" + pair.Key.Replace(" ", string.Empty) + ".png";
 			Debug.Log("QuestLeaderboard: filepath - " + path);
@@ -95,14 +118,17 @@ public class QuestLeaderBoardController : MonoBehaviour
 					}
 				}
 			}
-			
-			//Extra for current user
-			if (pair.Key == firebaseData.currentUserUserId)
+
+			if (i > 3)
 			{
-				var color = Color.white;
-				color.a = 1;
-				userInfo.GetComponent<Image>().color = color;
-				userInfo.GetComponent<Image>().sprite = currentUserSprite;
+				//Extra for current user
+				if (pair.Key == firebaseData.currentUserUserId)
+				{
+					var color = Color.white;
+					color.a = 1;
+					userInfo.GetComponent<Image>().color = color;
+					userInfo.GetComponent<Image>().sprite = currentUserSprite;
+				}
 			}
 			i++;
 		}

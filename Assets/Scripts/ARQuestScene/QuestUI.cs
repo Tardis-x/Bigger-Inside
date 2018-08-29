@@ -317,12 +317,6 @@ public class QuestUI : MonoBehaviour
 		}
 		else if (questStepNumber == 3)
 		{
-//			if (!_questManager.QuestProgress.allRiddlesCompleted)
-//			{
-//				_activePanel.gameObject.SetActive(false);
-//				_questManager.CompleteAllRiddles();
-//			}
-			
 			step1CongratzImage.gameObject.SetActive(false);
 			step2CongratzImage.gameObject.SetActive(false);
 			step3CongratzImage.gameObject.SetActive(true);
