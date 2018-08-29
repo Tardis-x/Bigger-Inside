@@ -49,9 +49,9 @@ namespace ua.org.gdg.devfest
       _upgradePanel.SelectedTower = towerScript;
       _upgradePanel.SetUpgradeCostText(towerScript.UpgradeCost);
       _upgradePanel.SetSellCostText(towerScript.SellCost);
-      
       _towerPanel.gameObject.SetActive(false);
       _upgradePanel.gameObject.SetActive(true);
+      _upgradePanel.UpdatePanel();
     }
 
     public void OnTowerDeselected()
