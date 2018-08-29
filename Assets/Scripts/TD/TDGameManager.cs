@@ -82,8 +82,6 @@ namespace ua.org.gdg.devfest
     public void OnRestart()
     {
       SceneManager.LoadScene("TDScene");
-     
-      _gameStart.Raise();
     }
     
     //---------------------------------------------------------------------
