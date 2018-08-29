@@ -6,6 +6,12 @@ namespace ua.org.gdg.devfest
 	public class AOETowerScript : TowerScript
 	{
 		//---------------------------------------------------------------------
+		// Editor
+		//---------------------------------------------------------------------
+
+		[SerializeField] private GameObject _AOEMesh;
+		
+		//---------------------------------------------------------------------
 		// Internal
 		//---------------------------------------------------------------------
 
@@ -53,6 +59,11 @@ namespace ua.org.gdg.devfest
 		{
 			base.LevelUp();
 			_slowAmount += ((AOETower) Tower).SlowAmouontPerLevel;
+		}
+
+		public void SetAOEVisible(bool value)
+		{
+			_AOEMesh.SetActive(value);
 		}
 		
 		//---------------------------------------------------------------------

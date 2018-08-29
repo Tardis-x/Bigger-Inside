@@ -81,6 +81,8 @@ namespace ua.org.gdg.devfest
         var tower = Instantiate(_towerPrefab, quadCentre, Quaternion.identity, _activeSlot.transform.parent.transform);
         tower.GetComponent<CapsuleCollider>().enabled = true;
         tower.GetComponent<TowerScript>().Slot = _activeSlot;
+        var aoeTower = tower.GetComponent<AOETowerScript>();
+        if(aoeTower != null) aoeTower.SetAOEVisible(true);
         _activeSlot.SetActive(false);
         _moneyChangedForAmount.Raise(-_towerPrefab.GetComponent<TowerScript>().Cost);
       }
@@ -98,6 +100,7 @@ namespace ua.org.gdg.devfest
     private void ChangeMaterialColor(bool value)
     {
       var meshRenderers = _hoverPrefab.GetComponentsInChildren<MeshRenderer>();
+      
       for (var i = 0; i < meshRenderers.Length; i++)
       {
         meshRenderers[i].material.color = value ? Color.green : Color.red;

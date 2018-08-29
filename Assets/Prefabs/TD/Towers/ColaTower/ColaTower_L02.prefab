@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4460124426828162}
   - component: {fileID: 33626979992667422}
   - component: {fileID: 23337650533870906}
-  - component: {fileID: 136931468042848664}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -40,9 +39,8 @@ GameObject:
   - component: {fileID: 33449276796613282}
   - component: {fileID: 23390797476574632}
   - component: {fileID: 65804386939178088}
-  - component: {fileID: 95249162953906062}
   m_Layer: 0
-  m_Name: ColaCanLeft
+  m_Name: Cola Can (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,9 +57,8 @@ GameObject:
   - component: {fileID: 33129281115835474}
   - component: {fileID: 23265749213928516}
   - component: {fileID: 65096772130891118}
-  - component: {fileID: 95678603527611402}
   m_Layer: 0
-  m_Name: ColaCanRight
+  m_Name: Cola Can
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -360,52 +357,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.09494366, y: 0.15346396, z: 0.09029679}
   m_Center: {x: 0.000000007450581, y: 0.07673198, z: -0.000000007450581}
---- !u!95 &95249162953906062
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1545287638525634}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8544de39c429b5b4aa47c07ea9b9a269, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!95 &95678603527611402
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1560994805700920}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0fdf817bc254c9f46888978d9d1f5f0c, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!136 &136931468042848664
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1001117643795734}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}

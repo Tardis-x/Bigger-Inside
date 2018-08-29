@@ -25,7 +25,7 @@ MonoBehaviour:
     Variable: {fileID: 0}
   RangePerLevel:
     UseConstant: 1
-    ConstantValue: 0.2
+    ConstantValue: 0.1
     Variable: {fileID: 0}
   Level:
     UseConstant: 1
@@ -43,8 +43,7 @@ MonoBehaviour:
     UseConstant: 1
     ConstantValue: 40
     Variable: {fileID: 0}
-  IgnoredEnemies:
-  - {fileID: 11400000, guid: db59d67985f4b9d48922656462bf0015, type: 2}
+  IgnoredEnemies: []
   SlowAmount:
     UseConstant: 1
     ConstantValue: 50
