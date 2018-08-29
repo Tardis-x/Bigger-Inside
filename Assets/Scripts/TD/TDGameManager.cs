@@ -95,6 +95,12 @@ namespace ua.org.gdg.devfest
       _objectClick.IsInteractable = true;
       SetMoney(_money);
     }
+
+    private void Awake()
+    {
+      ResetVariables();
+      Time.timeScale = 1;
+    }
     
     //---------------------------------------------------------------------
     // Helpers
