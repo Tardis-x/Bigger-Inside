@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class QuestGoogleColorsController : MonoBehaviour
 {
-	readonly string _answerCheck = "314321";
+	const string AnswerCheck = "314321";
 
 	QuestManager _questManager;
 
@@ -115,7 +115,7 @@ public class QuestGoogleColorsController : MonoBehaviour
 			checkString += x.ToString();
 		}
 
-		if (checkString == _answerCheck)
+		if (checkString == AnswerCheck)
 		{
 			_questManager.CompleteGoogleColorsRiddle();
 		}

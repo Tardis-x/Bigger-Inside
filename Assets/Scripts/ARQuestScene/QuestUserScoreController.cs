@@ -48,24 +48,7 @@ public class QuestUserScoreController : MonoBehaviour
 	void UpdateUserInfo()
 	{
 		scoreText.text = _questManager.QuestProgress.globalScore.ToString();
-		var userRank = FindUserPositionInRankings().ToString();
-		var lastNumber = userRank[userRank.Length - 1];
-		switch (lastNumber)
-		{
-			case '1':
-				userRank += "st";
-				break;
-			case '2':
-				userRank += "nd";
-				break;
-			case '3':
-				userRank += "rd";
-				break;
-			default:
-				userRank += "th";
-				break;
-		}
-		positionInfoText.text = string.Format("The {0} in the ranking", userRank);
+		positionInfoText.text = "";
 		gate1ScoreText.text = string.Format("+{0}",_questManager.QuestProgress.PhotoData.Score);
 		gate2ScoreText.text = string.Format("+{0}",_questManager.QuestProgress.VrGameData.Score);
 		gate3ScoreText.text = string.Format("+{0}",_questManager.QuestProgress.globalScore - _questManager.QuestProgress.VrGameData.Score - _questManager.QuestProgress.PhotoData.Score);
@@ -90,6 +73,23 @@ public class QuestUserScoreController : MonoBehaviour
 	IEnumerator LateUpdateUserInfo()
 	{
 		yield return new WaitForSeconds(1);
-		UpdateUserInfo();
+		var userRank = FindUserPositionInRankings().ToString();
+		var lastNumber = userRank[userRank.Length - 1];
+		switch (lastNumber)
+		{
+			case '1':
+				userRank += "st";
+				break;
+			case '2':
+				userRank += "nd";
+				break;
+			case '3':
+				userRank += "rd";
+				break;
+			default:
+				userRank += "th";
+				break;
+		}
+		positionInfoText.text = string.Format("The {0} in the ranking", userRank);
 	}
 }

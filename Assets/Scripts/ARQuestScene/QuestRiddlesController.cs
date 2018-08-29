@@ -97,6 +97,7 @@ public class QuestRiddlesController : MonoBehaviour
 	{
 		_questManager.ReadRiddleDataFromQuestProgress();
 		var anyRiddles = false;
+		_inputField.text = "";
 		
 		foreach (KeyValuePair<string, QuestRiddleDataFull> riddle in _questManager.QuestRiddlesDataFull)
 		{
@@ -183,7 +184,6 @@ public class QuestRiddlesController : MonoBehaviour
 		var correctAnswer = _currentRiddle.ToLower().Replace(" ", string.Empty);
 		if (answer == correctAnswer)
 		{
-			_inputField.text = "";
 			_inputField.image.color = Color.green;
 			_isCorrectAnswerSubmitted = true;
 			StopAllCoroutines();

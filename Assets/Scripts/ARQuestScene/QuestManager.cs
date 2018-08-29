@@ -16,7 +16,7 @@ public class QuestManager : MonoBehaviour
 
 	QuestUI _questUi;
 	public QuestFirebaseData firebaseData;
-	
+
 	public QuestProgress QuestProgress { get; set; }
 
 	public Dictionary<string, QuestLeaderboardEntry> QuestLeaderboardData { get; set; }
@@ -42,80 +42,87 @@ public class QuestManager : MonoBehaviour
 		LeaderBoardInitialization();
 		Debug.Log("QuestManager.Awake.Leaderboard");
 	}
-	
+
 	void Start()
 	{
 		Debug.Log("QuestManager.Start");
-		
+
 #if UNITY_ANDROID
 		var spinner = AGProgressDialog.CreateSpinnerDialog("Please wait", "Updating Quest Data...", AGDialogTheme.Dark);
 		spinner.Show();
 #endif
 		_questUi.FadeQuestScreenIn();
-		firebaseData.database.Child("users").Child(firebaseData.currentUserUserId).GetValueAsync().ContinueWith(readTask => {
-			if (readTask.Result == null)
+		firebaseData.database.Child("users").Child(firebaseData.currentUserUserId).GetValueAsync().ContinueWith(
+			readTask =>
 			{
-				var json = JsonConvert.SerializeObject(QuestProgress);
-				firebaseData.database.Child("users").Child(firebaseData.currentUserUserId)
-					.SetRawJsonValueAsync(json).ContinueWith(writeTask => {
-						if (writeTask.IsFaulted)
-						{
-							Debug.LogError("QuestManager: Failed to write default quest data to firebase realtime database!");
-							Debug.LogError("Error message: " + writeTask.Exception.Message);
-						}
-						else if (writeTask.IsCompleted)
-						{
-							Debug.Log("QuestManager: Default quest data was successfully set up!");
-							_questUi.FadeScreenOut();
-						}
-#if UNITY_ANDROID
-						spinner.Dismiss();
-#endif
-						Debug.Log("Default info screen");
-						_questUi.ShowInfoPanel("Welcome to the DevFest Quest Adventure!",
-							"It's a Quest, where you will have to complete different tasks related to the conference and Google technologies knowledge.\nNote: accomplish all tasks as fast as possible to win a greater award!", 0);
-					});
-			}
-			else
-			{
-				if (readTask.IsFaulted) 
+				if (readTask.Result == null)
 				{
-					Debug.LogError("QuestManager: Failed to retrieve quest data from firebase realtime database!");
-					Debug.LogError("Error message: " + readTask.Exception.Message);
-					
-					_questUi.FadeScreenOut();
-				}
-				else if (readTask.IsCompleted) 
-				{
-					// retrieve user quest progress
-					var snapshot = readTask.Result;
-					QuestProgress = JsonConvert.DeserializeObject<QuestProgress>(snapshot.GetRawJsonValue());
-					
-					Debug.Log("QuestManager: Quest data was successfully set up!");
-					_questUi.FadeScreenOut();
-					
-					Debug.Log("Updating Info screen");
-					if (QuestProgress.allRiddlesCompleted)
-					{
-						_questUi.ShowUserScorePanel();
-					}
-					else
-					{
-						Debug.Log("Default info screen");
-						_questUi.ShowInfoPanel("Welcome to the DevFest Quest Adventure!",
-							"It's a Quest, where you will have to complete different tasks related to the conference and Google technologies knowledge.\nNote: accomplish all tasks as fast as possible to win a greater award!", 0);
-					}
-				}
+					var json = JsonConvert.SerializeObject(QuestProgress);
+					firebaseData.database.Child("users").Child(firebaseData.currentUserUserId)
+						.SetRawJsonValueAsync(json).ContinueWith(writeTask =>
+						{
+							if (writeTask.IsFaulted)
+							{
+								Debug.LogError(
+									"QuestManager: Failed to write default quest data to firebase realtime database!");
+								Debug.LogError("Error message: " + writeTask.Exception.Message);
+							}
+							else if (writeTask.IsCompleted)
+							{
+								Debug.Log("QuestManager: Default quest data was successfully set up!");
+								_questUi.FadeScreenOut();
+							}
 #if UNITY_ANDROID
-				spinner.Dismiss();
+							spinner.Dismiss();
 #endif
-			}
-			//Check if Quest is activated
-			CheckIfQuestIsActivated();
-			ReadRiddleDataFromQuestProgress();
-			StartCoroutine(LoadUserImageFromUrl());
-			UpdateUserScoreInLeaderBoard();
-		});
+							Debug.Log("Default info screen");
+							_questUi.ShowInfoPanel("Welcome to the DevFest Quest Adventure!",
+								"It's a Quest, where you will have to complete different tasks related to the conference and Google technologies knowledge.\nNote: accomplish all tasks as fast as possible to win a greater award!",
+								0);
+						});
+				}
+				else
+				{
+					if (readTask.IsFaulted)
+					{
+						Debug.LogError("QuestManager: Failed to retrieve quest data from firebase realtime database!");
+						Debug.LogError("Error message: " + readTask.Exception.Message);
+
+						_questUi.FadeScreenOut();
+					}
+					else if (readTask.IsCompleted)
+					{
+						// retrieve user quest progress
+						var snapshot = readTask.Result;
+						QuestProgress = JsonConvert.DeserializeObject<QuestProgress>(snapshot.GetRawJsonValue());
+
+						Debug.Log("QuestManager: Quest data was successfully set up!");
+						_questUi.FadeScreenOut();
+
+						Debug.Log("Updating Info screen");
+						if (QuestProgress.allRiddlesCompleted)
+						{
+							_questUi.ShowUserScorePanel();
+						}
+						else
+						{
+							Debug.Log("Default info screen");
+							_questUi.ShowInfoPanel("Welcome to the DevFest Quest Adventure!",
+								"It's a Quest, where you will have to complete different tasks related to the conference and Google technologies knowledge.\nNote: accomplish all tasks as fast as possible to win a greater award!",
+								0);
+						}
+					}
+#if UNITY_ANDROID
+					spinner.Dismiss();
+#endif
+				}
+
+				//Check if Quest is activated
+				CheckIfQuestIsActivated();
+				ReadRiddleDataFromQuestProgress();
+				StartCoroutine(LoadUserImageFromUrl());
+				UpdateUserScoreInLeaderBoard(false);
+			});
 	}
 
 	void UiReferenceInitialization()
@@ -136,7 +143,7 @@ public class QuestManager : MonoBehaviour
 			Debug.LogError("Could not locate quest canvas object in current scene!");
 		}
 	}
-	
+
 	void RiddleDataInitizalization()
 	{
 		QuestProgress = new QuestProgress {userPhotoUrl = firebaseData.userPhotoUrl};
@@ -146,19 +153,20 @@ public class QuestManager : MonoBehaviour
 		var riddle1 = new QuestRiddleDataFull(true, "How are new comers called in Google?");
 		QuestRiddlesDataFull.Add("Noogler", riddle1);
 		var riddle5 = new QuestRiddleDataFull(false, riddleImages[0]);
-        		QuestRiddlesDataFull.Add("Angular", riddle5);
+		QuestRiddlesDataFull.Add("Angular", riddle5);
 		var riddle2 = new QuestRiddleDataFull(true, "What was the first google doodle in 1998?");
 		QuestRiddlesDataFull.Add("BurningMan", riddle2);
 		var riddle6 = new QuestRiddleDataFull(false, riddleImages[1]);
-        		QuestRiddlesDataFull.Add("Firebase", riddle6);
+		QuestRiddlesDataFull.Add("Firebase", riddle6);
 		var riddle3 = new QuestRiddleDataFull(true,
 			"One day a computer failure stumped Grace Hopper and her team until she opened the machine and found THIS inside!");
 		QuestRiddlesDataFull.Add("Bug", riddle3);
 		var riddle7 = new QuestRiddleDataFull(false, riddleImages[2]);
-        		QuestRiddlesDataFull.Add("GoogleSearch", riddle7);
+		QuestRiddlesDataFull.Add("GoogleSearch", riddle7);
 		var riddle8 = new QuestRiddleDataFull(false, riddleImages[3]);
 		QuestRiddlesDataFull.Add("Snap", riddle8);
-		var riddle4 = new QuestRiddleDataFull(true, "The most important thing in the programming language is THIS. A language will not succeed without a good THIS. I have recently invented a very good THIS and now I am looking for a suitable language. -- Donald Knuth");
+		var riddle4 = new QuestRiddleDataFull(true,
+			"The most important thing in the programming language is THIS. A language will not succeed without a good THIS. I have recently invented a very good THIS and now I am looking for a suitable language. -- Donald Knuth");
 		QuestRiddlesDataFull.Add("Name", riddle4);
 		WriteRiddleDataInQuestProgress();
 	}
@@ -168,9 +176,9 @@ public class QuestManager : MonoBehaviour
 		QuestLeaderboardData = new Dictionary<string, QuestLeaderboardEntry>();
 	}
 
-	
+
 	public void CompleteVrGame(int score, QuestVrGameController vrGameController)
-	{	
+	{
 		//Get the global data from FireBase
 		var childUpdates = new Dictionary<string, object>();
 		firebaseData.database.Child("GlobalQuestData/VRGame").GetValueAsync().ContinueWith(task =>
@@ -183,21 +191,24 @@ public class QuestManager : MonoBehaviour
 			_timesCompleted++;
 			// update VR progress data in database
 			childUpdates["GlobalQuestData/VRGame"] = _timesCompleted;
-			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/VrGameData/Score"] = QuestProgress.VrGameData.Score;
+			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/VrGameData/Score"] =
+				QuestProgress.VrGameData.Score;
 			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/VrGameData/GameScore"] = score;
 			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/VrGameData/State"] = true;
-			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/globalScore"] = QuestProgress.globalScore;
-			firebaseData.database.UpdateChildrenAsync(childUpdates).ContinueWith(task1 => {
+			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/globalScore"] =
+				QuestProgress.globalScore;
+			firebaseData.database.UpdateChildrenAsync(childUpdates).ContinueWith(task1 =>
+			{
 				if (task1.IsCompleted)
 				{
 					// mark VR game as completed in local storage
 					QuestProgress.VrGameData.GameScore = score;
 					QuestProgress.VrGameData.State = true;
-					
+
 					//Update local leaderboard
 					UpdateUserScoreInLeaderBoard();
 					UpdateFirebaseLeaderboard();
-					
+
 					//Refresh the info panel
 					_questUi.ShowCongratzPanel(QuestProgress.VrGameData.Score, 2);
 				}
@@ -215,29 +226,32 @@ public class QuestManager : MonoBehaviour
 	}
 
 	public void CompletePhoto()
-	{	
+	{
 		var childUpdates = new Dictionary<string, object>();
 		firebaseData.database.Child("GlobalQuestData/Social").GetValueAsync().ContinueWith(task =>
 		{
 			QuestProgress.PhotoData.State = true;
-			
+
 			var snapshot = task.Result;
 			_timesCompleted = JsonConvert.DeserializeObject<int>(snapshot.GetRawJsonValue());
 			QuestProgress.PhotoData.Score = MaxSocialScore - _timesCompleted * 8;
 			QuestProgress.globalScore += QuestProgress.PhotoData.Score;
 			_timesCompleted++;
-			
+
 			childUpdates["GlobalQuestData/Social"] = _timesCompleted;
-			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/PhotoData/Score"] = QuestProgress.PhotoData.Score;
+			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/PhotoData/Score"] =
+				QuestProgress.PhotoData.Score;
 			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/PhotoData/State"] = true;
-			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/globalScore"] = QuestProgress.globalScore;
-			
-			firebaseData.database.UpdateChildrenAsync(childUpdates).ContinueWith(task1 => {
+			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/globalScore"] =
+				QuestProgress.globalScore;
+
+			firebaseData.database.UpdateChildrenAsync(childUpdates).ContinueWith(task1 =>
+			{
 				if (task1.IsCompleted)
 				{
 					UpdateUserScoreInLeaderBoard();
 					UpdateFirebaseLeaderboard();
-					
+
 					_questUi.ShowCongratzPanel(QuestProgress.PhotoData.Score, 1);
 				}
 				else if (task1.IsFaulted)
@@ -252,35 +266,40 @@ public class QuestManager : MonoBehaviour
 			});
 		});
 	}
-	
+
 	public void CompleteRiddle(string riddleKey, QuestRiddlesController riddlesController)
 	{
 		var childUpdates = new Dictionary<string, object>();
 		firebaseData.database.Child("GlobalQuestData/" + riddleKey).GetValueAsync().ContinueWith(task =>
 		{
 			var snapshot = task.Result;
-            _timesCompleted = JsonConvert.DeserializeObject<int>(snapshot.GetRawJsonValue());
+			_timesCompleted = JsonConvert.DeserializeObject<int>(snapshot.GetRawJsonValue());
 			QuestRiddlesDataFull[riddleKey].score = MaxRiddleScore - _timesCompleted;
 			QuestProgress.RiddlesData[riddleKey].score = MaxRiddleScore - _timesCompleted;
 			QuestProgress.globalScore += QuestProgress.RiddlesData[riddleKey].score;
 			_timesCompleted++;
-			
+
 			QuestRiddlesDataFull[riddleKey].isCompleted = true;
 			QuestProgress.RiddlesData[riddleKey].isCompleted = true;
-			
+
 			childUpdates["GlobalQuestData/" + riddleKey] = _timesCompleted;
-			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/RiddlesData/" + riddleKey + "/isCompleted"] = true;
-            childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/RiddlesData/" + riddleKey + "/score"] = 
-	            QuestProgress.RiddlesData[riddleKey].score;
-			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/globalScore"] = QuestProgress.globalScore;
-			firebaseData.database.UpdateChildrenAsync(childUpdates).ContinueWith(task1 => 
+			childUpdates[
+					"users/" + firebaseData.auth.CurrentUser.DisplayName + "/RiddlesData/" + riddleKey +
+					"/isCompleted"] =
+				true;
+			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/RiddlesData/" + riddleKey + "/score"]
+				=
+				QuestProgress.RiddlesData[riddleKey].score;
+			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/globalScore"] =
+				QuestProgress.globalScore;
+			firebaseData.database.UpdateChildrenAsync(childUpdates).ContinueWith(task1 =>
 			{
 				if (task1.IsCompleted)
 				{
 					//Update local score
 					UpdateUserScoreInLeaderBoard();
 					UpdateFirebaseLeaderboard();
-					
+
 					ReadRiddleDataFromQuestProgress();
 					riddlesController.UpdateRiddlesScreen();
 				}
@@ -300,12 +319,12 @@ public class QuestManager : MonoBehaviour
 	public void CompleteAllRiddles()
 	{
 		var childUpdates = new Dictionary<string, object>();
-		
+
 		QuestProgress.allRiddlesCompleted = true;
 		var riddlesScore = QuestProgress.globalScore - QuestProgress.PhotoData.Score - QuestProgress.VrGameData.Score;
-		
+
 		childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/allRiddlesCompleted"] = true;
-		firebaseData.database.UpdateChildrenAsync(childUpdates).ContinueWith(task => 
+		firebaseData.database.UpdateChildrenAsync(childUpdates).ContinueWith(task =>
 		{
 			if (task.IsCompleted)
 			{
@@ -322,13 +341,17 @@ public class QuestManager : MonoBehaviour
 			}
 		});
 	}
-	
-	void GetLeaderboardDataFromFirebase()
+
+	void GetLeaderboardDataFromFirebase(bool showSpinner = true)
 	{
-#if UNITY_ANDROID
 		var spinner = AGProgressDialog.CreateSpinnerDialog("Please wait", "Updating Leaderboard...", AGDialogTheme.Dark);
-		spinner.Show();
+		if (showSpinner)
+		{
+#if UNITY_ANDROID
+			spinner.Show();
 #endif
+		}
+
 		//Try to get data from firebase
 		firebaseData.database.Child("GlobalQuestData/Leaderboards").GetValueAsync().ContinueWith(readTask =>
 		{
@@ -337,29 +360,36 @@ public class QuestManager : MonoBehaviour
 				//Create data in firebase
 				var json = JsonConvert.SerializeObject(QuestLeaderboardData);
 				firebaseData.database.Child("GlobalQuestData/Leaderboards")
-					.SetRawJsonValueAsync(json).ContinueWith(writeTask => {
+					.SetRawJsonValueAsync(json).ContinueWith(writeTask =>
+					{
 						if (writeTask.IsFaulted)
 						{
-							Debug.LogError("QuestManager: Failed to write default leaderboard data to firebase realtime database!");
+							Debug.LogError(
+								"QuestManager: Failed to write default leaderboard data to firebase realtime database!");
 							Debug.LogError("Error message: " + writeTask.Exception.Message);
 						}
 						else if (writeTask.IsCompleted)
 						{
 							Debug.Log("QuestManager: Default leaderboard data was successfully set up!");
 						}
-#if UNITY_ANDROID
-						spinner.Dismiss();
-#endif
+
+						if (showSpinner)
+						{
+							#if UNITY_ANDROID
+                            spinner.Dismiss();
+                            #endif
+						}
 					});
 			}
 			else
 			{
-				if (readTask.IsFaulted) 
+				if (readTask.IsFaulted)
 				{
-					Debug.LogError("QuestManager: Failed to retrieve leaderboard data from firebase realtime database!");
+					Debug.LogError(
+						"QuestManager: Failed to retrieve leaderboard data from firebase realtime database!");
 					Debug.LogError("Error message: " + readTask.Exception.Message);
 				}
-				else if (readTask.IsCompleted) 
+				else if (readTask.IsCompleted)
 				{
 					// retrieve current leaderboard from firebase
 					var snapshot = readTask.Result;
@@ -367,44 +397,53 @@ public class QuestManager : MonoBehaviour
 						(snapshot.GetRawJsonValue());
 					Debug.Log("QuestManager: Leaderboard data was successfully updated!");
 				}
+
+				if (showSpinner)
+				{
 #if UNITY_ANDROID
-				spinner.Dismiss();
+					spinner.Dismiss();
 #endif
+				}
 			}
 		});
 	}
-	
-	public void UpdateUserScoreInLeaderBoard()
+
+	public void UpdateUserScoreInLeaderBoard(bool showSpinner = true)
 	{
-		GetLeaderboardDataFromFirebase();
+		GetLeaderboardDataFromFirebase(showSpinner);
 		if (!QuestLeaderboardData.ContainsKey(firebaseData.currentUserUserId))
 		{
-			QuestLeaderboardData.Add(firebaseData.currentUserUserId, new QuestLeaderboardEntry(QuestProgress.userPhotoUrl, QuestProgress.globalScore));
+			QuestLeaderboardData.Add(firebaseData.currentUserUserId,
+				new QuestLeaderboardEntry(QuestProgress.userPhotoUrl, QuestProgress.globalScore));
 		}
 		else
 		{
-			QuestLeaderboardData[firebaseData.currentUserUserId] = new QuestLeaderboardEntry(QuestProgress.userPhotoUrl, QuestProgress.globalScore);
+			QuestLeaderboardData[firebaseData.currentUserUserId] =
+				new QuestLeaderboardEntry(QuestProgress.userPhotoUrl, QuestProgress.globalScore);
 		}
 	}
-	
+
 	void UpdateFirebaseLeaderboard()
 	{
-		var json = JsonConvert.SerializeObject(QuestLeaderboardData);
-		firebaseData.database.Child("GlobalQuestData/Leaderboards").SetRawJsonValueAsync(json);
+		var json = JsonConvert.SerializeObject(QuestLeaderboardData[firebaseData.auth.CurrentUser.DisplayName]);
+		firebaseData.database.Child("GlobalQuestData/Leaderboards/" + firebaseData.auth.CurrentUser.DisplayName)
+			.SetRawJsonValueAsync(json);
 	}
-	
+
 	public void CheckInPhoto(QuestPhotoController photoController)
 	{
 		var childUpdates = new Dictionary<string, object>();
-		
-		childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/PhotoData/imageURLSpeaker"] = QuestProgress.PhotoData.ImgUrlSpeaker;
-		
-		childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/PhotoData/imageURLFriend"] = QuestProgress.PhotoData.ImgUrlFriend;
-		
-		firebaseData.database.UpdateChildrenAsync(childUpdates).ContinueWith(task => {
+
+		childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/PhotoData/imageURLSpeaker"] =
+			QuestProgress.PhotoData.ImgUrlSpeaker;
+
+		childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/PhotoData/imageURLFriend"] =
+			QuestProgress.PhotoData.ImgUrlFriend;
+
+		firebaseData.database.UpdateChildrenAsync(childUpdates).ContinueWith(task =>
+		{
 			if (task.IsCompleted)
 			{
-				
 			}
 			else if (task.IsFaulted)
 			{
@@ -436,6 +475,7 @@ public class QuestManager : MonoBehaviour
 			var riddle = new QuestRiddleData(fullRiddle.Value.isCompleted, fullRiddle.Value.score);
 			QuestProgress.RiddlesData.Add(fullRiddle.Key, riddle);
 		}
+
 		Debug.Log("RiddleDataInitialization3");
 	}
 
@@ -451,18 +491,17 @@ public class QuestManager : MonoBehaviour
 	public void CompleteGoogleColorsRiddle()
 	{
 		var childUpdates = new Dictionary<string, object>();
-		
+
 		QuestProgress.isGoogleColorsCompleted = true;
 		//Refresh the info panel
 		_questUi.OnChangeInfoButtonClicked();
-		
+
 		childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/isGoogleColorsCompleted"] = true;
-		
-		firebaseData.database.UpdateChildrenAsync(childUpdates).ContinueWith(task1 => 
+
+		firebaseData.database.UpdateChildrenAsync(childUpdates).ContinueWith(task1 =>
 		{
 			if (task1.IsCompleted)
 			{
-				
 			}
 			else if (task1.IsFaulted)
 			{
@@ -480,6 +519,7 @@ public class QuestManager : MonoBehaviour
 	{
 		var www = new WWW(firebaseData.userPhotoUrl.ToString());
 		yield return www;
-		userPhotoImage.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0, 0));
+		userPhotoImage.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height),
+			new Vector2(0, 0));
 	}
 }
