@@ -52,24 +52,24 @@ public class QuestLeaderBoardController : MonoBehaviour
 	
 	void UpdateLeaderBoard()
 	{
-		var i = 1;
+		var position = 1;
 		
 		CreateImageFolder();
 		
 		foreach (var pair in _questManager.QuestLeaderboardData.OrderByDescending(entry => entry.Value.globalScore))
 		{
 			var userInfo = new GameObject();
-			if (i == 1)
+			if (position == 1)
 			{
 				position1Holder.gameObject.SetActive(true);
 				userInfo = position1Holder;
 			}
-			else if (i == 2)
+			else if (position == 2)
 			{
 				position2Holder.gameObject.SetActive(true);
 				userInfo = position2Holder;
 			}
-			else if (i == 3)
+			else if (position == 3)
 			{
 				position3Holder.gameObject.SetActive(true);
 				userInfo = position3Holder;
@@ -85,7 +85,7 @@ public class QuestLeaderBoardController : MonoBehaviour
 			{
 				if (text.CompareTag("PositionText"))
 				{
-					text.text = i.ToString();
+					text.text = position.ToString();
 				}
 				else if (text.CompareTag("UserNameText"))
 				{
@@ -119,7 +119,7 @@ public class QuestLeaderBoardController : MonoBehaviour
 				}
 			}
 
-			if (i > 3)
+			if (position > 3)
 			{
 				//Extra for current user
 				if (pair.Key == firebaseData.currentUserUserId)
@@ -130,7 +130,7 @@ public class QuestLeaderBoardController : MonoBehaviour
 					userInfo.GetComponent<Image>().sprite = currentUserSprite;
 				}
 			}
-			i++;
+			position++;
 		}
 		scrollbar.value = 1;
 	}

@@ -113,6 +113,6 @@ public class QuestVrGameController : MonoBehaviour
 		_mainCamera.gameObject.SetActive(true);
 		_arCamera.gameObject.SetActive(false);
 		
-		_questManager.CompleteVrGame(Int32.Parse(_scoreInputField.text), this);
+		_questManager.CompleteVrGame(int.Parse(_scoreInputField.text), this);
 	}
 }
