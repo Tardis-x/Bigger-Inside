@@ -82,10 +82,7 @@ namespace ua.org.gdg.devfest
     public void OnRestart()
     {
       SceneManager.LoadScene("TDScene");
-      _score.Variable.ResetValue();
-      _money.Variable.ResetValue();
-      _enemiesLeft.Variable.ResetValue();
-      _level.Variable.ResetValue();
+     
       _gameStart.Raise();
     }
     
@@ -103,6 +100,14 @@ namespace ua.org.gdg.devfest
     // Helpers
     //---------------------------------------------------------------------
 
+    private void ResetVariables()
+    {
+      _score.Variable.ResetValue();
+      _money.Variable.ResetValue();
+      _enemiesLeft.Variable.ResetValue();
+      _level.Variable.ResetValue();
+    }
+    
     public void ClearPrefs()
     {
       PlayerPrefs.DeleteAll();
