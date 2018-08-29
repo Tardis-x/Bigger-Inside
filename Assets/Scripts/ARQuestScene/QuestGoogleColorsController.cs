@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -54,10 +53,12 @@ public class QuestGoogleColorsController : MonoBehaviour
 		QuestManagerReferenceInitialization();
 		_colors = new Dictionary<int, Color>
 		{
-			{1, new Color(204 / 256f, 45 / 256f, 45 / 256f)},
-			{2, new Color(42 / 256f, 176 / 256f, 34 / 256f)},
-			{3, new Color(55 / 256f, 74 / 256f, 190 / 256f)},
-			{4, new Color(202 / 256f, 199 / 256f, 37 / 256f)}
+			{1, new Color(239 / 255f, 68 / 255f, 56 / 255f)},
+			{2, new Color(73 / 255f, 176 / 256f, 80 / 255f)},
+			{3, new Color(70 / 255f, 143 / 255f, 204 / 255f)},
+			{4, new Color(250 / 255f, 237 / 255f, 56 / 255f)},
+			{5, new Color(248 / 255f, 152 / 255f, 28 / 255f)},
+			{6, new Color(144 / 255f, 62 / 255f, 152 / 255f)}
 		};
 		_buttons = new Dictionary<int, Button>
 		{

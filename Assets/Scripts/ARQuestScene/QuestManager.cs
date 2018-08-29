@@ -73,7 +73,7 @@ public class QuestManager : MonoBehaviour
 #endif
 						Debug.Log("Default info screen");
 						_questUi.ShowInfoPanel("Welcome to the DevFest Quest Adventure!",
-							"It's a Quest, where you will have to complete different tasks related to the conference and Google technologies knowledge.\nNote: accomplish all tasks as fast as possible to win a greater award!");
+							"It's a Quest, where you will have to complete different tasks related to the conference and Google technologies knowledge.\nNote: accomplish all tasks as fast as possible to win a greater award!", 0);
 					});
 			}
 			else
@@ -103,7 +103,7 @@ public class QuestManager : MonoBehaviour
 					{
 						Debug.Log("Default info screen");
 						_questUi.ShowInfoPanel("Welcome to the DevFest Quest Adventure!",
-							"You will have to complete different tasks in order to proceed with the Quest. Are you ready?");
+							"It's a Quest, where you will have to complete different tasks related to the conference and Google technologies knowledge.\nNote: accomplish all tasks as fast as possible to win a greater award!", 0);
 					}
 				}
 #if UNITY_ANDROID

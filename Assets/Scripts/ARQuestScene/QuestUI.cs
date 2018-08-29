@@ -19,6 +19,11 @@ public class QuestUI : MonoBehaviour
 	[SerializeField] Button _changeInfoButton;
 	[SerializeField] Button _proceedButton;
 
+	public Image infoPanelSwordImage;
+	public Image infoPanelSelfieImage;
+	public Image infoPanelVrImage;
+	public Image infoPanelKnowledgeImage;
+	
 	public GameObject usersList;
 	public QuestFirebaseData firebaseData;
 	
@@ -111,7 +116,7 @@ public class QuestUI : MonoBehaviour
 		if (!_questManager.QuestProgress.isGoogleColorsCompleted)
 		{
 			ShowInfoPanel("Test of worthiness",
-				"In order to begin the Quest you have to solve a riddle to prove your capability for the future tasks");
+				"In order to begin the Quest you have to solve a riddle to prove your capability for the future tasks", 0);
 			//Switch the buttons
 			_changeInfoButton.gameObject.SetActive(false);
 			_proceedButton.gameObject.SetActive(true);
@@ -123,7 +128,7 @@ public class QuestUI : MonoBehaviour
 				"To complete this part you have to:\n- Take a photo with a speaker;\n" +
 				"- Take a crazy photo with your friend(s) in front of Press Wall;\n" +
 				"- Share those photos with hashtags #DevFest18, #dfua, #quest as public space in Facebook, Twitter or Instagram;\n" +
-				"- Scan a special marker from Quest guys");
+				"- Scan a special marker from Quest guys", 1);
 			//Switch the buttons
 			_changeInfoButton.gameObject.SetActive(false);
 			_proceedButton.gameObject.SetActive(true);
@@ -135,7 +140,7 @@ public class QuestUI : MonoBehaviour
 				"To complete this part:\n" +
 				"- Find HTC Vive demo;\n" +
 				"- Play Beast Saber and earn minimum of 50000 points;\n" +
-				"- Scan a special marker from Quest guys");
+				"- Scan a special marker from Quest guys", 2);
 			//Switch the buttons
 			_changeInfoButton.gameObject.SetActive(false);
 			_proceedButton.gameObject.SetActive(true);
@@ -146,7 +151,7 @@ public class QuestUI : MonoBehaviour
 			_questManager.CheckIfQuestIsActivated();
 			if (_questManager.isQuestActivated)
 			{
-				ShowInfoPanel("Wisdom part", "Solve the riddles and find the right answers");
+				ShowInfoPanel("Wisdom part", "Solve the riddles and find the right answers", 3);
 				//Switch the buttons
 				_changeInfoButton.gameObject.SetActive(false);
 				_proceedButton.gameObject.SetActive(true);
@@ -154,7 +159,7 @@ public class QuestUI : MonoBehaviour
 			else
 			{
 				ShowInfoPanel("Third task is Knowledge Gate",
-					"Will become available tomorrow!");
+					"Will become available tomorrow!", 3);
 				_proceedButton.gameObject.SetActive(false);
 				_changeInfoButton.gameObject.SetActive(false);
 			}
@@ -228,12 +233,15 @@ public class QuestUI : MonoBehaviour
 		_leaderBoardPanel.SetActive(true);
 	}
 
-	public void ShowInfoPanel(string shortDescription, string longDescription)
+	public void ShowInfoPanel(string shortDescription, string longDescription, int i)
 	{
 		if (_activePanel != null)
 		{
 			_activePanel.SetActive(false);
 		}
+		
+		EnableCorrectInfoImage(i);
+		
 		_activePanel = _infoPanel;
 		_infoPanel.SetActive(true);
 		_shortDescription.text = shortDescription;
@@ -242,6 +250,42 @@ public class QuestUI : MonoBehaviour
 		_changeInfoButton.gameObject.SetActive(true);
 	}
 
+	public void DisableAllInfoPanelImages()
+	{
+		infoPanelSwordImage.gameObject.SetActive(false);
+		infoPanelSelfieImage.gameObject.SetActive(false);
+		infoPanelVrImage.gameObject.SetActive(false);
+		infoPanelKnowledgeImage.gameObject.SetActive(false);
+	}
+
+	public void EnableCorrectInfoImage(int i)
+	{
+		DisableAllInfoPanelImages();
+		switch (i)
+		{
+			case 0:
+			{
+				infoPanelSwordImage.gameObject.SetActive(true);
+				break;
+			}
+			case 1:
+			{
+				infoPanelSelfieImage.gameObject.SetActive(true);
+				break;
+			}
+			case 2:
+			{
+				infoPanelVrImage.gameObject.SetActive(true);
+				break;
+			}
+			case 3:
+			{
+				infoPanelKnowledgeImage.gameObject.SetActive(true);
+				break;
+			}
+		}
+	}
+	
 	public void ShowUserScorePanel()
 	{
 		if (_activePanel)
@@ -273,19 +317,17 @@ public class QuestUI : MonoBehaviour
 		}
 		else if (questStepNumber == 3)
 		{
-			if (!_questManager.QuestProgress.allRiddlesCompleted)
-			{
-				_activePanel.gameObject.SetActive(false);
-				_questManager.CompleteAllRiddles();
-			}
+//			if (!_questManager.QuestProgress.allRiddlesCompleted)
+//			{
+//				_activePanel.gameObject.SetActive(false);
+//				_questManager.CompleteAllRiddles();
+//			}
 			
 			step1CongratzImage.gameObject.SetActive(false);
 			step2CongratzImage.gameObject.SetActive(false);
 			step3CongratzImage.gameObject.SetActive(true);
 			congratzTitle.text += "\nYou have completed the Quest!";
 			nextButton.gameObject.SetActive(false);
-			var pos = new Vector3(0, 200, -20);
-			leaderboardButton.transform.position = pos;
 		}
 	}
 }
