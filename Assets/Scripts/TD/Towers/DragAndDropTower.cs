@@ -100,6 +100,7 @@ namespace ua.org.gdg.devfest
     private void ChangeMaterialColor(bool value)
     {
       var meshRenderers = _hoverPrefab.GetComponentsInChildren<MeshRenderer>();
+      
       for (var i = 0; i < meshRenderers.Length; i++)
       {
         meshRenderers[i].material.color = value ? Color.green : Color.red;
