@@ -31,12 +31,9 @@ public class QuestUI : MonoBehaviour
 	public Image step1CongratzImage;
 	public Image step2CongratzImage;
 	public Image step3CongratzImage;
-	public Button leaderboardButton;
 	public Button nextButton;
 	public Text congratzTitle;
-
-	GameObject _activePanel;
-
+	
 	QuestManager _questManager;
 	
 	void Awake()
@@ -77,8 +74,7 @@ public class QuestUI : MonoBehaviour
 	{
 		Debug.Log("QuestUI.OnBackButtonClicked");
 
-		_activePanel.SetActive(false);
-		_activePanel = _infoPanel;
+		DisableAllPanels();
 		_infoPanel.SetActive(true);
 		_proceedButton.gameObject.SetActive(true);
 		_changeInfoButton.gameObject.SetActive(false);
@@ -109,9 +105,7 @@ public class QuestUI : MonoBehaviour
 
 	public void OnChangeInfoButtonClicked()
 	{
-		//Disable previous panels
-		_activePanel.SetActive(false);
-		_activePanel = _infoPanel;
+		DisableAllPanels();
 		//Google Riddle Info
 		if (!_questManager.QuestProgress.isGoogleColorsCompleted)
 		{
@@ -167,8 +161,6 @@ public class QuestUI : MonoBehaviour
 		//User Score Panel
 		else
 		{
-			_activePanel.gameObject.SetActive(false);
-			_activePanel = _userScorePanel;
 			_userScorePanel.gameObject.SetActive(true);
 			//Switch the buttons
 			_changeInfoButton.gameObject.SetActive(false);
@@ -178,22 +170,20 @@ public class QuestUI : MonoBehaviour
 
 	public void OnProceedButtonClicked()
 	{
+		DisableAllPanels();
 		//Google Riddle Panel
 		if (!_questManager.QuestProgress.isGoogleColorsCompleted)
 		{
-			_activePanel = _googleColorsPanel;
 			_googleColorsPanel.SetActive(true);
 		}
 		//Photo Panel
 		else if (!_questManager.QuestProgress.PhotoData.State)
 		{
-			_activePanel = _photoPanel;
 			_photoPanel.SetActive(true);
 		}
 		//VR Game Panel
 		else if (!_questManager.QuestProgress.VrGameData.State)
 		{
-			_activePanel = _vrGamePanel;
 			_vrGamePanel.SetActive(true);
 		}
 		//Riddles Panel
@@ -203,7 +193,6 @@ public class QuestUI : MonoBehaviour
 			if (_questManager.isQuestActivated)
 			{
 				Debug.Log("Quest is activated.");
-				_activePanel = _riddlesPanel;
 				_riddlesPanel.SetActive(true);
 			}
 			else
@@ -222,27 +211,19 @@ public class QuestUI : MonoBehaviour
 		//Switch the buttons
 		_changeInfoButton.gameObject.SetActive(true);
 		_proceedButton.gameObject.SetActive(false);
-		
-		_infoPanel.SetActive(false);
 	}
 
 	public void OnLeaderboardButtonClicked()
 	{
-		_activePanel.SetActive(false);
-		_activePanel = _leaderBoardPanel;
+		DisableAllPanels();
 		_leaderBoardPanel.SetActive(true);
 	}
 
 	public void ShowInfoPanel(string shortDescription, string longDescription, int i)
 	{
-		if (_activePanel != null)
-		{
-			_activePanel.SetActive(false);
-		}
-		
+		DisableAllPanels();
 		EnableCorrectInfoImage(i);
 		
-		_activePanel = _infoPanel;
 		_infoPanel.SetActive(true);
 		_shortDescription.text = shortDescription;
 		_longDescription.text = longDescription;
@@ -288,18 +269,13 @@ public class QuestUI : MonoBehaviour
 	
 	public void ShowUserScorePanel()
 	{
-		if (_activePanel)
-		{
-			_activePanel.gameObject.SetActive(false);
-		}
-		_activePanel = _userScorePanel;
+		DisableAllPanels();
 		_userScorePanel.SetActive(true);
 	}
 
 	public void ShowCongratzPanel(int score, int questStepNumber)
 	{
-		_activePanel.gameObject.SetActive(false);
-		_activePanel = _congratzPanel;
+		DisableAllPanels();
 		_congratzPanel.gameObject.SetActive(true);
 		
 		questStepScore.text = "+" + score;
@@ -320,8 +296,20 @@ public class QuestUI : MonoBehaviour
 			step1CongratzImage.gameObject.SetActive(false);
 			step2CongratzImage.gameObject.SetActive(false);
 			step3CongratzImage.gameObject.SetActive(true);
-			congratzTitle.text += "\nYou have completed the Quest!";
+			congratzTitle.text += "\nYou have completed Quest!";
 			nextButton.gameObject.SetActive(false);
 		}
+	}
+
+	public void DisableAllPanels()
+	{
+		_photoPanel.gameObject.SetActive(false);
+		_vrGamePanel.gameObject.SetActive(false);
+		_riddlesPanel.gameObject.SetActive(false);
+		_leaderBoardPanel.gameObject.SetActive(false);
+		_googleColorsPanel.gameObject.SetActive(false);
+		_infoPanel.gameObject.SetActive(false);
+		_userScorePanel.gameObject.SetActive(false);
+		_congratzPanel.gameObject.SetActive(false);
 	}
 }
