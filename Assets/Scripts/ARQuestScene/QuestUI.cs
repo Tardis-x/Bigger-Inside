@@ -239,10 +239,10 @@ public class QuestUI : MonoBehaviour
 		infoPanelKnowledgeImage.gameObject.SetActive(false);
 	}
 
-	public void EnableCorrectInfoImage(int i)
+	public void EnableCorrectInfoImage(int stepNumber)
 	{
 		DisableAllInfoPanelImages();
-		switch (i)
+		switch (stepNumber)
 		{
 			case 0:
 			{
