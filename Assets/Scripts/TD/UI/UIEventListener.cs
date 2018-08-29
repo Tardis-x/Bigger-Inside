@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Runtime.Serialization.Formatters;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace ua.org.gdg.devfest
@@ -16,6 +19,7 @@ namespace ua.org.gdg.devfest
 
     [Space] 
     [Header("Panels")] 
+    [SerializeField] private GameObject _canvas;
     [SerializeField] private TowerUpgradePanelScript _upgradePanel;
     [SerializeField] private RectTransform _towerPanel;
     [SerializeField] private HallUnlockPanelScript _hallUnlockPanel;
@@ -33,6 +37,8 @@ namespace ua.org.gdg.devfest
     [SerializeField] private IntReference _score;
     [SerializeField] private IntReference _enemiesLeft;
 
+    public bool GameOn { get; set; }
+
     //---------------------------------------------------------------------
     // Events
     //---------------------------------------------------------------------
@@ -49,9 +55,9 @@ namespace ua.org.gdg.devfest
       _upgradePanel.SelectedTower = towerScript;
       _upgradePanel.SetUpgradeCostText(towerScript.UpgradeCost);
       _upgradePanel.SetSellCostText(towerScript.SellCost);
-      
       _towerPanel.gameObject.SetActive(false);
       _upgradePanel.gameObject.SetActive(true);
+      _upgradePanel.UpdatePanel();
     }
 
     public void OnTowerDeselected()
@@ -75,17 +81,29 @@ namespace ua.org.gdg.devfest
 
     public void OnTrackableFound()
     {
-      _playButton.gameObject.SetActive(true);
+      if (!_gameOverPanel.NeedToPressRestart) _gameOverPanel.HidePanel();
+      if(!GameOn && !_gameOverPanel.gameObject.activeSelf) _playButton.gameObject.SetActive(true);
+    }
+
+    public void OnTrackableLost()
+    {
+      _playButton.gameObject.SetActive(false);
     }
     
     public void OnGameStart()
     {
+      GameOn = true;
       UIToPlayMode();
     }
 
     public void OnGameOver()
     {
-     _gameOverPanel.ShowPanel(_score);
+      _gameOverPanel.ShowPanel(_score);
+      _towerPanel.gameObject.SetActive(false);
+      _upgradePanel.gameObject.SetActive(false);
+      HideStats();
+      GameOn = false;
+      _gameOverPanel.NeedToPressRestart = true;
     }
     
     //---------------------------------------------------------------------
@@ -97,6 +115,7 @@ namespace ua.org.gdg.devfest
       ShowStats();
       _towerPanel.gameObject.SetActive(true);
       _playButton.gameObject.SetActive(false);
+      _gameOverPanel.HidePanel();
     }
 
     private void ShowStats()
@@ -104,6 +123,32 @@ namespace ua.org.gdg.devfest
       _moneyPanel.SetActive(true);
       _scorePanel.SetActive(true);
       _enemiesLeftPanel.SetActive(true);
+    }
+
+    private void HideStats()
+    {
+      _moneyPanel.SetActive(false);
+      _scorePanel.SetActive(false);
+      _enemiesLeftPanel.SetActive(false);
+    }
+    
+    //---------------------------------------------------------------------
+    // Messages
+    //---------------------------------------------------------------------
+
+    private static bool _created;
+    
+    private void Awake()
+    {
+      if (!_created)
+      {
+        DontDestroyOnLoad(_canvas);
+        _created = true;
+      }
+      else
+      {
+        Destroy(gameObject);       
+      }
     }
   }
 }

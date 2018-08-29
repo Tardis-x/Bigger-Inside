@@ -48,8 +48,7 @@ namespace ua.org.gdg.devfest
 		{
 			if (!_canUpgrade) return;
 			
-			SelectedTower.LevelUp();
-			_moneyEvent.Raise(-SelectedTower.UpgradeCost);
+			if(SelectedTower.LevelUp()) _moneyEvent.Raise(-SelectedTower.UpgradeCost);
 		}
 
 		public void OnrSellButtonClick()
@@ -88,11 +87,14 @@ namespace ua.org.gdg.devfest
 		// Helpers
 		//---------------------------------------------------------------------
 
-		private void UpdatePanel()
+		public void UpdatePanel()
 		{
 			bool canAfford = _money.Value >= SelectedTower.UpgradeCost;
 			_canUpgrade = canAfford;
 			_upgradeCostText.color = canAfford ? Color.white : Color.red;
+			
+			_upgradeButon.gameObject.SetActive(SelectedTower.Level < SelectedTower.MaxLevel);
+			_upgradeCostText.gameObject.SetActive(SelectedTower.Level < SelectedTower.MaxLevel);
 		}
 		
 		//---------------------------------------------------------------------

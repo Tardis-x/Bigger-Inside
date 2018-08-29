@@ -33,7 +33,6 @@ namespace ua.org.gdg.devfest
 		//---------------------------------------------------------------------
 
 		protected List<EnemyScript> TargetsInRange = new List<EnemyScript>();
-		protected int Level;
 		private GameObject _currentMesh;
 		protected float Cooldown;
 		protected float Range;
@@ -68,14 +67,15 @@ namespace ua.org.gdg.devfest
 		// Public
 		//---------------------------------------------------------------------
 
-		public void LevelUp()
+		public bool LevelUp()
 		{
-			if (Level >= Tower.MaxLevel) return;
+			if (Level >= Tower.MaxLevel) return false;
 			Level++;
 			SetLevelMesh(Level);
 			Cooldown -= Tower.CDRPerLevel;
 			SetRange(Range + Tower.RangePerLevel);
 			Projectile.LevelUp();
+			return true;
 		}
 
 		public void OnEnemyDie(GameObject enemy)
@@ -122,6 +122,13 @@ namespace ua.org.gdg.devfest
 		public int SellCost
 		{
 			get { return Tower.Cost / 2; }
+		}
+		
+		public int Level { get; private set; }
+		
+		public int MaxLevel
+		{
+			get { return Tower.MaxLevel; }
 		}
 		
 		public GameObject Slot { get; set; }

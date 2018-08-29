@@ -26,6 +26,8 @@ namespace ua.org.gdg.devfest
 		{
 			gameObject.SetActive(false);
 		}
+
+		public bool NeedToPressRestart;
 		
 		//---------------------------------------------------------------------
 		// Events
@@ -34,6 +36,7 @@ namespace ua.org.gdg.devfest
 		public void OnReplayButtonClick()
 		{
 			_restart.Raise();
+			NeedToPressRestart = false;
 		}
 	}
 }

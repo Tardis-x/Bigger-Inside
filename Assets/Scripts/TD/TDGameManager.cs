@@ -82,8 +82,6 @@ namespace ua.org.gdg.devfest
     public void OnRestart()
     {
       SceneManager.LoadScene("TDScene");
-     
-      _gameStart.Raise();
     }
     
     //---------------------------------------------------------------------
@@ -94,6 +92,12 @@ namespace ua.org.gdg.devfest
     {
       _objectClick.IsInteractable = true;
       SetMoney(_money);
+    }
+
+    private void Awake()
+    {
+      ResetVariables();
+      Time.timeScale = 1;
     }
     
     //---------------------------------------------------------------------
