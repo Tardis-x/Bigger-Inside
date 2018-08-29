@@ -12,8 +12,32 @@ The main objective of this project is to build an app for inside navigation in t
 
 
 ## Release note Version 0.0.9
-- Development version
 
+Scenes:
+
+	- SignIn Scene (alpha design)
+
+	- Menu Scene (alpha design):
+		- AR Map button
+		- Для Тараса button :) 
+		- Spare button
+		- SignOut button
+
+	- AR Map Scene:
+		- Scrollable List (alpha design)
+		- Planeta Kino model (alpha design) (just 'model' later on)
+
+	- Test Scene (empty)
+
+Features implemented:
+
+	- Google Firebase SignIn
+	- Clickable highlighted halls on model
+	- Scrollable list (schedule) show on click
+	- Model pinch zoom in/out
+	- Model movement
+  
+  
 =================================================   
 Tech stack:
 Unity, Android, iOS, Vuforia, FireBase, ProBuilder,  
