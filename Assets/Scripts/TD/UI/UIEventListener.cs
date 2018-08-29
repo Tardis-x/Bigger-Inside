@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System.Runtime.Serialization.Formatters;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -35,6 +36,8 @@ namespace ua.org.gdg.devfest
     [SerializeField] private IntReference _money;
     [SerializeField] private IntReference _score;
     [SerializeField] private IntReference _enemiesLeft;
+
+    public bool GameOn { get; set; }
 
     //---------------------------------------------------------------------
     // Events
@@ -78,12 +81,18 @@ namespace ua.org.gdg.devfest
 
     public void OnTrackableFound()
     {
-      _playButton.gameObject.SetActive(true);
-      _gameOverPanel.HidePanel();
+      if (!_gameOverPanel.NeedToPressRestart) _gameOverPanel.HidePanel();
+      if(!GameOn && !_gameOverPanel.gameObject.activeSelf) _playButton.gameObject.SetActive(true);
+    }
+
+    public void OnTrackableLost()
+    {
+      _playButton.gameObject.SetActive(false);
     }
     
     public void OnGameStart()
     {
+      GameOn = true;
       UIToPlayMode();
     }
 
@@ -93,6 +102,8 @@ namespace ua.org.gdg.devfest
       _towerPanel.gameObject.SetActive(false);
       _upgradePanel.gameObject.SetActive(false);
       HideStats();
+      GameOn = false;
+      _gameOverPanel.NeedToPressRestart = true;
     }
     
     //---------------------------------------------------------------------
@@ -125,9 +136,19 @@ namespace ua.org.gdg.devfest
     // Messages
     //---------------------------------------------------------------------
 
+    private static bool _created;
+    
     private void Awake()
     {
-      DontDestroyOnLoad(_canvas);
+      if (!_created)
+      {
+        DontDestroyOnLoad(_canvas);
+        _created = true;
+      }
+      else
+      {
+        Destroy(gameObject);       
+      }
     }
   }
 }
