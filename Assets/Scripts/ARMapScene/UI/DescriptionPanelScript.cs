@@ -61,8 +61,8 @@ namespace ua.org.gdg.devfest
         ShowSpeakerData(false);
       }
 
-      if (!string.IsNullOrEmpty(model.ImageUrl)) LoadImage(model.ImageUrl, _headerBackgroundImage);
-      else _headerBackgroundImage.texture = Texture2D.whiteTexture;
+//      if (!string.IsNullOrEmpty(model.ImageUrl)) LoadImage(model.ImageUrl, _headerBackgroundImage);
+//      else _headerBackgroundImage.texture = Texture2D.whiteTexture;
       
       _titleText.text = model.Title;
       _descriptionText.text = model.Description;
@@ -167,10 +167,9 @@ namespace ua.org.gdg.devfest
     private string ComposeDetailsText(string date, string startTime, string endTime, string hall, string language,
       string complexity)
     {
-      string details = date + " / " + startTime + " - " + endTime + " / " + hall;
+      string details = date + ", " + startTime + " - " + endTime + "\n" + hall;
 
-      if (language != "") details += " / " + language;
-      if(complexity != "") details += " / " + complexity;
+      if(complexity != "") details += "\n Content level: " + complexity;
 
       return details;
     }
