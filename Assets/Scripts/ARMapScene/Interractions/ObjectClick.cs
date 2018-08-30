@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Runtime.Serialization.Formatters;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace ua.org.gdg.devfest
 {
@@ -12,29 +10,29 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     [SerializeField] private LayerMask _clicableObjects;
-    [SerializeField] private LayerMask _uiLayer;
-    [SerializeField] private RectTransform _scrollableList;
 
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
 
     private bool _fingerMoved;
-    private ScrollableListScript _listScript;
-    private InterractibleObject _lastInterracted;
+    private InteractableObject _lastInterracted;
+
+    //---------------------------------------------------------------------
+    // Property
+    //---------------------------------------------------------------------
+
+    public bool IsInteractable { get; set; }
 
     //---------------------------------------------------------------------
     // Messages
     //---------------------------------------------------------------------
 
-    private void Start()
-    {
-      _listScript = _scrollableList.GetComponent<ScrollableListScript>();
-    }
-
     // Update is called once per frame
     void Update()
     {
+      if (!IsInteractable) return;
+
       Touch touch = new Touch();
 
       try
@@ -55,31 +53,16 @@ namespace ua.org.gdg.devfest
         var ray = Camera.main.ScreenPointToRay(touch.position);
         RaycastHit hit = new RaycastHit();
 
-        if (Physics.Raycast(ray, out hit, _clicableObjects))
+        if (Physics.Raycast(ray, out hit, 100, _clicableObjects, QueryTriggerInteraction.Ignore))
         {
+          InteractableObject obj = hit.transform.gameObject.GetComponent<InteractableObject>(); //get interraction
+
+          if (obj != null) //if obj is interactable
           {
-            Debug.Log("Object hit");
-            InterractibleObject
-              obj = hit.transform.gameObject.GetComponent<InterractibleObject>(); //get interraction
-
-            if (obj != null) //if obj is interractible
-            {
-              if(_lastInterracted != null) _lastInterracted.Disable();
-              _lastInterracted = obj;
-              Debug.Log("Interraction started");
-              obj.Interract(); 
-            }
+            if (_lastInterracted != null) _lastInterracted.Disable();
+            _lastInterracted = obj;
+            obj.Interact();
           }
-        }
-
-        _uiLayer = ~_uiLayer;
-        
-        // If ray casts not on list
-        if (!Physics.Raycast(ray, _uiLayer))
-        {
-          // Hide list and clear it
-          _listScript.Disable();
-          if(_lastInterracted != null) _lastInterracted.Disable();
         }
       }
     }
