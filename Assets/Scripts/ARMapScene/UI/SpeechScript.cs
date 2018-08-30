@@ -146,7 +146,7 @@ namespace ua.org.gdg.devfest
     private void SetTag(string tag)
     {
       SetTagText(tag);
-      SetTagImageColor(tag);
+      //SetTagImageColor(tag);
     }
     
     private void SetTagText(string tag)

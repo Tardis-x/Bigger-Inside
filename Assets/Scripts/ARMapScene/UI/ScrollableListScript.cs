@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.UI;
 
 namespace ua.org.gdg.devfest
@@ -22,9 +21,6 @@ namespace ua.org.gdg.devfest
 
     private float _contentWidth;
     
-    /// <summary>
-    /// Clear list content.
-    /// </summary>
     private void ClearContent()
     {
       var items = _contentContainer.GetComponentsInChildren<RectTransform>().Where(x => x.parent == _contentContainer);
@@ -35,9 +31,6 @@ namespace ua.org.gdg.devfest
       }
     }
 
-    /// <summary>
-    /// Clear panel and set active to false.
-    /// </summary>
     private void DisablePanel()
     {
       Active = false;
@@ -45,10 +38,7 @@ namespace ua.org.gdg.devfest
       gameObject.SetActive(false);
     }
     
-    /// <summary>
-    /// Add chedule item to list.
-    /// </summary>
-    /// <param name="contentItem">Schedule item.</param>
+   
     private void AddContentItem(SpeechScript contentItem)
     {
       contentItem.GetComponent<RectTransform>().SetParent(_contentContainer, false);
@@ -67,23 +57,13 @@ namespace ua.org.gdg.devfest
     // Public
     //---------------------------------------------------------------------
 
-    /// <summary>
-    /// Only for OnClock of Toolbar BackButton 
-    /// </summary>
     public void OnBackButtonClick()
     {
       Invoke("DisablePanel", .01f);
     }
-    
-    /// <summary>
-    /// Panel avtive state.
-    /// </summary>
+
     public bool Active { get; private set; }
 
-    /// <summary>
-    /// Set panel content depending on hall.
-    /// </summary>
-    /// <param name="hall">Hall name.</param>
     public void SetContentForHall(string hall)
     {
       List<ScheduleItemUiModel> listContent;
@@ -97,9 +77,6 @@ namespace ua.org.gdg.devfest
       SetListHeader(hall);
     }
 
-    /// <summary>
-    /// Clear panel and set it active.
-    /// </summary>
     public void EnablePanel()
     {
       GetComponentInChildren<ScrollRect>().verticalNormalizedPosition = 1;
@@ -109,7 +86,7 @@ namespace ua.org.gdg.devfest
     }
     
     //---------------------------------------------------------------------
-    // Internal
+    // Helpers
     //---------------------------------------------------------------------
 
     private void SetListHeader(string header)
