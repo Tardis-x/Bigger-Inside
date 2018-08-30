@@ -150,6 +150,7 @@ namespace ua.org.gdg.devfest
 
     private Vector3 GetQuadCentre(GameObject quad)
     {
+      var offsetY = 0.05f;
       var meshVerts = quad.GetComponent<MeshFilter>().mesh.vertices;
       var vertRealWorldPositions = new Vector3[meshVerts.Length];
 
@@ -159,6 +160,8 @@ namespace ua.org.gdg.devfest
       }
 
       var midPoint = Vector3.Slerp(vertRealWorldPositions[0], vertRealWorldPositions[1], 0.5f);
+      midPoint.y = offsetY;
+      
       return midPoint;
     }
     
