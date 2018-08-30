@@ -20,6 +20,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] private Text _startTimeMinutesText;
     [SerializeField] private Text _nameText;
     [SerializeField] private Text _tagText;
+    [SerializeField] private Image _tagBorder;
     [SerializeField] private RawImage _tagImage;
     [SerializeField] private RawImage _speakerPhoto;
     [SerializeField] private Text _timespanText;
@@ -74,9 +75,9 @@ namespace ua.org.gdg.devfest
     // Internal
     //---------------------------------------------------------------------
     
-    private const string ANDROID_TAG_COLOR = "#8DCB71";
-    private const string WEB_TAG_COLOR = "#43A6F5";
-    private const string CLOUD_TAG_COLOR = "#5C6CC0";
+    private const string ANDROID_TAG_COLOR = "#3CC23E";
+    private const string WEB_TAG_COLOR = "#2196F3";
+    private const string CLOUD_TAG_COLOR = "#3F51B5";
     private const string FIREBASE_TAG_COLOR = "#FFA827";
     private const string DESIGN_TAG_COLOR = "#EC407B";
     private const string GENERAL_TAG_COLOR = "#9E9E9E";
@@ -130,7 +131,7 @@ namespace ua.org.gdg.devfest
 
     private void SetSpeakerCompanyCountry(string company, string country)
     {
-      _speakerCompanyCountryText.text = company + " / " + country;
+      _speakerCompanyCountryText.text = company + ", " + country;
     }
 
     private void SetSpeakerName(string speakerNameText)
@@ -146,7 +147,7 @@ namespace ua.org.gdg.devfest
     private void SetTag(string tag)
     {
       SetTagText(tag);
-      //SetTagImageColor(tag);
+      SetTagImageColor(tag);
     }
     
     private void SetTagText(string tag)
@@ -166,36 +167,41 @@ namespace ua.org.gdg.devfest
       switch (tag)
       {
         case "Android":
-          _description.TagColor = ANDROID_TAG_COLOR;
-          if (ColorUtility.TryParseHtmlString(ANDROID_TAG_COLOR, out newColor))
-            _tagImage.color = newColor;
+          //_description.TagColor = ANDROID_TAG_COLOR;
+          SetTagTextAndBorderColor(ANDROID_TAG_COLOR);
           break;
         case "Cloud":
-          _description.TagColor = CLOUD_TAG_COLOR;
-          if (ColorUtility.TryParseHtmlString(CLOUD_TAG_COLOR, out newColor))
-            _tagImage.color = newColor;
+          //_description.TagColor = CLOUD_TAG_COLOR;
+          SetTagTextAndBorderColor(CLOUD_TAG_COLOR);
           break;
         case "Web":
-          _description.TagColor = WEB_TAG_COLOR;
-          if (ColorUtility.TryParseHtmlString(WEB_TAG_COLOR, out newColor))
-            _tagImage.color = newColor;
+          //_description.TagColor = WEB_TAG_COLOR;
+          SetTagTextAndBorderColor(WEB_TAG_COLOR);
           break;
         case "Firebase":
-          _description.TagColor = FIREBASE_TAG_COLOR;
-          ColorUtility.TryParseHtmlString(FIREBASE_TAG_COLOR, out newColor);
-          _tagImage.color = newColor;
+          //_description.TagColor = FIREBASE_TAG_COLOR;
+          SetTagTextAndBorderColor(FIREBASE_TAG_COLOR);
           break;
         case "Design":
-          _description.TagColor = DESIGN_TAG_COLOR;
-          ColorUtility.TryParseHtmlString(DESIGN_TAG_COLOR, out newColor);
-          _tagImage.color = newColor;
+          //_description.TagColor = DESIGN_TAG_COLOR;
+          SetTagTextAndBorderColor(DESIGN_TAG_COLOR);
           break;
         default:
-          _description.TagColor = GENERAL_TAG_COLOR;
-          ColorUtility.TryParseHtmlString(GENERAL_TAG_COLOR, out newColor);
-          _tagImage.color = newColor;
+          //_description.TagColor = GENERAL_TAG_COLOR;
+          SetTagTextAndBorderColor(GENERAL_TAG_COLOR);
           SetSpeakerImageVisible(false);
           break;
+      }
+    }
+
+    private void SetTagTextAndBorderColor(string color)
+    {
+      Color newColor;
+      
+      if (ColorUtility.TryParseHtmlString(color, out newColor))
+      {
+        _tagBorder.color = newColor;
+        _tagText.color = newColor;
       }
     }
     
