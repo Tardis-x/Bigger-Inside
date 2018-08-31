@@ -60,21 +60,15 @@ namespace ua.org.gdg.devfest
       {
         ShowSpeakerData(false);
       }
-
-//      if (!string.IsNullOrEmpty(model.ImageUrl)) LoadImage(model.ImageUrl, _headerBackgroundImage);
-//      else _headerBackgroundImage.texture = Texture2D.whiteTexture;
       
       _titleText.text = model.Title;
       _descriptionText.text = model.Description;
       _detailsText.text = ComposeDetailsText(model.DateReadable, model.StartTime, model.EndTime, model.Hall,
         model.Language, model.Complexity);
       _tagText.text = model.Tag;
-      SetBackgroundColor(model.TagColor);
+      //SetBackgroundColor(model.TagColor);
     }
 
-    /// <summary>
-    /// Only for Toolbar BackButton click event
-    /// </summary>
     public void OnBackButtonClick()
     {
       SetActive(false);

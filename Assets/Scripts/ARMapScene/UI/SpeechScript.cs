@@ -167,27 +167,27 @@ namespace ua.org.gdg.devfest
       switch (tag)
       {
         case "Android":
-          //_description.TagColor = ANDROID_TAG_COLOR;
+          _description.TagColor = ANDROID_TAG_COLOR;
           SetTagTextAndBorderColor(ANDROID_TAG_COLOR);
           break;
         case "Cloud":
-          //_description.TagColor = CLOUD_TAG_COLOR;
+          _description.TagColor = CLOUD_TAG_COLOR;
           SetTagTextAndBorderColor(CLOUD_TAG_COLOR);
           break;
         case "Web":
-          //_description.TagColor = WEB_TAG_COLOR;
+          _description.TagColor = WEB_TAG_COLOR;
           SetTagTextAndBorderColor(WEB_TAG_COLOR);
           break;
         case "Firebase":
-          //_description.TagColor = FIREBASE_TAG_COLOR;
+          _description.TagColor = FIREBASE_TAG_COLOR;
           SetTagTextAndBorderColor(FIREBASE_TAG_COLOR);
           break;
         case "Design":
-          //_description.TagColor = DESIGN_TAG_COLOR;
+          _description.TagColor = DESIGN_TAG_COLOR;
           SetTagTextAndBorderColor(DESIGN_TAG_COLOR);
           break;
         default:
-          //_description.TagColor = GENERAL_TAG_COLOR;
+          _description.TagColor = GENERAL_TAG_COLOR;
           SetTagTextAndBorderColor(GENERAL_TAG_COLOR);
           SetSpeakerImageVisible(false);
           break;
