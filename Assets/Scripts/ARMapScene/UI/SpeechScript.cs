@@ -99,6 +99,7 @@ namespace ua.org.gdg.devfest
       _speechDescription.offsetMin = new Vector2(0, 0);
       _speechDescription.offsetMax = new Vector2(0, value ? DESCRIPTION_HEIGHT_W_O_SPEAKER : DESCRIPTION_HEIGHT_W_SPEAKER);
       _tagImage.gameObject.SetActive(!value);
+      _tagBorder.gameObject.SetActive(!value);
     }
 
     private void SetTimespanText(string timespanText)

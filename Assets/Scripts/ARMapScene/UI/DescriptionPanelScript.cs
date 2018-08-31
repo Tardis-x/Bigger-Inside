@@ -68,6 +68,7 @@ namespace ua.org.gdg.devfest
         model.Language, model.Complexity);
       _tagText.text = model.Tag;
       SetTagColor(model.TagColor);
+      ShowTag(model.Tag != "General");
     }
 
     public void OnBackButtonClick()
@@ -91,6 +92,11 @@ namespace ua.org.gdg.devfest
       LoadImage(speaker.PhotoUrl, _speakerPhotoImage);
       _speakerNameText.text = speaker.Name;
       _speakerCompanyCountryText.text = speaker.Company + ", " + speaker.Country;
+    }
+
+    private void ShowTag(bool value)
+    {
+      _tagBorder.gameObject.SetActive(value);
     }
 
     private void SetTagColor(string color)
