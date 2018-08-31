@@ -24,7 +24,7 @@ public class QuestManager : MonoBehaviour
 	public Dictionary<string, QuestRiddleDataFull> QuestRiddlesDataFull { get; set; }
 	public bool isQuestActivated;
 	int _timesCompleted;
-	public Texture2D[] riddleImages;
+	public Sprite[] riddleImages;
 	public Image userPhotoImage;
 
 	void Awake()

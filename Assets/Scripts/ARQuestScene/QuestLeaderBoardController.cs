@@ -17,6 +17,7 @@ public class QuestLeaderBoardController : MonoBehaviour
 	public GameObject position1Holder;
 	public GameObject position2Holder;
 	public GameObject position3Holder;
+	public GameObject bottomImagePrefab;
 	
 	void Awake()
 	{
@@ -133,6 +134,7 @@ public class QuestLeaderBoardController : MonoBehaviour
 			}
 			position++;
 		}
+		Instantiate(bottomImagePrefab, transform.position, Quaternion.identity, gridForList);
 		scrollbar.value = 1;
 	}
 

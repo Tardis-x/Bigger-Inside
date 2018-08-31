@@ -117,8 +117,7 @@ public class QuestRiddlesController : MonoBehaviour
 				{
 					_riddleText.text = "Knowledge";
 					_descriptionText.text = "* you have to find and scan a marker, hidden around the venue";
-					_riddleImageHolder.sprite = Sprite.Create(riddle.Value.texture, new Rect(0.0f, 0.0f, 
-						riddle.Value.texture.width, riddle.Value.texture.height), new Vector2(0f, 0f), 100.0f);
+					_riddleImageHolder.sprite = riddle.Value.image;
 					_submitButton.gameObject.SetActive(false);
 					_inputField.gameObject.SetActive(false);
 					_scanButton.gameObject.SetActive(true);

@@ -8,11 +8,11 @@ public class QuestRiddleDataFull
     public bool isCompleted;
     public int score;
     public bool isText;
-    public Texture2D texture;
-    public QuestRiddleDataFull(bool istext, Texture2D tex)
+    public Sprite image;
+    public QuestRiddleDataFull(bool istext, Sprite sprite)
     {
         isText = istext;
-        texture = tex;
+        image = sprite;
     }
     
     public QuestRiddleDataFull(bool istext, string text)
