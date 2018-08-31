@@ -9,6 +9,7 @@ namespace ua.org.gdg.devfest
 		//---------------------------------------------------------------------
 		
 		[SerializeField] private Projectile _projectile;
+		[SerializeField] private ParticleSystem _particleEffects;
 		
 		//---------------------------------------------------------------------
 		// Messages
@@ -35,7 +36,7 @@ namespace ua.org.gdg.devfest
 		// Helpers
 		//---------------------------------------------------------------------
 
-		protected bool TryToShoot(Collider target)
+		protected virtual bool TryToShoot(Collider target)
 		{
 			if (Target == null) return false;
 			
@@ -61,7 +62,11 @@ namespace ua.org.gdg.devfest
 
 		protected void SelfDestroy()
 		{
-			Destroy(gameObject);
+			if (_particleEffects != null)
+			{
+				_particleEffects.Play();
+			}
+			Destroy(gameObject, 1.1f);
 		}
 		
 		//---------------------------------------------------------------------

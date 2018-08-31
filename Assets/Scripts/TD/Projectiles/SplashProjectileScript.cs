@@ -26,13 +26,14 @@ namespace ua.org.gdg.devfest
 
     private void OnTriggerEnter(Collider other)
     {
-      if (!TryToShoot(other)) return;
+      if (!base.TryToShoot(other)) return;
 
       var hitEnemies = GetHitEnemies(SplashRadius);
 
       foreach (var enemyCollider in hitEnemies)
       {
-         if(TryToShoot(enemyCollider)) Debug.Log(enemyCollider.gameObject.name + " got splash damage!");
+        if(enemyCollider == other) continue;
+        if(TryToShoot(enemyCollider)) Debug.Log(enemyCollider.gameObject.name + " got splash damage!");
       }
 
       SelfDestroy();
@@ -45,6 +46,17 @@ namespace ua.org.gdg.devfest
     private Collider[] GetHitEnemies(float radius)
     {
       return Physics.OverlapSphere(transform.localPosition, radius, _enemiesLayer);
+    }
+    
+    protected override bool TryToShoot(Collider target)
+    {
+      var enemy = target.GetComponent<EnemyScript>();
+
+      if (enemy == null) return false;
+			
+      enemy.GetShot(this);
+      SelfDestroy();
+      return true;
     }
   }
 }

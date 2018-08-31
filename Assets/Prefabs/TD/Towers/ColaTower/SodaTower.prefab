@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4033955480358266}
   - component: {fileID: 198197247641004466}
   - component: {fileID: 199608863135506152}
-  m_Layer: 12
+  m_Layer: 14
   m_Name: ColaTowerParticles_L01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,6 @@ GameObject:
   - component: {fileID: 4268543605639126}
   - component: {fileID: 33338528665654268}
   - component: {fileID: 23653507906477376}
-  - component: {fileID: 65332384679898252}
   - component: {fileID: 95045262641473986}
   m_Layer: 14
   m_Name: ColaCanLeft
@@ -123,7 +122,7 @@ GameObject:
   - component: {fileID: 4598781272109666}
   - component: {fileID: 198630689322192638}
   - component: {fileID: 199132435737864156}
-  m_Layer: 12
+  m_Layer: 14
   m_Name: ColaTowerParticles_L03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -194,7 +193,6 @@ GameObject:
   - component: {fileID: 4864518026501156}
   - component: {fileID: 33007590634548576}
   - component: {fileID: 23310587671217720}
-  - component: {fileID: 65551258834490888}
   - component: {fileID: 95153180909359712}
   m_Layer: 14
   m_Name: Cola Can (1)
@@ -247,7 +245,6 @@ GameObject:
   - component: {fileID: 4463574407777670}
   - component: {fileID: 33611021426880206}
   - component: {fileID: 23216043331760662}
-  - component: {fileID: 65979212141939898}
   - component: {fileID: 95606132615835214}
   m_Layer: 14
   m_Name: ColaCanRight
@@ -283,7 +280,6 @@ GameObject:
   - component: {fileID: 4160350241077232}
   - component: {fileID: 33056064036439810}
   - component: {fileID: 23526802117668066}
-  - component: {fileID: 65570993845492024}
   - component: {fileID: 95582886231153184}
   m_Layer: 14
   m_Name: Cola Can
@@ -302,7 +298,6 @@ GameObject:
   - component: {fileID: 4997571365539174}
   - component: {fileID: 33210566239497152}
   - component: {fileID: 23806291506241402}
-  - component: {fileID: 65916055549130854}
   - component: {fileID: 95429742925145892}
   m_Layer: 14
   m_Name: Cola Can
@@ -404,7 +399,7 @@ GameObject:
   - component: {fileID: 4061021838203998}
   - component: {fileID: 198101213159592124}
   - component: {fileID: 199627814861402510}
-  m_Layer: 12
+  m_Layer: 14
   m_Name: ColaTowerParticles_L02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -451,7 +446,6 @@ GameObject:
   - component: {fileID: 4384550912673760}
   - component: {fileID: 33686776602623086}
   - component: {fileID: 23571822475552162}
-  - component: {fileID: 65181005208189740}
   - component: {fileID: 95762553427982902}
   m_Layer: 14
   m_Name: ColaCanBack
@@ -1340,80 +1334,8 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 126
   m_CollisionDetection: 0
---- !u!65 &65181005208189740
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1967301107073982}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.09494366, y: 0.15346396, z: 0.09029679}
-  m_Center: {x: 0.000000007450581, y: 0.07673198, z: -0.000000007450581}
---- !u!65 &65332384679898252
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1118781489592314}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.09494366, y: 0.15346396, z: 0.09029679}
-  m_Center: {x: 0.000000007450581, y: 0.07673198, z: -0.000000007450581}
---- !u!65 &65551258834490888
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1576975748539282}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.09494366, y: 0.15346396, z: 0.09029679}
-  m_Center: {x: 0.000000007450581, y: 0.07673198, z: -0.000000007450581}
---- !u!65 &65570993845492024
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1703604257449884}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.09494366, y: 0.15346396, z: 0.09029679}
-  m_Center: {x: 0.000000007450581, y: 0.07673198, z: -0.000000007450581}
---- !u!65 &65916055549130854
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1703721821867008}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.09494366, y: 0.15346396, z: 0.09029679}
-  m_Center: {x: 0.000000007450581, y: 0.07673198, z: -0.000000007450581}
---- !u!65 &65979212141939898
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1649229216685352}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.09494366, y: 0.15346396, z: 0.09029679}
-  m_Center: {x: 0.000000007450581, y: 0.07673198, z: -0.000000007450581}
 --- !u!95 &95045262641473986
 Animator:
   serializedVersion: 3
@@ -1592,7 +1514,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 1381377060479450}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.15
   m_Height: 0.4297502
   m_Direction: 1
