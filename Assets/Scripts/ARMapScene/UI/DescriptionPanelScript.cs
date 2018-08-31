@@ -17,6 +17,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] private Text _titleText;
     [SerializeField] private Text _detailsText;
     [SerializeField] private Text _tagText;
+    [SerializeField] private Image _tagBorder;
     [SerializeField] private Text _descriptionText;
     [SerializeField] private RawImage _speakerPhotoImage;
     [SerializeField] private Text _speakerNameText;
@@ -66,7 +67,7 @@ namespace ua.org.gdg.devfest
       _detailsText.text = ComposeDetailsText(model.DateReadable, model.StartTime, model.EndTime, model.Hall,
         model.Language, model.Complexity);
       _tagText.text = model.Tag;
-      //SetBackgroundColor(model.TagColor);
+      SetTagColor(model.TagColor);
     }
 
     public void OnBackButtonClick()
@@ -90,6 +91,17 @@ namespace ua.org.gdg.devfest
       LoadImage(speaker.PhotoUrl, _speakerPhotoImage);
       _speakerNameText.text = speaker.Name;
       _speakerCompanyCountryText.text = speaker.Company + ", " + speaker.Country;
+    }
+
+    private void SetTagColor(string color)
+    {
+      Color newColor;
+
+      if (ColorUtility.TryParseHtmlString(color, out newColor))
+      {
+        _tagText.color = newColor;
+        _tagBorder.color = newColor;
+      }
     }
     
     private void SetBackgroundColor(string color)
