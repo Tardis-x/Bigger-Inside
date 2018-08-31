@@ -24,6 +24,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] private RawImage _tagImage;
     [SerializeField] private RawImage _speakerPhoto;
     [SerializeField] private Text _timespanText;
+    [SerializeField] private RectTransform _speechDescription;
     
     //---------------------------------------------------------------------
     // Messages
@@ -82,9 +83,24 @@ namespace ua.org.gdg.devfest
     private const string DESIGN_TAG_COLOR = "#EC407B";
     private const string GENERAL_TAG_COLOR = "#9E9E9E";
     private string LOGO_BASE_PATH;
+    private const int DESCRIPTION_HEIGHT_W_O_SPEAKER = 330;
+    private const int DESCRIPTION_HEIGHT_W_SPEAKER = 510;
+    private const int ITEM_HEIGHT_W_SPEAKER = 650;
+    private const int ITEM_HEIGHT_W_O_SPEAKER = 470;
     private ScheduleItemDescriptionUiModel _description;
     private ScheduleItemUiModel _model;
-    
+
+    private void SetGeneralSpeechItem(bool value)
+    {
+      _speechDescription.sizeDelta = 
+        new Vector2(0, value ? DESCRIPTION_HEIGHT_W_O_SPEAKER : DESCRIPTION_HEIGHT_W_SPEAKER);
+      var itemTransform = GetComponent<RectTransform>();
+      itemTransform.sizeDelta = new Vector2(880, value ? ITEM_HEIGHT_W_O_SPEAKER : ITEM_HEIGHT_W_SPEAKER);
+      _speechDescription.offsetMin = new Vector2(0, 0);
+      _speechDescription.offsetMax = new Vector2(0, value ? DESCRIPTION_HEIGHT_W_O_SPEAKER : DESCRIPTION_HEIGHT_W_SPEAKER);
+      _tagImage.gameObject.SetActive(!value);
+      _tagBorder.gameObject.SetActive(!value);
+    }
 
     private void SetTimespanText(string timespanText)
     {
@@ -148,6 +164,7 @@ namespace ua.org.gdg.devfest
     {
       SetTagText(tag);
       SetTagImageColor(tag);
+      SetGeneralSpeechItem(tag == "General");
     }
     
     private void SetTagText(string tag)
