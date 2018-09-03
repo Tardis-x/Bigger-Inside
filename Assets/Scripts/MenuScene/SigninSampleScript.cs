@@ -14,28 +14,30 @@
 //  limitations
 
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Google;
+using UnityEngine;
+using UnityEngine.UI;
+using Firebase.Auth;
 
 namespace ua.org.gdg.devfest
 {
-  using System.Collections.Generic;
-  using System.Threading.Tasks;
-  using Google;
-  using UnityEngine;
-  using UnityEngine.UI;
-  using Firebase.Auth;
 
   public class SigninSampleScript : MonoBehaviour
   {
-    public Text statusText;
+    //---------------------------------------------------------------------
+    // Editor
+    //---------------------------------------------------------------------
+
+    [SerializeField] private RawImage _userAvatar;
+    [SerializeField] private ImageLoader _loader;
 
     public string webClientId = "634686754515-vtkaddac36pof0anm089grndrqckh4q2.apps.googleusercontent.com";
 
     private GoogleSignInConfiguration configuration;
     private FirebaseAuth _auth;
 
-
-    // Defer the configuration creation until Awake so the web Client ID
-    // Can be set via the property inspector in the Editor.
     void Awake()
     {
       configuration = new GoogleSignInConfiguration
@@ -53,7 +55,6 @@ namespace ua.org.gdg.devfest
       GoogleSignIn.Configuration.UseGameSignIn = false;
       GoogleSignIn.Configuration.RequestIdToken = true;
 
-      AddStatusText("Calling SignIn");
       GoogleSignIn.DefaultInstance.SignIn().ContinueWith(
         OnAuthenticationFinished);
     }
@@ -61,13 +62,11 @@ namespace ua.org.gdg.devfest
 
     public void OnSignOut()
     {
-      AddStatusText("Calling SignOut");
       GoogleSignIn.DefaultInstance.SignOut();
     }
 
     public void OnDisconnect()
     {
-      AddStatusText("Calling Disconnect");
       GoogleSignIn.DefaultInstance.Disconnect();
     }
 
@@ -82,21 +81,11 @@ namespace ua.org.gdg.devfest
           {
             GoogleSignIn.SignInException error =
               (GoogleSignIn.SignInException) enumerator.Current;
-            AddStatusText("Got Error: " + error.Status + " " + error.Message);
-          }
-          else
-          {
-            AddStatusText("Got Unexpected Exception?!?" + task.Exception);
           }
         }
       }
-      else if (task.IsCanceled)
-      {
-        AddStatusText("Canceled");
-      }
       else
       {
-        AddStatusText("Welcome: " + task.Result.DisplayName + "!");
 
         TaskCompletionSource<FirebaseUser> signInCompleted = new TaskCompletionSource<FirebaseUser>();
 
@@ -115,8 +104,7 @@ namespace ua.org.gdg.devfest
           {
             Debug.Log(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
             signInCompleted.SetResult(authTask.Result);
-            AddStatusText("Firebase user: " + authTask.Result.DisplayName);
-            
+           _loader.LoadImage(authTask.Result.PhotoUrl.AbsolutePath, _userAvatar);
             SceneManager.LoadScene("MenuScene");
           }
         });
@@ -124,22 +112,5 @@ namespace ua.org.gdg.devfest
     }
 
     private List<string> messages = new List<string>();
-
-    void AddStatusText(string text)
-    {
-      if (messages.Count == 5)
-      {
-        messages.RemoveAt(0);
-      }
-
-      messages.Add(text);
-      string txt = "";
-      foreach (string s in messages)
-      {
-        txt += "\n" + s;
-      }
-
-      statusText.text = txt;
-    }
   }
 }

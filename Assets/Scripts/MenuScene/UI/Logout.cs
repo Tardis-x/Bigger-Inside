@@ -3,16 +3,19 @@ using Firebase.Auth;
 using Google;
 using UnityEngine.SceneManagement;
 
-public class Logout : MonoBehaviour {
-
-  //---------------------------------------------------------------------
-  // Internal
-  //---------------------------------------------------------------------
-
-  public void OnLogout()
+namespace ua.org.gdg.devfest
+{
+  public class Logout : MonoBehaviour
   {
-    FirebaseAuth.DefaultInstance.SignOut();
-    GoogleSignIn.DefaultInstance.SignOut();
-    SceneManager.LoadScene("SignInScene");
+    //---------------------------------------------------------------------
+    // Internal
+    //---------------------------------------------------------------------
+
+    public void OnLogout()
+    {
+      FirebaseAuth.DefaultInstance.SignOut();
+      GoogleSignIn.DefaultInstance.SignOut();
+      SceneManager.LoadScene("SignInScene");
+    }
   }
 }

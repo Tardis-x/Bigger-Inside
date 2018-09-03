@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace ua.org.gdg.devfest
@@ -9,6 +10,8 @@ namespace ua.org.gdg.devfest
     // Editor
     //---------------------------------------------------------------------
 
+    [Tooltip("Refreshment rate")]
+    [SerializeField] private float _fadeTime;
     [SerializeField] private float _fadeRate;
 
     //---------------------------------------------------------------------
@@ -17,6 +20,8 @@ namespace ua.org.gdg.devfest
 
     private Image _image;
     private float _targetAlpha;
+    private float _startAlpha;
+    private float _time;
 
     //---------------------------------------------------------------------
     // Messages
@@ -34,32 +39,42 @@ namespace ua.org.gdg.devfest
       _targetAlpha = _image.color.a;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-      Color curColor = _image.color;
-      float alphaDiff = Mathf.Abs(curColor.a - _targetAlpha);
-
-      if (alphaDiff > 0.0001f)
-      {
-        curColor.a = Mathf.Lerp(curColor.a, _targetAlpha, _fadeRate * Time.deltaTime);
-        _image.color = curColor;
-      }
-    }
-
     //---------------------------------------------------------------------
-    // Helpers
+    // Public
     //---------------------------------------------------------------------
-
+  
     public void FadeOut()
     {
+      _startAlpha = 1.0f;
       _targetAlpha = 0.0f;
+      _time = 0;
+      StartCoroutine(FadeCoroutine());
     }
 
     public void FadeIn()
     {
-      gameObject.SetActive(true);
+      _startAlpha = 0.0f;
       _targetAlpha = 1.0f;
+      _time = 0;
+      StartCoroutine(FadeCoroutine());
+    }
+    
+    //---------------------------------------------------------------------
+    // Helpers
+    //---------------------------------------------------------------------
+
+    private IEnumerator FadeCoroutine()
+    {
+      while (_time <= _fadeTime)
+      {
+        _time += _fadeRate;
+        
+        Color curColor = _image.color;
+        curColor.a = Mathf.Lerp(_startAlpha, _targetAlpha, _time / _fadeTime);
+        _image.color = curColor;
+
+        yield return new WaitForSeconds(_fadeRate);
+      }
     }
   }
 }
