@@ -10,8 +10,7 @@ namespace ua.org.gdg.devfest
 		// Internal
 		//---------------------------------------------------------------------
 
-		private int _destPoint = 0;
-		public Node _currentNode;
+		private Node _currentNode;
 		private Vector3 _destination;
 
 		//---------------------------------------------------------------------
@@ -61,7 +60,7 @@ namespace ua.org.gdg.devfest
 				return;
 			}
 
-			Node nextNode = _currentNode.GetNextNode();
+			var nextNode = _currentNode.GetNextNode();
 
 			if (nextNode == null)
 			{
@@ -74,25 +73,12 @@ namespace ua.org.gdg.devfest
 			MoveToNode();
 		}
 
-		public void SetNode(Node node)
-		{
-			_currentNode = node;
-		}
-
 		public void SetSpeed(float speed)
 		{
 			// Cannot set negative speed
 			if (speed < 0) return;
 
 			_navMeshAgent.speed = speed;
-		}
-
-		public void MoveToNode()
-		{
-			var nodePosition = _currentNode.transform.position;
-			nodePosition.y = _currentNode.transform.position.y;
-			_destination = nodePosition;
-			NavigateTo(_destination);
 		}
 
 		public void Fed()
@@ -110,6 +96,19 @@ namespace ua.org.gdg.devfest
 		//---------------------------------------------------------------------
 		// Helpers
 		//---------------------------------------------------------------------
+		
+		private void SetNode(Node node)
+		{
+			_currentNode = node;
+		}
+		
+		private void MoveToNode()
+		{
+			var nodePosition = _currentNode.transform.position;
+			nodePosition.y = _currentNode.transform.position.y;
+			_destination = nodePosition;
+			NavigateTo(_destination);
+		}
 
 		private void NavigateTo(Vector3 nextPoint)
 		{
