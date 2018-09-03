@@ -13,30 +13,38 @@
 //  See the License for the specific language governing permissions and
 //  limitations
 
+using Facebook.Unity;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Google;
+using UnityEngine;
+using UnityEngine.UI;
+using Firebase.Auth;
 
 namespace ua.org.gdg.devfest
 {
-  using System.Collections.Generic;
-  using System.Threading.Tasks;
-  using Google;
-  using UnityEngine;
-  using UnityEngine.UI;
-  using Firebase.Auth;
-
   public class SigninSampleScript : MonoBehaviour
-  {
+  {    
     public Text statusText;
-
     public string webClientId = "634686754515-vtkaddac36pof0anm089grndrqckh4q2.apps.googleusercontent.com";
 
+    //---------------------------------------------------------------------
+    // Internal
+    //---------------------------------------------------------------------
+    
     private GoogleSignInConfiguration configuration;
     private FirebaseAuth _auth;
+    private List<string> _messages = new List<string>();
 
 
     // Defer the configuration creation until Awake so the web Client ID
     // Can be set via the property inspector in the Editor.
-    void Awake()
+    //---------------------------------------------------------------------
+    // Messages
+    //---------------------------------------------------------------------
+    
+    private void Awake()
     {
       configuration = new GoogleSignInConfiguration
       {
@@ -45,8 +53,21 @@ namespace ua.org.gdg.devfest
       };
 
       _auth = FirebaseAuth.DefaultInstance;
-    }
 
+      if (!FB.IsInitialized)
+      {
+        FB.Init();
+      }
+      else
+      {
+        FB.ActivateApp();
+      }
+    }
+    
+    //---------------------------------------------------------------------
+    // Public
+    //---------------------------------------------------------------------
+    
     public void OnSignIn()
     {
       GoogleSignIn.Configuration = configuration;
@@ -58,7 +79,11 @@ namespace ua.org.gdg.devfest
         OnAuthenticationFinished);
     }
 
-
+    public void OnFacebookSignIn()
+    {
+      FB.LogInWithReadPermissions(callback:OnFacebookLogin);
+    }
+    
     public void OnSignOut()
     {
       AddStatusText("Calling SignOut");
@@ -71,7 +96,53 @@ namespace ua.org.gdg.devfest
       GoogleSignIn.DefaultInstance.Disconnect();
     }
 
-    internal void OnAuthenticationFinished(Task<GoogleSignInUser> task)
+    //---------------------------------------------------------------------
+    // Helpers
+    //---------------------------------------------------------------------
+    
+    private void OnFacebookLogin(ILoginResult result)
+    {
+      Debug.Log("FB LOGIN: " + FB.IsLoggedIn);
+      if (FB.IsLoggedIn)
+      {
+        var token = AccessToken.CurrentAccessToken.TokenString;
+        var credential = FacebookAuthProvider.GetCredential(token);
+        
+        _auth.SignInWithCredentialAsync(credential).ContinueWith(OnFacebookAuthenticationFinished);
+      }
+      else
+      {
+        AddStatusText("Facebook login failed");
+      }
+    }
+
+    private void OnFacebookAuthenticationFinished(Task<FirebaseUser> task)
+    {
+      var signInCompleted = new TaskCompletionSource<FirebaseUser>();
+      Debug.Log("FB FIREBASE CALLBACK");
+      
+      if (task.IsCanceled)
+      {
+        Debug.Log("TASK IS CANCELED");
+        signInCompleted.SetCanceled();
+      }
+      else if (task.IsFaulted)
+      {
+        Debug.LogError("SignInWithCredentialAsync encountered an error: " + task.Exception);
+        signInCompleted.SetException(task.Exception);
+      }
+      else
+      {
+        Debug.Log("TASK IS SUCCESSFUL");
+        Debug.Log(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
+        signInCompleted.SetResult(task.Result);
+        AddStatusText("Firebase user: " + task.Result.DisplayName);
+            
+        SceneManager.LoadScene("MenuScene");
+      }
+    }
+
+    private void OnAuthenticationFinished(Task<GoogleSignInUser> task)
     {
       if (task.IsFaulted)
       {
@@ -98,9 +169,9 @@ namespace ua.org.gdg.devfest
       {
         AddStatusText("Welcome: " + task.Result.DisplayName + "!");
 
-        TaskCompletionSource<FirebaseUser> signInCompleted = new TaskCompletionSource<FirebaseUser>();
+        var signInCompleted = new TaskCompletionSource<FirebaseUser>();
 
-        Credential credential = GoogleAuthProvider.GetCredential(task.Result.IdToken, null);
+        var credential = GoogleAuthProvider.GetCredential(task.Result.IdToken, null);
         _auth.SignInWithCredentialAsync(credential).ContinueWith(authTask =>
         {
           if (authTask.IsCanceled)
@@ -123,18 +194,16 @@ namespace ua.org.gdg.devfest
       }
     }
 
-    private List<string> messages = new List<string>();
-
-    void AddStatusText(string text)
+    private void AddStatusText(string text)
     {
-      if (messages.Count == 5)
+      if (_messages.Count == 5)
       {
-        messages.RemoveAt(0);
+        _messages.RemoveAt(0);
       }
 
-      messages.Add(text);
-      string txt = "";
-      foreach (string s in messages)
+      _messages.Add(text);
+      var txt = "";
+      foreach (string s in _messages)
       {
         txt += "\n" + s;
       }
