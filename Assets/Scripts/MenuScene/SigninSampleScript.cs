@@ -75,7 +75,7 @@ namespace ua.org.gdg.devfest
     // Public
     //---------------------------------------------------------------------
     
-    public void OnSignIn()
+    public void OnGoogleSignIn()
     {
       GoogleSignIn.Configuration = configuration;
       GoogleSignIn.Configuration.UseGameSignIn = false;
@@ -106,7 +106,6 @@ namespace ua.org.gdg.devfest
     
     private void OnFacebookLogin(ILoginResult result)
     {
-      Debug.Log("FB LOGIN: " + FB.IsLoggedIn);
       if (FB.IsLoggedIn)
       {
         var token = AccessToken.CurrentAccessToken.TokenString;
@@ -114,33 +113,24 @@ namespace ua.org.gdg.devfest
         
         _auth.SignInWithCredentialAsync(credential).ContinueWith(OnFacebookAuthenticationFinished);
       }
-      else
-      {
-        AddStatusText("Facebook login failed");
-      }
     }
 
     private void OnFacebookAuthenticationFinished(Task<FirebaseUser> task)
     {
       var signInCompleted = new TaskCompletionSource<FirebaseUser>();
-      Debug.Log("FB FIREBASE CALLBACK");
       
       if (task.IsCanceled)
       {
-        Debug.Log("TASK IS CANCELED");
         signInCompleted.SetCanceled();
       }
       else if (task.IsFaulted)
       {
-        Debug.LogError("SignInWithCredentialAsync encountered an error: " + task.Exception);
         signInCompleted.SetException(task.Exception);
       }
       else
       {
-        Debug.Log("TASK IS SUCCESSFUL");
-        Debug.Log(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
         signInCompleted.SetResult(task.Result);
-        AddStatusText("Firebase user: " + task.Result.DisplayName);
+        _loader.LoadImage(task.Result.PhotoUrl.AbsolutePath, _userAvatar);
             
         SceneManager.LoadScene("MenuScene");
       }
@@ -178,7 +168,6 @@ namespace ua.org.gdg.devfest
           }
           else
           {
-            Debug.Log(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
             signInCompleted.SetResult(authTask.Result);
            _loader.LoadImage(authTask.Result.PhotoUrl.AbsolutePath, _userAvatar);
             SceneManager.LoadScene("MenuScene");

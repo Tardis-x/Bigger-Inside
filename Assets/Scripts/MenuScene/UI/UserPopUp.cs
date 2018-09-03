@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using Firebase.Auth;
 
 namespace ua.org.gdg.devfest
 {
@@ -10,13 +11,49 @@ namespace ua.org.gdg.devfest
 		//---------------------------------------------------------------------
 
 		[SerializeField] private Fade _fadeImage;
-		[SerializeField] private Button _logOutButton;
+		[SerializeField] private Button _signInOutButton;
+		[SerializeField] private Text _signInOutText;
+
+		[Space] 
+		[Header("Events")] 
+		[SerializeField] private GameEvent _signOutRequest;
+		[SerializeField] private GameEvent _signInRequest;
 		
 		//---------------------------------------------------------------------
 		// Internal
 		//---------------------------------------------------------------------
 
 		private bool _active;
+		
+		//---------------------------------------------------------------------
+		// Helpers
+		//---------------------------------------------------------------------
+
+		private void SetSignInButton(bool userSignedIn)
+		{
+			_signInOutButton.onClick.RemoveAllListeners();
+			
+			if (userSignedIn)
+			{
+				_signInOutText.text = "Sign Out";
+				_signInOutButton.onClick.AddListener(SignOut);
+			}
+			else
+			{
+				_signInOutText.text = "Sign In";
+				_signInOutButton.onClick.AddListener(SignIn);
+			}
+		}
+
+		private void SignOut()
+		{
+			_signOutRequest.Raise();
+		}
+
+		private void SignIn()
+		{
+			_signInRequest.Raise();
+		}
 		
 		//---------------------------------------------------------------------
 		// Public
@@ -31,14 +68,16 @@ namespace ua.org.gdg.devfest
 
 		public void Show()
 		{
+			SetSignInButton(FirebaseAuth.DefaultInstance.CurrentUser != null);
+			
 			_fadeImage.FadeOut();
-			_logOutButton.enabled = true;
+			_signInOutButton.enabled = true;
 		}
 
 		public void Hide()
 		{
 			_fadeImage.FadeIn();
-			_logOutButton.enabled = false;
+			_signInOutButton.enabled = false;
 		}
 	}
 }
