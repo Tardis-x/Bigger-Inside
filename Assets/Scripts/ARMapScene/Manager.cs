@@ -78,7 +78,7 @@ namespace ua.org.gdg.devfest
 		private void PrepareScene(bool arCoreSupport)
 		{
 			_planeFinder.gameObject.SetActive(arCoreSupport);
-      
+			_hint.gameObject.SetActive(arCoreSupport);
 			_imageTarget.SetActive(!arCoreSupport);
       
 			if (!arCoreSupport)
