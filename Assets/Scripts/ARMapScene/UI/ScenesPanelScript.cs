@@ -12,10 +12,10 @@ namespace ua.org.gdg.devfest
         //---------------------------------------------------------------------
 
         [Header("UI")] 
-        [SerializeField] private Button _openScenesMenuButton;
-        [SerializeField] private Button _closeScenesMenuButton;
-        [SerializeField] private Button _saveSpeakerSceneButton;
-        [SerializeField] private Button _towerDefenceSceneButton;
+        [SerializeField] private GameObject _openScenesMenuButton;
+        [SerializeField] private GameObject _closeScenesMenuButton;
+        [SerializeField] private GameObject _saveSpeakerSceneButton;
+        [SerializeField] private GameObject _towerDefenceSceneButton;
 
         //---------------------------------------------------------------------
         // Public
@@ -49,14 +49,14 @@ namespace ua.org.gdg.devfest
 
         private void ShowOpenMenuButton(bool value)
         {
-            _openScenesMenuButton.gameObject.SetActive(value);
+            _openScenesMenuButton.SetActive(value);
         }
 
         private void ShowMenu(bool value)
         {
-            _closeScenesMenuButton.gameObject.SetActive(value);
-            _saveSpeakerSceneButton.gameObject.SetActive(value);
-            _towerDefenceSceneButton.gameObject.SetActive(value);
+            _closeScenesMenuButton.SetActive(value);
+            _saveSpeakerSceneButton.SetActive(value);
+            _towerDefenceSceneButton.SetActive(value);
         }
     }
 }
