@@ -10,6 +10,7 @@ namespace ua.org.gdg.devfest
 		
 		[SerializeField] private GameObject _signInPanel;
 		[SerializeField] private GameObject _menuPanel;
+		[SerializeField] private DescriptionPanelScript _descriptionPanel;
 		[SerializeField] private UserPopUp _userPopUp;
 		
 		//---------------------------------------------------------------------
@@ -26,6 +27,12 @@ namespace ua.org.gdg.devfest
 		{
 			_signInPanel.SetActive(false);
 			_menuPanel.SetActive(true);
+		}
+		
+		public void ShowSpeechDescription(GameObject speech)
+		{
+			_descriptionPanel.SetData(speech.GetComponent<SpeechItemScript>().GetDescription());
+			_descriptionPanel.SetActive(true);
 		}
 	}
 }

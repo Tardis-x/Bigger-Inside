@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
@@ -32,6 +33,17 @@ namespace ua.org.gdg.devfest
       return _modelsMapped;
     }
 
+    public bool RequestFullSchedule(int day, out List<TimeslotModel> schedule)
+    {
+      if (!_modelsMapped)
+      {
+        schedule = null;
+        return false;
+      }
+      schedule = ComposeFullSchedule();
+      return true;
+    }
+
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
@@ -47,6 +59,7 @@ namespace ua.org.gdg.devfest
       "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/speakers?pageSize=40";
 
     private const string SCHEDULE_DAY_1_NAME = "2016-09-09";
+    private const string SCHEDULE_DAY_2_NAME = "2016-09-10";
     
     //Requests
     private WWW _scheduleRequest, _sessionRequest, _speakerRequest;
@@ -61,8 +74,13 @@ namespace ua.org.gdg.devfest
     private Dictionary<int, SessionItem> _sessions;
     private Dictionary<string, Speaker> _speakers;
     private Dictionary<string, List<ScheduleItemUiModel>> _scheduleModels;
+    private List<TimeslotModel> _fullSchedule;
     private bool _scheduleParsed, _sessionsParsed, _speakersParsed;
     private bool _modelsMapped;
+    
+    //---------------------------------------------------------------------
+    // Helpers
+    //---------------------------------------------------------------------
     
     private IEnumerator OnScheduleResponse(WWW req)
     {
@@ -105,6 +123,81 @@ namespace ua.org.gdg.devfest
       _scheduleModels.Add(HALL_WORKSHOPS, ComposeScheduleForHall(HALL_WORKSHOPS));
       _modelsMapped = true;
     }
+
+    private List<TimeslotModel> ComposeFullSchedule()
+    {
+      var schedule = new List<TimeslotModel>();
+
+      foreach (var ts in _daySchedule.Timeslots)
+      {
+        var items = ts.Sessions.SelectMany(s => s.Items);
+        string timespan = GetTimespanText(ts.StartTime, ts.EndTime);
+        
+        List<SpeechItemModel> speeches = new List<SpeechItemModel>();
+        
+        foreach (var item in items)
+        {
+          var session = _sessions[item];
+          
+          speeches.Add(new SpeechItemModel
+          {
+            Timespan = timespan,
+            Tag = session.Tag,
+            Title = session.Title,
+            Speaker = session.Speakers.Count > 0 ? _speakers[session.Speakers[0]] : null,
+            Description = new ScheduleItemDescriptionUiModel
+            {
+              EndTime = ts.EndTime,
+              StartTime = ts.StartTime,
+              Tag = session.Tag,
+              Description = session.Description,
+              Title = session.Title,
+              Speaker = session.Speakers.Count > 0 ? _speakers[session.Speakers[0]] : null,
+              Complexity = session.Complexity,
+              Hall = ts.Sessions.First(s => s.Items.Contains(item)).Hall,
+              Language = session.Language,
+              DateReadable = _daySchedule.DateReadable,
+              ImageUrl = session.ImageUrl
+            }
+          });
+        }
+        
+        schedule.Add(new TimeslotModel
+        {
+          Items = speeches,
+          EndTime = ts.EndTime,
+          StartTime = ts.StartTime
+        });
+      }
+
+      return schedule;
+    }
+    
+    private string GetTimespanText(string startTime, string endTime)
+    {
+      int startHour = Convert.ToInt32(startTime.Split(':')[0]);
+      int endHour = Convert.ToInt32(endTime.Split(':')[0]);
+      int startMinute = Convert.ToInt32(startTime.Split(':')[1]);
+      int endMinute = Convert.ToInt32(endTime.Split(':')[1]);
+
+      int hourSpan = endHour - startHour;
+      int minuteSpan = endMinute - startMinute;
+
+      if (minuteSpan < 0)
+      {
+        hourSpan--;
+        minuteSpan = 60 + minuteSpan;
+      }
+
+      string timespanText = "";
+
+      if (hourSpan == 1) timespanText += "1 hour";
+      if (hourSpan > 1) timespanText += hourSpan + " hours";
+      if (timespanText != "") timespanText += " ";
+      if(minuteSpan > 0) timespanText += minuteSpan + " mins";
+
+      return timespanText;
+    }
     
     private List<ScheduleItemUiModel> ComposeScheduleForHall(string h)
     {
@@ -145,10 +238,6 @@ namespace ua.org.gdg.devfest
 
       return result;
     }
-    
-    //---------------------------------------------------------------------
-    // Helpers
-    //---------------------------------------------------------------------
 
     private bool AreAllRequestsFinished()
     {
