@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = System.Random;
 
@@ -79,7 +80,15 @@ namespace ua.org.gdg.devfest
       _planeFinder.SetActive(false);
       _uiManager.ShowARCorePanel(true);
     }
-    
+
+    private void Update()
+    {
+      if (Input.GetKeyDown(KeyCode.Escape))
+      {
+        SceneManager.LoadScene(Scenes.SCENE_MENU);
+      }
+    }
+
     //---------------------------------------------------------------------
     // Events
     //---------------------------------------------------------------------
