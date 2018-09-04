@@ -71,13 +71,15 @@ namespace ua.org.gdg.devfest
 		public void Show()
 		{
 			SetSignInButton(FirebaseAuth.DefaultInstance.CurrentUser != null);
-			
+
+			_active = true;
 			_fadeImage.FadeOut();
 			_signInOutButton.enabled = true;
 		}
 
 		public void Hide()
 		{
+			_active = false;
 			_fadeImage.FadeIn();
 			_signInOutButton.enabled = false;
 		}

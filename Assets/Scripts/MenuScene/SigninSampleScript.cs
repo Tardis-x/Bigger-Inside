@@ -76,11 +76,12 @@ namespace ua.org.gdg.devfest
     // Public
     //---------------------------------------------------------------------
     
-    public void OnGoogleSignIn()
+    public void OnSignIn()
     {
       GoogleSignIn.Configuration = configuration;
       GoogleSignIn.Configuration.UseGameSignIn = false;
       GoogleSignIn.Configuration.RequestIdToken = true;
+      
       AddStatusText("Calling SignIn");
       GoogleSignIn.DefaultInstance.SignIn().ContinueWith(
         OnAuthenticationFinished);

@@ -2,7 +2,6 @@
 using UnityEngine;
 using Firebase.Auth;
 using Google;
-using UnityEngine.SceneManagement;
 
 namespace ua.org.gdg.devfest
 {
@@ -14,8 +13,8 @@ namespace ua.org.gdg.devfest
 
     public void OnLogout()
     {
-      FB.LogOut();
-      FirebaseAuth.DefaultInstance.SignOut();
+      if(FB.IsLoggedIn) FB.LogOut();
+      if(FirebaseAuth.DefaultInstance.CurrentUser != null) FirebaseAuth.DefaultInstance.SignOut();
       GoogleSignIn.DefaultInstance.SignOut();
     }
   }
