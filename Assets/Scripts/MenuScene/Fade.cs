@@ -35,8 +35,6 @@ namespace ua.org.gdg.devfest
       {
         Debug.LogError("Error: No image on " + name);
       }
-
-      _targetAlpha = _image.color.a;
     }
 
     //---------------------------------------------------------------------

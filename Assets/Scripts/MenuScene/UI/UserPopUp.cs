@@ -18,7 +18,7 @@ namespace ua.org.gdg.devfest
 		[Header("Events")] 
 		[SerializeField] private GameEvent _signOutRequest;
 		[SerializeField] private GameEvent _signInRequest;
-		
+
 		//---------------------------------------------------------------------
 		// Internal
 		//---------------------------------------------------------------------
@@ -48,11 +48,13 @@ namespace ua.org.gdg.devfest
 		private void SignOut()
 		{
 			_signOutRequest.Raise();
+			Hide();
 		}
 
 		private void SignIn()
 		{
 			_signInRequest.Raise();
+			Hide();
 		}
 		
 		//---------------------------------------------------------------------

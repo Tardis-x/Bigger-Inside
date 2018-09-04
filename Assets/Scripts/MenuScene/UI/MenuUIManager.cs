@@ -20,14 +20,12 @@ namespace ua.org.gdg.devfest
 		{
 			_signInPanel.SetActive(true);
 			_menuPanel.SetActive(false);
-			_userPopUp.Hide();
 		}
 
 		public void ShowMenu()
 		{
 			_signInPanel.SetActive(false);
 			_menuPanel.SetActive(true);
-			_userPopUp.Hide();
 		}
 	}
 }
