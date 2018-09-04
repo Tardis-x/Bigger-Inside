@@ -13,9 +13,12 @@ namespace ua.org.gdg.devfest
 
     public void OnLogout()
     {
+      if (FirebaseAuth.DefaultInstance.CurrentUser == null) return;
+      
+      FirebaseAuth.DefaultInstance.SignOut();
+      
       if(FB.IsLoggedIn) FB.LogOut();
-      if(FirebaseAuth.DefaultInstance.CurrentUser != null) FirebaseAuth.DefaultInstance.SignOut();
-      GoogleSignIn.DefaultInstance.SignOut();
+      else GoogleSignIn.DefaultInstance.SignOut();
     }
   }
 }
