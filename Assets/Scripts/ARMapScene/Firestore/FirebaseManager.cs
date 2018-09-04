@@ -15,7 +15,7 @@ namespace ua.org.gdg.devfest
 
     private void Start()
     {
-      _scheduleRequest = new WWW(SCHEDULE_URL + "/" + SCHEDULE_DAY_1_NAME);
+      _scheduleRequest = new WWW(SCHEDULE_URL);// + "/" + SCHEDULE_DAY_1_NAME);
       StartCoroutine(OnScheduleResponse(_scheduleRequest));
       _sessionRequest = new WWW(SESSIONS_URL);
       StartCoroutine(OnSessionResponse(_sessionRequest));
@@ -40,7 +40,7 @@ namespace ua.org.gdg.devfest
         schedule = null;
         return false;
       }
-      schedule = ComposeFullSchedule();
+      schedule = ComposeFullSchedule(day);
       return true;
     }
 
@@ -71,6 +71,7 @@ namespace ua.org.gdg.devfest
     
     //Data
     private ScheduleDay _daySchedule;
+    private Schedule _schedule;
     private Dictionary<int, SessionItem> _sessions;
     private Dictionary<string, Speaker> _speakers;
     private Dictionary<string, List<ScheduleItemUiModel>> _scheduleModels;
@@ -86,8 +87,9 @@ namespace ua.org.gdg.devfest
     {
       yield return req;
       
-      JsonDocument jScheduleDay = JsonConvert.DeserializeObject<JsonDocument>(req.text);
-      _daySchedule = FirestoreHelper.ParseSchedule(jScheduleDay);
+      JsonSchedule schedule = JsonConvert.DeserializeObject<JsonSchedule>(req.text);
+      _schedule = FirestoreHelper.ParseSchedule(schedule);
+      _daySchedule = _schedule.Days[0];
       _scheduleParsed = true;
       
       if(AreAllRequestsFinished()) MapModels();
@@ -127,11 +129,11 @@ namespace ua.org.gdg.devfest
       _modelsMapped = true;
     }
 
-    private List<TimeslotModel> ComposeFullSchedule()
+    private List<TimeslotModel> ComposeFullSchedule(int day)
     {
       var schedule = new List<TimeslotModel>();
 
-      foreach (var ts in _daySchedule.Timeslots)
+      foreach (var ts in _schedule.Days[day - 1].Timeslots)
       {
         var items = ts.Sessions.SelectMany(s => s.Items);
         string timespan = GetTimespanText(ts.StartTime, ts.EndTime);

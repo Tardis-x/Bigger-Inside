@@ -6,7 +6,19 @@ namespace ua.org.gdg.devfest
 {
   public class FirestoreHelper
   {
-    public static ScheduleDay ParseSchedule(JsonDocument jday)
+    public static Schedule ParseSchedule(JsonSchedule sch)
+    {
+      Schedule result = new Schedule();
+
+      foreach (var day in sch.documents)
+      {
+        result.Days.Add(ParseScheduleDay(day));
+      }
+
+      return result;
+    }
+    
+    public static ScheduleDay ParseScheduleDay(JsonDocument jday)
     {
         ScheduleDay day = new ScheduleDay();
       
