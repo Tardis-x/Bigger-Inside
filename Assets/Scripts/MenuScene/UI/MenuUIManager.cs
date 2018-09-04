@@ -31,8 +31,8 @@ namespace ua.org.gdg.devfest
 		
 		public void ShowSpeechDescription(GameObject speech)
 		{
-			_descriptionPanel.SetData(speech.GetComponent<SpeechItemScript>().GetDescription());
 			_descriptionPanel.SetActive(true);
+			_descriptionPanel.SetData(speech.GetComponent<SpeechItemScript>().GetDescription());
 		}
 	}
 }

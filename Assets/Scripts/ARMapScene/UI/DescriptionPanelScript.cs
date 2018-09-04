@@ -109,14 +109,6 @@ namespace ua.org.gdg.devfest
         _tagBorder.color = newColor;
       }
     }
-    
-    private void SetBackgroundColor(string color)
-    {
-      Color newColor;
-
-      if (ColorUtility.TryParseHtmlString(color, out newColor))
-        _headerBackgroundImage.color = newColor;
-    }
 
     private void LoadImage(string logoUrl, RawImage image)
     {

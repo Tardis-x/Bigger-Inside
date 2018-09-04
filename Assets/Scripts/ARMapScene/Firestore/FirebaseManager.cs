@@ -117,10 +117,13 @@ namespace ua.org.gdg.devfest
 
     private void MapModels()
     {
-      _scheduleModels = new Dictionary<string, List<ScheduleItemUiModel>>();
-      _scheduleModels.Add(HALL_EXPO, ComposeScheduleForHall(HALL_EXPO));
-      _scheduleModels.Add(HALL_CONFERENCE, ComposeScheduleForHall(HALL_CONFERENCE));
-      _scheduleModels.Add(HALL_WORKSHOPS, ComposeScheduleForHall(HALL_WORKSHOPS));
+      _scheduleModels = new Dictionary<string, List<ScheduleItemUiModel>>
+      {
+        {HALL_EXPO, ComposeScheduleForHall(HALL_EXPO)},
+        {HALL_CONFERENCE, ComposeScheduleForHall(HALL_CONFERENCE)},
+        {HALL_WORKSHOPS, ComposeScheduleForHall(HALL_WORKSHOPS)}
+      };
+      
       _modelsMapped = true;
     }
 
