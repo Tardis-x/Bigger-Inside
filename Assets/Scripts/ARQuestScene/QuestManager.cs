@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 public class QuestManager : MonoBehaviour
 {
-	const int MaxRiddleScore = 5000;
+	const int MaxRiddleScore = 8000;
 	const int MaxVrGameScore = 40000;
 	const int MaxSocialScore = 40000;
 
@@ -152,22 +152,30 @@ public class QuestManager : MonoBehaviour
 		Debug.Log("RiddleDataInitialization");
 		var riddle1 = new QuestRiddleDataFull(true, "How are new comers called in Google?");
 		QuestRiddlesDataFull.Add("Noogler", riddle1);
-		var riddle5 = new QuestRiddleDataFull(false, riddleImages[0]);
-		QuestRiddlesDataFull.Add("Angular", riddle5);
-		var riddle2 = new QuestRiddleDataFull(true, "What was the first google doodle in 1998?");
-		QuestRiddlesDataFull.Add("BurningMan", riddle2);
-		var riddle6 = new QuestRiddleDataFull(false, riddleImages[1]);
-		QuestRiddlesDataFull.Add("Firebase", riddle6);
+//		var riddle5 = new QuestRiddleDataFull(false, riddleImages[0]);
+//		QuestRiddlesDataFull.Add("Angular", riddle5);
+//		var riddle2 = new QuestRiddleDataFull(true, "What was the first google doodle in 1998?");
+//		QuestRiddlesDataFull.Add("BurningMan", riddle2);
+//		var riddle6 = new QuestRiddleDataFull(false, riddleImages[1]);
+//		QuestRiddlesDataFull.Add("Firebase", riddle6);
+		var riddle9 = new QuestRiddleDataFull(false, riddleImages[4]);
+		QuestRiddlesDataFull.Add("AndroidAuto", riddle9);
 		var riddle3 = new QuestRiddleDataFull(true,
 			"One day a computer failure stumped Grace Hopper and her team until she opened the machine and found THIS inside!");
 		QuestRiddlesDataFull.Add("Bug", riddle3);
-		var riddle7 = new QuestRiddleDataFull(false, riddleImages[2]);
-		QuestRiddlesDataFull.Add("GoogleSearch", riddle7);
-		var riddle8 = new QuestRiddleDataFull(false, riddleImages[3]);
-		QuestRiddlesDataFull.Add("Snap", riddle8);
-		var riddle4 = new QuestRiddleDataFull(true,
-			"The most important thing in the programming language is THIS. A language will not succeed without a good THIS. I have recently invented a very good THIS and now I am looking for a suitable language. -- Donald Knuth");
-		QuestRiddlesDataFull.Add("Name", riddle4);
+		var riddle10 = new QuestRiddleDataFull(false, riddleImages[5]);
+		QuestRiddlesDataFull.Add("Dart", riddle10);
+		var riddle11 = new QuestRiddleDataFull(true,
+			"Enthusiasts-musicians-developers developed a computer called AImus, which could compose music by himself. Answer with two words. How was his first music composition named?");
+		QuestRiddlesDataFull.Add("HelloWorld", riddle11);
+//		var riddle7 = new QuestRiddleDataFull(false, riddleImages[2]);
+//		QuestRiddlesDataFull.Add("GoogleSearch", riddle7);
+//		var riddle8 = new QuestRiddleDataFull(false, riddleImages[3]);
+//		QuestRiddlesDataFull.Add("Snap", riddle8);
+//		var riddle4 = new QuestRiddleDataFull(true,
+//			"The most important thing in the programming language is THIS. A language will not succeed without a good THIS. I have recently invented a very good THIS and now I am looking for a suitable language. -- Donald Knuth");
+//		QuestRiddlesDataFull.Add("Name", riddle4);
+		
 		WriteRiddleDataInQuestProgress();
 	}
 
@@ -186,7 +194,7 @@ public class QuestManager : MonoBehaviour
 			var snapshot = task.Result;
 			_timesCompleted = JsonConvert.DeserializeObject<int>(snapshot.GetRawJsonValue());
 			//Calculate and write the score
-			QuestProgress.VrGameData.Score = MaxVrGameScore - _timesCompleted * 8;
+			QuestProgress.VrGameData.Score = MaxVrGameScore - _timesCompleted * 5;
 			QuestProgress.globalScore += QuestProgress.VrGameData.Score;
 			_timesCompleted++;
 			// update VR progress data in database
@@ -234,7 +242,7 @@ public class QuestManager : MonoBehaviour
 
 			var snapshot = task.Result;
 			_timesCompleted = JsonConvert.DeserializeObject<int>(snapshot.GetRawJsonValue());
-			QuestProgress.PhotoData.Score = MaxSocialScore - _timesCompleted * 8;
+			QuestProgress.PhotoData.Score = MaxSocialScore - _timesCompleted * 5;
 			QuestProgress.globalScore += QuestProgress.PhotoData.Score;
 			_timesCompleted++;
 
