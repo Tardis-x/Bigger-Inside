@@ -97,6 +97,7 @@ namespace ua.org.gdg.devfest
 
     public void EnablePanel(int day)
     {
+      SetButtonsUnderscore(day);
       GetComponentInChildren<ScrollRect>().verticalNormalizedPosition = 1;
       Active = true;
       ClearContent();
@@ -107,6 +108,7 @@ namespace ua.org.gdg.devfest
     
     public void EnablePanel(int day, string hall)
     {
+      SetButtonsUnderscore(day);
       GetComponentInChildren<ScrollRect>().verticalNormalizedPosition = 1;
       Active = true;
       ClearContent();
