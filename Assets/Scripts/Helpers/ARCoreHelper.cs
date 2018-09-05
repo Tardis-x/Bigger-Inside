@@ -2,7 +2,8 @@
 
 namespace ua.org.gdg.devfest {
     public static class ARCoreHelper {
-        public static AndroidJavaObject GetAppContext() {
+        public static AndroidJavaObject GetAppContext() 
+        {
             #if UNITY_EDITOR
                 return null;
             #elif UNITY_ANDROID
