@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Networking.NetworkSystem;
 using UnityEngine.UI;
 
 namespace ua.org.gdg.devfest
@@ -14,6 +15,9 @@ namespace ua.org.gdg.devfest
     [SerializeField] private RectTransform _contentContainer;
     [SerializeField] private TimeslotScript _timeslot;
     [SerializeField] private GameEvent _showMenu;
+    [SerializeField] private GameObject _day1Underscore;
+    [SerializeField] private GameObject _day2Underscore;
+    [SerializeField] private RectTransform _canvas;
 
     //---------------------------------------------------------------------
     // Internal
@@ -54,6 +58,12 @@ namespace ua.org.gdg.devfest
       DisablePanel();
     }
 
+    public void SetButtonsUnderscore(int day)
+    {
+      _day1Underscore.SetActive(day == 1);
+      _day2Underscore.SetActive(day == 2);
+    }
+
     public bool Active { get; private set; }
 
     public void SetContent(int day)
@@ -63,7 +73,7 @@ namespace ua.org.gdg.devfest
 
       foreach (var item in listContent)
       {
-        AddContentItem(_timeslot.GetInstance(item.Items, item.StartTime));
+        AddContentItem(_timeslot.GetInstance(item.Items, item.StartTime, _canvas.rect.width));
       }
     }
 

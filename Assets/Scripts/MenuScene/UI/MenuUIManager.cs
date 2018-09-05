@@ -12,6 +12,7 @@ namespace ua.org.gdg.devfest
 		[SerializeField] private GameObject _menuPanel;
 		[SerializeField] private DescriptionPanelScript _descriptionPanel;
 		[SerializeField] private UserPopUp _userPopUp;
+		[SerializeField] private SchedulePanelScript _schedulePanel;
 		
 		//---------------------------------------------------------------------
 		// Public
@@ -26,7 +27,14 @@ namespace ua.org.gdg.devfest
 		public void ShowMenu()
 		{
 			_signInPanel.SetActive(false);
+			_descriptionPanel.SetActive(false);
 			_menuPanel.SetActive(true);
+		}
+
+		public void ShowSchedule()
+		{
+			_menuPanel.SetActive(false);
+			_schedulePanel.EnablePanel(1);
 		}
 		
 		public void ShowSpeechDescription(GameObject speech)

@@ -143,13 +143,16 @@ namespace ua.org.gdg.devfest
         foreach (var item in items)
         {
           var session = _sessions[item];
+
+          var speaker = session.Speakers.Count > 0 ? 
+            (session.Speakers[0] != null ? _speakers[session.Speakers[0]] : null) : null;
           
           speeches.Add(new SpeechItemModel
           {
             Timespan = timespan,
             Tag = session.Tag,
             Title = session.Title,
-            Speaker = session.Speakers.Count > 0 ? _speakers[session.Speakers[0]] : null,
+            Speaker = speaker,
             Description = new ScheduleItemDescriptionUiModel
             {
               EndTime = ts.EndTime,
@@ -157,7 +160,7 @@ namespace ua.org.gdg.devfest
               Tag = session.Tag,
               Description = session.Description,
               Title = session.Title,
-              Speaker = session.Speakers.Count > 0 ? _speakers[session.Speakers[0]] : null,
+              Speaker = speaker,
               Complexity = session.Complexity,
               Hall = ts.Sessions.First(s => s.Items.Contains(item)).Hall,
               Language = session.Language,

@@ -19,20 +19,21 @@ namespace ua.org.gdg.devfest
     // Public
     //---------------------------------------------------------------------
 
-    public TimeslotScript GetInstance(List<SpeechItemModel> speeches, string startTime)
+    public TimeslotScript GetInstance(List<SpeechItemModel> speeches, string startTime, float width)
     {
       TimeslotScript instance = Instantiate(this);
       instance.SetStartTime(startTime);
 
-      int tsHeight = 140;
+      int tsHeight = 170;
       
       foreach (var speech in speeches)
       {
         var item = _speechPrefab.GetInstance(speech);
         item.transform.SetParent(instance.transform);
-        (item.transform as RectTransform).sizeDelta = new Vector2(1080, item.General ? 330 : 510);
+        (item.transform as RectTransform).sizeDelta = new Vector2(width, item.General ? 330 : 510);
         tsHeight += item.General ? 330 : 510;
       }
+      
       (instance.transform as RectTransform).sizeDelta = new Vector2(0, tsHeight);
       
       return instance;
