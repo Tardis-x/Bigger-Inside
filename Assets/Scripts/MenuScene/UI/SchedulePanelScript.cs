@@ -18,6 +18,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] private GameObject _day1Underscore;
     [SerializeField] private GameObject _day2Underscore;
     [SerializeField] private RectTransform _canvas;
+    [SerializeField] private Text _hallName;
 
     //---------------------------------------------------------------------
     // Internal
@@ -76,6 +77,17 @@ namespace ua.org.gdg.devfest
         AddContentItem(_timeslot.GetInstance(item.Items, item.StartTime, _canvas.rect.width));
       }
     }
+    
+    public void SetContent(int day, string hall)
+    {
+      List<TimeslotModel> listContent;
+      if (!FirebaseManager.Instance.RequestFullSchedule(day, hall, out listContent)) return;
+
+      foreach (var item in listContent)
+      {
+        AddContentItem(_timeslot.GetInstance(item.Items, item.StartTime, _canvas.rect.width));
+      }
+    }
 
     public void EnablePanel(int day)
     {
@@ -83,7 +95,24 @@ namespace ua.org.gdg.devfest
       Active = true;
       ClearContent();
       SetContent(day);
+      _hallName.text = "";
       gameObject.SetActive(true);
+    }
+    
+    public void EnablePanel(int day, string hall)
+    {
+      GetComponentInChildren<ScrollRect>().verticalNormalizedPosition = 1;
+      Active = true;
+      ClearContent();
+      SetContent(day, hall);
+      _hallName.text = hall;
+      gameObject.SetActive(true);
+    }
+
+    public void ClosePanel()
+    {
+      Active = false;
+      gameObject.SetActive(false);
     }
   }
 }

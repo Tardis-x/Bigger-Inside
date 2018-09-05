@@ -43,6 +43,17 @@ namespace ua.org.gdg.devfest
       schedule = ComposeFullSchedule(day);
       return true;
     }
+    
+    public bool RequestFullSchedule(int day, string hall, out List<TimeslotModel> schedule)
+    {
+      if (!_modelsMapped)
+      {
+        schedule = null;
+        return false;
+      }
+      schedule = ComposeFullSchedule(day, hall);
+      return true;
+    }
 
     //---------------------------------------------------------------------
     // Internal
@@ -136,6 +147,59 @@ namespace ua.org.gdg.devfest
       foreach (var ts in _schedule.Days[day - 1].Timeslots)
       {
         var items = ts.Sessions.SelectMany(s => s.Items);
+        string timespan = GetTimespanText(ts.StartTime, ts.EndTime);
+        
+        List<SpeechItemModel> speeches = new List<SpeechItemModel>();
+        
+        foreach (var item in items)
+        {
+          var session = _sessions[item];
+
+          var speaker = session.Speakers.Count > 0 ? 
+            (session.Speakers[0] != null ? _speakers[session.Speakers[0]] : null) : null;
+          
+          speeches.Add(new SpeechItemModel
+          {
+            Timespan = timespan,
+            Tag = session.Tag,
+            Title = session.Title,
+            Speaker = speaker,
+            Description = new ScheduleItemDescriptionUiModel
+            {
+              EndTime = ts.EndTime,
+              StartTime = ts.StartTime,
+              Tag = session.Tag,
+              Description = session.Description,
+              Title = session.Title,
+              Speaker = speaker,
+              Complexity = session.Complexity,
+              Hall = ts.Sessions.First(s => s.Items.Contains(item)).Hall,
+              Language = session.Language,
+              DateReadable = _daySchedule.DateReadable,
+              ImageUrl = session.ImageUrl
+            }
+          });
+        }
+        
+        schedule.Add(new TimeslotModel
+        {
+          Items = speeches,
+          EndTime = ts.EndTime,
+          StartTime = ts.StartTime
+        });
+      }
+
+      return schedule;
+    }
+    
+    private List<TimeslotModel> ComposeFullSchedule(int day, string hall)
+    {
+      var schedule = new List<TimeslotModel>();
+
+      foreach (var ts in _schedule.Days[day - 1].Timeslots)
+      {
+        var sessions = ts.Sessions.Where(x => x.Hall == hall).ToList();
+        var items = sessions.SelectMany(s => s.Items).ToList();
         string timespan = GetTimespanText(ts.StartTime, ts.EndTime);
         
         List<SpeechItemModel> speeches = new List<SpeechItemModel>();
