@@ -144,7 +144,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 555514967}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 1}
@@ -681,6 +681,7 @@ GameObject:
   - component: {fileID: 251594888}
   - component: {fileID: 251594889}
   - component: {fileID: 251594890}
+  - component: {fileID: 251594891}
   m_Layer: 5
   m_Name: SchedulePanelNew
   m_TagString: Untagged
@@ -701,7 +702,7 @@ RectTransform:
   m_Children:
   - {fileID: 2035449922}
   m_Father: {fileID: 415622056}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -757,6 +758,17 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: ua.org.gdg.devfest.IntUnityEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!225 &251594891
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 251594887}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &255650416
 GameObject:
   m_ObjectHideFlags: 0
@@ -862,7 +874,7 @@ RectTransform:
   m_Children:
   - {fileID: 1521450488}
   m_Father: {fileID: 555514967}
-  m_RootOrder: 2
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -1027,7 +1039,7 @@ RectTransform:
   - {fileID: 1129363170}
   - {fileID: 1612570325}
   m_Father: {fileID: 415622056}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1110,8 +1122,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 205ba6fd4575ccc4e92b4c489fd7dc0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SchedulePanel: {fileID: 0}
-  SpeechDescriptionPanel: {fileID: 0}
   SchedulePanelNew: {fileID: 251594889}
   SpeechDescriptionPanelNew: {fileID: 414179248}
   CurrentHall: 
@@ -1253,6 +1263,7 @@ GameObject:
   - component: {fileID: 414179250}
   - component: {fileID: 414179249}
   - component: {fileID: 414179248}
+  - component: {fileID: 414179252}
   m_Layer: 5
   m_Name: SpeechDescriptionPanelNew
   m_TagString: Untagged
@@ -1275,7 +1286,7 @@ RectTransform:
   - {fileID: 2070396448}
   - {fileID: 2103570642}
   m_Father: {fileID: 415622056}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1372,6 +1383,17 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 414179246}
   m_CullTransparentMesh: 0
+--- !u!225 &414179252
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 414179246}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &415622052
 GameObject:
   m_ObjectHideFlags: 0
@@ -1457,10 +1479,10 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 414179247}
   - {fileID: 1196260828}
   - {fileID: 329958343}
   - {fileID: 251594888}
+  - {fileID: 414179247}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1553,10 +1575,10 @@ RectTransform:
   m_Children:
   - {fileID: 1232590258}
   - {fileID: 1746292098}
-  - {fileID: 261940219}
   - {fileID: 700274598}
   - {fileID: 1406404284}
   - {fileID: 32201722}
+  - {fileID: 261940219}
   m_Father: {fileID: 2035449922}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2074,7 +2096,7 @@ RectTransform:
   - {fileID: 1831413905}
   - {fileID: 138128300}
   m_Father: {fileID: 555514967}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3726,7 +3748,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 415622056}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -4658,7 +4680,7 @@ RectTransform:
   - {fileID: 1237426723}
   - {fileID: 739847642}
   m_Father: {fileID: 555514967}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

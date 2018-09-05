@@ -74,7 +74,10 @@ namespace ua.org.gdg.devfest
 
       foreach (var item in listContent)
       {
-        AddContentItem(_timeslot.GetInstance(item.Items, item.StartTime, _canvas.rect.width));
+        var contentItem = _timeslot.GetInstance(item.Items, item.StartTime, _canvas.rect.width);
+        
+        if(!contentItem.Empty) AddContentItem(contentItem);
+        else Destroy(contentItem.gameObject);
       }
     }
     
@@ -85,7 +88,10 @@ namespace ua.org.gdg.devfest
 
       foreach (var item in listContent)
       {
-        AddContentItem(_timeslot.GetInstance(item.Items, item.StartTime, _canvas.rect.width));
+        var contentItem = _timeslot.GetInstance(item.Items, item.StartTime, _canvas.rect.width);
+        
+        if(!contentItem.Empty) AddContentItem(contentItem);
+        else Destroy(contentItem.gameObject);
       }
     }
 
