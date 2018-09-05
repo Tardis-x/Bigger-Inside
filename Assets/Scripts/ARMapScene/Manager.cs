@@ -68,7 +68,6 @@ namespace ua.org.gdg.devfest
 			}
 						
 			_hint.gameObject.SetActive(false);
-			// _planeFinder.GetComponent<PlaneFinderBehaviour>().OnAutomaticHitTest.RemoveAllListeners();
 		}
 		
 		//---------------------------------------------------------------------

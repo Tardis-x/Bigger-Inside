@@ -14,7 +14,6 @@
 //  limitations
 
 using Facebook.Unity;
-using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Google;
@@ -35,7 +34,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] private GameEvent _signedIn;
     
     public Text statusText;
-    public string webClientId = "634686754515-vtkaddac36pof0anm089grndrqckh4q2.apps.googleusercontent.com";
+    public string webClientId;
 
     //---------------------------------------------------------------------
     // Internal
@@ -54,11 +53,7 @@ namespace ua.org.gdg.devfest
     
     private void Awake()
     {
-      configuration = new GoogleSignInConfiguration
-      {
-        WebClientId = webClientId,
-        RequestIdToken = true
-      };
+      ConfigureGoogleSignIn();
 
       _auth = FirebaseAuth.DefaultInstance;
 
@@ -76,13 +71,9 @@ namespace ua.org.gdg.devfest
     // Public
     //---------------------------------------------------------------------
     
-    public void OnSignIn()
+    public void OnGoogleSignIn()
     {
-      GoogleSignIn.Configuration = configuration;
-      GoogleSignIn.Configuration.UseGameSignIn = false;
-      GoogleSignIn.Configuration.RequestIdToken = true;
       
-      AddStatusText("Calling SignIn");
       GoogleSignIn.DefaultInstance.SignIn().ContinueWith(
         OnAuthenticationFinished);
     }
@@ -108,6 +99,16 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     // Helpers
     //---------------------------------------------------------------------
+
+    private void ConfigureGoogleSignIn()
+    {
+      GoogleSignIn.Configuration = new GoogleSignInConfiguration
+      {
+        WebClientId = webClientId,
+        RequestIdToken = true,
+        UseGameSignIn = false
+      };
+    }
     
     private void OnFacebookLogin(ILoginResult result)
     {
@@ -119,6 +120,10 @@ namespace ua.org.gdg.devfest
         
         AddStatusText("Calling Firebase LogIn");
         _auth.SignInWithCredentialAsync(credential).ContinueWith(OnFacebookAuthenticationFinished);
+      }
+      else
+      {
+        Utils.ShowMessage("Facebook login failed");
       }
     }
 
@@ -134,7 +139,8 @@ namespace ua.org.gdg.devfest
       else if (task.IsFaulted)
       {
         signInCompleted.SetException(task.Exception);
-        AddStatusText("Got Unexpected Exception?!?" + task.Exception);
+        
+        Utils.ShowMessage("Firebase login failed");
       }
       else
       {
@@ -149,20 +155,7 @@ namespace ua.org.gdg.devfest
     {
       if (task.IsFaulted)
       {
-        using (IEnumerator<System.Exception> enumerator =
-          task.Exception.InnerExceptions.GetEnumerator())
-        {
-          if (enumerator.MoveNext())
-          {
-            GoogleSignIn.SignInException error =
-              (GoogleSignIn.SignInException) enumerator.Current;
-            AddStatusText("Got Error: " + error.Status + " " + error.Message);
-          }
-          else
-          {
-            AddStatusText("Got Unexpected Exception?!?" + task.Exception);
-          }
-        }
+        Utils.ShowMessage("Google plus login failed");
       }
       else if (task.IsCanceled)
       {
@@ -183,6 +176,7 @@ namespace ua.org.gdg.devfest
           }
           else if (authTask.IsFaulted)
           {
+            Utils.ShowMessage("Firebase login failed");
             signInCompleted.SetException(authTask.Exception);
           }
           else
