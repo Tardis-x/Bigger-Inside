@@ -78,7 +78,6 @@ namespace ua.org.gdg.devfest
     public void OnContentPlaced(GameObject environment)
     {
       _planeFinder.SetActive(false);
-      _uiManager.ShowARCorePanel(true);
     }
 
     private void Update()
@@ -128,6 +127,18 @@ namespace ua.org.gdg.devfest
       SubtractStar();
       SubtractBrain();
       AskQuestion();
+    }
+
+    public void OnTrackingLost()
+    {
+      _planeFinder.gameObject.SetActive(ARCoreHelper.CheckArCoreSupport());
+      PauseGame();
+    }
+
+    public void OnTrackingFound()
+    {
+      _planeFinder.gameObject.SetActive(false);
+      ResumeGame();
     }
 
     //---------------------------------------------------------------------
@@ -242,6 +253,16 @@ namespace ua.org.gdg.devfest
     private void ResetStars()
     {
       _starsCount.ResetValue();
+    }
+    
+    private void PauseGame()
+    {
+      Time.timeScale = 0;
+    }
+
+    private void ResumeGame()
+    {
+      Time.timeScale = 1;
     }
   }
 }
