@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
+using Vuforia;
 
 namespace ua.org.gdg.devfest
 {
@@ -18,6 +20,7 @@ namespace ua.org.gdg.devfest
     [Header("Overlay UI")] 
     [SerializeField] private HealthTimePanelScript _healthTimePanel;
     [SerializeField] private ARCorePanelScript _arCorePanel;
+    [SerializeField] private Text _hintText;
 
     [Space] 
     [Header("Virtual Buttons")] 
@@ -40,6 +43,24 @@ namespace ua.org.gdg.devfest
     private void Start()
     {
       ButtonsToPauseMode();
+      ShowHint(ARCoreHelper.CheckArCoreSupport());
+    }
+
+    public void OnContentPlaced(GameObject environment)
+    {
+      ShowARCorePanel(true);
+      ShowHint(false);
+    }
+    
+    public void OnAutomaticHitTest(HitTestResult hitTestResult)
+    {
+      if (hitTestResult == null)
+      {
+        ShowHint(true);
+        return;
+      }
+						
+      ShowHint(false);
     }
     
     //---------------------------------------------------------------------
@@ -71,6 +92,19 @@ namespace ua.org.gdg.devfest
     {
       ButtonsToPlayMode();
       _healthTimePanel.StartCountdown(_timeForAnswer);
+    }
+
+    public void OnTrackingLost()
+    {
+      ShowHint(ARCoreHelper.CheckArCoreSupport());
+      ShowARCorePanel(false);
+    }
+
+    public void OnTrackingFound()
+    {
+      ShowARCorePanel(ARCoreHelper.CheckArCoreSupport());
+      ShowHint(false);
+      
     }
 
     //-----------------------------------------------
@@ -166,6 +200,11 @@ namespace ua.org.gdg.devfest
       _playVirtualButton.SetVirtualButtonMaterial(_playButtonMaterial);
       _playVirtualButton.SetButtonEnabled(true);
       _arCorePanel.ShowPlayButton(true);
+    }
+
+    private void ShowHint(bool value)
+    {
+      _hintText.gameObject.SetActive(value);
     }
   }
 }

@@ -37,8 +37,6 @@ namespace ua.org.gdg.devfest
 			EnableObjectClick(false);
 			
 			_planeFinder.SetActive(true);
-			// _planeFinder.GetComponent<PlaneFinderBehaviour>().OnAutomaticHitTest.AddListener(OnAutomaticHitTest);
-			
 		}
 		
 		//---------------------------------------------------------------------
