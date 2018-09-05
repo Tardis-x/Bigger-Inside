@@ -11,15 +11,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bca426c076bc4a85953f39bd5507053, type: 3}
   m_Name: GetSocialSettings
   m_EditorClassIdentifier: 
-  _appId: LuDPp7W0J4
+  _appId: MI99maK87Rs
   _isAutoRegisrationForPushesEnabled: 1
   _isForegroundNotificationsEnabled: 0
   _autoInitEnabled: 1
   _useGetSocialUi: 1
   _getSocialDefaultConfigurationFilePath: 
   _iosPushEnvironment: 
-  _deeplinkingDomains: []
-  _isAndroidEnabled: 0
+  _deeplinkingDomains:
+  - dfuaquestapp.gsc.im
+  - dfuaquestapp-gsalt.gsc.im
+  _isAndroidEnabled: 1
   _isIosEnabled: 0
   _isIosPushEnabled: 0
   _isAndroidPushEnabled: 0
