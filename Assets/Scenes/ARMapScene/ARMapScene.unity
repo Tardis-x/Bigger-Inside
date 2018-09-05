@@ -174,18 +174,18 @@ MonoBehaviour:
   m_Script: {fileID: 422107450, guid: bab6fa851cf5a1a4bba3cec5f191cb8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlaneIndicator: {fileID: 1353731089078378, guid: b9ed12c68682d5b49bfa70ee9d71602d,
+  PlaneIndicator: {fileID: 1353731089078378, guid: 2b7570185dbbf8a498c89ee13d8bd995,
     type: 2}
   Height: 1.4
   OnInteractiveHitTest:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 48566466}
-        m_MethodName: PositionContentAtPlaneAnchor
+      - m_Target: {fileID: 1046727952}
+        m_MethodName: OnInteractiveHitTest
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

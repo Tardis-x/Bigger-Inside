@@ -72,6 +72,13 @@ namespace ua.org.gdg.devfest
 						
 			_hint.gameObject.SetActive(false);
 		}
+
+		public void OnInteractiveHitTest(HitTestResult hitTestResult)
+		{
+			if (isFirebaseUIActive()) return;
+			
+			_planeFinder.GetComponent<ContentPositioningBehaviour>().PositionContentAtPlaneAnchor(hitTestResult);
+		}
 		
 		//---------------------------------------------------------------------
 		// Internal
@@ -90,10 +97,10 @@ namespace ua.org.gdg.devfest
 			}
 		}
 
-		private void ShowFirebaseUI(bool value)
+		private bool isFirebaseUIActive()
 		{
-			_descriptionPanel.SetActive(value);
-			_schedulePanel.SetActive(value);
+			return _descriptionPanel.activeSelf ||
+			       _schedulePanel.activeSelf;
 		}
 
 		private void EnableObjectClick()
