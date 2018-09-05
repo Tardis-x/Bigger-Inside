@@ -99,7 +99,15 @@ namespace ua.org.gdg.devfest
       ResetVariables();
       Time.timeScale = 1;
     }
-    
+
+    private void Update()
+    {
+      if (Input.GetKeyDown(KeyCode.Escape))
+      {
+        SceneManager.LoadScene(Scenes.SCENE_MENU);
+      }
+    }
+
     //---------------------------------------------------------------------
     // Helpers
     //---------------------------------------------------------------------
