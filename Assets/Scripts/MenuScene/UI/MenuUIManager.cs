@@ -49,5 +49,10 @@ namespace ua.org.gdg.devfest
 		{
 			CurrentDay = day;
 		}
+
+		public void OpenTermsAndServicesURL()
+		{
+			Application.OpenURL("https://devfest.gdg.org.ua/terms-and-services");
+		}
 	}
 }
