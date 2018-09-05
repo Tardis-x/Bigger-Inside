@@ -31,12 +31,18 @@ namespace ua.org.gdg.devfest
 
 		public void OnTrackingLost()
 		{
-			ShowFirebaseUI(false);		
-			_hint.gameObject.SetActive(true);
-			
-			EnableObjectClick(false);
-			
-			_planeFinder.SetActive(true);
+			var arCoreSupport = ARCoreHelper.CheckArCoreSupport();
+								
+			_hint.gameObject.SetActive(arCoreSupport);
+			_planeFinder.SetActive(arCoreSupport);
+			EnableObjectClick(false);			
+		}
+
+		public void OnTrackingFound()
+		{
+			_planeFinder.SetActive(false);
+			ShowHint(false);
+			Invoke("EnableObjectClick", 0.5f);
 		}
 		
 		//---------------------------------------------------------------------
@@ -53,7 +59,6 @@ namespace ua.org.gdg.devfest
 		{
 			_planeFinder.SetActive(false);
 			ShowHint(false);
-			ShowFirebaseUI(false);
 			Invoke("EnableObjectClick", 0.5f);
 		}
 

@@ -104,7 +104,6 @@ namespace ua.org.gdg.devfest
     {
       ShowARCorePanel(ARCoreHelper.CheckArCoreSupport());
       ShowHint(false);
-      
     }
 
     //-----------------------------------------------
@@ -120,27 +119,6 @@ namespace ua.org.gdg.devfest
       ButtonsToPlayMode();
     }
 
-    public void ButtonsToPlayMode()
-    {
-      HidePlayButton();
-      ShowAnswerButton();
-      ShowHitButton();
-    }
-
-    public void ButtonsToPauseMode()
-    {
-      ShowPlayButton();
-      HideAnswerButton();
-      HideHitButton();
-    }
-
-    public void ToAnswerMode()
-    {
-      HideAnswerButton();
-      HideHitButton();
-      _healthTimePanel.PauseCountDown(true);
-    }
-
     public void SubstractBrain()
     {
       _healthTimePanel.SubtractBrain();
@@ -151,14 +129,35 @@ namespace ua.org.gdg.devfest
       _healthTimePanel.SubtractStar();
     }
 
-    public void ShowARCorePanel(bool value)
-    {
-      _arCorePanel.gameObject.SetActive(value);
-    }
-
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
+    
+    private void ButtonsToPlayMode()
+    {
+      HidePlayButton();
+      ShowAnswerButton();
+      ShowHitButton();
+    }
+
+    private void ButtonsToPauseMode()
+    {
+      ShowPlayButton();
+      HideAnswerButton();
+      HideHitButton();
+    }
+
+    private void ToAnswerMode()
+    {
+      HideAnswerButton();
+      HideHitButton();
+      _healthTimePanel.PauseCountDown(true);
+    }
+    
+    private void ShowARCorePanel(bool value)
+    {
+      _arCorePanel.gameObject.SetActive(value);
+    }
 
     private void HideHitButton()
     {
