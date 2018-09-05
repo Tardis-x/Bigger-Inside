@@ -146,7 +146,6 @@ namespace ua.org.gdg.devfest
 
       foreach (var ts in _schedule.Days[day - 1].Timeslots)
       {
-        
         var items = ts.Sessions.SelectMany(s => s.Items);
         string timespan = GetTimespanText(ts.StartTime, ts.EndTime);
         
