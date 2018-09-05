@@ -42,5 +42,10 @@ namespace ua.org.gdg.devfest
 			_descriptionPanel.SetActive(true);
 			_descriptionPanel.SetData(speech.GetComponent<SpeechItemScript>().GetDescription());
 		}
+
+		public void OpenTermsAndServicesURL()
+		{
+			Application.OpenURL("https://devfest.gdg.org.ua/terms-and-services");
+		}
 	}
 }
