@@ -15,7 +15,7 @@ namespace ua.org.gdg.devfest
 
     private void Start()
     {
-      _scheduleRequest = new WWW(SCHEDULE_URL);// + "/" + SCHEDULE_DAY_1_NAME);
+      _scheduleRequest = new WWW(SCHEDULE_URL);
       StartCoroutine(OnScheduleResponse(_scheduleRequest));
       _sessionRequest = new WWW(SESSIONS_URL);
       StartCoroutine(OnSessionResponse(_sessionRequest));
@@ -146,6 +146,7 @@ namespace ua.org.gdg.devfest
 
       foreach (var ts in _schedule.Days[day - 1].Timeslots)
       {
+        
         var items = ts.Sessions.SelectMany(s => s.Items);
         string timespan = GetTimespanText(ts.StartTime, ts.EndTime);
         
@@ -204,9 +205,9 @@ namespace ua.org.gdg.devfest
         
         List<SpeechItemModel> speeches = new List<SpeechItemModel>();
         
-        foreach (var item in items)
+        for (int i = 0; i < items.Count; i++)
         {
-          var session = _sessions[item];
+          var session = _sessions[items[i]];
 
           var speaker = session.Speakers.Count > 0 ? 
             (session.Speakers[0] != null ? _speakers[session.Speakers[0]] : null) : null;
@@ -226,7 +227,7 @@ namespace ua.org.gdg.devfest
               Title = session.Title,
               Speaker = speaker,
               Complexity = session.Complexity,
-              Hall = ts.Sessions.First(s => s.Items.Contains(item)).Hall,
+              Hall = sessions.First(s => s.Items.Contains(items[i])).Hall,
               Language = session.Language,
               DateReadable = _daySchedule.DateReadable,
               ImageUrl = session.ImageUrl
