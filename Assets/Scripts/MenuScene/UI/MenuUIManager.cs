@@ -18,6 +18,8 @@ namespace ua.org.gdg.devfest
 		// Public
 		//---------------------------------------------------------------------
 
+		public int CurrentDay = 1;
+
 		public void ShowSignInPanel()
 		{
 			_signInPanel.SetActive(true);
@@ -34,13 +36,18 @@ namespace ua.org.gdg.devfest
 		public void ShowSchedule()
 		{
 			_menuPanel.SetActive(false);
-			_schedulePanel.EnablePanel(1);
+			_schedulePanel.EnablePanel(CurrentDay);
 		}
 		
 		public void ShowSpeechDescription(GameObject speech)
 		{
 			_descriptionPanel.SetActive(true);
 			_descriptionPanel.SetData(speech.GetComponent<SpeechItemScript>().GetDescription());
+		}
+
+		public void SetCurrentDay(int day)
+		{
+			CurrentDay = day;
 		}
 	}
 }

@@ -4802,6 +4802,7 @@ GameObject:
   - component: {fileID: 1176905101}
   - component: {fileID: 1176905102}
   - component: {fileID: 1176905103}
+  - component: {fileID: 1176905104}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -4932,6 +4933,7 @@ MonoBehaviour:
   _descriptionPanel: {fileID: 864795197}
   _userPopUp: {fileID: 39339437}
   _schedulePanel: {fileID: 561165241}
+  CurrentDay: 1
 --- !u!114 &1176905100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5026,6 +5028,34 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &1176905104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1176905092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac369d564858eb24da8848f6b3628e31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: bba508044a940b045b563b61955ac345, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1176905099}
+        m_MethodName: SetCurrentDay
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: ua.org.gdg.devfest.IntUnityEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &1188813203
 GameObject:
