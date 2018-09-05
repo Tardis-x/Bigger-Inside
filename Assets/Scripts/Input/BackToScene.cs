@@ -10,8 +10,8 @@ namespace ua.org.gdg.devfest
 		// Update is called once per frame
 		void Update()
 		{
-			if (Input.GetKeyDown(KeyCode.Escape) && !PanelManager.Instance.SchedulePanel.Active
-			    && !PanelManager.Instance.SpeechDescriptionPanel.Active) SceneManager.LoadScene(SceneToGoBackTo);
+			if (Input.GetKeyDown(KeyCode.Escape) && !PanelManager.Instance.SchedulePanelNew.Active
+			    && !PanelManager.Instance.SpeechDescriptionPanelNew.Active) SceneManager.LoadScene(SceneToGoBackTo);
 		}
 	}
 }
