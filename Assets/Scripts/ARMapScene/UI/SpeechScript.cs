@@ -62,8 +62,7 @@ namespace ua.org.gdg.devfest
     
     public override void Interact()
     {
-      PanelManager.Instance.SpeechDescriptionPanel.SetActive(true);
-      PanelManager.Instance.SpeechDescriptionPanel.SetData(_description);
+      
     }
 
     public override void Disable()

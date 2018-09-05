@@ -50,7 +50,7 @@ namespace ua.org.gdg.devfest
 
     private void Update()
     {
-      if (Input.GetKeyDown(KeyCode.Escape) && !PanelManager.Instance.SpeechDescriptionPanel.Active) DisablePanel();
+      if (Input.GetKeyDown(KeyCode.Escape) && !PanelManager.Instance.SpeechDescriptionPanelNew.Active) DisablePanel();
     }
 
     //---------------------------------------------------------------------
