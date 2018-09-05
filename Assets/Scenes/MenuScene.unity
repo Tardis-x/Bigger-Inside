@@ -4850,6 +4850,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6e86ea296391a84a827ff210e464f6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _defaultUserAvatar: {fileID: 2800000, guid: 7048542c7615ecd47b977d485d63c2cd, type: 3}
+  _userAvatar: {fileID: 803005976}
 --- !u!114 &1176905096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4906,6 +4908,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1176905096}
         m_MethodName: OnLogout
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1176905095}
+        m_MethodName: SetDefaultUserAvatar
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7990,7 +8003,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1176905093}
-        m_MethodName: OnSignIn
+        m_MethodName: OnGoogleSignIn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

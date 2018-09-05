@@ -8,7 +8,26 @@ namespace ua.org.gdg.devfest
 {
 	public class ImageLoader : MonoBehaviour
 	{
+		//---------------------------------------------------------------------
+		// Editor
+		//---------------------------------------------------------------------
 
+		[SerializeField] private Texture _defaultUserAvatar;
+		[SerializeField] private RawImage _userAvatar;
+		
+		//---------------------------------------------------------------------
+		// Public
+		//---------------------------------------------------------------------
+
+		public void SetDefaultUserAvatar()
+		{
+			_userAvatar.texture = _defaultUserAvatar;
+		}
+		
+		//---------------------------------------------------------------------
+		// Helpers
+		//---------------------------------------------------------------------
+		
 		private void Awake()
 		{
 			LOGO_BASE_PATH = Application.persistentDataPath + "Graphics/Logo";
