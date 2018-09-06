@@ -9,22 +9,6 @@ namespace ua.org.gdg.devfest
 	public class ImageLoader : MonoBehaviour
 	{
 		//---------------------------------------------------------------------
-		// Editor
-		//---------------------------------------------------------------------
-
-		[SerializeField] private Texture _defaultUserAvatar;
-		[SerializeField] private RawImage _userAvatar;
-		
-		//---------------------------------------------------------------------
-		// Public
-		//---------------------------------------------------------------------
-
-		public void SetDefaultUserAvatar()
-		{
-			_userAvatar.texture = _defaultUserAvatar;
-		}
-		
-		//---------------------------------------------------------------------
 		// Helpers
 		//---------------------------------------------------------------------
 		
