@@ -29,8 +29,7 @@ namespace ua.org.gdg.devfest
     // Editor
     //---------------------------------------------------------------------
 
-    [SerializeField] private RawImage _userAvatar;
-    [SerializeField] private ImageLoader _loader;
+    [SerializeField] private GameEvent _showMenu;
     [SerializeField] private GameEvent _signedIn;
     
     public Text statusText;
@@ -75,7 +74,7 @@ namespace ua.org.gdg.devfest
     {
       
       GoogleSignIn.DefaultInstance.SignIn().ContinueWith(
-        OnAuthenticationFinished);
+        OnGoogleAuthenticationFinished);
     }
 
     public void OnFacebookSignIn()
@@ -145,13 +144,13 @@ namespace ua.org.gdg.devfest
       else
       {
         signInCompleted.SetResult(task.Result);
-        _loader.LoadImage(task.Result.PhotoUrl.AbsolutePath, _userAvatar);
         AddStatusText("Welcome: " + task.Result.DisplayName + "!");
         _signedIn.Raise();
+        _showMenu.Raise();
       }
     }
 
-    private void OnAuthenticationFinished(Task<GoogleSignInUser> task)
+    private void OnGoogleAuthenticationFinished(Task<GoogleSignInUser> task)
     {
       if (task.IsFaulted)
       {
@@ -184,7 +183,7 @@ namespace ua.org.gdg.devfest
             signInCompleted.SetResult(authTask.Result);
             AddStatusText("Firebase user: " + authTask.Result.DisplayName);
             _signedIn.Raise();
-           _loader.LoadImage(authTask.Result.PhotoUrl.AbsolutePath, _userAvatar);
+           _showMenu.Raise();
           }
         });
       }

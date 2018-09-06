@@ -4822,9 +4822,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad23e63bfb06a4657a8fbcc5d668487a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _userAvatar: {fileID: 803005976}
-  _loader: {fileID: 1176905095}
-  _signedIn: {fileID: 11400000, guid: f2156674dc5d5254c8a4378a23b7b0ed, type: 2}
+  _showMenu: {fileID: 11400000, guid: f2156674dc5d5254c8a4378a23b7b0ed, type: 2}
+  _signedIn: {fileID: 11400000, guid: fca2f201e2263674b8b427fc4ee0d265, type: 2}
   statusText: {fileID: 1870366015}
   webClientId: 926000437499-djlmvbahmfs2im5tjd69gf5mrs0sknda.apps.googleusercontent.com
 --- !u!4 &1176905094
@@ -5082,6 +5081,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultUserAvatar: {fileID: 2800000, guid: 7048542c7615ecd47b977d485d63c2cd, type: 3}
   _userAvatar: {fileID: 803005976}
+  _imageLoader: {fileID: 1176905095}
 --- !u!1 &1188813203
 GameObject:
   m_ObjectHideFlags: 0
