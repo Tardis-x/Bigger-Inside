@@ -20,10 +20,14 @@ namespace ua.org.gdg.devfest
 
 		[Space] 
 		[Header("UI")] 
-		[SerializeField] private GameObject _descriptionPanel;
-		[SerializeField] private GameObject _schedulePanel;
+		[SerializeField] private PanelManager _firebasePanel;
 		[SerializeField] private ObjectClick _objectClick;
 		[SerializeField] private Text _hint;
+
+		[Space]
+		[Header("Cameras")]
+		[SerializeField] private Camera _arCamera;
+		[SerializeField] private Camera _mainCamera;
 		
 		//---------------------------------------------------------------------
 		// Events
@@ -49,9 +53,15 @@ namespace ua.org.gdg.devfest
 		// Messages
 		//---------------------------------------------------------------------
 
+		private void Awake()
+		{
+			LoadResources(ARCoreHelper.CheckArCoreSupport());
+		}
+
 		private void Start()
 		{
 			var arCoreSupport = ARCoreHelper.CheckArCoreSupport();
+			EnableARCamera();
 			PrepareScene(arCoreSupport);
 		}
 
@@ -75,7 +85,7 @@ namespace ua.org.gdg.devfest
 
 		public void OnInteractiveHitTest(HitTestResult hitTestResult)
 		{
-			if (isFirebaseUIActive()) return;
+			if (_firebasePanel.IsPanelActive()) return;
 			
 			_planeFinder.GetComponent<ContentPositioningBehaviour>().PositionContentAtPlaneAnchor(hitTestResult);
 		}
@@ -83,6 +93,19 @@ namespace ua.org.gdg.devfest
 		//---------------------------------------------------------------------
 		// Internal
 		//---------------------------------------------------------------------
+
+		private void LoadResources(bool arCoreSupport)
+		{
+			if (arCoreSupport)
+			{
+				_planeFinder.GetComponent<ContentPositioningBehaviour>().AnchorStage =
+					Resources.Load<AnchorBehaviour>("ARMap/GroundPlaneStage");
+			}
+			else
+			{
+				_environment = Resources.Load<GameObject>("ARMap/Environment");
+			}
+		}
 		
 		private void PrepareScene(bool arCoreSupport)
 		{
@@ -93,21 +116,21 @@ namespace ua.org.gdg.devfest
 			if (!arCoreSupport)
 			{
 				Instantiate(_environment, _imageTarget.transform);  
-				EnableObjectClick();
+				EnableObjectClick(true);
 			}
 		}
 
-		private bool isFirebaseUIActive()
+		private void EnableARCamera()
 		{
-			return _descriptionPanel.activeSelf ||
-			       _schedulePanel.activeSelf;
+			_arCamera.gameObject.SetActive(true);
+			_mainCamera.gameObject.SetActive(false);
 		}
-
+		
 		private void EnableObjectClick()
 		{
 			_objectClick.IsInteractable = true;
 		}
-	
+
 		private void EnableObjectClick(bool value)
 		{
 			_objectClick.IsInteractable = value;
