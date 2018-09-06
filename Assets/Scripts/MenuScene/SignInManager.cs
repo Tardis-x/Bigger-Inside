@@ -1,29 +1,12 @@
-﻿// <copyright file="SigninSampleScript.cs" company="Google Inc.">
-// Copyright (C) 2017 Google Inc. All Rights Reserved.
-//
-//  Licensed under the Apache License, Version 2.0 (the "License");
-//  you may not use this file except in compliance with the License.
-//  You may obtain a copy of the License at
-//
-//  http://www.apache.org/licenses/LICENSE-2.0
-//
-//  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an "AS IS" BASIS,
-//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//  See the License for the specific language governing permissions and
-//  limitations
-
-using Facebook.Unity;
-using System.Collections.Generic;
+﻿using Facebook.Unity;
 using System.Threading.Tasks;
 using Google;
 using UnityEngine;
-using UnityEngine.UI;
 using Firebase.Auth;
 
 namespace ua.org.gdg.devfest
 {
-  public class SigninManager : MonoBehaviour
+  public class SignInManager : MonoBehaviour
   {
     //---------------------------------------------------------------------
     // Editor
@@ -32,9 +15,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] private GameEvent _showMenu;
     [SerializeField] private GameEvent _signIn;
     [SerializeField] private GameEvent _signInFinished;
-    
-    
-    public Text statusText;
+
     public string webClientId;
 
     public bool UserSignedIn
@@ -48,11 +29,7 @@ namespace ua.org.gdg.devfest
     
     private GoogleSignInConfiguration configuration;
     private FirebaseAuth _auth;
-    private List<string> _messages = new List<string>();
 
-
-    // Defer the configuration creation until Awake so the web Client ID
-    // Can be set via the property inspector in the Editor.
     //---------------------------------------------------------------------
     // Messages
     //---------------------------------------------------------------------
@@ -80,27 +57,23 @@ namespace ua.org.gdg.devfest
     public void OnGoogleSignIn()
     {
       _signIn.Raise();
-      GoogleSignIn.DefaultInstance.SignIn().ContinueWith(
-        OnGoogleAuthenticationFinished);
+      GoogleSignIn.DefaultInstance.SignIn().ContinueWith(OnGoogleAuthenticationFinished);
     }
 
     public void OnFacebookSignIn()
     {
       _signIn.Raise();
-      AddStatusText("Calling FB SignIn");
       FB.LogInWithReadPermissions(callback:OnFacebookLogin);
     }
     
-    public void OnSignOut()
+    public void Logout()
     {
-      AddStatusText("Calling SignOut");
-      GoogleSignIn.DefaultInstance.SignOut();
-    }
-
-    public void OnDisconnect()
-    {
-      AddStatusText("Calling Disconnect");
-      GoogleSignIn.DefaultInstance.Disconnect();
+      if (FirebaseAuth.DefaultInstance.CurrentUser == null) return;
+      
+      FirebaseAuth.DefaultInstance.SignOut();
+      
+      if(FB.IsLoggedIn) FB.LogOut();
+      else GoogleSignIn.DefaultInstance.SignOut();
     }
 
     //---------------------------------------------------------------------
@@ -121,11 +94,8 @@ namespace ua.org.gdg.devfest
     {
       if (FB.IsLoggedIn)
       {
-        AddStatusText("FB is LoggedIn");
         var token = AccessToken.CurrentAccessToken.TokenString;
         var credential = FacebookAuthProvider.GetCredential(token);
-        
-        AddStatusText("Calling Firebase LogIn");
         _auth.SignInWithCredentialAsync(credential).ContinueWith(OnFacebookAuthenticationFinished);
       }
       else
@@ -141,14 +111,12 @@ namespace ua.org.gdg.devfest
       if (task.IsCanceled)
       {
         signInCompleted.SetCanceled();
-        AddStatusText("Canceled");
         
         SignInFinished();
       }
       else if (task.IsFaulted)
       {
         signInCompleted.SetException(task.Exception);
-        
         Utils.ShowMessage("Firebase login failed");
         
         SignInFinished();
@@ -156,7 +124,6 @@ namespace ua.org.gdg.devfest
       else
       {
         signInCompleted.SetResult(task.Result);
-        AddStatusText("Welcome: " + task.Result.DisplayName + "!");
         
         SignInFinished();
       }
@@ -169,22 +136,17 @@ namespace ua.org.gdg.devfest
       if (task.IsFaulted)
       {
         Utils.ShowMessage("Google plus login failed");
-        
         SignInFinished();
       }
       else if (task.IsCanceled)
       {
-        AddStatusText("Canceled");
-        
         SignInFinished();
       }
       else
       {
-        AddStatusText("Welcome: " + task.Result.DisplayName + "!");
-        
         var signInCompleted = new TaskCompletionSource<FirebaseUser>();
-
         var credential = GoogleAuthProvider.GetCredential(task.Result.IdToken, null);
+        
         _auth.SignInWithCredentialAsync(credential).ContinueWith(authTask =>
         {
           if (authTask.IsCanceled)
@@ -203,8 +165,7 @@ namespace ua.org.gdg.devfest
           else
           {
             signInCompleted.SetResult(authTask.Result);
-            AddStatusText("Firebase user: " + authTask.Result.DisplayName);
-
+            
             SignInFinished();
           }
         });
@@ -215,23 +176,6 @@ namespace ua.org.gdg.devfest
     {
       _signInFinished.Raise();
       _showMenu.Raise();
-    }
-
-    private void AddStatusText(string text)
-    {
-      if (_messages.Count == 5)
-      {
-        _messages.RemoveAt(0);
-      }
-
-      _messages.Add(text);
-      var txt = "";
-      foreach (string s in _messages)
-      {
-        txt += "\n" + s;
-      }
-
-      statusText.text = txt;
     }
   }
 }

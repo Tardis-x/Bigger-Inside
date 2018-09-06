@@ -35,14 +35,6 @@ namespace ua.org.gdg.devfest
         Destroy(item.gameObject);
       }
     }
-
-    private void DisablePanel()
-    {
-      Active = false;
-      ClearContent();
-      gameObject.SetActive(false);
-    }
-    
    
     private void AddContentItem(TimeslotScript contentItem)
     {
@@ -53,6 +45,13 @@ namespace ua.org.gdg.devfest
     // Public
     //---------------------------------------------------------------------
 
+    public void DisablePanel()
+    {
+      Active = false;
+      ClearContent();
+      gameObject.SetActive(false);
+    }
+    
     public void OnBackButtonClick()
     {
       _showMenu.Raise();

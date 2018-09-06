@@ -20,7 +20,7 @@ public class QuestPhotoController : MonoBehaviour
 	public string imageUrl;
 	byte[] imageBytes;
 	string pictureNameInStorage;
-	SigninManager signIn;
+	SignInManager signIn;
 	public Text _cameraText;
 	string _photoComment;
 	[SerializeField] Camera _mainCamera;

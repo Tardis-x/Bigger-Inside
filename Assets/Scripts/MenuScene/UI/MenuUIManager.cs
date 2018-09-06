@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using DeadMosquito.AndroidGoodies;
+﻿using System;
+using UnityEngine;
 
 namespace ua.org.gdg.devfest
 {
@@ -13,21 +13,7 @@ namespace ua.org.gdg.devfest
 		[SerializeField] private GameObject _menuPanel;
 		[SerializeField] private DescriptionPanelScript _descriptionPanel;
 		[SerializeField] private SchedulePanelScript _schedulePanel;
-		
-#if UNITY_ANDROID
-		private AGProgressDialog _loginSpinner;
-#endif
-		
-		//---------------------------------------------------------------------
-		// Messages
-		//---------------------------------------------------------------------
-
-		private void Awake()
-		{
-#if UNITY_ANDROID
-			_loginSpinner = AGProgressDialog.CreateSpinnerDialog("Please wait", "Signing in...", AGDialogTheme.Dark);
-#endif
-		}
+		[SerializeField] private ScenesManager _scenesManager;
 
 		//---------------------------------------------------------------------
 		// Public
@@ -43,8 +29,19 @@ namespace ua.org.gdg.devfest
 
 		public void ShowMenu()
 		{
+			if(_scenesManager.SceneToGo != String.Empty) return;
 			_signInPanel.SetActive(false);
 			_descriptionPanel.SetActive(false);
+			_schedulePanel.DisablePanel();
+			_menuPanel.SetActive(true);
+		}
+
+		public void OnBackToMenuButtonClick()
+		{
+			_scenesManager.ResetSceneToGo();
+			_signInPanel.SetActive(false);
+			_descriptionPanel.SetActive(false);
+			_schedulePanel.DisablePanel();
 			_menuPanel.SetActive(true);
 		}
 
@@ -63,20 +60,6 @@ namespace ua.org.gdg.devfest
 		public void SetCurrentDay(int day)
 		{
 			CurrentDay = day;
-		}
-
-		public void OnSignIn()
-		{
-#if UNITY_ANDROID
-			//_loginSpinner.Show();
-#endif
-		}
-
-		public void OnSignInFinished()
-		{
-#if UNITY_ANDROID
-			//_loginSpinner.Dismiss();
-#endif
 		}
 	}
 }

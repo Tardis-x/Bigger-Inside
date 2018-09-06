@@ -51,6 +51,7 @@ public class QuestManager : MonoBehaviour
 		var spinner = AGProgressDialog.CreateSpinnerDialog("Please wait", "Updating Quest Data...", AGDialogTheme.Dark);
 		spinner.Show();
 #endif
+		
 		_questUi.FadeQuestScreenIn();
 		firebaseData.database.Child("users").Child(firebaseData.currentUserUserId).GetValueAsync().ContinueWith(
 			readTask =>
