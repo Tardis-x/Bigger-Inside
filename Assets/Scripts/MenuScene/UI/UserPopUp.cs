@@ -23,8 +23,8 @@ namespace ua.org.gdg.devfest
 		// Internal
 		//---------------------------------------------------------------------
 
-		private bool _active;
-		
+		public bool Active { get; set; }
+
 		//---------------------------------------------------------------------
 		// Helpers
 		//---------------------------------------------------------------------
@@ -63,8 +63,8 @@ namespace ua.org.gdg.devfest
 
 		public void Toggle()
 		{
-			_active = !_active;
-			if(_active) Show();
+			Active = !Active;
+			if(Active) Show();
 			else Hide();
 		}
 
@@ -72,14 +72,14 @@ namespace ua.org.gdg.devfest
 		{
 			SetSignInButton(FirebaseAuth.DefaultInstance.CurrentUser != null);
 
-			_active = true;
+			Active = true;
 			_fadeImage.FadeOut();
 			_signInOutButton.enabled = true;
 		}
 
 		public void Hide()
 		{
-			_active = false;
+			Active = false;
 			_fadeImage.FadeIn();
 			_signInOutButton.enabled = false;
 		}

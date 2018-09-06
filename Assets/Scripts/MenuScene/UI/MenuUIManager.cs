@@ -14,7 +14,8 @@ namespace ua.org.gdg.devfest
 		[SerializeField] private DescriptionPanelScript _descriptionPanel;
 		[SerializeField] private SchedulePanelScript _schedulePanel;
 		[SerializeField] private ScenesManager _scenesManager;
-
+		[SerializeField] private UserPopUp _userPopUp;
+		
 		//---------------------------------------------------------------------
 		// Public
 		//---------------------------------------------------------------------
@@ -25,6 +26,7 @@ namespace ua.org.gdg.devfest
 		{
 			_signInPanel.SetActive(true);
 			_menuPanel.SetActive(false);
+			if(_userPopUp.Active) _userPopUp.Hide();
 		}
 
 		public void ShowMenu()
