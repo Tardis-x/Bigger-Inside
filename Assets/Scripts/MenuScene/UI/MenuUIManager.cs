@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using DeadMosquito.AndroidGoodies;
 
 namespace ua.org.gdg.devfest
 {
@@ -11,9 +12,23 @@ namespace ua.org.gdg.devfest
 		[SerializeField] private GameObject _signInPanel;
 		[SerializeField] private GameObject _menuPanel;
 		[SerializeField] private DescriptionPanelScript _descriptionPanel;
-		[SerializeField] private UserPopUp _userPopUp;
 		[SerializeField] private SchedulePanelScript _schedulePanel;
 		
+#if UNITY_ANDROID
+		private AGProgressDialog _loginSpinner;
+#endif
+		
+		//---------------------------------------------------------------------
+		// Messages
+		//---------------------------------------------------------------------
+
+		private void Awake()
+		{
+#if UNITY_ANDROID
+			_loginSpinner = AGProgressDialog.CreateSpinnerDialog("Please wait", "Signing in...", AGDialogTheme.Dark);
+#endif
+		}
+
 		//---------------------------------------------------------------------
 		// Public
 		//---------------------------------------------------------------------
@@ -48,6 +63,20 @@ namespace ua.org.gdg.devfest
 		public void SetCurrentDay(int day)
 		{
 			CurrentDay = day;
+		}
+
+		public void OnSignIn()
+		{
+#if UNITY_ANDROID
+			//_loginSpinner.Show();
+#endif
+		}
+
+		public void OnSignInFinished()
+		{
+#if UNITY_ANDROID
+			//_loginSpinner.Dismiss();
+#endif
 		}
 	}
 }
