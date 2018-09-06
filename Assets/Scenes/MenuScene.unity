@@ -4799,6 +4799,7 @@ GameObject:
   - component: {fileID: 1176905101}
   - component: {fileID: 1176905105}
   - component: {fileID: 1176905098}
+  - component: {fileID: 1176905106}
   - component: {fileID: 1176905097}
   - component: {fileID: 1176905100}
   - component: {fileID: 1176905102}
@@ -5082,6 +5083,34 @@ MonoBehaviour:
   _defaultUserAvatar: {fileID: 2800000, guid: 7048542c7615ecd47b977d485d63c2cd, type: 3}
   _userAvatar: {fileID: 803005976}
   _imageLoader: {fileID: 1176905095}
+--- !u!114 &1176905106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1176905092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3318b37b5a34577429583f0b3833dd78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: fca2f201e2263674b8b427fc4ee0d265, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1176905105}
+        m_MethodName: SetUserAvatar
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &1188813203
 GameObject:
   m_ObjectHideFlags: 0

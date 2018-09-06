@@ -25,6 +25,8 @@ public class UserAvatarManager : MonoBehaviour
 
 	public void SetUserAvatar()
 	{
+		if (FirebaseAuth.DefaultInstance.CurrentUser == null) return;
+		
 		_imageLoader.LoadImage(FirebaseAuth.DefaultInstance.CurrentUser.PhotoUrl.OriginalString, _userAvatar);
 	}
 }

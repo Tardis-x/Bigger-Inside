@@ -20,6 +20,7 @@ using Google;
 using UnityEngine;
 using UnityEngine.UI;
 using Firebase.Auth;
+using DeadMosquito.AndroidGoodies;
 
 namespace ua.org.gdg.devfest
 {
@@ -38,7 +39,8 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
-    
+
+    private AGProgressDialog _spinner;
     private GoogleSignInConfiguration configuration;
     private FirebaseAuth _auth;
     private List<string> _messages = new List<string>();
@@ -64,6 +66,8 @@ namespace ua.org.gdg.devfest
       {
         FB.ActivateApp();
       }
+      
+      _spinner = AGProgressDialog.CreateSpinnerDialog("Please wait", "Signing in...", AGDialogTheme.Dark);
     }
     
     //---------------------------------------------------------------------
