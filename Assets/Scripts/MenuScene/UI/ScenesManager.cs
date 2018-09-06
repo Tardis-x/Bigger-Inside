@@ -25,7 +25,7 @@ namespace ua.org.gdg.devfest
     // Public
     //---------------------------------------------------------------------
 
-    [NonSerialized] public string SceneToGo;
+    [NonSerialized] public string SceneToGo = String.Empty;
     
     public void GoToARMap()
     {

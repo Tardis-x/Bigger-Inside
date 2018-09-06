@@ -29,13 +29,14 @@ namespace ua.org.gdg.devfest
     
     private GoogleSignInConfiguration configuration;
     private FirebaseAuth _auth;
+    private ProgressDialogSpinner _signInSpinner;
 
     //---------------------------------------------------------------------
     // Messages
     //---------------------------------------------------------------------
     
     private void Awake()
-    {
+    {     
       ConfigureGoogleSignIn();
 
       _auth = FirebaseAuth.DefaultInstance;
@@ -57,6 +58,7 @@ namespace ua.org.gdg.devfest
     public void OnGoogleSignIn()
     {
       _signIn.Raise();
+      
       GoogleSignIn.DefaultInstance.SignIn().ContinueWith(OnGoogleAuthenticationFinished);
     }
 
@@ -144,33 +146,37 @@ namespace ua.org.gdg.devfest
       }
       else
       {
-        var signInCompleted = new TaskCompletionSource<FirebaseUser>();
         var credential = GoogleAuthProvider.GetCredential(task.Result.IdToken, null);
         
-        _auth.SignInWithCredentialAsync(credential).ContinueWith(authTask =>
-        {
-          if (authTask.IsCanceled)
-          {
-            signInCompleted.SetCanceled();
-            
-            SignInFinished();
-          }
-          else if (authTask.IsFaulted)
-          {
-            Utils.ShowMessage("Firebase login failed");
-            signInCompleted.SetException(authTask.Exception);
-            
-            SignInFinished();
-          }
-          else
-          {
-            signInCompleted.SetResult(authTask.Result);
-            
-            SignInFinished();
-          }
-        });
+        _signInSpinner = new ProgressDialogSpinner("Please wait", "Signing in...");
+        _signInSpinner.Show();
+        
+        _auth.SignInWithCredentialAsync(credential).ContinueWith(OnSignInWithCredentialsFinished);
       }
     }
+
+    private void OnSignInWithCredentialsFinished(Task<FirebaseUser> authTask)
+    {
+      var signInCompleted = new TaskCompletionSource<FirebaseUser>();
+
+      _signInSpinner.Dismiss();
+      SignInFinished();
+
+      if (authTask.IsCanceled)
+      {
+        signInCompleted.SetCanceled();
+      }
+      else if (authTask.IsFaulted)
+      {
+        Utils.ShowMessage("Firebase login failed");
+        signInCompleted.SetException(authTask.Exception);
+      }
+      else
+      {
+        signInCompleted.SetResult(authTask.Result);
+      }
+    }
+
 
     private void SignInFinished()
     {
