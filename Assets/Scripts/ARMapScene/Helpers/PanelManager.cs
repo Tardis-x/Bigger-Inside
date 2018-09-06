@@ -17,5 +17,11 @@ namespace ua.org.gdg.devfest
 			SpeechDescriptionPanelNew.SetActive(true);
 			SpeechDescriptionPanelNew.SetData(speech.GetComponent<SpeechItemScript>().GetDescription());
 		}
+
+		public bool IsPanelActive()
+		{
+			return SchedulePanelNew.gameObject.activeSelf ||
+			       SpeechDescriptionPanelNew.gameObject.activeSelf;
+		}
 	}
 }
