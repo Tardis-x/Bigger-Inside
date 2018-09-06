@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 using Vuforia;
 
@@ -61,7 +62,7 @@ namespace ua.org.gdg.devfest
 		private void Start()
 		{
 			var arCoreSupport = ARCoreHelper.CheckArCoreSupport();
-			EnableARCamera();
+			StartCoroutine(EnableARCamera());
 			PrepareScene(arCoreSupport);
 		}
 
@@ -120,8 +121,10 @@ namespace ua.org.gdg.devfest
 			}
 		}
 
-		private void EnableARCamera()
+		private IEnumerator EnableARCamera()
 		{
+			yield return new WaitForEndOfFrame();
+			
 			_arCamera.gameObject.SetActive(true);
 			_mainCamera.gameObject.SetActive(false);
 		}

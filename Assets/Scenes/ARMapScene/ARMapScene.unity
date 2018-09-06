@@ -222,7 +222,8 @@ MonoBehaviour:
   m_Script: {fileID: 2020821747, guid: bab6fa851cf5a1a4bba3cec5f191cb8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AnchorStage: {fileID: 0}
+  AnchorStage: {fileID: 114644094707623850, guid: 660c1eaabd0c29641933880ec4d24233,
+    type: 2}
   DuplicateStage: 0
   OnContentPlaced:
     m_PersistentCalls:
@@ -3329,7 +3330,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 681b3b4e3d408364492a0af2e0e2f0a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _environment: {fileID: 0}
+  _environment: {fileID: 1787891877112604, guid: a7348097e8610fb4993cca6137d1d38a,
+    type: 2}
   _imageTarget: {fileID: 1964602097}
   _planeFinder: {fileID: 48566465}
   _firebasePanel: {fileID: 355201933}
@@ -3594,33 +3596,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1066471023}
   m_CullTransparentMesh: 0
---- !u!21 &1090639301
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 'IMG_20180815_130256Material
-
-    92010'
-  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 5
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 3d176d2ac2a74e6fab7fee99d29044e9, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats: []
-    m_Colors:
-    - _Color: {r: 0.82089555, g: 0.82089555, b: 0.82089555, a: 1}
 --- !u!1 &1093320131
 GameObject:
   m_ObjectHideFlags: 0
@@ -5576,6 +5551,33 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1831413904}
   m_CullTransparentMesh: 0
+--- !u!21 &1924095942
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 'IMG_20180815_130256Material
+
+    21432'
+  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 3d176d2ac2a74e6fab7fee99d29044e9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 0.82089555, g: 0.82089555, b: 0.82089555, a: 1}
 --- !u!1 &1964602097
 GameObject:
   m_ObjectHideFlags: 0
@@ -5618,7 +5620,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 1090639301}
+  - {fileID: 1924095942}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
