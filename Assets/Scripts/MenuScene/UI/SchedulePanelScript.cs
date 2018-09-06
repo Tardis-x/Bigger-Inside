@@ -117,6 +117,11 @@ namespace ua.org.gdg.devfest
       gameObject.SetActive(true);
     }
 
+    public void ClosePanelDelayed()
+    {
+      Invoke("ClosePanel", 0.1f);
+    }
+ 
     public void ClosePanel()
     {
       Active = false;
