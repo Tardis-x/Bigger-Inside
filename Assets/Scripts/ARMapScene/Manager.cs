@@ -65,6 +65,10 @@ namespace ua.org.gdg.devfest
 			StartCoroutine(EnableARCamera());
 			PrepareScene(arCoreSupport);
 		}
+		
+		//---------------------------------------------------------------------
+		// Public
+		//---------------------------------------------------------------------
 
 		public void OnContentPlaced(GameObject anchor)
 		{
@@ -92,7 +96,7 @@ namespace ua.org.gdg.devfest
 		}
 		
 		//---------------------------------------------------------------------
-		// Internal
+		// Helpers
 		//---------------------------------------------------------------------
 
 		private void LoadResources(bool arCoreSupport)

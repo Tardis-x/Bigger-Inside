@@ -6,7 +6,6 @@ namespace ua.org.gdg.devfest
 {
 	public class UserAvatarManager : MonoBehaviour
 	{
-
 		//---------------------------------------------------------------------
 		// Editor
 		//---------------------------------------------------------------------
@@ -15,6 +14,15 @@ namespace ua.org.gdg.devfest
 		[SerializeField] private RawImage _userAvatar;
 		[SerializeField] private ImageLoader _imageLoader;
 
+		//---------------------------------------------------------------------
+		// Messages
+		//---------------------------------------------------------------------
+
+		private void Start()
+		{
+			SetUserAvatar();
+		}
+		
 		//---------------------------------------------------------------------
 		// Public
 		//---------------------------------------------------------------------
@@ -29,15 +37,6 @@ namespace ua.org.gdg.devfest
 			if (FirebaseAuth.DefaultInstance.CurrentUser == null) return;
 
 			_imageLoader.LoadImage(FirebaseAuth.DefaultInstance.CurrentUser.PhotoUrl.OriginalString, _userAvatar);
-		}
-
-		//---------------------------------------------------------------------
-		// Messages
-		//---------------------------------------------------------------------
-
-		private void Start()
-		{
-			SetUserAvatar();
 		}
 	}
 }

@@ -6,8 +6,16 @@ namespace ua.org.gdg.devfest
 	[CreateAssetMenu(menuName = "Events/IntGameEvent")]
 	public class IntGameEvent : ScriptableObject
 	{
+		//---------------------------------------------------------------------
+		// Internal
+		//---------------------------------------------------------------------
+		
 		private List<IntGameEventListener> _listeners = new List<IntGameEventListener>();
 
+		//---------------------------------------------------------------------
+		// Public
+		//---------------------------------------------------------------------
+		
 		public void Raise(int param)
 		{
 			for (var i = _listeners.Count - 1; i >= 0; i--)

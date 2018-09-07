@@ -10,6 +10,7 @@ namespace ua.org.gdg.devfest
 		// Editor
 		//---------------------------------------------------------------------
 
+		[Header("UI")]
 		[SerializeField] private Fade _fadeImage;
 		[SerializeField] private Button _signInOutButton;
 		[SerializeField] private Text _signInOutText;
@@ -20,10 +21,37 @@ namespace ua.org.gdg.devfest
 		[SerializeField] private GameEvent _signInRequest;
 
 		//---------------------------------------------------------------------
-		// Internal
+		// Properties
 		//---------------------------------------------------------------------
 
 		public bool Active { get; set; }
+		
+		//---------------------------------------------------------------------
+		// Public
+		//---------------------------------------------------------------------
+
+		public void Toggle()
+		{
+			Active = !Active;
+			if(Active) Show();
+			else Hide();
+		}
+
+		public void Show()
+		{
+			SetSignInButton(FirebaseAuth.DefaultInstance.CurrentUser != null);
+
+			Active = true;
+			_fadeImage.FadeOut();
+			_signInOutButton.enabled = true;
+		}
+
+		public void Hide()
+		{
+			Active = false;
+			_fadeImage.FadeIn();
+			_signInOutButton.enabled = false;
+		}
 
 		//---------------------------------------------------------------------
 		// Helpers
@@ -55,33 +83,6 @@ namespace ua.org.gdg.devfest
 		{
 			_signInRequest.Raise();
 			Hide();
-		}
-		
-		//---------------------------------------------------------------------
-		// Public
-		//---------------------------------------------------------------------
-
-		public void Toggle()
-		{
-			Active = !Active;
-			if(Active) Show();
-			else Hide();
-		}
-
-		public void Show()
-		{
-			SetSignInButton(FirebaseAuth.DefaultInstance.CurrentUser != null);
-
-			Active = true;
-			_fadeImage.FadeOut();
-			_signInOutButton.enabled = true;
-		}
-
-		public void Hide()
-		{
-			Active = false;
-			_fadeImage.FadeIn();
-			_signInOutButton.enabled = false;
 		}
 	}
 }

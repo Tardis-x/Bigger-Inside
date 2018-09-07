@@ -20,29 +20,12 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     private float _contentWidth;
-    
-    private void ClearContent()
-    {
-      var items = _contentContainer.GetComponentsInChildren<RectTransform>().Where(x => x.parent == _contentContainer);
 
-      foreach (var item in items)
-      {
-        Destroy(item.gameObject);
-      }
-    }
+    //---------------------------------------------------------------------
+    // Properties
+    //---------------------------------------------------------------------
 
-    private void DisablePanel()
-    {
-      Active = false;
-      ClearContent();
-      gameObject.SetActive(false);
-    }
-    
-   
-    private void AddContentItem(SpeechScript contentItem)
-    {
-      contentItem.GetComponent<RectTransform>().SetParent(_contentContainer, false);
-    }
+    private bool Active { get; set; }
 
     //---------------------------------------------------------------------
     // Messages
@@ -62,7 +45,6 @@ namespace ua.org.gdg.devfest
       Invoke("DisablePanel", .01f);
     }
 
-    public bool Active { get; private set; }
 
     public void SetContentForHall(string hall)
     {
@@ -73,7 +55,7 @@ namespace ua.org.gdg.devfest
       {
         AddContentItem(_speechScript.GetInstance(item));
       }
-      
+
       SetListHeader(hall);
     }
 
@@ -88,6 +70,28 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     // Helpers
     //---------------------------------------------------------------------
+
+    private void ClearContent()
+    {
+      var items = _contentContainer.GetComponentsInChildren<RectTransform>().Where(x => x.parent == _contentContainer);
+
+      foreach (var item in items)
+      {
+        Destroy(item.gameObject);
+      }
+    }
+
+    private void DisablePanel()
+    {
+      Active = false;
+      ClearContent();
+      gameObject.SetActive(false);
+    }
+
+    private void AddContentItem(SpeechScript contentItem)
+    {
+      contentItem.GetComponent<RectTransform>().SetParent(_contentContainer, false);
+    }
 
     private void SetListHeader(string header)
     {

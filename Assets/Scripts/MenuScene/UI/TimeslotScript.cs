@@ -10,26 +10,32 @@ namespace ua.org.gdg.devfest
     // Editor
     //---------------------------------------------------------------------
 
-    [Header("Value References")] 
+    [Header("UI")] 
     [SerializeField] private Text _startTimeHoursText;
     [SerializeField] private Text _startTimeMinutesText;
+    
+    [Space]
+    [Header("Prefabs")]
     [SerializeField] private SpeechItemScript _speechPrefab;
 
+    //---------------------------------------------------------------------
+    // Properties
+    //---------------------------------------------------------------------
+    
+    public bool Empty { get; private set; }
+    
     //---------------------------------------------------------------------
     // Public
     //---------------------------------------------------------------------
 
-    public bool Empty { get; private set; }
-    
     public TimeslotScript GetInstance(List<SpeechItemModel> speeches, string startTime, float width)
     {
-      
-      TimeslotScript instance = Instantiate(this);
+      var instance = Instantiate(this);
       instance.SetStartTime(startTime);
 
       instance.Empty = true;
       
-      int tsHeight = 170;
+      var tsHeight = 170;
       
       foreach (var speech in speeches)
       {

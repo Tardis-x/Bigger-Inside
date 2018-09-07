@@ -27,10 +27,10 @@ namespace ua.org.gdg.devfest
     // Messages
     //---------------------------------------------------------------------
 
-    // Use this for initialization
-    void Start()
+    private void Start()
     {
       _image = GetComponent<Image>();
+      
       if (_image == null)
       {
         Debug.LogError("Error: No image on " + name);
