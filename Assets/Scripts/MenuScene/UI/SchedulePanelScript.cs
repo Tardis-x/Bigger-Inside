@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Networking.NetworkSystem;
 using UnityEngine.UI;
 
 namespace ua.org.gdg.devfest
@@ -25,22 +24,13 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     private float _contentWidth;
+
+    //---------------------------------------------------------------------
+    // Properties
+    //---------------------------------------------------------------------
     
-    private void ClearContent()
-    {
-      var items = _contentContainer.GetComponentsInChildren<RectTransform>().Where(x => x.parent == _contentContainer);
-
-      foreach (var item in items)
-      {
-        Destroy(item.gameObject);
-      }
-    }
-   
-    private void AddContentItem(TimeslotScript contentItem)
-    {
-      contentItem.GetComponent<RectTransform>().SetParent(_contentContainer, false);
-    }
-
+    public bool Active { get; private set; }
+    
     //---------------------------------------------------------------------
     // Public
     //---------------------------------------------------------------------
@@ -51,7 +41,7 @@ namespace ua.org.gdg.devfest
       ClearContent();
       gameObject.SetActive(false);
     }
-    
+
     public void OnBackButtonClick()
     {
       _showMenu.Raise();
@@ -64,8 +54,6 @@ namespace ua.org.gdg.devfest
       _day2Underscore.SetActive(day == 2);
     }
 
-    public bool Active { get; private set; }
-
     public void SetContent(int day)
     {
       List<TimeslotModel> listContent;
@@ -74,12 +62,12 @@ namespace ua.org.gdg.devfest
       foreach (var item in listContent)
       {
         var contentItem = _timeslot.GetInstance(item.Items, item.StartTime, _canvas.rect.width);
-        
-        if(!contentItem.Empty) AddContentItem(contentItem);
+
+        if (!contentItem.Empty) AddContentItem(contentItem);
         else Destroy(contentItem.gameObject);
       }
     }
-    
+
     public void SetContent(int day, string hall)
     {
       List<TimeslotModel> listContent;
@@ -88,8 +76,8 @@ namespace ua.org.gdg.devfest
       foreach (var item in listContent)
       {
         var contentItem = _timeslot.GetInstance(item.Items, item.StartTime, _canvas.rect.width);
-        
-        if(!contentItem.Empty) AddContentItem(contentItem);
+
+        if (!contentItem.Empty) AddContentItem(contentItem);
         else Destroy(contentItem.gameObject);
       }
     }
@@ -104,7 +92,7 @@ namespace ua.org.gdg.devfest
       _hallName.text = "";
       gameObject.SetActive(true);
     }
-    
+
     public void EnablePanel(int day, string hall)
     {
       SetButtonsUnderscore(day);
@@ -120,6 +108,25 @@ namespace ua.org.gdg.devfest
     {
       Active = false;
       gameObject.SetActive(false);
+    }
+    
+    //---------------------------------------------------------------------
+    // Helpers
+    //---------------------------------------------------------------------
+
+    private void ClearContent()
+    {
+      var items = _contentContainer.GetComponentsInChildren<RectTransform>().Where(x => x.parent == _contentContainer);
+
+      foreach (var item in items)
+      {
+        Destroy(item.gameObject);
+      }
+    }
+
+    private void AddContentItem(TimeslotScript contentItem)
+    {
+      contentItem.GetComponent<RectTransform>().SetParent(_contentContainer, false);
     }
   }
 }

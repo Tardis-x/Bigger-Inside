@@ -12,16 +12,13 @@ namespace ua.org.gdg.devfest
     // Editor
     //---------------------------------------------------------------------
 
+    [Header("Events")]
     [SerializeField] private GameEvent _showMenu;
     [SerializeField] private GameEvent _signIn;
     [SerializeField] private GameEvent _signInFinished;
-
-    public string webClientId;
-
-    public bool UserSignedIn
-    {
-      get { return FirebaseAuth.DefaultInstance.CurrentUser != null; }
-    }
+    
+    [Header("SignIn")]
+    [SerializeField] private string _webClientId;
 
     //---------------------------------------------------------------------
     // Internal
@@ -30,6 +27,15 @@ namespace ua.org.gdg.devfest
     private GoogleSignInConfiguration configuration;
     private FirebaseAuth _auth;
     private ProgressDialogSpinner _signInSpinner;
+    
+    //---------------------------------------------------------------------
+    // Properties
+    //---------------------------------------------------------------------
+    
+    public bool UserSignedIn
+    {
+      get { return FirebaseAuth.DefaultInstance.CurrentUser != null; }
+    }
 
     //---------------------------------------------------------------------
     // Messages
@@ -86,7 +92,7 @@ namespace ua.org.gdg.devfest
     {
       GoogleSignIn.Configuration = new GoogleSignInConfiguration
       {
-        WebClientId = webClientId,
+        WebClientId = _webClientId,
         RequestIdToken = true,
         UseGameSignIn = false
       };
@@ -113,21 +119,15 @@ namespace ua.org.gdg.devfest
       if (task.IsCanceled)
       {
         signInCompleted.SetCanceled();
-        
-        SignInFinished();
       }
       else if (task.IsFaulted)
       {
         signInCompleted.SetException(task.Exception);
         Utils.ShowMessage("Firebase login failed");
-        
-        SignInFinished();
       }
       else
       {
         signInCompleted.SetResult(task.Result);
-        
-        SignInFinished();
       }
       
       SignInFinished();
@@ -176,7 +176,6 @@ namespace ua.org.gdg.devfest
         signInCompleted.SetResult(authTask.Result);
       }
     }
-
 
     private void SignInFinished()
     {

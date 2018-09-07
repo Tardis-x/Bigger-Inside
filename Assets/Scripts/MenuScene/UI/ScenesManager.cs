@@ -6,14 +6,9 @@ namespace ua.org.gdg.devfest
 {
   public class ScenesManager : MonoBehaviour
   {
-    //---------------------------------------------------------------------
-    // Internal
-    //---------------------------------------------------------------------
-    
     private const string AR_MAP_SCENE = "ArMapScene";
     private const string QUEST_SCENE = "ArQuestScene";
     
-
     //---------------------------------------------------------------------
     // Editor
     //---------------------------------------------------------------------

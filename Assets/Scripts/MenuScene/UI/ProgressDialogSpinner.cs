@@ -6,10 +6,18 @@ namespace ua.org.gdg.devfest
 {
   public class ProgressDialogSpinner
   {
+    //---------------------------------------------------------------------
+    // Internal
+    //---------------------------------------------------------------------
+      
 #if UNITY_ANDROID && !UNITY_EDITOR
     private AGProgressDialog _progressSpinner;
 #endif
 
+    //---------------------------------------------------------------------
+    // Public
+    //---------------------------------------------------------------------
+      
     public ProgressDialogSpinner()
     {
 #if UNITY_ANDROID && !UNITY_EDITOR
