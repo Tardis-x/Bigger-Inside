@@ -4,21 +4,18 @@ using UnityEngine;
 
 namespace ua.org.gdg.devfest
 {
-  public class GetSocialController : MonoBehaviour
+  public class ActivityFeedButton : MonoBehaviour
   {
-    private void Awake()
+
+    public void ShowActivityFeed()
     {
-      Debug.Log("awake");
       GetSocial.WhenInitialized(() =>
       {
-        Debug.Log("GetSocial Init");
         var wasShown = GetSocialUi.CreateGlobalActivityFeedView()
           .SetButtonActionListener((s, post) =>
           {
-            Debug.Log("Button was pressed with action: " + s);
           })
           .Show();
-        Debug.Log("Was shown: " + wasShown);
       });
     }
   }
