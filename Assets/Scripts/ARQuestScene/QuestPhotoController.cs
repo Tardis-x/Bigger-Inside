@@ -1,9 +1,7 @@
 ﻿using System.Collections;
-using System.IO;
 using UnityEngine;
 using DeadMosquito.AndroidGoodies;
 using DeadMosquito.AndroidGoodies.Internal;
-using DeadMosquito.IosGoodies;
 using Firebase.Auth;
 using Firebase.Storage;
 using ua.org.gdg.devfest;
@@ -22,7 +20,7 @@ public class QuestPhotoController : MonoBehaviour
 	public string imageUrl;
 	byte[] imageBytes;
 	string pictureNameInStorage;
-	SigninSampleScript signIn;
+	SignInManager signIn;
 	public Text _cameraText;
 	string _photoComment;
 	[SerializeField] Camera _mainCamera;

@@ -548,7 +548,6 @@ GameObject:
   - component: {fileID: 143166461}
   - component: {fileID: 143166460}
   - component: {fileID: 143166459}
-  - component: {fileID: 143166462}
   m_Layer: 5
   m_Name: Button_Quest
   m_TagString: Untagged
@@ -616,7 +615,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 143166460}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 1d32d8916e9531e4f96ccecd846cbf87, type: 2}
+        m_MethodName: Raise
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &143166460
@@ -653,18 +663,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 143166457}
   m_CullTransparentMesh: 0
---- !u!114 &143166462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 143166457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 305a3201d7da8a64e9164db284497c33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SceneToGoTo: ARQuestScene
 --- !u!1 &182780239
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,7 +710,6 @@ GameObject:
   - component: {fileID: 183632642}
   - component: {fileID: 183632641}
   - component: {fileID: 183632640}
-  - component: {fileID: 183632639}
   m_Layer: 5
   m_Name: Button_NewsFeed
   m_TagString: Untagged
@@ -742,18 +739,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -1440}
   m_SizeDelta: {x: -80, y: 370}
   m_Pivot: {x: 0.5, y: 1}
---- !u!114 &183632639
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 183632637}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 305a3201d7da8a64e9164db284497c33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SceneToGoTo: ARQuestScene
 --- !u!114 &183632640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -909,7 +894,6 @@ GameObject:
   - component: {fileID: 230275541}
   - component: {fileID: 230275540}
   - component: {fileID: 230275539}
-  - component: {fileID: 230275542}
   m_Layer: 5
   m_Name: Button_AR_Map
   m_TagString: Untagged
@@ -977,7 +961,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 230275540}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 09ff9a02087d84c45863d59c07884a18, type: 2}
+        m_MethodName: Raise
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &230275540
@@ -1014,18 +1009,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 230275537}
   m_CullTransparentMesh: 0
---- !u!114 &230275542
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 230275537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 305a3201d7da8a64e9164db284497c33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SceneToGoTo: ARMapScene
 --- !u!1 &230708405
 GameObject:
   m_ObjectHideFlags: 0
@@ -1844,8 +1827,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 561165241}
-        m_MethodName: OnBackButtonClick
+      - m_Target: {fileID: 1176905099}
+        m_MethodName: OnBackToMenuButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2859,6 +2842,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 803005978}
   - {fileID: 1469941107}
   m_Father: {fileID: 866292422}
   m_RootOrder: 0
@@ -3252,13 +3236,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1469941107}
+  m_Father: {fileID: 696735607}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &864795195
 GameObject:
@@ -4709,15 +4693,19 @@ GameObject:
   - component: {fileID: 1176905094}
   - component: {fileID: 1176905093}
   - component: {fileID: 1176905095}
-  - component: {fileID: 1176905096}
   - component: {fileID: 1176905099}
+  - component: {fileID: 1176905110}
+  - component: {fileID: 1176905101}
+  - component: {fileID: 1176905105}
   - component: {fileID: 1176905098}
+  - component: {fileID: 1176905106}
   - component: {fileID: 1176905097}
   - component: {fileID: 1176905100}
-  - component: {fileID: 1176905101}
   - component: {fileID: 1176905102}
   - component: {fileID: 1176905103}
   - component: {fileID: 1176905104}
+  - component: {fileID: 1176905109}
+  - component: {fileID: 1176905108}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -4736,10 +4724,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad23e63bfb06a4657a8fbcc5d668487a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _userAvatar: {fileID: 803005976}
-  _loader: {fileID: 1176905095}
-  _signedIn: {fileID: 11400000, guid: f2156674dc5d5254c8a4378a23b7b0ed, type: 2}
-  statusText: {fileID: 1870366015}
+  _showMenu: {fileID: 11400000, guid: f2156674dc5d5254c8a4378a23b7b0ed, type: 2}
+  _signIn: {fileID: 11400000, guid: 9a58a46cb18e1ae44b32fe2df4c6ed19, type: 2}
+  _signInFinished: {fileID: 11400000, guid: fca2f201e2263674b8b427fc4ee0d265, type: 2}
   webClientId: 926000437499-djlmvbahmfs2im5tjd69gf5mrs0sknda.apps.googleusercontent.com
 --- !u!4 &1176905094
 Transform:
@@ -4748,7 +4735,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1176905092}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 491.21945, y: 985.755, z: -1.5939013}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4763,19 +4750,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6e86ea296391a84a827ff210e464f6d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _defaultUserAvatar: {fileID: 2800000, guid: 7048542c7615ecd47b977d485d63c2cd, type: 3}
-  _userAvatar: {fileID: 803005976}
---- !u!114 &1176905096
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1176905092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d35aab4342f7c054fb4f6a09a98830b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1176905097
@@ -4821,8 +4795,8 @@ MonoBehaviour:
   Response:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1176905096}
-        m_MethodName: OnLogout
+      - m_Target: {fileID: 1176905093}
+        m_MethodName: Logout
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4832,7 +4806,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1176905095}
+      - m_Target: {fileID: 1176905105}
         m_MethodName: SetDefaultUserAvatar
         m_Mode: 1
         m_Arguments:
@@ -4859,8 +4833,9 @@ MonoBehaviour:
   _signInPanel: {fileID: 1596197694}
   _menuPanel: {fileID: 1010160580}
   _descriptionPanel: {fileID: 864795197}
-  _userPopUp: {fileID: 39339437}
   _schedulePanel: {fileID: 561165241}
+  _scenesManager: {fileID: 1176905110}
+  _userPopUp: {fileID: 39339437}
   CurrentDay: 1
 --- !u!114 &1176905100
 MonoBehaviour:
@@ -4879,6 +4854,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1176905099}
         m_MethodName: ShowMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1176905105}
+        m_MethodName: SetUserAvatar
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4985,6 +4971,128 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: ua.org.gdg.devfest.IntUnityEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &1176905105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1176905092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a7e1680db10d1e47949411bf3934eac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _defaultUserAvatar: {fileID: 2800000, guid: 7048542c7615ecd47b977d485d63c2cd, type: 3}
+  _userAvatar: {fileID: 803005976}
+  _imageLoader: {fileID: 1176905095}
+--- !u!114 &1176905106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1176905092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3318b37b5a34577429583f0b3833dd78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: fca2f201e2263674b8b427fc4ee0d265, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1176905105}
+        m_MethodName: SetUserAvatar
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1176905110}
+        m_MethodName: OnSignIn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &1176905108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1176905092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3318b37b5a34577429583f0b3833dd78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 1d32d8916e9531e4f96ccecd846cbf87, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1176905110}
+        m_MethodName: GoToARQuest
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &1176905109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1176905092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3318b37b5a34577429583f0b3833dd78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 09ff9a02087d84c45863d59c07884a18, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1176905110}
+        m_MethodName: GoToARMap
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &1176905110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1176905092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c40b9c6be0f8d94f88a9ac248406511, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _signInManager: {fileID: 1176905093}
+  _showSignIn: {fileID: 11400000, guid: 76fe15a1a378d724493a4eb36646f8b5, type: 2}
 --- !u!1 &1188813203
 GameObject:
   m_ObjectHideFlags: 0
@@ -5062,7 +5170,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1176905099}
-        m_MethodName: ShowMenu
+        m_MethodName: OnBackToMenuButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6221,18 +6329,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1469941106}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 803005978}
+  m_Children: []
   m_Father: {fileID: 696735607}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1469941108
 MonoBehaviour:
@@ -6566,7 +6673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331eadd9159d747498a6dd28b515612d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fadeTime: 0.2
+  _fadeTime: 0.1
   _fadeRate: 0.01
 --- !u!114 &1602646463
 MonoBehaviour:

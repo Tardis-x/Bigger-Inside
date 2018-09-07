@@ -6,7 +6,7 @@ namespace ua.org.gdg.devfest
 	public class SceneNavigationButton : MonoBehaviour
 	{
 		private UnityEngine.UI.Button _menuButton;
-		public string SceneToGoTo = "Menu";
+		public string SceneToGoTo = "MenuScene";
 
 		// Use this for initialization
 		void Awake()

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace ua.org.gdg.devfest
 {
@@ -11,8 +12,9 @@ namespace ua.org.gdg.devfest
 		[SerializeField] private GameObject _signInPanel;
 		[SerializeField] private GameObject _menuPanel;
 		[SerializeField] private DescriptionPanelScript _descriptionPanel;
-		[SerializeField] private UserPopUp _userPopUp;
 		[SerializeField] private SchedulePanelScript _schedulePanel;
+		[SerializeField] private ScenesManager _scenesManager;
+		[SerializeField] private UserPopUp _userPopUp;
 		
 		//---------------------------------------------------------------------
 		// Public
@@ -24,12 +26,24 @@ namespace ua.org.gdg.devfest
 		{
 			_signInPanel.SetActive(true);
 			_menuPanel.SetActive(false);
+			if(_userPopUp.Active) _userPopUp.Hide();
 		}
 
 		public void ShowMenu()
 		{
+			if(_scenesManager.SceneToGo != String.Empty) return;
 			_signInPanel.SetActive(false);
 			_descriptionPanel.SetActive(false);
+			_schedulePanel.DisablePanel();
+			_menuPanel.SetActive(true);
+		}
+
+		public void OnBackToMenuButtonClick()
+		{
+			_scenesManager.ResetSceneToGo();
+			_signInPanel.SetActive(false);
+			_descriptionPanel.SetActive(false);
+			_schedulePanel.DisablePanel();
 			_menuPanel.SetActive(true);
 		}
 
