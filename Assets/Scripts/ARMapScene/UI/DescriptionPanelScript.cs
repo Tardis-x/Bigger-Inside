@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.IO;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,6 +22,12 @@ namespace ua.org.gdg.devfest
     [SerializeField] private Text _speakerNameText;
     [SerializeField] private Text _speakerCompanyCountryText;
     [SerializeField] private RectTransform _speakerInfoGroup;
+    
+    //---------------------------------------------------------------------
+    // Properties
+    //---------------------------------------------------------------------
+    
+    public bool Active { get; private set; }
 
     //---------------------------------------------------------------------
     // Messages
@@ -41,8 +46,6 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     // Public
     //---------------------------------------------------------------------
-
-    public bool Active { get; private set; }
 
     public void SetActive(bool value)
     {

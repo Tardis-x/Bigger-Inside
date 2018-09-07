@@ -16,7 +16,7 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     private bool _fingerMoved;
-    private InteractableObject _lastInterracted;
+    private InteractableObject _lastInteracted;
 
     //---------------------------------------------------------------------
     // Property
@@ -28,7 +28,6 @@ namespace ua.org.gdg.devfest
     // Messages
     //---------------------------------------------------------------------
 
-    // Update is called once per frame
     void Update()
     {
       if (!IsInteractable) return;
@@ -55,12 +54,12 @@ namespace ua.org.gdg.devfest
 
         if (Physics.Raycast(ray, out hit, 100, _clicableObjects, QueryTriggerInteraction.Ignore))
         {
-          InteractableObject obj = hit.transform.gameObject.GetComponent<InteractableObject>(); //get interraction
+          InteractableObject obj = hit.transform.gameObject.GetComponent<InteractableObject>();
 
-          if (obj != null) //if obj is interactable
+          if (obj != null)
           {
-            if (_lastInterracted != null) _lastInterracted.Disable();
-            _lastInterracted = obj;
+            if (_lastInteracted != null) _lastInteracted.Disable();
+            _lastInteracted = obj;
             obj.Interact();
           }
         }

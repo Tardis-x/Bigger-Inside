@@ -18,14 +18,13 @@ public class ModelPositionConstraint : MonoBehaviour {
 	//---------------------------------------------------------------------
 	// Messages
 	//---------------------------------------------------------------------
-	
-	// Use this for initialization
-	void Awake ()
+
+	private void Awake ()
 	{
 		_anchor = transform.position;
 	} 
 	
-	void FixedUpdate ()
+	private void FixedUpdate ()
 	{
 		var _scale = transform.localScale.x / .3f;
 		

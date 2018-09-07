@@ -7,9 +7,14 @@ namespace ua.org.gdg.devfest
 		//---------------------------------------------------------------------
 		// Editor
 		//---------------------------------------------------------------------
-		public SchedulePanelScript SchedulePanelNew;
-		public DescriptionPanelScript SpeechDescriptionPanelNew;
+		
+		[SerializeField] public SchedulePanelScript SchedulePanelNew;
+		[SerializeField] public DescriptionPanelScript SpeechDescriptionPanelNew;
 
+		//---------------------------------------------------------------------
+		// Public
+		//---------------------------------------------------------------------
+		
 		public string CurrentHall;
 		
 		public void ShowSpeechDescription(GameObject speech)

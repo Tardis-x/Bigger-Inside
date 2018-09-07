@@ -9,6 +9,19 @@ namespace ua.org.gdg.devfest
 {
   public class FirebaseManager : Singleton<FirebaseManager>
   {
+    //URLs
+    private const string SCHEDULE_URL =
+      "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/schedule";
+    private const string SESSIONS_URL =
+      "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/sessions?pageSize=40";
+    private const string SPEAKERS_URL =
+      "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/speakers?pageSize=40";
+
+    //Halls
+    private const string HALL_EXPO = "Expo";
+    private const string HALL_CONFERENCE = "Conference";
+    private const string HALL_WORKSHOPS = "Workshops";
+
     //---------------------------------------------------------------------
     // Messages
     //---------------------------------------------------------------------
@@ -26,7 +39,7 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     // Public
     //---------------------------------------------------------------------
-    
+
     public bool RequestHallSchedule(string hall, out List<ScheduleItemUiModel> schedule)
     {
       schedule = _scheduleModels[hall];
@@ -40,10 +53,11 @@ namespace ua.org.gdg.devfest
         schedule = null;
         return false;
       }
+
       schedule = ComposeFullSchedule(day);
       return true;
     }
-    
+
     public bool RequestFullSchedule(int day, string hall, out List<TimeslotModel> schedule)
     {
       if (!_modelsMapped)
@@ -51,6 +65,7 @@ namespace ua.org.gdg.devfest
         schedule = null;
         return false;
       }
+
       schedule = ComposeFullSchedule(day, hall);
       return true;
     }
@@ -58,28 +73,10 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
-
-    //URLs
-    private const string SCHEDULE_URL =
-      "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/schedule";
-
-    private const string SESSIONS_URL =
-      "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/sessions?pageSize=40";
-
-    private const string SPEAKERS_URL =
-      "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/speakers?pageSize=40";
-
-    private const string SCHEDULE_DAY_1_NAME = "2016-09-09";
-    private const string SCHEDULE_DAY_2_NAME = "2016-09-10";
     
     //Requests
     private WWW _scheduleRequest, _sessionRequest, _speakerRequest;
-    
-    //Halls
-    private const string HALL_EXPO = "Expo";
-    private const string HALL_CONFERENCE = "Conference";
-    private const string HALL_WORKSHOPS = "Workshops";
-    
+
     //Data
     private ScheduleDay _daySchedule;
     private Schedule _schedule;
@@ -89,21 +86,21 @@ namespace ua.org.gdg.devfest
     private List<TimeslotModel> _fullSchedule;
     private bool _scheduleParsed, _sessionsParsed, _speakersParsed;
     private bool _modelsMapped;
-    
+
     //---------------------------------------------------------------------
     // Helpers
     //---------------------------------------------------------------------
-    
+
     private IEnumerator OnScheduleResponse(WWW req)
     {
       yield return req;
-      
+
       JsonSchedule schedule = JsonConvert.DeserializeObject<JsonSchedule>(req.text);
       _schedule = FirestoreHelper.ParseSchedule(schedule);
       _daySchedule = _schedule.Days[0];
       _scheduleParsed = true;
-      
-      if(AreAllRequestsFinished()) MapModels();
+
+      if (AreAllRequestsFinished()) MapModels();
     }
 
     private IEnumerator OnSessionResponse(WWW req)
@@ -113,8 +110,8 @@ namespace ua.org.gdg.devfest
       SessionTable st = JsonConvert.DeserializeObject<SessionTable>(req.text);
       _sessions = FirestoreHelper.ParseSessions(st);
       _sessionsParsed = true;
-      
-      if(AreAllRequestsFinished()) MapModels();
+
+      if (AreAllRequestsFinished()) MapModels();
     }
 
     private IEnumerator OnSpeakerResponse(WWW req)
@@ -124,8 +121,8 @@ namespace ua.org.gdg.devfest
       JsonSpeakersTable st = JsonConvert.DeserializeObject<JsonSpeakersTable>(req.text);
       _speakers = FirestoreHelper.ParseSpeakers(st);
       _speakersParsed = true;
-      
-      if(AreAllRequestsFinished()) MapModels();
+
+      if (AreAllRequestsFinished()) MapModels();
     }
 
     private void MapModels()
@@ -136,7 +133,7 @@ namespace ua.org.gdg.devfest
         {HALL_CONFERENCE, ComposeScheduleForHall(HALL_CONFERENCE)},
         {HALL_WORKSHOPS, ComposeScheduleForHall(HALL_WORKSHOPS)}
       };
-      
+
       _modelsMapped = true;
     }
 
@@ -148,16 +145,17 @@ namespace ua.org.gdg.devfest
       {
         var items = ts.Sessions.SelectMany(s => s.Items);
         string timespan = GetTimespanText(ts.StartTime, ts.EndTime);
-        
+
         List<SpeechItemModel> speeches = new List<SpeechItemModel>();
-        
+
         foreach (var item in items)
         {
           var session = _sessions[item];
 
-          var speaker = session.Speakers.Count > 0 ? 
-            (session.Speakers[0] != null ? _speakers[session.Speakers[0]] : null) : null;
-          
+          var speaker = session.Speakers.Count > 0
+            ? (session.Speakers[0] != null ? _speakers[session.Speakers[0]] : null)
+            : null;
+
           speeches.Add(new SpeechItemModel
           {
             Timespan = timespan,
@@ -180,7 +178,7 @@ namespace ua.org.gdg.devfest
             }
           });
         }
-        
+
         schedule.Add(new TimeslotModel
         {
           Items = speeches,
@@ -191,7 +189,7 @@ namespace ua.org.gdg.devfest
 
       return schedule;
     }
-    
+
     private List<TimeslotModel> ComposeFullSchedule(int day, string hall)
     {
       var schedule = new List<TimeslotModel>();
@@ -201,16 +199,17 @@ namespace ua.org.gdg.devfest
         var sessions = ts.Sessions.Where(x => x.Hall == hall).ToList();
         var items = sessions.SelectMany(s => s.Items).ToList();
         string timespan = GetTimespanText(ts.StartTime, ts.EndTime);
-        
+
         List<SpeechItemModel> speeches = new List<SpeechItemModel>();
-        
+
         for (int i = 0; i < items.Count; i++)
         {
           var session = _sessions[items[i]];
 
-          var speaker = session.Speakers.Count > 0 ? 
-            (session.Speakers[0] != null ? _speakers[session.Speakers[0]] : null) : null;
-          
+          var speaker = session.Speakers.Count > 0
+            ? (session.Speakers[0] != null ? _speakers[session.Speakers[0]] : null)
+            : null;
+
           speeches.Add(new SpeechItemModel
           {
             Timespan = timespan,
@@ -233,7 +232,7 @@ namespace ua.org.gdg.devfest
             }
           });
         }
-        
+
         schedule.Add(new TimeslotModel
         {
           Items = speeches,
@@ -244,7 +243,7 @@ namespace ua.org.gdg.devfest
 
       return schedule;
     }
-    
+
     private string GetTimespanText(string startTime, string endTime)
     {
       int startHour = Convert.ToInt32(startTime.Split(':')[0]);
@@ -266,11 +265,11 @@ namespace ua.org.gdg.devfest
       if (hourSpan == 1) timespanText += "1 hour";
       if (hourSpan > 1) timespanText += hourSpan + " hours";
       if (timespanText != "") timespanText += " ";
-      if(minuteSpan > 0) timespanText += minuteSpan + " mins";
+      if (minuteSpan > 0) timespanText += minuteSpan + " mins";
 
       return timespanText;
     }
-    
+
     private List<ScheduleItemUiModel> ComposeScheduleForHall(string h)
     {
       // Get all sessions from schedule
@@ -280,7 +279,7 @@ namespace ua.org.gdg.devfest
       for (int i = 0; i < sList.Count; i++)
       {
         SessionItem s = _sessions[sList[i].Items[0]];
-        
+
         ScheduleItemDescriptionUiModel description = new ScheduleItemDescriptionUiModel
         {
           Complexity = s.Complexity,

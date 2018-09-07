@@ -54,6 +54,10 @@ namespace ua.org.gdg.devfest
 			var arCoreSupport = ARCoreHelper.CheckArCoreSupport();
 			PrepareScene(arCoreSupport);
 		}
+		
+		//---------------------------------------------------------------------
+		// Public
+		//---------------------------------------------------------------------
 
 		public void OnContentPlaced(GameObject anchor)
 		{
@@ -75,13 +79,13 @@ namespace ua.org.gdg.devfest
 
 		public void OnInteractiveHitTest(HitTestResult hitTestResult)
 		{
-			if (isFirebaseUIActive()) return;
+			if (IsFirebaseUiActive()) return;
 			
 			_planeFinder.GetComponent<ContentPositioningBehaviour>().PositionContentAtPlaneAnchor(hitTestResult);
 		}
 		
 		//---------------------------------------------------------------------
-		// Internal
+		// Helpers
 		//---------------------------------------------------------------------
 		
 		private void PrepareScene(bool arCoreSupport)
@@ -97,7 +101,7 @@ namespace ua.org.gdg.devfest
 			}
 		}
 
-		private bool isFirebaseUIActive()
+		private bool IsFirebaseUiActive()
 		{
 			return _descriptionPanel.activeSelf ||
 			       _schedulePanel.activeSelf;

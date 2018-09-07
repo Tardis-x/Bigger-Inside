@@ -9,11 +9,23 @@ namespace ua.org.gdg.devfest
 {
   public class SpeechScript : InteractableObject
   {
+    private const string ANDROID_TAG_COLOR = "#3CC23E";
+    private const string WEB_TAG_COLOR = "#2196F3";
+    private const string CLOUD_TAG_COLOR = "#3F51B5";
+    private const string FIREBASE_TAG_COLOR = "#FFA827";
+    private const string DESIGN_TAG_COLOR = "#EC407B";
+    private const string GENERAL_TAG_COLOR = "#9E9E9E";
+    private string LOGO_BASE_PATH;
+    private const int DESCRIPTION_HEIGHT_W_O_SPEAKER = 330;
+    private const int DESCRIPTION_HEIGHT_W_SPEAKER = 510;
+    private const int ITEM_HEIGHT_W_SPEAKER = 650;
+    private const int ITEM_HEIGHT_W_O_SPEAKER = 470;
+
     //---------------------------------------------------------------------
     // Editor
     //---------------------------------------------------------------------
 
-    [Header("Value References")] 
+    [Header("UI")] 
     [SerializeField] private Text _speakerCompanyCountryText;
     [SerializeField] private Text _speakerNameText;
     [SerializeField] private Text _startTimeHoursText;
@@ -25,7 +37,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] private RawImage _speakerPhoto;
     [SerializeField] private Text _timespanText;
     [SerializeField] private RectTransform _speechDescription;
-    
+
     //---------------------------------------------------------------------
     // Messages
     //---------------------------------------------------------------------
@@ -37,8 +49,8 @@ namespace ua.org.gdg.devfest
 
     private void Start()
     {
-      if(_model.Speaker != null) LoadImage(_model.Speaker.PhotoUrl, _speakerPhoto);
-      if(_model.ImageUrl != null) LoadImage(_model.ImageUrl, _tagImage);
+      if (_model.Speaker != null) LoadImage(_model.Speaker.PhotoUrl, _speakerPhoto);
+      if (_model.ImageUrl != null) LoadImage(_model.ImageUrl, _tagImage);
     }
 
     //---------------------------------------------------------------------
@@ -51,18 +63,17 @@ namespace ua.org.gdg.devfest
       instance.SetName(model.Title);
       instance.SetStartTime(model.StartTime);
       instance.SetTimespanText(GetTimespanText(model.StartTime, model.EndTime));
-      
+
       if (model.Speaker != null) instance.SetSpeakerData(model.Speaker);
-      
+
       instance._description = model.Description;
       instance.SetTag(model.Tag);
       instance._model = model;
       return instance;
     }
-    
+
     public override void Interact()
     {
-      
     }
 
     public override void Disable()
@@ -75,28 +86,22 @@ namespace ua.org.gdg.devfest
     // Internal
     //---------------------------------------------------------------------
     
-    private const string ANDROID_TAG_COLOR = "#3CC23E";
-    private const string WEB_TAG_COLOR = "#2196F3";
-    private const string CLOUD_TAG_COLOR = "#3F51B5";
-    private const string FIREBASE_TAG_COLOR = "#FFA827";
-    private const string DESIGN_TAG_COLOR = "#EC407B";
-    private const string GENERAL_TAG_COLOR = "#9E9E9E";
-    private string LOGO_BASE_PATH;
-    private const int DESCRIPTION_HEIGHT_W_O_SPEAKER = 330;
-    private const int DESCRIPTION_HEIGHT_W_SPEAKER = 510;
-    private const int ITEM_HEIGHT_W_SPEAKER = 650;
-    private const int ITEM_HEIGHT_W_O_SPEAKER = 470;
     private ScheduleItemDescriptionUiModel _description;
     private ScheduleItemUiModel _model;
 
+    //---------------------------------------------------------------------
+    // Helpers
+    //---------------------------------------------------------------------
+    
     private void SetGeneralSpeechItem(bool value)
     {
-      _speechDescription.sizeDelta = 
+      _speechDescription.sizeDelta =
         new Vector2(0, value ? DESCRIPTION_HEIGHT_W_O_SPEAKER : DESCRIPTION_HEIGHT_W_SPEAKER);
       var itemTransform = GetComponent<RectTransform>();
       itemTransform.sizeDelta = new Vector2(880, value ? ITEM_HEIGHT_W_O_SPEAKER : ITEM_HEIGHT_W_SPEAKER);
       _speechDescription.offsetMin = new Vector2(0, 0);
-      _speechDescription.offsetMax = new Vector2(0, value ? DESCRIPTION_HEIGHT_W_O_SPEAKER : DESCRIPTION_HEIGHT_W_SPEAKER);
+      _speechDescription.offsetMax =
+        new Vector2(0, value ? DESCRIPTION_HEIGHT_W_O_SPEAKER : DESCRIPTION_HEIGHT_W_SPEAKER);
       _tagImage.gameObject.SetActive(!value);
       _tagBorder.gameObject.SetActive(!value);
     }
@@ -105,7 +110,7 @@ namespace ua.org.gdg.devfest
     {
       _timespanText.text = timespanText;
     }
-    
+
     private string GetTimespanText(string startTime, string endTime)
     {
       int startHour = Convert.ToInt32(startTime.Split(':')[0]);
@@ -127,7 +132,7 @@ namespace ua.org.gdg.devfest
       if (hourSpan == 1) timespanText += "1 hour";
       if (hourSpan > 1) timespanText += hourSpan + " hours";
       if (timespanText != "") timespanText += " ";
-      if(minuteSpan > 0) timespanText += minuteSpan + " mins";
+      if (minuteSpan > 0) timespanText += minuteSpan + " mins";
 
       return timespanText;
     }
@@ -137,7 +142,7 @@ namespace ua.org.gdg.devfest
       SetSpeakerCompanyCountry(speaker.Company, speaker.Country);
       SetSpeakerName(speaker.Name);
     }
-    
+
     private void SetStartTime(string startTimeText)
     {
       _startTimeHoursText.text = startTimeText.Split(':')[0];
@@ -165,7 +170,7 @@ namespace ua.org.gdg.devfest
       SetTagImageColor(tag);
       SetGeneralSpeechItem(tag == "General");
     }
-    
+
     private void SetTagText(string tag)
     {
       _tagText.text = tag;
@@ -175,11 +180,9 @@ namespace ua.org.gdg.devfest
     {
       _speakerPhoto.gameObject.SetActive(visible);
     }
-    
+
     private void SetTagImageColor(string tag)
     {
-      Color newColor;
-
       switch (tag)
       {
         case "Android":
@@ -213,20 +216,20 @@ namespace ua.org.gdg.devfest
     private void SetTagTextAndBorderColor(string color)
     {
       Color newColor;
-      
+
       if (ColorUtility.TryParseHtmlString(color, out newColor))
       {
         _tagBorder.color = newColor;
         _tagText.color = newColor;
       }
     }
-    
+
     private void LoadImage(string logoUrl, RawImage image)
     {
       string filePath = GetFilePathFromUrl(logoUrl);
-      
+
       if (LoadFromFile(filePath, image)) return;
-      
+
       WWW req = new WWW(logoUrl);
       StartCoroutine(OnResponse(req, filePath, image));
     }
@@ -238,13 +241,13 @@ namespace ua.org.gdg.devfest
       image.texture = req.texture;
       SaveLogoToFile(filePath, req.bytes);
     }
-    
+
     private bool LoadFromFile(string fileName, RawImage image)
     {
       var filePath = LOGO_BASE_PATH + fileName;
-      
+
       if (!File.Exists(filePath)) return false;
-      
+
       var fileData = File.ReadAllBytes(filePath);
       SetImageTexture(image, fileData);
       return true;
@@ -256,25 +259,25 @@ namespace ua.org.gdg.devfest
       texture2D.LoadImage(data);
       image.texture = texture2D;
     }
-    
+
     private void SaveLogoToFile(string fileName, byte[] logoBytes)
     {
       var filePath = LOGO_BASE_PATH + fileName;
       var directoryName = Path.GetDirectoryName(filePath);
 
       if (directoryName == null) return;
-      
+
       if (!Directory.Exists(directoryName))
       {
         Directory.CreateDirectory(directoryName);
       }
-      
+
       File.WriteAllBytes(filePath, logoBytes);
     }
 
     private string GetFilePathFromUrl(string url)
     {
-      if(!url.Contains('%')) return url.Split('/').Last();
+      if (!url.Contains('%')) return url.Split('/').Last();
 
       return url.Split('%').First(x => x.Contains("?")).Split('?').First(y => y.Contains(".jpg"));
     }
