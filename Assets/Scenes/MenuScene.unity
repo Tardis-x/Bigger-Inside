@@ -3385,7 +3385,6 @@ GameObject:
   - component: {fileID: 866292422}
   - component: {fileID: 866292427}
   - component: {fileID: 866292425}
-  - component: {fileID: 866292423}
   - component: {fileID: 866292424}
   m_Layer: 5
   m_Name: Button_Profile
@@ -3413,17 +3412,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 1, y: 1}
---- !u!114 &866292423
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 866292421}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d35aab4342f7c054fb4f6a09a98830b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &866292424
 MonoBehaviour:
   m_ObjectHideFlags: 0
