@@ -2866,14 +2866,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 803005978}
-  - {fileID: 1469941107}
   m_Father: {fileID: 866292422}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 80, y: 80}
+  m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &696735608
 MonoBehaviour:
@@ -3235,7 +3234,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 2800000, guid: 7048542c7615ecd47b977d485d63c2cd, type: 3}
+  m_Texture: {fileID: 2800000, guid: d5eaf3a974b290e4599cc38d7534da19, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -3262,10 +3261,10 @@ RectTransform:
   m_Father: {fileID: 696735607}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &864795195
 GameObject:
@@ -3424,9 +3423,10 @@ RectTransform:
   m_GameObject: {fileID: 866292421}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0000172, y: 1.0000172, z: 1.0000172}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 696735607}
+  - {fileID: 1469941107}
   m_Father: {fileID: 1010160581}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5003,7 +5003,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a7e1680db10d1e47949411bf3934eac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultUserAvatar: {fileID: 2800000, guid: 7048542c7615ecd47b977d485d63c2cd, type: 3}
+  _defaultUserAvatar: {fileID: 2800000, guid: d5eaf3a974b290e4599cc38d7534da19, type: 3}
   _userAvatar: {fileID: 803005976}
   _imageLoader: {fileID: 1176905095}
 --- !u!114 &1176905106
@@ -6327,7 +6327,7 @@ GameObject:
   - component: {fileID: 1469941109}
   - component: {fileID: 1469941108}
   m_Layer: 5
-  m_Name: Circle
+  m_Name: Image_Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6343,7 +6343,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 696735607}
+  m_Father: {fileID: 866292422}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
