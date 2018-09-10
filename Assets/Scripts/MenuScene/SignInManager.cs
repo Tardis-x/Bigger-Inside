@@ -90,6 +90,8 @@ namespace ua.org.gdg.devfest
 
     private void ConfigureGoogleSignIn()
     {
+      if (GoogleSignIn.Configuration != null) return;
+      
       GoogleSignIn.Configuration = new GoogleSignInConfiguration
       {
         WebClientId = _webClientId,

@@ -58,10 +58,6 @@ namespace ua.org.gdg.devfest
     [Header("Targets")]
     [SerializeField] private GameObject _imageTarget;
     [SerializeField] private GameObject _planeFinder;
-
-    [Space]
-    [Header("Debug")]
-    [SerializeField] private Text _text;
     
     //---------------------------------------------------------------------
     // Messages
@@ -71,8 +67,6 @@ namespace ua.org.gdg.devfest
     {
       var arCoreSupport = ARCoreHelper.CheckArCoreSupport();
       PrepareScene(arCoreSupport);
-      
-      _text.text = "ARCore support: " + arCoreSupport;
     }
 
     public void OnContentPlaced(GameObject environment)
@@ -84,8 +78,13 @@ namespace ua.org.gdg.devfest
     {
       if (Input.GetKeyDown(KeyCode.Escape))
       {
-        SceneManager.LoadScene(Scenes.SCENE_MENU);
+        ToMainMenu();
       }
+    }
+    
+    private void OnDestroy()
+    {
+      Time.timeScale = 1;
     }
 
     //---------------------------------------------------------------------
@@ -145,6 +144,11 @@ namespace ua.org.gdg.devfest
     // Public
     //---------------------------------------------------------------------
 
+    public void ToMainMenu()
+    {
+      SceneManager.LoadScene(Scenes.SCENE_MENU);
+    }
+    
     public void NewGame()
     {
       if(GameActive) return;

@@ -13,6 +13,7 @@ namespace ua.org.gdg.devfest
     [Tooltip("Refreshment rate")]
     [SerializeField] private float _fadeTime;
     [SerializeField] private float _fadeRate;
+    [SerializeField] private Animator _animator;
 
     //---------------------------------------------------------------------
     // Internal
@@ -63,7 +64,7 @@ namespace ua.org.gdg.devfest
 
     private IEnumerator FadeCoroutine()
     {
-      while (_time <= _fadeTime)
+      while (_fadeTime - _time > .005f)
       {
         _time += _fadeRate;
         
@@ -71,8 +72,14 @@ namespace ua.org.gdg.devfest
         curColor.a = Mathf.Lerp(_startAlpha, _targetAlpha, _time / _fadeTime);
         _image.color = curColor;
 
+        Debug.Log(_time / _fadeTime);
+        
         yield return new WaitForSeconds(_fadeRate);
       }
+
+      Color targetColor = _image.color;
+      targetColor.a = _targetAlpha;
+      _image.color = targetColor;
     }
   }
 }
