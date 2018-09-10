@@ -108,10 +108,15 @@ namespace ua.org.gdg.devfest
       }
     }
 
+    private void OnDestroy()
+    {
+      Time.timeScale = 1;
+    }
+
     //---------------------------------------------------------------------
     // Helpers
     //---------------------------------------------------------------------
-
+    
     private void ResetVariables()
     {
       _score.Variable.ResetValue();

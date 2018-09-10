@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Vuforia;
 
@@ -66,10 +67,21 @@ namespace ua.org.gdg.devfest
 			PrepareScene(arCoreSupport);
 		}
 		
+		void Update()
+		{
+			if (Input.GetKeyDown(KeyCode.Escape) && !PanelManager.Instance.SchedulePanelNew.Active
+			    && !PanelManager.Instance.SpeechDescriptionPanelNew.Active) GoToMenu();
+		}
+		
 		//---------------------------------------------------------------------
 		// Public
 		//---------------------------------------------------------------------
 
+		public void GoToMenu()
+		{
+			SceneManager.LoadScene(Scenes.SCENE_MENU);
+		}
+		
 		public void OnContentPlaced(GameObject anchor)
 		{
 			_planeFinder.SetActive(false);

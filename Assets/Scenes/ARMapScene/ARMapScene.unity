@@ -421,7 +421,7 @@ GameObject:
   - component: {fileID: 127960251}
   - component: {fileID: 127960252}
   m_Layer: 0
-  m_Name: MainCamera
+  m_Name: UICamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3078,7 +3078,7 @@ GameObject:
   - component: {fileID: 977705818}
   m_Layer: 0
   m_Name: ARCamera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3338,6 +3338,7 @@ GameObject:
   - component: {fileID: 1046727952}
   - component: {fileID: 1046727954}
   - component: {fileID: 1046727955}
+  - component: {fileID: 1046727956}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -3425,6 +3426,34 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1046727952}
         m_MethodName: OnTrackingFound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &1046727956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1046727951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3318b37b5a34577429583f0b3833dd78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: f2156674dc5d5254c8a4378a23b7b0ed, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1046727952}
+        m_MethodName: GoToMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3806,7 +3835,6 @@ GameObject:
   - component: {fileID: 1166279685}
   - component: {fileID: 1166279684}
   - component: {fileID: 1166279683}
-  - component: {fileID: 1166279686}
   - component: {fileID: 1166279687}
   m_Layer: 0
   m_Name: EventSystem
@@ -3860,18 +3888,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1166279686
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1166279682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be9eb0884f3753748906fd04a18869cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SceneToGoBackTo: MenuScene
 --- !u!114 &1166279687
 MonoBehaviour:
   m_ObjectHideFlags: 0

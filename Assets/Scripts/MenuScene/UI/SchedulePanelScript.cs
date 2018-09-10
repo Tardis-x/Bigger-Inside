@@ -89,7 +89,7 @@ namespace ua.org.gdg.devfest
       Active = true;
       ClearContent();
       SetContent(day);
-      _hallName.text = "";
+      _hallName.text = "Schedule";
       gameObject.SetActive(true);
     }
 

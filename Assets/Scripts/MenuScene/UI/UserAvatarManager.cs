@@ -6,6 +6,8 @@ namespace ua.org.gdg.devfest
 {
 	public class UserAvatarManager : MonoBehaviour
 	{
+		private const string USER_AVATAR_FILENAME = "img_user_avatar.jpg";
+		
 		//---------------------------------------------------------------------
 		// Editor
 		//---------------------------------------------------------------------
@@ -36,7 +38,13 @@ namespace ua.org.gdg.devfest
 		{
 			if (FirebaseAuth.DefaultInstance.CurrentUser == null) return;
 			
-			_imageLoader.LoadImage(FirebaseAuth.DefaultInstance.CurrentUser.PhotoUrl.OriginalString, _userAvatar);
+			_imageLoader.LoadImage(FirebaseAuth.DefaultInstance.CurrentUser.PhotoUrl.OriginalString,
+				USER_AVATAR_FILENAME,  _userAvatar);
+		}
+
+		public void ClearUserAvatarCache()
+		{
+			_imageLoader.DeleteImage(USER_AVATAR_FILENAME);
 		}
 	}
 }
