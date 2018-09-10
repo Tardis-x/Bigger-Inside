@@ -71,8 +71,6 @@ namespace ua.org.gdg.devfest
         Color curColor = _image.color;
         curColor.a = Mathf.Lerp(_startAlpha, _targetAlpha, _time / _fadeTime);
         _image.color = curColor;
-
-        Debug.Log(_time / _fadeTime);
         
         yield return new WaitForSeconds(_fadeRate);
       }
