@@ -60,6 +60,8 @@ namespace Lean.Touch
 
     protected virtual void Update()
     {
+      if (Camera.main == null) return;
+      
       // Get the fingers we want to use
       var fingers =
         LeanSelectable.GetFingers(IgnoreStartedOverGui, IgnoreIsOverGui, RequiredFingerCount, RequiredSelectable);
