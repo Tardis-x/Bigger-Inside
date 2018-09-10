@@ -140,11 +140,9 @@ namespace ua.org.gdg.devfest
       if (task.IsFaulted)
       {
         Utils.ShowMessage("Google plus login failed");
-        SignInFinished();
       }
       else if (task.IsCanceled)
       {
-        SignInFinished();
       }
       else
       {
