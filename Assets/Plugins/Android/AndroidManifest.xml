@@ -26,7 +26,7 @@
         </activity>
         <provider android:name="im.getsocial.sdk.invites.ImageContentProvider" android:authorities="ua.com.gdg.devfest.smartinvite.images.provider" android:exported="true" android:enabled="true" />
         <provider android:name="im.getsocial.sdk.AutoInitSdkContentProvider" android:authorities="ua.com.gdg.devfest.AutoInitSdkContentProvider" android:exported="false" android:enabled="true" />
-        <meta-data android:name="im.getsocial.sdk.UiConfigurationFile" android:value="" />
+        <meta-data android:name="im.getsocial.sdk.UiConfigurationFile" android:value="getsocial-dark/ui-config.json" />
         <meta-data android:name="im.getsocial.sdk.AutoInitSdk" android:value="true" />
         <meta-data android:name="im.getsocial.sdk.ShowNotificationInForeground" android:value="false" />
         <meta-data android:name="im.getsocial.sdk.AutoRegisterForPush" android:value="true" />
