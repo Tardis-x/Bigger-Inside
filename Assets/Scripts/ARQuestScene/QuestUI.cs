@@ -6,7 +6,6 @@ using DeadMosquito.AndroidGoodies;
 public class QuestUI : MonoBehaviour
 {
 	[SerializeField] Image _fadeImage;
-	[SerializeField] GameObject _photoPanel;
 	[SerializeField] GameObject _vrGamePanel;
 	[SerializeField] GameObject _riddlesPanel;
 	[SerializeField] GameObject _leaderBoardPanel;
@@ -18,6 +17,7 @@ public class QuestUI : MonoBehaviour
 	[SerializeField] Text _longDescription;
 	[SerializeField] Button _changeInfoButton;
 	[SerializeField] Button _proceedButton;
+	[SerializeField] Button _scanPhotoMarkerButton;
 
 	public Image infoPanelSwordImage;
 	public Image infoPanelSelfieImage;
@@ -32,6 +32,8 @@ public class QuestUI : MonoBehaviour
 	public Image step2CongratzImage;
 	public Image step3CongratzImage;
 	public Button nextButton;
+	public Button leaderboardButton;
+	public Button hiddenLeaderboardButton;
 	public Text congratzTitle;
 	
 	QuestManager _questManager;
@@ -125,7 +127,8 @@ public class QuestUI : MonoBehaviour
 				"- Scan a special marker from Quest guys", 1);
 			//Switch the buttons
 			_changeInfoButton.gameObject.SetActive(false);
-			_proceedButton.gameObject.SetActive(true);
+			_proceedButton.gameObject.SetActive(false);
+			_scanPhotoMarkerButton.gameObject.SetActive(true);
 		}
 		//VR Game Panel
 		else if (!_questManager.QuestProgress.VrGameData.State)
@@ -165,6 +168,7 @@ public class QuestUI : MonoBehaviour
 			//Switch the buttons
 			_changeInfoButton.gameObject.SetActive(false);
 			_proceedButton.gameObject.SetActive(true);
+			_scanPhotoMarkerButton.gameObject.SetActive(false);
 		}
 	}
 
@@ -175,11 +179,6 @@ public class QuestUI : MonoBehaviour
 		if (!_questManager.QuestProgress.isGoogleColorsCompleted)
 		{
 			_googleColorsPanel.SetActive(true);
-		}
-		//Photo Panel
-		else if (!_questManager.QuestProgress.PhotoData.State)
-		{
-			_photoPanel.SetActive(true);
 		}
 		//VR Game Panel
 		else if (!_questManager.QuestProgress.VrGameData.State)
@@ -211,6 +210,7 @@ public class QuestUI : MonoBehaviour
 		//Switch the buttons
 		_changeInfoButton.gameObject.SetActive(true);
 		_proceedButton.gameObject.SetActive(false);
+		_scanPhotoMarkerButton.gameObject.SetActive(false);
 	}
 
 	public void OnLeaderboardButtonClicked()
@@ -229,6 +229,7 @@ public class QuestUI : MonoBehaviour
 		_longDescription.text = longDescription;
 		_proceedButton.gameObject.SetActive(false);
 		_changeInfoButton.gameObject.SetActive(true);
+		_scanPhotoMarkerButton.gameObject.SetActive(false);
 	}
 
 	public void DisableAllInfoPanelImages()
@@ -239,10 +240,10 @@ public class QuestUI : MonoBehaviour
 		infoPanelKnowledgeImage.gameObject.SetActive(false);
 	}
 
-	public void EnableCorrectInfoImage(int i)
+	public void EnableCorrectInfoImage(int stepNumber)
 	{
 		DisableAllInfoPanelImages();
-		switch (i)
+		switch (stepNumber)
 		{
 			case 0:
 			{
@@ -298,12 +299,13 @@ public class QuestUI : MonoBehaviour
 			step3CongratzImage.gameObject.SetActive(true);
 			congratzTitle.text += "\nYou have completed Quest!";
 			nextButton.gameObject.SetActive(false);
+			leaderboardButton.gameObject.SetActive(false);
+			hiddenLeaderboardButton.gameObject.SetActive(true);
 		}
 	}
 
 	public void DisableAllPanels()
 	{
-		_photoPanel.gameObject.SetActive(false);
 		_vrGamePanel.gameObject.SetActive(false);
 		_riddlesPanel.gameObject.SetActive(false);
 		_leaderBoardPanel.gameObject.SetActive(false);

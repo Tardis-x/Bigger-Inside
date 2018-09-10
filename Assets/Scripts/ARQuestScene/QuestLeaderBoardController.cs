@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.IO;
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 using Application = UnityEngine.Application;
@@ -16,6 +17,7 @@ public class QuestLeaderBoardController : MonoBehaviour
 	public GameObject position1Holder;
 	public GameObject position2Holder;
 	public GameObject position3Holder;
+	public GameObject bottomImagePrefab;
 	
 	void Awake()
 	{
@@ -132,16 +134,20 @@ public class QuestLeaderBoardController : MonoBehaviour
 			}
 			position++;
 		}
+		Instantiate(bottomImagePrefab, transform.position, Quaternion.identity, gridForList);
 		scrollbar.value = 1;
 	}
 
-	static IEnumerator LoadUserImageFromUrl(string url, Image image, string filePath)
+	static IEnumerator LoadUserImageFromUrl([CanBeNull]string url, Image image, string filePath)
 	{
-		var www = new WWW(url);
-		yield return www;
-		image.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0, 0));
-		//Saving texture to file
-		File.WriteAllBytes(filePath, www.texture.EncodeToPNG());
+		if (url != null)
+		{
+			var www = new WWW(url);
+			yield return www;
+			image.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0, 0));
+			//Saving texture to file
+			File.WriteAllBytes(filePath, www.texture.EncodeToPNG());
+		}
 	}
 	
 	static void LoadUserImageFromFolder(Image image, string filePath)
