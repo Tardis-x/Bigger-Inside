@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace ua.org.gdg.devfest
 {
@@ -35,7 +36,8 @@ namespace ua.org.gdg.devfest
         item.ImageUrl = s.fields.image != null ? s.fields.image.stringValue : null;
         item.Complexity = s.fields.complexity != null ? s.fields.complexity.stringValue : "";
         item.Language = s.fields.language != null ? s.fields.language.stringValue : "";
-        item.Description = s.fields.description != null ? s.fields.description.stringValue : "";
+        item.Description = s.fields.description != null ?  
+          Regex.Replace(s.fields.description.stringValue, @"[^\u0000-\u007F]+", "●") : "";
 
         if (s.fields.speakers != null)
         {
