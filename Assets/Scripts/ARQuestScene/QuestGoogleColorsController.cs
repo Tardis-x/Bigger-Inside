@@ -11,6 +11,9 @@ public class QuestGoogleColorsController : MonoBehaviour
 
 	[SerializeField]
 	GameObject _colorsPanel;
+	
+	[SerializeField]
+	GameObject _wellDonePanel;
 
 	[SerializeField]
 	Button _letterButton1;
@@ -117,7 +120,7 @@ public class QuestGoogleColorsController : MonoBehaviour
 
 		if (checkString == AnswerCheck)
 		{
-			_questManager.CompleteGoogleColorsRiddle();
+			ShowWellDonePanel();
 		}
 		else
 		{
@@ -142,6 +145,17 @@ public class QuestGoogleColorsController : MonoBehaviour
 		_colorsPanel.SetActive(false);
 		Debug.Log("Selected color index is: " + colorIndex);
 		UpdateLetterColor(colorIndex);
+	}
+
+	public void OnProceedButtonClicked()
+	{
+		_wellDonePanel.gameObject.SetActive(false);
+		_questManager.CompleteGoogleColorsRiddle();
+	}
+
+	public void ShowWellDonePanel()
+	{
+		_wellDonePanel.gameObject.SetActive(true);
 	}
 
 	IEnumerator WrongAnswerHighlight()
