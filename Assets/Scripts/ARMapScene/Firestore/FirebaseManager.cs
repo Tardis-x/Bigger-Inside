@@ -18,9 +18,10 @@ namespace ua.org.gdg.devfest
       "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/speakers?pageSize=40";
 
     //Halls
-    private const string HALL_EXPO = "Expo";
-    private const string HALL_CONFERENCE = "Conference";
-    private const string HALL_WORKSHOPS = "Workshops";
+    private const string HALL_STAGE_1 = "Stage 1";
+    private const string HALL_STAGE_2 = "Stage 2";
+    private const string HALL_STAGE_3 = "Stage 3";
+    private const string HALL_WORKSHOPS = "Workshops hall";
 
     //---------------------------------------------------------------------
     // Messages
@@ -129,8 +130,9 @@ namespace ua.org.gdg.devfest
     {
       _scheduleModels = new Dictionary<string, List<ScheduleItemUiModel>>
       {
-        {HALL_EXPO, ComposeScheduleForHall(HALL_EXPO)},
-        {HALL_CONFERENCE, ComposeScheduleForHall(HALL_CONFERENCE)},
+        {HALL_STAGE_1, ComposeScheduleForHall(HALL_STAGE_1)},
+        {HALL_STAGE_2, ComposeScheduleForHall(HALL_STAGE_2)},
+        {HALL_STAGE_3, ComposeScheduleForHall(HALL_STAGE_3)},
         {HALL_WORKSHOPS, ComposeScheduleForHall(HALL_WORKSHOPS)}
       };
 
@@ -208,11 +210,15 @@ namespace ua.org.gdg.devfest
 
         for (int i = 0; i < items.Count; i++)
         {
+          if(!_sessions.ContainsKey(items[i])) continue;
+          
           var session = _sessions[items[i]];
 
-          var speaker = session.Speakers.Count > 0
-            ? (session.Speakers[0] != null ? _speakers[session.Speakers[0]] : null)
-            : null;
+          var speaker = session.Speakers.Count > 0 ?
+            session.Speakers[0] != null ? 
+              _speakers.ContainsKey(session.Speakers[0]) ? 
+                _speakers[session.Speakers[0]] : null
+              : null : null;
 
           speeches.Add(new SpeechItemModel
           {
