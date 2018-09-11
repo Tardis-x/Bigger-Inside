@@ -30,6 +30,7 @@ namespace ua.org.gdg.devfest
     [Header("Buttons")]
     [SerializeField] private Button _playButton;
     [SerializeField] private Button _replayButton;
+    [SerializeField] private Button _backToMenuButton;
     
     [Space]
     [Header("Public Variables")]
@@ -104,6 +105,7 @@ namespace ua.org.gdg.devfest
       HideStats();
       GameOn = false;
       _gameOverPanel.NeedToPressRestart = true;
+      _backToMenuButton.gameObject.SetActive(true);
     }
     
     //---------------------------------------------------------------------
@@ -116,6 +118,7 @@ namespace ua.org.gdg.devfest
       _towerPanel.gameObject.SetActive(true);
       _playButton.gameObject.SetActive(false);
       _gameOverPanel.HidePanel();
+      _backToMenuButton.gameObject.SetActive(false);
     }
 
     private void ShowStats()
@@ -131,24 +134,5 @@ namespace ua.org.gdg.devfest
       _scorePanel.SetActive(false);
       _enemiesLeftPanel.SetActive(false);
     }
-    
-    //---------------------------------------------------------------------
-    // Messages
-    //---------------------------------------------------------------------
-
-//    private static bool _created;
-//    
-//    private void Awake()
-//    {
-//      if (!_created)
-//      {
-//        DontDestroyOnLoad(_canvas);
-//        _created = true;
-//      }
-//      else
-//      {
-//        Destroy(gameObject);       
-//      }
-//    }
   }
 }

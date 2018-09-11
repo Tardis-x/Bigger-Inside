@@ -23,17 +23,20 @@ namespace ua.org.gdg.devfest
     {
       switch (hall)
       {
-          case 0:
-            Hall = "Expo";
-            break;
-          case 1:
-            Hall = "Conference";
-            break;
-          case 2:
-            Hall = "Workshops";
-            break;
-          default :
-            throw new Exception("Unknown hall.");
+        case 0:
+          Hall = "Stage 1";
+          break;
+        case 1:
+          Hall = "Stage 2";
+          break;
+        case 2:
+          Hall = "Stage 3";
+          break;
+        case 3:
+          Hall = "Workshops hall";
+          break;
+        default:
+          throw new Exception("Unknown hall.");
       }
     }
   }

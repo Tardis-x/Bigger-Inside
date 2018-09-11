@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using DeadMosquito.AndroidGoodies;
+using ua.org.gdg.devfest;
 
 public class QuestUI : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class QuestUI : MonoBehaviour
 	[SerializeField] Button _changeInfoButton;
 	[SerializeField] Button _proceedButton;
 	[SerializeField] Button _scanPhotoMarkerButton;
+	[SerializeField] private UserAvatarManager _avatarManager;
 
 	public Image infoPanelSwordImage;
 	public Image infoPanelSelfieImage;
@@ -44,6 +46,12 @@ public class QuestUI : MonoBehaviour
 
 		// obtain reference to object that represents quest manager
 		QuestManagerReferenceInitialization();
+		
+	}
+
+	private void Start()
+	{
+		_avatarManager.SetUserAvatar();
 	}
 
 	void QuestManagerReferenceInitialization()

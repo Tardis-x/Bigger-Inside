@@ -132,7 +132,7 @@ namespace ua.org.gdg.devfest
     {
       switch (speechTag)
       {
-        case "Android":
+        case "Mobile":
           _description.TagColor = ANDROID_TAG_COLOR;
           SetTagTextAndBorderColor(ANDROID_TAG_COLOR);
           break;

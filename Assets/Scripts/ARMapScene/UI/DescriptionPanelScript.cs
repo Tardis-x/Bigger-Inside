@@ -49,6 +49,7 @@ namespace ua.org.gdg.devfest
 
     public void SetActive(bool value)
     {
+      GetComponentInChildren<ScrollRect>().verticalNormalizedPosition = 1;
       gameObject.SetActive(value);
       Active = value;
     }

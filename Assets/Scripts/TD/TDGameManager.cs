@@ -83,6 +83,11 @@ namespace ua.org.gdg.devfest
     {
       SceneManager.LoadScene("TDScene");
     }
+
+    public void GoToMainMenu()
+    {
+      SceneManager.LoadScene(Scenes.SCENE_MENU);
+    }
     
     //---------------------------------------------------------------------
     // Messages
@@ -104,7 +109,7 @@ namespace ua.org.gdg.devfest
     {
       if (Input.GetKeyDown(KeyCode.Escape))
       {
-        SceneManager.LoadScene(Scenes.SCENE_MENU);
+        GoToMainMenu();
       }
     }
 
