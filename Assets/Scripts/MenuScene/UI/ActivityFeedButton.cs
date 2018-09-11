@@ -10,7 +10,7 @@ namespace ua.org.gdg.devfest
     {
       GetSocial.WhenInitialized(() =>
       {
-        var wasShown = GetSocialUi.CreateGlobalActivityFeedView()
+        GetSocialUi.CreateGlobalActivityFeedView()
           .SetButtonActionListener((s, post) => { })
           .Show();
       });
