@@ -49,30 +49,10 @@ namespace ua.org.gdg.devfest
     [Space]
     [Header("Values")]
     [SerializeField] private float _timeForAnswer;
-
-    [Space] 
-    [Header("Prefabs")] 
-    [SerializeField] private GameObject _environment;
-
-    [Space]
-    [Header("Targets")]
-    [SerializeField] private GameObject _imageTarget;
-    [SerializeField] private GameObject _planeFinder;
     
     //---------------------------------------------------------------------
     // Messages
     //---------------------------------------------------------------------
-
-    private void Start()
-    {
-      var arCoreSupport = ARCoreHelper.CheckArCoreSupport();
-      PrepareScene(arCoreSupport);
-    }
-
-    public void OnContentPlaced(GameObject environment)
-    {
-      _planeFinder.SetActive(false);
-    }
 
     private void Update()
     {
@@ -130,13 +110,11 @@ namespace ua.org.gdg.devfest
 
     public void OnTrackingLost()
     {
-      _planeFinder.gameObject.SetActive(ARCoreHelper.CheckArCoreSupport());
       PauseGame();
     }
 
     public void OnTrackingFound()
     {
-      _planeFinder.gameObject.SetActive(false);
       ResumeGame();
     }
 
@@ -181,18 +159,6 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
-
-    private void PrepareScene(bool arCoreSupport)
-    {
-      _planeFinder.gameObject.SetActive(arCoreSupport);
-      
-      _imageTarget.SetActive(!arCoreSupport);
-      
-      if (!arCoreSupport)
-      {
-        Instantiate(_environment, _imageTarget.transform);        
-      }
-    }
 
     private void ResetHealthAndScore()
     {

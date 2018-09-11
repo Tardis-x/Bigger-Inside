@@ -77,10 +77,11 @@ namespace ua.org.gdg.devfest
     {
       if (hitTestResult == null)
       {
-        _hint.gameObject.SetActive(true);
+        ShowHint(true);
+        return;
       }
       
-      _hint.gameObject.SetActive(false);
+      ShowHint(false);
     }
     
     //---------------------------------------------------------------------
