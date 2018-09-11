@@ -29,13 +29,13 @@ namespace ua.org.gdg.devfest
       foreach (var s in st.documents)
       {
         SessionItem item = new SessionItem();
-        item.Title = s.fields.title.stringValue;
+        item.Title = s.fields.title != null ? s.fields.title.stringValue : "";
         item.Id = Convert.ToInt32(s.name.Split('/').Last());
         item.Tag = s.fields.tags == null ? "General" : s.fields.tags.arrayValue.values.First().stringValue;
         item.ImageUrl = s.fields.image != null ? s.fields.image.stringValue : null;
         item.Complexity = s.fields.complexity != null ? s.fields.complexity.stringValue : "";
         item.Language = s.fields.language != null ? s.fields.language.stringValue : "";
-        item.Description = s.fields.description.stringValue;
+        item.Description = s.fields.description != null ? s.fields.description.stringValue : "";
 
         if (s.fields.speakers != null)
         {

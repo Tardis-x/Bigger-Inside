@@ -143,18 +143,22 @@ namespace ua.org.gdg.devfest
 
       foreach (var ts in _schedule.Days[day - 1].Timeslots)
       {
-        var items = ts.Sessions.SelectMany(s => s.Items);
+        var items = ts.Sessions.SelectMany(s => s.Items).ToList();
         string timespan = GetTimespanText(ts.StartTime, ts.EndTime);
 
         List<SpeechItemModel> speeches = new List<SpeechItemModel>();
 
         foreach (var item in items)
         {
+          if(!_sessions.ContainsKey(item)) continue;
+          
           var session = _sessions[item];
 
-          var speaker = session.Speakers.Count > 0
-            ? (session.Speakers[0] != null ? _speakers[session.Speakers[0]] : null)
-            : null;
+          var speaker = session.Speakers.Count > 0 ?
+            session.Speakers[0] != null ? 
+              _speakers.ContainsKey(session.Speakers[0]) ? 
+                _speakers[session.Speakers[0]] : null
+            : null : null;
 
           speeches.Add(new SpeechItemModel
           {
