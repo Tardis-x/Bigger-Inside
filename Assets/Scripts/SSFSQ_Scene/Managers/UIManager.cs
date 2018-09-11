@@ -43,24 +43,11 @@ namespace ua.org.gdg.devfest
     private void Start()
     {
       ButtonsToPauseMode();
-      ShowHint(ARCoreHelper.CheckArCoreSupport());
     }
 
     public void OnContentPlaced(GameObject environment)
     {
       ShowARCorePanel(true);
-      ShowHint(false);
-    }
-    
-    public void OnAutomaticHitTest(HitTestResult hitTestResult)
-    {
-      if (hitTestResult == null)
-      {
-        ShowHint(true);
-        return;
-      }
-						
-      ShowHint(false);
     }
     
     //---------------------------------------------------------------------
@@ -96,14 +83,12 @@ namespace ua.org.gdg.devfest
 
     public void OnTrackingLost()
     {
-      ShowHint(ARCoreHelper.CheckArCoreSupport());
       ShowARCorePanel(false);
     }
 
     public void OnTrackingFound()
     {
       ShowARCorePanel(ARCoreHelper.CheckArCoreSupport());
-      ShowHint(false);
     }
 
     //-----------------------------------------------
@@ -199,11 +184,6 @@ namespace ua.org.gdg.devfest
       _playVirtualButton.SetVirtualButtonMaterial(_playButtonMaterial);
       _playVirtualButton.SetButtonEnabled(true);
       _arCorePanel.ShowPlayButton(true);
-    }
-
-    private void ShowHint(bool value)
-    {
-      _hintText.gameObject.SetActive(value);
     }
   }
 }
