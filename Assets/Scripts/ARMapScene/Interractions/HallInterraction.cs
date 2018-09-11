@@ -16,12 +16,18 @@ namespace ua.org.gdg.devfest
 		// Public
 		//---------------------------------------------------------------------
 
+		public void SetDay(int day)
+		{
+			_day = day;
+			if(PanelManager.Instance.CurrentHall == _hall) PanelManager.Instance.SchedulePanelNew.EnablePanel(_day, _hall);
+		}
+		
 		public override void Interact()
 		{
-			if (!PanelManager.Instance.SchedulePanel.Active)
+			if (!PanelManager.Instance.SchedulePanelNew.Active)
 			{
-				PanelManager.Instance.SchedulePanel.EnablePanel();
-				PanelManager.Instance.SchedulePanel.SetContentForHall(_hall);
+				PanelManager.Instance.CurrentHall = _hall;
+				PanelManager.Instance.SchedulePanelNew.EnablePanel(_day, _hall);
 			}
 		}
 
@@ -29,5 +35,11 @@ namespace ua.org.gdg.devfest
 		{
 			_highlightRenderer.material.mainTexture = _defaultTexture;
 		}
+		
+		//---------------------------------------------------------------------
+		// Internal
+		//---------------------------------------------------------------------
+
+		private int _day = 1;
 	}
 }

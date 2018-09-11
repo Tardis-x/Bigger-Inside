@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = System.Random;
 
@@ -57,10 +58,6 @@ namespace ua.org.gdg.devfest
     [Header("Targets")]
     [SerializeField] private GameObject _imageTarget;
     [SerializeField] private GameObject _planeFinder;
-
-    [Space]
-    [Header("Debug")]
-    [SerializeField] private Text _text;
     
     //---------------------------------------------------------------------
     // Messages
@@ -70,16 +67,26 @@ namespace ua.org.gdg.devfest
     {
       var arCoreSupport = ARCoreHelper.CheckArCoreSupport();
       PrepareScene(arCoreSupport);
-      
-      _text.text = "ARCore support: " + arCoreSupport;
     }
 
     public void OnContentPlaced(GameObject environment)
     {
       _planeFinder.SetActive(false);
-      _uiManager.ShowARCorePanel(true);
+    }
+
+    private void Update()
+    {
+      if (Input.GetKeyDown(KeyCode.Escape))
+      {
+        ToMainMenu();
+      }
     }
     
+    private void OnDestroy()
+    {
+      Time.timeScale = 1;
+    }
+
     //---------------------------------------------------------------------
     // Events
     //---------------------------------------------------------------------
@@ -121,10 +128,27 @@ namespace ua.org.gdg.devfest
       AskQuestion();
     }
 
+    public void OnTrackingLost()
+    {
+      _planeFinder.gameObject.SetActive(ARCoreHelper.CheckArCoreSupport());
+      PauseGame();
+    }
+
+    public void OnTrackingFound()
+    {
+      _planeFinder.gameObject.SetActive(false);
+      ResumeGame();
+    }
+
     //---------------------------------------------------------------------
     // Public
     //---------------------------------------------------------------------
 
+    public void ToMainMenu()
+    {
+      SceneManager.LoadScene(Scenes.SCENE_MENU);
+    }
+    
     public void NewGame()
     {
       if(GameActive) return;
@@ -233,6 +257,16 @@ namespace ua.org.gdg.devfest
     private void ResetStars()
     {
       _starsCount.ResetValue();
+    }
+    
+    private void PauseGame()
+    {
+      Time.timeScale = 0;
+    }
+
+    private void ResumeGame()
+    {
+      Time.timeScale = 1;
     }
   }
 }

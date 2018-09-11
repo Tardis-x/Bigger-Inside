@@ -1,26 +1,40 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Experimental.UIElements;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace ua.org.gdg.devfest
 {
 	public class SceneNavigationButton : MonoBehaviour
 	{
-		private UnityEngine.UI.Button _menuButton;
-		public string SceneToGoTo = "Menu";
-
-		// Use this for initialization
+		//---------------------------------------------------------------------
+		// Editor
+		//---------------------------------------------------------------------
+		
+		[SerializeField] private string _sceneToGoTo = "MenuScene";
+		
+		//---------------------------------------------------------------------
+		// Internal
+		//---------------------------------------------------------------------
+		
+		private Button _menuButton;
+		
+		//---------------------------------------------------------------------
+		// Messages
+		//---------------------------------------------------------------------
+		
 		void Awake()
 		{
-			_menuButton = GetComponent<UnityEngine.UI.Button>();
+			_menuButton = GetComponent<Button>();
 			_menuButton.onClick.AddListener(GoToScene);
 		}
+		
+		//---------------------------------------------------------------------
+		// Helpers
+		//---------------------------------------------------------------------
 
 		void GoToScene()
 		{
-			SceneManager.LoadScene(SceneToGoTo);
+			SceneManager.LoadScene(_sceneToGoTo);
 		}
 	}
 }

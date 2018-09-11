@@ -8,7 +8,8 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     // Property
     //---------------------------------------------------------------------
-    
+
+    public int Extend { get; set; }
     public string Hall { get; set; }
     public List<Tag> Tags { get; set; }
     public List<int> Items { get; set; }

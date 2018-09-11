@@ -76,6 +76,8 @@ namespace ua.org.gdg.devfest
 
 		private void InstantiateHpBar()
 		{
+			if(_hpBarInstance != null) Destroy(_hpBarInstance);
+			
 			var hpBar = Instantiate(_hpBarPrefab);
 			hpBar.transform.SetParent(Canvas.transform, false);
 			hpBar.transform.SetAsFirstSibling();
@@ -85,6 +87,8 @@ namespace ua.org.gdg.devfest
 
 		private void InstantiateHappyIcon()
 		{
+			if (_happyIconInstance != null) Destroy(_happyIconInstance);	
+			
 			_happyIconInstance = Instantiate(_happyIconPrefab);
 			_happyIconInstance.transform.SetParent(Canvas.transform, false);
 			_happyIconInstance.transform.SetAsFirstSibling();

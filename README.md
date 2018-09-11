@@ -8,39 +8,45 @@ This open source project is developed to showcase AR technology at #DFUA18 confe
 The main objective of this project is to build an app for inside navigation in the #DFUA conference zone and to reflect the location as 3D model in AR. 
 
 
--Supported platforms:  Android/iOS. 
+-
 
 
-## Release note Version 0.0.9
+## Release note Version  0.1
 
-Scenes:
+Updates:
 
-	- SignIn Scene (alpha design)
-
-	- Menu Scene (alpha design):
-		- AR Map button
-		- Для Тараса button :) 
-		- Spare button
-		- SignOut button
-
-	- AR Map Scene:
-		- Scrollable List (alpha design)
-		- Planeta Kino model (alpha design) (just 'model' later on)
-
-	- Test Scene (empty)
-
-Features implemented:
-
-	- Google Firebase SignIn
-	- Clickable highlighted halls on model
-	- Scrollable list (schedule) show on click
-	- Model pinch zoom in/out
-	- Model movement
-  
+	- Google+ Authorization
+	- Facebook Authorization
+	- Logout
+	- Application User Interface (Menu, Schedule, AR Map Schedule)
+	- Schedule Panel (All halls)
+	- News Feed - Opens GetSocial feed activity
+	- AR Map - Planeta Kino plan; Tap on hall opens schedule (Vuforia and AR Core support)
+	- Save Speaker Game (Without Questions / Vuforia and AR Core support)
+	- TD Game (Without Balance / only Vuforia support)  
   
 =================================================   
-Tech stack:
-Unity, Android, iOS, Vuforia, FireBase, ProBuilder,  
+
+IDE: 
++    [Unity](https://unity3d.com/)
++    [Rider](https://www.jetbrains.com/rider/)
+
+
+Supported platforms:  Android/iOS. 
++    Android
++    iOS
+
+Third Party Instruments:
++    [Vuforia](https://www.vuforia.com/)
++    [FireBase](http://firebase.google.com)
++    [ProBuilder](https://assetstore.unity.com/packages/tools/modeling/probuilder-111418)
++    [GetSocial](https://assetstore.unity.com/packages/tools/integration/getsocial-social-features-for-user-acquisition-engagement-and-re-123383)
++    [Flaticon](https://www.flaticon.com/family/flat_circular/flat)
++    [Cola Can - Asset Store](https://assetstore.unity.com/packages/3d/cola-can-96659)
++    [FREE Food Pack - Asset Store](https://assetstore.unity.com/packages/3d/props/food/free-food-pack-85884)
++    [Freepik](https://www.freepik.com/)
+
+
 
 =================================================  
 ## Vuforia set up

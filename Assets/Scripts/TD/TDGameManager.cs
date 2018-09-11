@@ -99,11 +99,24 @@ namespace ua.org.gdg.devfest
       ResetVariables();
       Time.timeScale = 1;
     }
-    
+
+    private void Update()
+    {
+      if (Input.GetKeyDown(KeyCode.Escape))
+      {
+        SceneManager.LoadScene(Scenes.SCENE_MENU);
+      }
+    }
+
+    private void OnDestroy()
+    {
+      Time.timeScale = 1;
+    }
+
     //---------------------------------------------------------------------
     // Helpers
     //---------------------------------------------------------------------
-
+    
     private void ResetVariables()
     {
       _score.Variable.ResetValue();
