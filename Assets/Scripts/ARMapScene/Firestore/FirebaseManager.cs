@@ -208,11 +208,15 @@ namespace ua.org.gdg.devfest
 
         for (int i = 0; i < items.Count; i++)
         {
+          if(!_sessions.ContainsKey(items[i])) continue;
+          
           var session = _sessions[items[i]];
 
-          var speaker = session.Speakers.Count > 0
-            ? (session.Speakers[0] != null ? _speakers[session.Speakers[0]] : null)
-            : null;
+          var speaker = session.Speakers.Count > 0 ?
+            session.Speakers[0] != null ? 
+              _speakers.ContainsKey(session.Speakers[0]) ? 
+                _speakers[session.Speakers[0]] : null
+              : null : null;
 
           speeches.Add(new SpeechItemModel
           {
