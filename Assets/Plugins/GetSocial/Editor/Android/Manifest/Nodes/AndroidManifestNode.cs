@@ -9,6 +9,7 @@ namespace GetSocialSdk.Editor.Android.Manifest
         public const string IntentFilterTag = "intent-filter";
         
         public const string NameAttribute = "android:name";
+        public const string HardwareAccelerated = "android:hardwareAccelerated";
         public const string ValueAttribute = "android:value";
         
         public string Name { get; private set; }

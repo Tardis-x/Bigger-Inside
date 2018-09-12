@@ -1,3 +1,4 @@
+using Firebase.Auth;
 using GetSocialSdk.Core;
 using GetSocialSdk.Ui;
 using UnityEngine;
@@ -11,10 +12,8 @@ namespace ua.org.gdg.devfest
     {
       GetSocial.WhenInitialized(() =>
       {
-        var wasShown = GetSocialUi.CreateGlobalActivityFeedView()
-          .SetButtonActionListener((s, post) =>
-          {
-          })
+        GetSocialUi.CreateGlobalActivityFeedView()
+          .SetWindowTitle("GDG News")
           .Show();
       });
     }
