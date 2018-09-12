@@ -11,6 +11,14 @@ namespace GetSocialSdk.Editor.Android.Manifest
         {
             intentFilters.ForEach(AddChild);
         }
+        
+        public Activity(string name, List<IntentFilter> intentFilters, bool hardwareAccelerated) : base(
+            "activity", 
+            ApplicationTag, 
+            new Dictionary<string, string>{{NameAttribute, name}, {HardwareAccelerated, hardwareAccelerated ? "true" : "false"}})
+        {
+            intentFilters.ForEach(AddChild);
+        }
 
         public override string ToString()
         {

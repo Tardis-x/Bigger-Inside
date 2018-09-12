@@ -6,12 +6,13 @@ namespace ua.org.gdg.devfest
 {
   public class ActivityFeedButton : MonoBehaviour
   {
+
     public void ShowActivityFeed()
     {
       GetSocial.WhenInitialized(() =>
       {
         GetSocialUi.CreateGlobalActivityFeedView()
-          .SetButtonActionListener((s, post) => { })
+          .SetWindowTitle("GDG News")
           .Show();
       });
     }
