@@ -12,11 +12,11 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     [SerializeField] private GameEvent _showSignIn;
-    
+
     //---------------------------------------------------------------------
     // Public
     //---------------------------------------------------------------------
-    
+
     public void ShowActivityFeed()
     {
       if (FirebaseAuth.DefaultInstance.CurrentUser == null)
@@ -24,13 +24,10 @@ namespace ua.org.gdg.devfest
         _showSignIn.Raise();
         return;
       }
-      
-      GetSocial.WhenInitialized(() =>
-      {
-        GetSocialUi.CreateGlobalActivityFeedView()
-          .SetWindowTitle("GDG News")
-          .Show();
-      });
+
+      GetSocialUi.CreateGlobalActivityFeedView()
+        .SetWindowTitle("GDG News")
+        .Show();
     }
   }
 }
