@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
 

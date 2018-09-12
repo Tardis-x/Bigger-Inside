@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Security.Cryptography;
 using Facebook.Unity;
 using System.Threading.Tasks;
 using Google;
@@ -55,6 +56,8 @@ namespace ua.org.gdg.devfest
       {
         FB.ActivateApp();
       }
+      
+      SetGetSocialNameAndAvatar();
     }
 
     //---------------------------------------------------------------------
@@ -77,12 +80,12 @@ namespace ua.org.gdg.devfest
     {
       if (_auth.CurrentUser == null) return;
 
-      GetSocial.User.RemoveAuthIdentity(_auth.CurrentUser.ProviderId, 
-        () => { Debug.Log("PROVIDER REMOVED"); },
-        error => { Debug.Log("AUTH REMOVE ERROR: " + error.Message); });
-      
+      GetSocial.User.Reset(
+        () => { Debug.Log("AUTH RESET SUCCESSFULL"); },
+        error => { Debug.Log("AUTH RESET ERROR: " + error.Message);});
+
       _auth.SignOut();
-      
+
       if (FB.IsLoggedIn) FB.LogOut();
       else GoogleSignIn.DefaultInstance.SignOut();
     }
@@ -194,7 +197,33 @@ namespace ua.org.gdg.devfest
 
     private void OnGetSocialInitialized()
     {
-      FirebaseAuth.DefaultInstance.CurrentUser.TokenAsync(false).ContinueWith(OnUserTokenFetched);
+      var user = FirebaseAuth.DefaultInstance.CurrentUser;
+      
+      HMACSHA256 cypher = new HMACSHA256(System.Text.Encoding.Default.GetBytes("SECURITY"));
+      string token = System.Text.Encoding.Default.GetString(cypher.ComputeHash(Convert.FromBase64String(user.UserId)));
+      
+      var authIdentity = AuthIdentity.CreateCustomIdentity(user.ProviderId, user.UserId, token);
+
+      GetSocial.User.AddAuthIdentity(authIdentity, SetGetSocialNameAndAvatar,
+        error => { Debug.Log("AUTH ADD ERROR: " + error.Message); },
+        conflict =>
+        {
+          Debug.Log("CONFLICT");
+          
+          GetSocial.User.SwitchUser(authIdentity, () =>
+          {
+            Debug.Log("SWITCH SUCCESS");
+          }, error =>
+          {
+            Debug.Log("SWTRCH ERROR: " + error.Message);
+          });
+        });
+      
+      Debug.Log("PROVIDER ID: " + user.ProviderId);
+      Debug.Log("USER ID: " + user.UserId);
+      Debug.Log("GET SOCIAL USER ID: " + GetSocial.User.Id);
+      Debug.Log("TOKEN: " + token);
+      SetGetSocialNameAndAvatar();
     }
 
     private void OnUserTokenFetched(Task<string> task)
@@ -214,11 +243,11 @@ namespace ua.org.gdg.devfest
       string idToken = task.Result;
       var user = FirebaseAuth.DefaultInstance.CurrentUser;
       var authIdentity = AuthIdentity.CreateCustomIdentity(user.ProviderId, user.UserId, idToken);
-      
+
       GetSocial.User.AddAuthIdentity(authIdentity, SetGetSocialNameAndAvatar,
         error => { Debug.Log("AUTH ADD ERROR: " + error.Message); },
         conflict => { Debug.Log("CONFLICT"); });
-
+      
       Debug.Log("PROVIDER ID: " + user.ProviderId);
       Debug.Log("USER ID: " + user.UserId);
       Debug.Log("GET SOCIAL USER ID: " + GetSocial.User.Id);
