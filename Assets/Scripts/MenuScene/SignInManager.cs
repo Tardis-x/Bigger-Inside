@@ -9,13 +9,12 @@ namespace ua.org.gdg.devfest
 {
   public class SignInManager : MonoBehaviour
   {
-    private const string KEY = "";
-
     //---------------------------------------------------------------------
     // Editor
     //---------------------------------------------------------------------
 
-    [Header("Events")] [SerializeField] private GameEvent _showMenu;
+    [Header("Events")] 
+    [SerializeField] private GameEvent _showMenu;
     [SerializeField] private GameEvent _signIn;
     [SerializeField] private GameEvent _signInFinished;
 
@@ -80,8 +79,8 @@ namespace ua.org.gdg.devfest
       if (_auth.CurrentUser == null) return;
 
       GetSocial.User.Reset(
-        () => { Debug.Log("AUTH RESET SUCCESSFULL"); },
-        error => { Debug.Log("AUTH RESET ERROR: " + error.Message); });
+        () => {},
+        error => {});
 
       _auth.SignOut();
 
@@ -119,7 +118,7 @@ namespace ua.org.gdg.devfest
       }
       else
       {
-        Utils.ShowMessage("Facebook login failed");
+        Utils.ShowMessage("Oops! Something went wrong, try again later.");
       }
     }
 
@@ -135,7 +134,7 @@ namespace ua.org.gdg.devfest
       else if (task.IsFaulted)
       {
         signInCompleted.SetException(task.Exception);
-        Utils.ShowMessage("Firebase login failed");
+        Utils.ShowMessage("Oops! Something went wrong, try again later.");
       }
       else
       {
@@ -150,7 +149,7 @@ namespace ua.org.gdg.devfest
     {
       if (task.IsFaulted)
       {
-        Utils.ShowMessage("Google plus login failed");
+        Utils.ShowMessage("Oops! Something went wrong, try again later.");
       }
       else if (task.IsCanceled)
       {
@@ -177,7 +176,7 @@ namespace ua.org.gdg.devfest
       }
       else if (authTask.IsFaulted)
       {
-        Utils.ShowMessage("Firebase login failed");
+        Utils.ShowMessage("Oops! Something went wrong, try again later.");
         signInCompleted.SetException(authTask.Exception);
       }
       else
@@ -197,24 +196,17 @@ namespace ua.org.gdg.devfest
     private void OnGetSocialInitialized()
     {
       var user = FirebaseAuth.DefaultInstance.CurrentUser;
-      var token = Cyphering.GetHashByKey(KEY, user.UserId);
+      var token = Cyphering.GetHashByKey(Credentials.HASH_SECRET, user.UserId);
       var authIdentity = AuthIdentity.CreateCustomIdentity(user.ProviderId, user.UserId, token);
 
       GetSocial.User.AddAuthIdentity(authIdentity, SetGetSocialNameAndAvatar,
-        error => { Debug.Log("AUTH ADD ERROR: " + error.Message); },
+        error => { Utils.ShowMessage("Oops! Something went wrong, try again later.");},
         conflict =>
         {
-          Debug.Log("CONFLICT");
-
           GetSocial.User.SwitchUser(authIdentity,
             SetGetSocialNameAndAvatar,
-            error => { Debug.Log("SWTRCH ERROR: " + error.Message); });
+            error => {Utils.ShowMessage("Oops! Something went wrong, try again later.");});
         });
-
-      Debug.Log("PROVIDER ID: " + user.ProviderId);
-      Debug.Log("USER ID: " + user.UserId);
-      Debug.Log("GET SOCIAL USER ID: " + GetSocial.User.Id);
-      Debug.Log("TOKEN: " + token);
     }
 
     private void SetGetSocialNameAndAvatar()
@@ -234,15 +226,15 @@ namespace ua.org.gdg.devfest
     private void SetGetSocialUsername(string name)
     {
       GetSocial.User.SetDisplayName(name,
-        () => { Utils.ShowMessage("Name successfully changed: " + GetSocial.User.DisplayName); },
-        error => { Utils.ShowMessage("Name change failed, error: " + error); });
+        () => {},
+        error => { Utils.ShowMessage("Oops! Something went wrong, try again later.");});
     }
 
     private void SetGetSocialAvatar(string url)
     {
       GetSocial.User.SetAvatarUrl(url,
-        () => { Utils.ShowMessage("Avatar successfully changed: " + GetSocial.User.AvatarUrl); },
-        error => { Utils.ShowMessage("Avatar update failed, error: " + error); });
+        () => {},
+        error => {Utils.ShowMessage("Oops! Something went wrong, try again later.");});
     }
 
     private void SignInFinished()

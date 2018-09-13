@@ -11,10 +11,10 @@ namespace ua.org.gdg.devfest
     public class AutoKeystore : MonoBehaviour {
 #if UNITY_EDITOR
 
-        private const string KeystoreName = "";
-        private const string KeystorePass = "";
-        private const string KeyAliasName = "";
-        private const string KeyAliasPass = "";
+        private const string KeystoreName = Credentials.KEYSTORE_NAME;
+        private const string KeystorePass = Credentials.KEYSTORE_PASS;
+        private const string KeyAliasName = Credentials.ALIAS_NAME;
+        private const string KeyAliasPass = Credentials.ALIAS_PASS;
         
         
         static AutoKeystore() {
