@@ -18,7 +18,9 @@ namespace ua.org.gdg.devfest
     [SerializeField] private GameEvent _signIn;
     [SerializeField] private GameEvent _signInFinished;
 
-    [Header("SignIn")] [SerializeField] private string _webClientId;
+    [Header("SignIn")] 
+    [SerializeField]
+    private string _webClientId;
 
     //---------------------------------------------------------------------
     // Internal
@@ -149,7 +151,7 @@ namespace ua.org.gdg.devfest
     {
       if (task.IsFaulted)
       {
-        Utils.ShowMessage("Oops! Something went wrong, try again later.");
+        Utils.ShowMessage("GoogleSignIn faulted");
       }
       else if (task.IsCanceled)
       {
@@ -176,7 +178,7 @@ namespace ua.org.gdg.devfest
       }
       else if (authTask.IsFaulted)
       {
-        Utils.ShowMessage("Oops! Something went wrong, try again later.");
+        Utils.ShowMessage("Firebase SignIn faulted");
         signInCompleted.SetException(authTask.Exception);
       }
       else
@@ -213,11 +215,7 @@ namespace ua.org.gdg.devfest
     {
       var user = FirebaseAuth.DefaultInstance.CurrentUser;
       
-      if (user == null)
-      {
-        Logout();
-        return;
-      }
+      if (user == null) return;
       
       SetGetSocialUsername(user.DisplayName);
       SetGetSocialAvatar(GetHigherResProfilePic(user.PhotoUrl.OriginalString));
