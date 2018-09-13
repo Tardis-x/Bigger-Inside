@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace ua.org.gdg.devfest
 {
@@ -21,54 +18,6 @@ namespace ua.org.gdg.devfest
       }
 
       return result;
-    }
-
-    public static Dictionary<int, SessionItem> ParseSessions(SessionTable st)
-    {
-      Dictionary<int, SessionItem> result = new Dictionary<int, SessionItem>();
-
-      foreach (var s in st.documents)
-      {
-        SessionItem item = new SessionItem();
-        item.Title = s.fields.title != null ? s.fields.title.stringValue : "";
-        item.Id = Convert.ToInt32(s.name.Split('/').Last());
-        item.Tag = s.fields.tags == null ? "General" : s.fields.tags.arrayValue.values.First().stringValue;
-        item.ImageUrl = s.fields.image != null ? s.fields.image.stringValue : null;
-        item.Complexity = s.fields.complexity != null ? s.fields.complexity.stringValue : "";
-        item.Language = s.fields.language != null ? s.fields.language.stringValue : "";
-        item.Description = s.fields.description != null ?  
-          Regex.Replace(s.fields.description.stringValue, @"[^\u0000-\u007F]+", "●") : "";
-
-        if (s.fields.speakers != null)
-        {
-          foreach (var speaker in s.fields.speakers.arrayValue.values)
-          {
-            item.Speakers.Add(speaker.stringValue);
-          }
-        }
-
-        result.Add(item.Id, item);
-      }
-
-      return result;
-    }
-
-    public static Dictionary<string, Speaker> ParseSpeakers(JsonSpeakersTable jst)
-    {
-      Dictionary<string, Speaker> speakers = new Dictionary<string, Speaker>();
-
-      foreach (var js in jst.documents)
-      {
-        Speaker s = new Speaker();
-        s.Name = js.fields.name.stringValue;
-        s.Company = js.fields.company.stringValue;
-        s.Country = js.fields.country.stringValue;
-        s.PhotoUrl = js.fields.photoUrl.stringValue;
-
-        speakers.Add(js.name.Split('/').Last(), s);
-      }
-
-      return speakers;
     }
     
     //---------------------------------------------------------------------
@@ -91,21 +40,65 @@ namespace ua.org.gdg.devfest
 
         foreach (var tsSession in timeslot.mapValue.fields.sessions.arrayValue.values)
         {
-          Session session = new Session();
-
-//          foreach (var item in tsSession.mapValue.fields.items.arrayValue.values)
-//          {
-//            //session.Items.Add(Convert.ToInt32(item.integerValue));
-//          }
-
-          session.SetHall(Array.IndexOf(timeslot.mapValue.fields.sessions.arrayValue.values.ToArray(), tsSession));
-          ts.Sessions.Add(session);
+          foreach (var item in tsSession.mapValue.fields.items.arrayValue.values)
+          {
+            ts.Sessions.Add(ParseSessionItem(item));
+          }
         }
 
         day.Timeslots.Add(ts);
       }
 
       return day;
+    }
+
+    private static SessionItem ParseSessionItem(JsonValue<JsonSessionItem> jSession)
+    {
+      var session = new SessionItem
+      {
+        Id = jSession.mapValue.fields.id != null ?
+          jSession.mapValue.fields.id.stringValue : null,
+        Description = jSession.mapValue.fields.description != null ?
+          jSession.mapValue.fields.description.stringValue : null,
+        Title = jSession.mapValue.fields.title != null ?
+          jSession.mapValue.fields.title.stringValue : null,
+        Tag = jSession.mapValue.fields.mainTag != null ?
+          jSession.mapValue.fields.mainTag.stringValue : null,
+        Complexity = jSession.mapValue.fields.complexity != null ? 
+          jSession.mapValue.fields.complexity.stringValue : null,
+        Language = jSession.mapValue.fields.language != null ? 
+          jSession.mapValue.fields.language.stringValue : null,
+        Hall = jSession.mapValue.fields.track.mapValue.fields.title.stringValue,
+        StartTime = jSession.mapValue.fields.startTime.stringValue,
+        EndTime = jSession.mapValue.fields.endTime.stringValue,
+        DateReadable = jSession.mapValue.fields.dateReadable.stringValue,
+        Duration = new Duration
+        {
+          Hours = Convert.ToInt32(jSession.mapValue.fields.duration.mapValue.fields.hh.integerValue),
+          Minutes = Convert.ToInt32(jSession.mapValue.fields.duration.mapValue.fields.mm.integerValue)
+        }
+      };
+
+      if (jSession.mapValue.fields.speakers.arrayValue.values == null) return session;
+      
+      foreach (var speaker in jSession.mapValue.fields.speakers.arrayValue.values)
+      {
+        session.Speakers.Add(ParseSpeaker(speaker));
+      }
+
+      return session;
+    }
+
+    private static Speaker ParseSpeaker(JsonValue<JsonSpeakerFields> jSpeaker)
+    {
+      return new Speaker
+      {
+        Id = jSpeaker.mapValue.fields.id.stringValue,
+        PhotoUrl = jSpeaker.mapValue.fields.photoUrl.stringValue,
+        Company = jSpeaker.mapValue.fields.company.stringValue,
+        Country = jSpeaker.mapValue.fields.country.stringValue,
+        Name = jSpeaker.mapValue.fields.name.stringValue
+      };
     }
   }
 }

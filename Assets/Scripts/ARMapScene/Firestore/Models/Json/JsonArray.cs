@@ -5,6 +5,6 @@ namespace ua.org.gdg.devfest
   [Serializable]
   public class JsonArray<T>
   {
-    public ArrayValue<T> arrayValue;
+    public JsonArrayValue<T> arrayValue;
   }
 }

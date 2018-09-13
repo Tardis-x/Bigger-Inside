@@ -6,6 +6,6 @@ namespace ua.org.gdg.devfest
   [Serializable]
   public class ItemsArray
   {
-    public List<MapValue<JsonSessionItem>> arrayValue;
+    public List<JsonMapValue<JsonSessionItem>> arrayValue;
   }
 }

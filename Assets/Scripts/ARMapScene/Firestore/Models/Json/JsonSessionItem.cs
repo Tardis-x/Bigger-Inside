@@ -15,7 +15,7 @@ namespace ua.org.gdg.devfest
     public StringValue language;
     public StringValue complexity;
     public JsonArray<JsonSpeakerFields> speakers;
-    public Value<JsonTrack> track;
-    public Value<JsonDurationFields> duration;
+    public JsonValue<JsonTrack> track;
+    public JsonValue<JsonDurationFields> duration;
   }
 }
