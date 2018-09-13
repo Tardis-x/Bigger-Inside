@@ -55,7 +55,7 @@ namespace ua.org.gdg.devfest
     private void Awake()
     {
       _arCoreSupport = ARCoreHelper.CheckArCoreSupport();
-      LoadResources(_arCoreSupport);
+      // LoadResources(_arCoreSupport);
     }
 
     private void Start()

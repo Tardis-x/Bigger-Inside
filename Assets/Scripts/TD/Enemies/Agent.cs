@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 namespace ua.org.gdg.devfest
@@ -18,6 +17,7 @@ namespace ua.org.gdg.devfest
 		//---------------------------------------------------------------------
 
 		[SerializeField] private NavMeshAgent _navMeshAgent;
+		[SerializeField] private float _extraRotationSpeed;
 
 		//---------------------------------------------------------------------
 		// Property
@@ -41,6 +41,7 @@ namespace ua.org.gdg.devfest
 			{
 				_navMeshAgent.SetDestination(_destination);
 			}
+			ExtraRotation();
 		}
 
 		//---------------------------------------------------------------------
@@ -113,6 +114,13 @@ namespace ua.org.gdg.devfest
 		private void NavigateTo(Vector3 nextPoint)
 		{
 			_navMeshAgent.SetDestination(nextPoint);
+		}
+
+		private void ExtraRotation()
+		{
+			var desiredRotation = _navMeshAgent.steeringTarget - transform.position;
+			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(desiredRotation), 
+				_extraRotationSpeed * Time.deltaTime);
 		}
 	}
 }

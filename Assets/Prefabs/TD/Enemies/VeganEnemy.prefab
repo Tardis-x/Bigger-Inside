@@ -948,8 +948,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 243ce20cbde5e69488fc5af6b5183b40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentNode: {fileID: 0}
   _navMeshAgent: {fileID: 195010227367101618}
+  _extraRotationSpeed: 5
 --- !u!114 &114955008756708166
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1067,10 +1067,10 @@ NavMeshAgent:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1984150013969462}
   m_Enabled: 1
-  m_AgentTypeID: 0
+  m_AgentTypeID: -334000983
   m_Radius: 0.05
-  m_Speed: 1.2
-  m_Acceleration: 6
+  m_Speed: 1.5
+  m_Acceleration: 24
   avoidancePriority: 50
   m_AngularSpeed: 90
   m_StoppingDistance: 0
