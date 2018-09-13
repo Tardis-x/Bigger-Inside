@@ -9,6 +9,8 @@ namespace ua.org.gdg.devfest
 {
   public class SignInManager : MonoBehaviour
   {
+    private const string KEY = "";
+
     //---------------------------------------------------------------------
     // Editor
     //---------------------------------------------------------------------
@@ -78,8 +80,8 @@ namespace ua.org.gdg.devfest
       if (_auth.CurrentUser == null) return;
 
       GetSocial.User.Reset(
-        () => {},
-        error => {});
+        () => { Debug.Log("AUTH RESET SUCCESSFULL"); },
+        error => { Debug.Log("AUTH RESET ERROR: " + error.Message); });
 
       _auth.SignOut();
 
@@ -117,7 +119,7 @@ namespace ua.org.gdg.devfest
       }
       else
       {
-        Utils.ShowMessage("Something went wrong! Try again.");
+        Utils.ShowMessage("Facebook login failed");
       }
     }
 
@@ -133,7 +135,7 @@ namespace ua.org.gdg.devfest
       else if (task.IsFaulted)
       {
         signInCompleted.SetException(task.Exception);
-        Utils.ShowMessage("Something went wrong! Try again.");
+        Utils.ShowMessage("Firebase login failed");
       }
       else
       {
@@ -148,7 +150,7 @@ namespace ua.org.gdg.devfest
     {
       if (task.IsFaulted)
       {
-        Utils.ShowMessage("Something went wrong! Try again.");
+        Utils.ShowMessage("Google plus login failed");
       }
       else if (task.IsCanceled)
       {
@@ -175,7 +177,7 @@ namespace ua.org.gdg.devfest
       }
       else if (authTask.IsFaulted)
       {
-        Utils.ShowMessage("Something went wrong! Try again.");
+        Utils.ShowMessage("Firebase login failed");
         signInCompleted.SetException(authTask.Exception);
       }
       else
@@ -195,24 +197,35 @@ namespace ua.org.gdg.devfest
     private void OnGetSocialInitialized()
     {
       var user = FirebaseAuth.DefaultInstance.CurrentUser;
-      var token = Cyphering.GetHashByKey(HashSecret.KEY, user.UserId);
+      var token = Cyphering.GetHashByKey(KEY, user.UserId);
       var authIdentity = AuthIdentity.CreateCustomIdentity(user.ProviderId, user.UserId, token);
 
       GetSocial.User.AddAuthIdentity(authIdentity, SetGetSocialNameAndAvatar,
-        error => {},
+        error => { Debug.Log("AUTH ADD ERROR: " + error.Message); },
         conflict =>
         {
+          Debug.Log("CONFLICT");
+
           GetSocial.User.SwitchUser(authIdentity,
             SetGetSocialNameAndAvatar,
-            error => {});
+            error => { Debug.Log("SWTRCH ERROR: " + error.Message); });
         });
+
+      Debug.Log("PROVIDER ID: " + user.ProviderId);
+      Debug.Log("USER ID: " + user.UserId);
+      Debug.Log("GET SOCIAL USER ID: " + GetSocial.User.Id);
+      Debug.Log("TOKEN: " + token);
     }
 
     private void SetGetSocialNameAndAvatar()
     {
       var user = FirebaseAuth.DefaultInstance.CurrentUser;
       
-      if (user == null) return;
+      if (user == null)
+      {
+        Logout();
+        return;
+      }
       
       SetGetSocialUsername(user.DisplayName);
       SetGetSocialAvatar(GetHigherResProfilePic(user.PhotoUrl.OriginalString));
@@ -221,15 +234,15 @@ namespace ua.org.gdg.devfest
     private void SetGetSocialUsername(string name)
     {
       GetSocial.User.SetDisplayName(name,
-        () => {},
-        error => {});
+        () => { Utils.ShowMessage("Name successfully changed: " + GetSocial.User.DisplayName); },
+        error => { Utils.ShowMessage("Name change failed, error: " + error); });
     }
 
     private void SetGetSocialAvatar(string url)
     {
       GetSocial.User.SetAvatarUrl(url,
-        () => {},
-        error => {});
+        () => { Utils.ShowMessage("Avatar successfully changed: " + GetSocial.User.AvatarUrl); },
+        error => { Utils.ShowMessage("Avatar update failed, error: " + error); });
     }
 
     private void SignInFinished()
