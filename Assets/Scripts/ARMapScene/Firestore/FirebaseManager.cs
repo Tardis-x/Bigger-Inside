@@ -41,15 +41,9 @@ namespace ua.org.gdg.devfest
     // Public
     //---------------------------------------------------------------------
 
-    public bool RequestHallSchedule(string hall, out List<ScheduleItemUiModel> schedule)
-    {
-      schedule = _scheduleModels[hall];
-      return _modelsMapped;
-    }
-
     public bool RequestFullSchedule(int day, out List<TimeslotModel> schedule)
     {
-      if (!_modelsMapped)
+      if (!AreAllRequestsFinished)
       {
         schedule = null;
         return false;
@@ -61,7 +55,7 @@ namespace ua.org.gdg.devfest
 
     public bool RequestFullSchedule(int day, string hall, out List<TimeslotModel> schedule)
     {
-      if (!_modelsMapped)
+      if (!AreAllRequestsFinished)
       {
         schedule = null;
         return false;
@@ -83,10 +77,8 @@ namespace ua.org.gdg.devfest
     private Schedule _schedule;
     private Dictionary<int, SessionItem> _sessions;
     private Dictionary<string, Speaker> _speakers;
-    private Dictionary<string, List<ScheduleItemUiModel>> _scheduleModels;
     private List<TimeslotModel> _fullSchedule;
     private bool _scheduleParsed, _sessionsParsed, _speakersParsed;
-    private bool _modelsMapped;
 
     //---------------------------------------------------------------------
     // Helpers
@@ -100,8 +92,6 @@ namespace ua.org.gdg.devfest
       _schedule = FirestoreHelper.ParseSchedule(schedule);
       _daySchedule = _schedule.Days[0];
       _scheduleParsed = true;
-
-      if (AreAllRequestsFinished()) MapModels();
     }
 
     private IEnumerator OnSessionResponse(WWW req)
@@ -111,8 +101,6 @@ namespace ua.org.gdg.devfest
       SessionTable st = JsonConvert.DeserializeObject<SessionTable>(req.text);
       _sessions = FirestoreHelper.ParseSessions(st);
       _sessionsParsed = true;
-
-      if (AreAllRequestsFinished()) MapModels();
     }
 
     private IEnumerator OnSpeakerResponse(WWW req)
@@ -122,21 +110,6 @@ namespace ua.org.gdg.devfest
       JsonSpeakersTable st = JsonConvert.DeserializeObject<JsonSpeakersTable>(req.text);
       _speakers = FirestoreHelper.ParseSpeakers(st);
       _speakersParsed = true;
-
-      if (AreAllRequestsFinished()) MapModels();
-    }
-
-    private void MapModels()
-    {
-      _scheduleModels = new Dictionary<string, List<ScheduleItemUiModel>>
-      {
-        {HALL_STAGE_1, ComposeScheduleForHall(HALL_STAGE_1)},
-        {HALL_STAGE_2, ComposeScheduleForHall(HALL_STAGE_2)},
-        {HALL_STAGE_3, ComposeScheduleForHall(HALL_STAGE_3)},
-        {HALL_WORKSHOPS, ComposeScheduleForHall(HALL_WORKSHOPS)}
-      };
-
-      _modelsMapped = true;
     }
 
     private List<TimeslotModel> ComposeFullSchedule(int day)
@@ -280,49 +253,9 @@ namespace ua.org.gdg.devfest
       return timespanText;
     }
 
-    private List<ScheduleItemUiModel> ComposeScheduleForHall(string h)
+    private bool AreAllRequestsFinished
     {
-      // Get all sessions from schedule
-      var sList = _daySchedule.Timeslots.SelectMany(x => x.Sessions).Where(s => s.Hall == h).ToList();
-      var result = new List<ScheduleItemUiModel>();
-
-      for (int i = 0; i < sList.Count; i++)
-      {
-        SessionItem s = _sessions[sList[i].Items[0]];
-
-        ScheduleItemDescriptionUiModel description = new ScheduleItemDescriptionUiModel
-        {
-          Complexity = s.Complexity,
-          DateReadable = _daySchedule.DateReadable,
-          Description = s.Description,
-          EndTime = _daySchedule.Timeslots[i].EndTime,
-          StartTime = _daySchedule.Timeslots[i].StartTime,
-          Hall = sList[i].Hall,
-          Language = s.Language,
-          Speaker = s.Speakers.Count > 0 ? _speakers[s.Speakers[0]] : null,
-          Tag = s.Tag,
-          Title = s.Title,
-          ImageUrl = s.ImageUrl
-        };
-        ScheduleItemUiModel model = new ScheduleItemUiModel
-        {
-          Description = description,
-          ImageUrl = s.ImageUrl,
-          Speaker = description.Speaker,
-          Tag = s.Tag,
-          Title = s.Title,
-          StartTime = description.StartTime,
-          EndTime = description.EndTime
-        };
-        result.Add(model);
-      }
-
-      return result;
-    }
-
-    private bool AreAllRequestsFinished()
-    {
-      return _sessionsParsed && _speakersParsed && _scheduleParsed;
+      get { return _sessionsParsed && _speakersParsed && _scheduleParsed; }
     }
   }
 }

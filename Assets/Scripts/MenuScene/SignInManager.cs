@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Security.Cryptography;
-using Facebook.Unity;
+﻿using Facebook.Unity;
 using System.Threading.Tasks;
 using Google;
 using UnityEngine;
@@ -12,6 +9,8 @@ namespace ua.org.gdg.devfest
 {
   public class SignInManager : MonoBehaviour
   {
+    private const string KEY = "";
+
     //---------------------------------------------------------------------
     // Editor
     //---------------------------------------------------------------------
@@ -56,7 +55,7 @@ namespace ua.org.gdg.devfest
       {
         FB.ActivateApp();
       }
-      
+
       SetGetSocialNameAndAvatar();
     }
 
@@ -82,7 +81,7 @@ namespace ua.org.gdg.devfest
 
       GetSocial.User.Reset(
         () => { Debug.Log("AUTH RESET SUCCESSFULL"); },
-        error => { Debug.Log("AUTH RESET ERROR: " + error.Message);});
+        error => { Debug.Log("AUTH RESET ERROR: " + error.Message); });
 
       _auth.SignOut();
 
@@ -198,10 +197,7 @@ namespace ua.org.gdg.devfest
     private void OnGetSocialInitialized()
     {
       var user = FirebaseAuth.DefaultInstance.CurrentUser;
-      
-      HMACSHA256 cypher = new HMACSHA256(System.Text.Encoding.Default.GetBytes("SECURITY"));
-      string token = System.Text.Encoding.Default.GetString(cypher.ComputeHash(Convert.FromBase64String(user.UserId)));
-      
+      var token = Cyphering.GetHashByKey(KEY, user.UserId);
       var authIdentity = AuthIdentity.CreateCustomIdentity(user.ProviderId, user.UserId, token);
 
       GetSocial.User.AddAuthIdentity(authIdentity, SetGetSocialNameAndAvatar,
@@ -209,55 +205,28 @@ namespace ua.org.gdg.devfest
         conflict =>
         {
           Debug.Log("CONFLICT");
-          
-          GetSocial.User.SwitchUser(authIdentity, () =>
-          {
-            Debug.Log("SWITCH SUCCESS");
-          }, error =>
-          {
-            Debug.Log("SWTRCH ERROR: " + error.Message);
-          });
+
+          GetSocial.User.SwitchUser(authIdentity,
+            SetGetSocialNameAndAvatar,
+            error => { Debug.Log("SWTRCH ERROR: " + error.Message); });
         });
-      
+
       Debug.Log("PROVIDER ID: " + user.ProviderId);
       Debug.Log("USER ID: " + user.UserId);
       Debug.Log("GET SOCIAL USER ID: " + GetSocial.User.Id);
       Debug.Log("TOKEN: " + token);
-      SetGetSocialNameAndAvatar();
-    }
-
-    private void OnUserTokenFetched(Task<string> task)
-    {
-      if (task.IsCanceled)
-      {
-        Utils.ShowMessage("TokenAsync was canceled.");
-        return;
-      }
-
-      if (task.IsFaulted)
-      {
-        Utils.ShowMessage("TokenAsync encountered an error: " + task.Exception);
-        return;
-      }
-
-      string idToken = task.Result;
-      var user = FirebaseAuth.DefaultInstance.CurrentUser;
-      var authIdentity = AuthIdentity.CreateCustomIdentity(user.ProviderId, user.UserId, idToken);
-
-      GetSocial.User.AddAuthIdentity(authIdentity, SetGetSocialNameAndAvatar,
-        error => { Debug.Log("AUTH ADD ERROR: " + error.Message); },
-        conflict => { Debug.Log("CONFLICT"); });
-      
-      Debug.Log("PROVIDER ID: " + user.ProviderId);
-      Debug.Log("USER ID: " + user.UserId);
-      Debug.Log("GET SOCIAL USER ID: " + GetSocial.User.Id);
-      Debug.Log("TOKEN: " + idToken);
-      SetGetSocialNameAndAvatar();
     }
 
     private void SetGetSocialNameAndAvatar()
     {
       var user = FirebaseAuth.DefaultInstance.CurrentUser;
+      
+      if (user == null)
+      {
+        Logout();
+        return;
+      }
+      
       SetGetSocialUsername(user.DisplayName);
       SetGetSocialAvatar(GetHigherResProfilePic(user.PhotoUrl.OriginalString));
     }

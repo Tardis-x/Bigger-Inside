@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using Random = System.Random;
 
 namespace ua.org.gdg.devfest
