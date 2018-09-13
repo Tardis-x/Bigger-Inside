@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace ua.org.gdg.devfest
 {
-  public class FirebaseManager : Singleton<FirebaseManager>
+  public class FirestoreManager : Singleton<FirestoreManager>
   {
     //URLs
     private const string SCHEDULE_URL =
@@ -16,12 +16,6 @@ namespace ua.org.gdg.devfest
       "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/sessions?pageSize=40";
     private const string SPEAKERS_URL =
       "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/speakers?pageSize=40";
-
-    //Halls
-    private const string HALL_STAGE_1 = "Stage 1";
-    private const string HALL_STAGE_2 = "Stage 2";
-    private const string HALL_STAGE_3 = "Stage 3";
-    private const string HALL_WORKSHOPS = "Workshops hall";
 
     //---------------------------------------------------------------------
     // Messages

@@ -57,7 +57,7 @@ namespace ua.org.gdg.devfest
     public void SetContent(int day)
     {
       List<TimeslotModel> listContent;
-      if (!FirebaseManager.Instance.RequestFullSchedule(day, out listContent)) return;
+      if (!FirestoreManager.Instance.RequestFullSchedule(day, out listContent)) return;
 
       foreach (var item in listContent)
       {
@@ -71,7 +71,7 @@ namespace ua.org.gdg.devfest
     public void SetContent(int day, string hall)
     {
       List<TimeslotModel> listContent;
-      if (!FirebaseManager.Instance.RequestFullSchedule(day, hall, out listContent)) return;
+      if (!FirestoreManager.Instance.RequestFullSchedule(day, hall, out listContent)) return;
 
       foreach (var item in listContent)
       {
