@@ -115,7 +115,7 @@ public class QuestRiddlesController : MonoBehaviour
 				}
 				else if(!riddle.Value.isText)
 				{
-					_riddleText.text = "Knowledge";
+					_riddleText.text = "Find and scan a stamp with:";
 					_descriptionText.text = "* you have to find and scan a marker, hidden around the venue";
 					_riddleImageHolder.sprite = riddle.Value.image;
 					_submitButton.gameObject.SetActive(false);
