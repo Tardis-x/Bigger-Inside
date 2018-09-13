@@ -93,14 +93,11 @@ namespace ua.org.gdg.devfest
         {
           Session session = new Session();
 
-          foreach (var item in tsSession.mapValue.fields.items.arrayValue.values)
-          {
-            session.Items.Add(Convert.ToInt32(item.integerValue));
-          }
+//          foreach (var item in tsSession.mapValue.fields.items.arrayValue.values)
+//          {
+//            //session.Items.Add(Convert.ToInt32(item.integerValue));
+//          }
 
-          session.Extend = tsSession.mapValue.fields.extend != null
-            ? Convert.ToInt32(tsSession.mapValue.fields.extend.integerValue)
-            : 1;
           session.SetHall(Array.IndexOf(timeslot.mapValue.fields.sessions.arrayValue.values.ToArray(), tsSession));
           ts.Sessions.Add(session);
         }

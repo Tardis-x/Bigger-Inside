@@ -11,7 +11,7 @@ namespace ua.org.gdg.devfest
   {
     //URLs
     private const string SCHEDULE_URL =
-      "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/schedule";
+      "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/generatedSchedule";
     private const string SESSIONS_URL =
       "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/sessions?pageSize=40";
     private const string SPEAKERS_URL =
@@ -67,7 +67,6 @@ namespace ua.org.gdg.devfest
     private WWW _scheduleRequest, _sessionRequest, _speakerRequest;
 
     //Data
-    private ScheduleDay _daySchedule;
     private Schedule _schedule;
     private Dictionary<int, SessionItem> _sessions;
     private Dictionary<string, Speaker> _speakers;
@@ -84,7 +83,6 @@ namespace ua.org.gdg.devfest
 
       JsonSchedule schedule = JsonConvert.DeserializeObject<JsonSchedule>(req.text);
       _schedule = FirestoreHelper.ParseSchedule(schedule);
-      _daySchedule = _schedule.Days[0];
       _scheduleParsed = true;
     }
 
@@ -146,7 +144,7 @@ namespace ua.org.gdg.devfest
               Complexity = session.Complexity,
               Hall = ts.Sessions.First(s => s.Items.Contains(item)).Hall,
               Language = session.Language,
-              DateReadable = _daySchedule.DateReadable,
+              DateReadable = _schedule.Days[day].DateReadable,
               ImageUrl = session.ImageUrl
             }
           });
@@ -204,7 +202,7 @@ namespace ua.org.gdg.devfest
               Complexity = session.Complexity,
               Hall = sessions.First(s => s.Items.Contains(items[i])).Hall,
               Language = session.Language,
-              DateReadable = _daySchedule.DateReadable,
+              DateReadable = _schedule.Days[day].DateReadable,
               ImageUrl = session.ImageUrl
             }
           });
