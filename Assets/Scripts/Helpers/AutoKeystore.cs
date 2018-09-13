@@ -16,7 +16,6 @@ namespace ua.org.gdg.devfest
         private const string KeyAliasName = Credentials.ALIAS_NAME;
         private const string KeyAliasPass = Credentials.ALIAS_PASS;
         
-        
         static AutoKeystore() {
             var appPath = Application.dataPath.Split(char.Parse("/"));
             appPath[appPath.Length - 1] = "";
