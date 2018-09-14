@@ -84,24 +84,24 @@ namespace ua.org.gdg.devfest
 
     public void EnablePanel(int day)
     {
+      gameObject.SetActive(true);
       SetButtonsUnderscore(day);
       GetComponentInChildren<ScrollRect>().verticalNormalizedPosition = 1;
       Active = true;
       ClearContent();
       SetContent(day);
       _hallName.text = "Schedule";
-      gameObject.SetActive(true);
     }
 
     public void EnablePanel(int day, string hall)
     {
+      gameObject.SetActive(true);
       SetButtonsUnderscore(day);
       GetComponentInChildren<ScrollRect>().verticalNormalizedPosition = 1;
       Active = true;
       ClearContent();
       SetContent(day, hall);
       _hallName.text = hall;
-      gameObject.SetActive(true);
     }
 
     public void ClosePanelDelayed()

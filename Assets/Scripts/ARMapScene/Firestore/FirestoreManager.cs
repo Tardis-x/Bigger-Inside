@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 using System.Linq;
+using System.Text;
 
 namespace ua.org.gdg.devfest
 {
@@ -11,11 +11,7 @@ namespace ua.org.gdg.devfest
   {
     //URLs
     private const string SCHEDULE_URL =
-      "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/schedule";
-    private const string SESSIONS_URL =
-      "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/sessions?pageSize=40";
-    private const string SPEAKERS_URL =
-      "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/speakers?pageSize=40";
+      "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/generatedSchedule";
 
     //---------------------------------------------------------------------
     // Messages
@@ -25,10 +21,6 @@ namespace ua.org.gdg.devfest
     {
       _scheduleRequest = new WWW(SCHEDULE_URL);
       StartCoroutine(OnScheduleResponse(_scheduleRequest));
-      _sessionRequest = new WWW(SESSIONS_URL);
-      StartCoroutine(OnSessionResponse(_sessionRequest));
-      _speakerRequest = new WWW(SPEAKERS_URL);
-      StartCoroutine(OnSpeakerResponse(_speakerRequest));
     }
 
     //---------------------------------------------------------------------
@@ -37,7 +29,7 @@ namespace ua.org.gdg.devfest
 
     public bool RequestFullSchedule(int day, out List<TimeslotModel> schedule)
     {
-      if (!AreAllRequestsFinished)
+      if (!_scheduleParsed)
       {
         schedule = null;
         return false;
@@ -49,7 +41,7 @@ namespace ua.org.gdg.devfest
 
     public bool RequestFullSchedule(int day, string hall, out List<TimeslotModel> schedule)
     {
-      if (!AreAllRequestsFinished)
+      if (!_scheduleParsed)
       {
         schedule = null;
         return false;
@@ -62,17 +54,16 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
-    
+
     //Requests
     private WWW _scheduleRequest, _sessionRequest, _speakerRequest;
 
     //Data
-    private ScheduleDay _daySchedule;
     private Schedule _schedule;
     private Dictionary<int, SessionItem> _sessions;
     private Dictionary<string, Speaker> _speakers;
     private List<TimeslotModel> _fullSchedule;
-    private bool _scheduleParsed, _sessionsParsed, _speakersParsed;
+    private bool _scheduleParsed;
 
     //---------------------------------------------------------------------
     // Helpers
@@ -84,26 +75,7 @@ namespace ua.org.gdg.devfest
 
       JsonSchedule schedule = JsonConvert.DeserializeObject<JsonSchedule>(req.text);
       _schedule = FirestoreHelper.ParseSchedule(schedule);
-      _daySchedule = _schedule.Days[0];
       _scheduleParsed = true;
-    }
-
-    private IEnumerator OnSessionResponse(WWW req)
-    {
-      yield return req;
-
-      SessionTable st = JsonConvert.DeserializeObject<SessionTable>(req.text);
-      _sessions = FirestoreHelper.ParseSessions(st);
-      _sessionsParsed = true;
-    }
-
-    private IEnumerator OnSpeakerResponse(WWW req)
-    {
-      yield return req;
-
-      JsonSpeakersTable st = JsonConvert.DeserializeObject<JsonSpeakersTable>(req.text);
-      _speakers = FirestoreHelper.ParseSpeakers(st);
-      _speakersParsed = true;
     }
 
     private List<TimeslotModel> ComposeFullSchedule(int day)
@@ -112,45 +84,34 @@ namespace ua.org.gdg.devfest
 
       foreach (var ts in _schedule.Days[day - 1].Timeslots)
       {
-        var items = ts.Sessions.SelectMany(s => s.Items).ToList();
-        string timespan = GetTimespanText(ts.StartTime, ts.EndTime);
-
-        List<SpeechItemModel> speeches = new List<SpeechItemModel>();
-
-        foreach (var item in items)
-        {
-          if(!_sessions.ContainsKey(item)) continue;
+        var items = ts.Sessions;
+        
+        var speeches = (from item in items
           
-          var session = _sessions[item];
-
-          var speaker = session.Speakers.Count > 0 ?
-            session.Speakers[0] != null ? 
-              _speakers.ContainsKey(session.Speakers[0]) ? 
-                _speakers[session.Speakers[0]] : null
-            : null : null;
-
-          speeches.Add(new SpeechItemModel
+          let speaker = item.Speakers != null ?
+            item.Speakers.Count > 0 ? 
+              item.Speakers[0] : null : null
+          
+          select new SpeechItemModel
           {
-            Timespan = timespan,
-            Tag = session.Tag,
-            Title = session.Title,
+            Timespan = GetTimespanText(item.Duration.Hours, item.Duration.Minutes),
+            Tag = item.Tag,
+            Title = item.Title,
             Speaker = speaker,
             Description = new ScheduleItemDescriptionUiModel
             {
-              EndTime = ts.EndTime,
-              StartTime = ts.StartTime,
-              Tag = session.Tag,
-              Description = session.Description,
-              Title = session.Title,
+              EndTime = item.EndTime,
+              StartTime = item.StartTime,
+              Tag = item.Tag,
+              Description = item.Description,
+              Title = item.Title,
               Speaker = speaker,
-              Complexity = session.Complexity,
-              Hall = ts.Sessions.First(s => s.Items.Contains(item)).Hall,
-              Language = session.Language,
-              DateReadable = _daySchedule.DateReadable,
-              ImageUrl = session.ImageUrl
+              Complexity = item.Complexity,
+              Hall = item.Hall,
+              Language = item.Language,
+              DateReadable = item.DateReadable
             }
-          });
-        }
+          }).ToList();
 
         schedule.Add(new TimeslotModel
         {
@@ -169,46 +130,34 @@ namespace ua.org.gdg.devfest
 
       foreach (var ts in _schedule.Days[day - 1].Timeslots)
       {
-        var sessions = ts.Sessions.Where(x => x.Hall == hall).ToList();
-        var items = sessions.SelectMany(s => s.Items).ToList();
-        string timespan = GetTimespanText(ts.StartTime, ts.EndTime);
+        var items = ts.Sessions.Where(s => s.Hall == hall);
 
-        List<SpeechItemModel> speeches = new List<SpeechItemModel>();
-
-        for (int i = 0; i < items.Count; i++)
-        {
-          if(!_sessions.ContainsKey(items[i])) continue;
+        var speeches = (from item in items
           
-          var session = _sessions[items[i]];
-
-          var speaker = session.Speakers.Count > 0 ?
-            session.Speakers[0] != null ? 
-              _speakers.ContainsKey(session.Speakers[0]) ? 
-                _speakers[session.Speakers[0]] : null
-              : null : null;
-
-          speeches.Add(new SpeechItemModel
+        let speaker = item.Speakers != null ?
+          item.Speakers.Count > 0 ? 
+            item.Speakers[0] : null : null
+          
+        select new SpeechItemModel
+        {
+          Timespan = GetTimespanText(item.Duration.Hours, item.Duration.Minutes),
+          Tag = item.Tag,
+          Title = item.Title,
+          Speaker = speaker,
+          Description = new ScheduleItemDescriptionUiModel
           {
-            Timespan = timespan,
-            Tag = session.Tag,
-            Title = session.Title,
+            EndTime = item.EndTime,
+            StartTime = item.StartTime,
+            Tag = item.Tag,
+            Description = item.Description,
+            Title = item.Title,
             Speaker = speaker,
-            Description = new ScheduleItemDescriptionUiModel
-            {
-              EndTime = ts.EndTime,
-              StartTime = ts.StartTime,
-              Tag = session.Tag,
-              Description = session.Description,
-              Title = session.Title,
-              Speaker = speaker,
-              Complexity = session.Complexity,
-              Hall = sessions.First(s => s.Items.Contains(items[i])).Hall,
-              Language = session.Language,
-              DateReadable = _daySchedule.DateReadable,
-              ImageUrl = session.ImageUrl
-            }
-          });
-        }
+            Complexity = item.Complexity,
+            Hall = item.Hall,
+            Language = item.Language,
+            DateReadable = item.DateReadable
+          }
+        }).ToList();
 
         schedule.Add(new TimeslotModel
         {
@@ -221,35 +170,22 @@ namespace ua.org.gdg.devfest
       return schedule;
     }
 
-    private string GetTimespanText(string startTime, string endTime)
+    private static string GetTimespanText(int hrs, int mins)
     {
-      int startHour = Convert.ToInt32(startTime.Split(':')[0]);
-      int endHour = Convert.ToInt32(endTime.Split(':')[0]);
-      int startMinute = Convert.ToInt32(startTime.Split(':')[1]);
-      int endMinute = Convert.ToInt32(endTime.Split(':')[1]);
-
-      int hourSpan = endHour - startHour;
-      int minuteSpan = endMinute - startMinute;
-
-      if (minuteSpan < 0)
+      var b = new StringBuilder();
+      
+      if (hrs > 0)
       {
-        hourSpan--;
-        minuteSpan = 60 + minuteSpan;
+        b.Append(hrs);
+        b.Append(hrs > 1 ? " hours " : " hour ");
       }
 
-      string timespanText = "";
+      if (mins <= 0) return b.ToString();
+      
+      b.Append(mins);
+      b.Append(" mins");
 
-      if (hourSpan == 1) timespanText += "1 hour";
-      if (hourSpan > 1) timespanText += hourSpan + " hours";
-      if (timespanText != "") timespanText += " ";
-      if (minuteSpan > 0) timespanText += minuteSpan + " mins";
-
-      return timespanText;
-    }
-
-    private bool AreAllRequestsFinished
-    {
-      get { return _sessionsParsed && _speakersParsed && _scheduleParsed; }
+      return b.ToString();
     }
   }
 }

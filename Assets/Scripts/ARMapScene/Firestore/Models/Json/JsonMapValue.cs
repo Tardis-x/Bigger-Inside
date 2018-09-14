@@ -3,8 +3,8 @@
 namespace ua.org.gdg.devfest
 {
   [Serializable]
-  public class Value<T>
+  public class JsonMapValue<T>
   {
-    public MapValue<T> mapValue;
+    public T fields;
   }
 }

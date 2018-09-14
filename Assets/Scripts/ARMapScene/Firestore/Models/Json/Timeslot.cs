@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace ua.org.gdg.devfest
 {
@@ -11,11 +10,11 @@ namespace ua.org.gdg.devfest
     
     public string StartTime { get; set; }
     public string EndTime { get; set; }
-    public List<Session> Sessions { get; set; }
+    public List<SessionItem> Sessions { get; set; }
 
     public Timeslot()
     {
-      Sessions = new List<Session>();
+      Sessions = new List<SessionItem>();
     }
   }
 }

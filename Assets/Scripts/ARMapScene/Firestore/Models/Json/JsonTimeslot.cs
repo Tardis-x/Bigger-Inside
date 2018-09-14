@@ -7,6 +7,6 @@ namespace ua.org.gdg.devfest
   {
     public StringValue startTime;
     public StringValue endTime;
-    public JsonArray<TimeslotSession> sessions;
+    public JsonArray<JsonTimeslotSession> sessions;
   }
 }
