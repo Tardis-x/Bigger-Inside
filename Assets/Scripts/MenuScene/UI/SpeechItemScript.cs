@@ -42,7 +42,7 @@ namespace ua.org.gdg.devfest
 
     private void Awake()
     {
-      LOGO_BASE_PATH = Application.persistentDataPath + "Graphics/Logo";
+      LOGO_BASE_PATH = Application.persistentDataPath + "Graphics/";
     }
 
     //---------------------------------------------------------------------
@@ -183,8 +183,8 @@ namespace ua.org.gdg.devfest
     private IEnumerator OnResponse(WWW req, string filePath, RawImage image)
     {
       yield return req;
-
-      image.texture = req.texture;
+      
+      SetImageTexture(image, req.bytes);
       SaveLogoToFile(filePath, req.bytes);
     }
 

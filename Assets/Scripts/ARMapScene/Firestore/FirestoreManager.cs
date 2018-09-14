@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
@@ -85,15 +84,15 @@ namespace ua.org.gdg.devfest
 
       foreach (var ts in _schedule.Days[day - 1].Timeslots)
       {
-        List<SpeechItemModel> speeches = new List<SpeechItemModel>();
-
-        foreach (var item in ts.Sessions)
-        {
-          var speaker = item.Speakers != null ? 
-            item.Speakers.Count > 0 ? 
-              item.Speakers[0] : null : null;
+        var items = ts.Sessions;
+        
+        var speeches = (from item in items
           
-          speeches.Add(new SpeechItemModel
+          let speaker = item.Speakers != null ?
+            item.Speakers.Count > 0 ? 
+              item.Speakers[0] : null : null
+          
+          select new SpeechItemModel
           {
             Timespan = GetTimespanText(item.Duration.Hours, item.Duration.Minutes),
             Tag = item.Tag,
@@ -112,8 +111,7 @@ namespace ua.org.gdg.devfest
               Language = item.Language,
               DateReadable = item.DateReadable
             }
-          });
-        }
+          }).ToList();
 
         schedule.Add(new TimeslotModel
         {
@@ -132,37 +130,34 @@ namespace ua.org.gdg.devfest
 
       foreach (var ts in _schedule.Days[day - 1].Timeslots)
       {
-        List<SpeechItemModel> speeches = new List<SpeechItemModel>();
-
         var items = ts.Sessions.Where(s => s.Hall == hall);
-        
-        foreach (var item in items)
-        {
-          var speaker = item.Speakers != null ? 
-            item.Speakers.Count > 0 ? 
-              item.Speakers[0] : null : null;
+
+        var speeches = (from item in items
           
-          speeches.Add(new SpeechItemModel
+        let speaker = item.Speakers != null ?
+          item.Speakers.Count > 0 ? 
+            item.Speakers[0] : null : null
+          
+        select new SpeechItemModel
+        {
+          Timespan = GetTimespanText(item.Duration.Hours, item.Duration.Minutes),
+          Tag = item.Tag,
+          Title = item.Title,
+          Speaker = speaker,
+          Description = new ScheduleItemDescriptionUiModel
           {
-            Timespan = GetTimespanText(item.Duration.Hours, item.Duration.Minutes),
+            EndTime = item.EndTime,
+            StartTime = item.StartTime,
             Tag = item.Tag,
+            Description = item.Description,
             Title = item.Title,
             Speaker = speaker,
-            Description = new ScheduleItemDescriptionUiModel
-            {
-              EndTime = item.EndTime,
-              StartTime = item.StartTime,
-              Tag = item.Tag,
-              Description = item.Description,
-              Title = item.Title,
-              Speaker = speaker,
-              Complexity = item.Complexity,
-              Hall = item.Hall,
-              Language = item.Language,
-              DateReadable = item.DateReadable
-            }
-          });
-        }
+            Complexity = item.Complexity,
+            Hall = item.Hall,
+            Language = item.Language,
+            DateReadable = item.DateReadable
+          }
+        }).ToList();
 
         schedule.Add(new TimeslotModel
         {
@@ -175,11 +170,20 @@ namespace ua.org.gdg.devfest
       return schedule;
     }
 
-    private string GetTimespanText(int hrs, int mins)
+    private static string GetTimespanText(int hrs, int mins)
     {
       var b = new StringBuilder();
-      if (hrs > 0) b.Append(hrs);
+      
+      if (hrs > 0)
+      {
+        b.Append(hrs);
+        b.Append(hrs > 1 ? " hours " : " hour ");
+      }
+
+      if (mins <= 0) return b.ToString();
+      
       b.Append(mins);
+      b.Append(" mins");
 
       return b.ToString();
     }
