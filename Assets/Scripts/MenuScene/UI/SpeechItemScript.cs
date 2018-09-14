@@ -28,6 +28,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] private Text _tagText;
     [SerializeField] private Image _tagBorder;
     [SerializeField] private RawImage _speakerPhoto;
+    [SerializeField] private Image _speakerPhotoCircle;
     [SerializeField] private Text _timespanText;
 
     //---------------------------------------------------------------------
@@ -126,6 +127,7 @@ namespace ua.org.gdg.devfest
     private void SetSpeakerImageVisible(bool visible)
     {
       _speakerPhoto.gameObject.SetActive(visible);
+      _speakerPhotoCircle.gameObject.SetActive(visible);
     }
 
     private void SetTagImageColor(string speechTag)
