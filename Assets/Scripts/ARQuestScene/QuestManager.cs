@@ -74,7 +74,7 @@ public class QuestManager : MonoBehaviour
 #endif
 							Debug.Log("Default info screen");
 							_questUi.ShowInfoPanel("Welcome to the DevFest Quest Adventure!",
-								"It's a Quest, where you will have to complete different tasks related to the conference and Google technologies knowledge.\nNote: accomplish all tasks as fast as possible to win a greater award!",
+								"It's a Quest, where you will have to complete different tasks related to the conference and Google technologies knowledge.\n\nNote: accomplish all tasks as fast as possible to win a greater award!",
 								0);
 						});
 				}
