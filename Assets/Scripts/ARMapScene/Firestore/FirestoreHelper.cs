@@ -60,7 +60,8 @@ namespace ua.org.gdg.devfest
         Id = jSession.mapValue.fields.id != null ?
           jSession.mapValue.fields.id.stringValue : null,
         Description = jSession.mapValue.fields.description != null ?
-          Regex.Replace(jSession.mapValue.fields.description.stringValue, @"[^\u0000-\u007F]+", "●") : null,
+          Regex.Replace(jSession.mapValue.fields.description.stringValue,
+            @"\p{Cs}|[\u2600-\u27ff]", "●").Replace("●●", "●") : null,
         Title = jSession.mapValue.fields.title != null ?
           jSession.mapValue.fields.title.stringValue : null,
         Tag = jSession.mapValue.fields.mainTag != null ?
