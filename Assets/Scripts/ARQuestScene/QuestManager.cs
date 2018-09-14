@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DeadMosquito.AndroidGoodies;
 using Firebase;
 using Firebase.Database;
 using Firebase.Unity.Editor;
 using Newtonsoft.Json;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class QuestManager : MonoBehaviour
 {
@@ -25,7 +23,6 @@ public class QuestManager : MonoBehaviour
 	public bool isQuestActivated;
 	int _timesCompleted;
 	public Sprite[] riddleImages;
-	public Image userPhotoImage;
 
 	void Awake()
 	{
@@ -521,13 +518,5 @@ public class QuestManager : MonoBehaviour
 				Debug.LogError("QuestManager: Cancel updating quest data in firebase realtime database!");
 			}
 		});
-	}
-
-	IEnumerator LoadUserImageFromUrl()
-	{
-		var www = new WWW(firebaseData.userPhotoUrl.ToString());
-		yield return www;
-		userPhotoImage.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height),
-			new Vector2(0, 0));
 	}
 }
