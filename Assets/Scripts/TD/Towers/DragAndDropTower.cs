@@ -24,6 +24,7 @@ namespace ua.org.gdg.devfest
 
     private GameObject _hoverPrefab;
     private GameObject _activeSlot;
+    private bool _arCoreSupport;
 
     //---------------------------------------------------------------------
     // Messages
@@ -31,6 +32,7 @@ namespace ua.org.gdg.devfest
 
     private void Start()
     {
+      _arCoreSupport = ARCoreHelper.CheckArCoreSupport();
       _hoverPrefab = Instantiate(_towerPrefab);
       _hoverPrefab.transform.localScale = Vector3.one * _ghostTowerScaleFactor;
       _hoverPrefab.SetActive(false);
@@ -166,9 +168,15 @@ namespace ua.org.gdg.devfest
 
       var midPoint = Vector3.Slerp(vertRealWorldPositions[0], vertRealWorldPositions[1], 0.5f);
       Debug.Log(string.Format("Midpoint y: {0}", midPoint.y));
-      // midPoint.y += offsetY;
+      midPoint.y += GetOffset();
       
       return midPoint;
+    }
+
+    private float GetOffset()
+    {
+      const float OFFSET_Y = -0.05f;
+      return _arCoreSupport ? 0 : OFFSET_Y;
     }
     
     //---------------------------------------------------------------------
