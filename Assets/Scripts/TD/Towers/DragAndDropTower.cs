@@ -166,7 +166,7 @@ namespace ua.org.gdg.devfest
 
       var midPoint = Vector3.Slerp(vertRealWorldPositions[0], vertRealWorldPositions[1], 0.5f);
       Debug.Log(string.Format("Midpoint y: {0}", midPoint.y));
-      midPoint.y += offsetY;
+      // midPoint.y += offsetY;
       
       return midPoint;
     }

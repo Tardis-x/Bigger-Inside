@@ -58,6 +58,11 @@ namespace ua.org.gdg.devfest
       }
     }
 
+    public void OnPrepareSpawnPoints(GameObject canvas)
+    {
+      _canvas = canvas.GetComponent<Canvas>();
+    }
+
     //---------------------------------------------------------------------
     // Messages
     //---------------------------------------------------------------------
