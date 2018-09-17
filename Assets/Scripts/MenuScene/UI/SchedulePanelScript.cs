@@ -38,8 +38,11 @@ namespace ua.org.gdg.devfest
 
     private void Update()
     {
-      if (Input.GetKeyDown(KeyCode.Escape) && Active && !_descriptionPanel.Active) 
+      if (Input.GetKeyDown(KeyCode.Escape) && Active && !_descriptionPanel.Active)
+      {
         Invoke("DisablePanel", .1f);
+        _showMenu.Raise();
+      }
     }
     
     //---------------------------------------------------------------------
