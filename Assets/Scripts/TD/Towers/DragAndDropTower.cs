@@ -24,7 +24,6 @@ namespace ua.org.gdg.devfest
 
     private GameObject _hoverPrefab;
     private GameObject _activeSlot;
-    private bool _arCoreSupport;
 
     //---------------------------------------------------------------------
     // Messages
@@ -32,7 +31,6 @@ namespace ua.org.gdg.devfest
 
     private void Start()
     {
-      _arCoreSupport = ARCoreHelper.CheckArCoreSupport();
       _hoverPrefab = Instantiate(_towerPrefab);
       _hoverPrefab.transform.localScale = Vector3.one * _ghostTowerScaleFactor;
       _hoverPrefab.SetActive(false);
