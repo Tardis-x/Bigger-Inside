@@ -53,6 +53,13 @@ namespace ua.org.gdg.devfest
       Active = value;
     }
 
+    public void DisablePanel()
+    {
+      GetComponentInChildren<ScrollRect>().verticalNormalizedPosition = 1;
+      gameObject.SetActive(false);
+      Active = false;
+    }
+
     public void SetData(ScheduleItemDescriptionUiModel model)
     {
       if (model.Speaker != null)
