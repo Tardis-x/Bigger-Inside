@@ -10,7 +10,7 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     [SerializeField] private GameObject _towerPrefab;
-    [SerializeField] private int _ghostTowerScaleFactor;
+    [SerializeField] private float _ghostTowerScaleFactor;
 
     [Space]
     [Header("Events")] 
@@ -43,7 +43,6 @@ namespace ua.org.gdg.devfest
     {
       if (!Interactable) return;
       
-      Debug.Log("OnBeginDrag raised");
       _onBeginDrag.Raise();
     }
 
@@ -79,13 +78,8 @@ namespace ua.org.gdg.devfest
       
       if (_activeSlot != null)
       {
-        Debug.Log(string.Format("Active slot pos: x - {0}, y - {1}, z - {2}", _activeSlot.transform.position.x, 
-          _activeSlot.transform.position.y, _activeSlot.transform.position.z));
         var quadCentre = GetQuadCentre(_activeSlot);
-        Debug.Log(string.Format("Quad center pos: x - {0}, y - {1}, z - {2}", quadCentre.x, 
-          quadCentre.y, quadCentre.z));
         var tower = Instantiate(_towerPrefab, quadCentre, Quaternion.identity, _activeSlot.transform.parent.transform);
-        Debug.Log("Instantiated tower");
         tower.GetComponent<CapsuleCollider>().enabled = true;
         tower.GetComponent<TowerScript>().Slot = _activeSlot;
         var aoeTower = tower.GetComponent<AOETowerScript>();
@@ -95,7 +89,6 @@ namespace ua.org.gdg.devfest
       }
 
       _hoverPrefab.SetActive(false);
-      Debug.Log("OnEndDrag raised");
       _onEndDrag.Raise();
     }
 
@@ -132,7 +125,7 @@ namespace ua.org.gdg.devfest
     {
       for (var i = 0; i < hits.Length; i++)
       {
-        if (hits[i].collider.gameObject.name.Equals("Environment"))
+        if (hits[i].collider.gameObject.name.StartsWith("Environment"))
         {
           return i;
         }
@@ -157,7 +150,6 @@ namespace ua.org.gdg.devfest
 
     private Vector3 GetQuadCentre(GameObject quad)
     {
-      var offsetY = -0.05f;
       var meshVerts = quad.GetComponent<MeshFilter>().mesh.vertices;
       var vertRealWorldPositions = new Vector3[meshVerts.Length];
 
@@ -167,7 +159,6 @@ namespace ua.org.gdg.devfest
       }
 
       var midPoint = Vector3.Slerp(vertRealWorldPositions[0], vertRealWorldPositions[1], 0.5f);
-      Debug.Log(string.Format("Midpoint y: {0}", midPoint.y));
       midPoint.y += GetOffset();
       
       return midPoint;
@@ -175,8 +166,7 @@ namespace ua.org.gdg.devfest
 
     private float GetOffset()
     {
-      const float OFFSET_Y = -0.05f;
-      return _arCoreSupport ? 0 : OFFSET_Y;
+      return -0.005f;
     }
     
     //---------------------------------------------------------------------
