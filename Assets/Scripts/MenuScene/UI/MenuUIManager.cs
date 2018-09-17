@@ -26,7 +26,7 @@ namespace ua.org.gdg.devfest
 		{
 			_signInPanel.SetActive(true);
 			_menuPanel.SetActive(false);
-			if(_userPopUp.Active) _userPopUp.Hide();
+			_schedulePanel.DisablePanel();
 		}
 
 		public void ShowMenu()
@@ -62,6 +62,11 @@ namespace ua.org.gdg.devfest
 		public void SetCurrentDay(int day)
 		{
 			CurrentDay = day;
+		}
+
+		public void OnMenuObjectClicked()
+		{
+			if(_userPopUp.Active) _userPopUp.Hide();
 		}
 
 		public void OpenTermsAndServicesURL()
