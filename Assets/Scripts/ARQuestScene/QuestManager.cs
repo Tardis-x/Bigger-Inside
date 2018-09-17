@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+#if UNITY_ANDROID
 using DeadMosquito.AndroidGoodies;
+#endif
 using Firebase;
 using Firebase.Database;
 using Firebase.Unity.Editor;
