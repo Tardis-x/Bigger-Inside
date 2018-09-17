@@ -83,7 +83,7 @@ namespace ua.org.gdg.devfest
         var aoeTower = tower.GetComponent<AOETowerScript>();
         if(aoeTower != null) aoeTower.SetAOEVisible(true);
         _activeSlot.SetActive(false);
-        // _moneyChangedForAmount.Raise(-_towerPrefab.GetComponent<TowerScript>().Cost);
+        _moneyChangedForAmount.Raise(-_towerPrefab.GetComponent<TowerScript>().Cost);
       }
 
       _hoverPrefab.SetActive(false);
