@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class QuestRiddlesController : MonoBehaviour
 {
 	[SerializeField]
+	Text _taskText;
+	
+	[SerializeField]
 	Text _riddleText;
 	
 	[SerializeField]
@@ -108,6 +111,7 @@ public class QuestRiddlesController : MonoBehaviour
 				{
 					_descriptionText.text = "";
 					_riddleText.text = riddle.Value.description;
+					_taskText.text = riddle.Value.taskText;
 					_scanButton.gameObject.SetActive(false);
 					_submitButton.gameObject.SetActive(true);
 					_inputField.gameObject.SetActive(true);
@@ -115,7 +119,8 @@ public class QuestRiddlesController : MonoBehaviour
 				}
 				else if(!riddle.Value.isText)
 				{
-					_riddleText.text = "Find and scan a marker with:";
+					_taskText.text = "Find and scan a marker with:";
+					_riddleText.text = "";
 					_descriptionText.text = "* you have to find and scan a marker, hidden around the venue";
 					_riddleImageHolder.sprite = riddle.Value.image;
 					_submitButton.gameObject.SetActive(false);
