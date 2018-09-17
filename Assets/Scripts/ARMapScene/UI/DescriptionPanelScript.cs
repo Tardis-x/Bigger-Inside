@@ -12,7 +12,6 @@ namespace ua.org.gdg.devfest
     // Editor
     //---------------------------------------------------------------------
 
-    [SerializeField] private RawImage _headerBackgroundImage;
     [SerializeField] private Text _titleText;
     [SerializeField] private Text _detailsText;
     [SerializeField] private Text _tagText;

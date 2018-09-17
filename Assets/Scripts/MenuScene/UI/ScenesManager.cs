@@ -12,13 +12,13 @@ namespace ua.org.gdg.devfest
 
     [SerializeField] private SignInManager _signInManager;
     [SerializeField] private GameEvent _showSignIn;
-    
+
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
 
     private ProgressDialogSpinner _progressDialogSpinner;
-    
+
 
     //---------------------------------------------------------------------
     // Messages
@@ -28,15 +28,15 @@ namespace ua.org.gdg.devfest
     {
       DismissLoadingDialog();
     }
-    
+
     //---------------------------------------------------------------------
     // Events
     //---------------------------------------------------------------------
-   
+
     public void OnSignIn()
     {
       Debug.Log("OnSignIn");
-      if(SceneToGo != string.Empty) GoToScene(SceneToGo);
+      if (SceneToGo != string.Empty) GoToScene(SceneToGo);
     }
 
     //---------------------------------------------------------------------
@@ -44,19 +44,11 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     [NonSerialized] public string SceneToGo = string.Empty;
-    
+
     public void GoToARMap()
     {
-      if (_signInManager.UserSignedIn)
-      {
-        ResetSceneToGo();
-        GoToScene(Scenes.SCENE_AR_MAP);
-      }
-      else
-      {
-        SceneToGo = Scenes.SCENE_AR_MAP;
-        _showSignIn.Raise();
-      }
+      ResetSceneToGo();
+      GoToScene(Scenes.SCENE_AR_MAP);
     }
 
     public void GoToARQuest()
@@ -72,12 +64,12 @@ namespace ua.org.gdg.devfest
         _showSignIn.Raise();
       }
     }
-    
+
     public void ResetSceneToGo()
     {
       SceneToGo = string.Empty;
     }
-    
+
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
@@ -92,8 +84,8 @@ namespace ua.org.gdg.devfest
     private void ShowLoading()
     {
       Debug.Log("Showing Loading Dialog");
-      if(_progressDialogSpinner != null) DismissLoadingDialog();
-      
+      if (_progressDialogSpinner != null) DismissLoadingDialog();
+
       _progressDialogSpinner = new ProgressDialogSpinner("Loading", "Please wait...");
       _progressDialogSpinner.Show();
     }
@@ -102,7 +94,7 @@ namespace ua.org.gdg.devfest
     {
       Debug.Log("Dismissing loading dialog");
       if (_progressDialogSpinner == null) return;
-      
+
       _progressDialogSpinner.Dismiss();
       _progressDialogSpinner = null;
     }

@@ -11,6 +11,7 @@ namespace ua.org.gdg.devfest
     // Editor
     //---------------------------------------------------------------------
 
+    [SerializeField] private DescriptionPanelScript _descriptionPanel;
     [SerializeField] private RectTransform _contentContainer;
     [SerializeField] private TimeslotScript _timeslot;
     [SerializeField] private GameEvent _showMenu;
@@ -30,6 +31,16 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     
     public bool Active { get; private set; }
+    
+    //---------------------------------------------------------------------
+    // Messages
+    //---------------------------------------------------------------------
+
+    private void Update()
+    {
+      if (Input.GetKeyDown(KeyCode.Escape) && Active && !_descriptionPanel.Active) 
+        _showMenu.Raise();
+    }
     
     //---------------------------------------------------------------------
     // Public

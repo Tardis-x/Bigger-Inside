@@ -2062,6 +2062,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cead17c61f94d747a99a231c80b1c2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _descriptionPanel: {fileID: 864795197}
   _contentContainer: {fileID: 596760821}
   _timeslot: {fileID: 114700091396007222, guid: 33ecb2f5292a4dc428aa93f6e80226f7,
     type: 2}
@@ -3145,7 +3146,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 773f2381d69e8ab4cbffa4314be7a01a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _headerBackgroundImage: {fileID: 1792030351}
   _titleText: {fileID: 281532944}
   _detailsText: {fileID: 1087718264}
   _tagText: {fileID: 1063820990}
@@ -5184,7 +5184,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1176905099}
-        m_MethodName: OnBackToMenuButtonClick
+        m_MethodName: ShowMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7742,7 +7742,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1176905099}
-        m_MethodName: OnBackToMenuButtonClick
+        m_MethodName: ShowMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
