@@ -216,11 +216,6 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1046727952}
-    - target: {fileID: 114664514074782762, guid: 290d3fc8b2cf4924abd2b098885d17c6,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: GoToMenu
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 290d3fc8b2cf4924abd2b098885d17c6, type: 2}
   m_IsPrefabAsset: 0
@@ -1086,6 +1081,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cead17c61f94d747a99a231c80b1c2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _descriptionPanel: {fileID: 414179248}
   _contentContainer: {fileID: 727000882}
   _timeslot: {fileID: 114700091396007222, guid: 33ecb2f5292a4dc428aa93f6e80226f7,
     type: 2}
@@ -1670,7 +1666,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 773f2381d69e8ab4cbffa4314be7a01a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _headerBackgroundImage: {fileID: 1521496784}
   _titleText: {fileID: 621952391}
   _detailsText: {fileID: 1381852259}
   _tagText: {fileID: 714769889}
@@ -2760,7 +2755,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.000061035156}
   m_SizeDelta: {x: 0, y: -1620}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &727000883
@@ -3235,8 +3230,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -5}
-  m_SizeDelta: {x: 20, y: 10}
+  m_AnchoredPosition: {x: -15, y: 0}
+  m_SizeDelta: {x: 50, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &957520294
 MonoBehaviour:
@@ -3258,7 +3253,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: d2dd1831d2d0f9d40b65a118cdd8f6f4, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4157,7 +4152,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -16.000122, y: 0}
+  m_AnchoredPosition: {x: -16.000061, y: 0}
   m_SizeDelta: {x: -32, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1166279682
@@ -5811,7 +5806,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -16.000122, y: -154}
+  m_AnchoredPosition: {x: -16.000061, y: -154}
   m_SizeDelta: {x: -32, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1620275349
@@ -6000,10 +5995,10 @@ RectTransform:
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0.88367444}
-  m_AnchoredPosition: {x: -3.25, y: -2.459961}
-  m_SizeDelta: {x: 6.5, y: -4.920033}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -300}
+  m_SizeDelta: {x: 10, y: -300}
+  m_Pivot: {x: 1, y: 1}
 --- !u!114 &1742715397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6024,9 +6019,9 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.24705884, g: 0.4666667, b: 0.8117648, a: 0}
-    m_HighlightedColor: {r: 0.24705884, g: 0.4666667, b: 0.8117648, a: 0}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1

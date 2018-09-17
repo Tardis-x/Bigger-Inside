@@ -47,11 +47,15 @@ namespace ua.org.gdg.devfest
 			StartCoroutine(EnableARCamera());
 			EnableObjectClick(true);
 		}
-		
-		void Update()
+
+		private void Update()
 		{
-			if (Input.GetKeyDown(KeyCode.Escape) && !PanelManager.Instance.SchedulePanelNew.Active
-			    && !PanelManager.Instance.SpeechDescriptionPanelNew.Active) GoToMenu();
+			if (!Input.GetKeyDown(KeyCode.Escape)) return;
+			
+			if(!PanelManager.Instance.IsPanelActive())
+			{
+				GoToMenu();
+			}
 		}
 		
 		//---------------------------------------------------------------------

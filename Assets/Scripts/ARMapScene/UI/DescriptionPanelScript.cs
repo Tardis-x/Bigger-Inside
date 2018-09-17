@@ -12,7 +12,6 @@ namespace ua.org.gdg.devfest
     // Editor
     //---------------------------------------------------------------------
 
-    [SerializeField] private RawImage _headerBackgroundImage;
     [SerializeField] private Text _titleText;
     [SerializeField] private Text _detailsText;
     [SerializeField] private Text _tagText;
@@ -52,6 +51,13 @@ namespace ua.org.gdg.devfest
       GetComponentInChildren<ScrollRect>().verticalNormalizedPosition = 1;
       gameObject.SetActive(value);
       Active = value;
+    }
+
+    public void DisablePanel()
+    {
+      GetComponentInChildren<ScrollRect>().verticalNormalizedPosition = 1;
+      gameObject.SetActive(false);
+      Active = false;
     }
 
     public void SetData(ScheduleItemDescriptionUiModel model)
