@@ -19,7 +19,7 @@ public class QuestUI : MonoBehaviour
 	[SerializeField] Button _changeInfoButton;
 	[SerializeField] Button _proceedButton;
 	[SerializeField] Button _scanPhotoMarkerButton;
-	[SerializeField] private UserAvatarManager _avatarManager;
+	[SerializeField] UserAvatarManager _avatarManager;
 
 	public Image infoPanelSwordImage;
 	public Image infoPanelSelfieImage;
@@ -49,9 +49,17 @@ public class QuestUI : MonoBehaviour
 		
 	}
 
-	private void Start()
+	void Start()
 	{
 		_avatarManager.SetUserAvatar();
+	}
+	
+	void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Escape))
+		{
+			OnAndroidBackButtonClicked();
+		}
 	}
 
 	void QuestManagerReferenceInitialization()
@@ -132,7 +140,7 @@ public class QuestUI : MonoBehaviour
 				"To complete this part you have to:\n- Take a photo with a speaker;\n" +
 				"- Take a crazy photo with your friend(s) in front of Press Wall;\n" +
 				"- Share those photos with hashtags #DevFest18, #dfua, #quest as public space in Facebook, Twitter or Instagram;\n" +
-				"- Scan a special marker from Quest guys", 1);
+				"- Scan a special marker from Quest guys, sitting near the registration desk", 1);
 			//Switch the buttons
 			_changeInfoButton.gameObject.SetActive(false);
 			_proceedButton.gameObject.SetActive(false);
@@ -309,6 +317,22 @@ public class QuestUI : MonoBehaviour
 			nextButton.gameObject.SetActive(false);
 			leaderboardButton.gameObject.SetActive(false);
 			hiddenLeaderboardButton.gameObject.SetActive(true);
+		}
+	}
+
+	public void OnAndroidBackButtonClicked()
+	{
+		if (_infoPanel.activeSelf || _userScorePanel.activeSelf)
+		{
+			OnMainMenuButtonClicked();
+		}
+		else if (_leaderBoardPanel.activeSelf)
+		{
+			OnBackFromLeaderBoardButtonClicked();
+		}
+		else
+		{
+			OnBackButtonClicked();
 		}
 	}
 
