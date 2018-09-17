@@ -19,15 +19,32 @@ namespace ua.org.gdg.devfest
 
     public void ShowActivityFeed()
     {
-      if (FirebaseAuth.DefaultInstance.CurrentUser == null)
-      {
-        _showSignIn.Raise();
-        return;
-      }
+      if (!IsUserAuthorized()) return; 
 
       GetSocialUi.CreateGlobalActivityFeedView()
         .SetWindowTitle("GDG News")
+        .SetTagClickListener(OnTagClick)
         .Show();
+    }
+
+    //---------------------------------------------------------------------
+    // Helpers
+    //---------------------------------------------------------------------
+
+    private void OnTagClick(string tagName)
+    {
+      GetSocialUi.CreateGlobalActivityFeedView()
+        .SetWindowTitle(tagName)
+        .SetFilterByTags(tagName)
+        .Show();
+    }
+    
+    private bool IsUserAuthorized()
+    {
+      if (FirebaseAuth.DefaultInstance.CurrentUser != null) return true;
+      
+      _showSignIn.Raise();
+      return false;
     }
   }
 }
