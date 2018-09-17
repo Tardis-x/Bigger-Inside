@@ -1,7 +1,4 @@
-﻿
-using UnityEngine;
-
-public class QuestRiddleData
+﻿public class QuestRiddleData
 {
 	public int score;
 	public bool isCompleted;

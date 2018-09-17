@@ -147,7 +147,7 @@ public class QuestManager : MonoBehaviour
 
 		QuestRiddlesDataFull = new Dictionary<string, QuestRiddleDataFull>();
 		Debug.Log("RiddleDataInitialization");
-		var riddle1 = new QuestRiddleDataFull(true, "How are new comers called in Google?");
+		var riddle1 = new QuestRiddleDataFull(true, "How are new comers called in Google?", "Question #1");
 		QuestRiddlesDataFull.Add("Noogler", riddle1);
 //		var riddle5 = new QuestRiddleDataFull(false, riddleImages[0]);
 //		QuestRiddlesDataFull.Add("Angular", riddle5);
@@ -158,12 +158,12 @@ public class QuestManager : MonoBehaviour
 		var riddle9 = new QuestRiddleDataFull(false, riddleImages[4]);
 		QuestRiddlesDataFull.Add("AndroidAuto", riddle9);
 		var riddle3 = new QuestRiddleDataFull(true,
-			"One day a computer failure stumped Grace Hopper and her team until she opened the machine and found THIS inside!");
+			"One day a computer failure stumped Grace Hopper and her team until she opened the machine and found THIS inside!", "Question #2");
 		QuestRiddlesDataFull.Add("Bug", riddle3);
 		var riddle10 = new QuestRiddleDataFull(false, riddleImages[5]);
 		QuestRiddlesDataFull.Add("Dart", riddle10);
 		var riddle11 = new QuestRiddleDataFull(true,
-			"Enthusiasts-musicians-developers developed a computer called AImus, which could compose music by himself. Answer with two words. How was his first music composition named?");
+			"Enthusiasts-musicians-developers developed a computer called AImus, which could compose music by himself. Answer with two words. How was his first music composition named?", "Question #3");
 		QuestRiddlesDataFull.Add("HelloWorld", riddle11);
 //		var riddle7 = new QuestRiddleDataFull(false, riddleImages[2]);
 //		QuestRiddlesDataFull.Add("GoogleSearch", riddle7);
