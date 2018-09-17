@@ -10,7 +10,7 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     [SerializeField] private GameObject _towerPrefab;
-    [SerializeField] private int _ghostTowerScaleFactor;
+    [SerializeField] private float _ghostTowerScaleFactor;
 
     [Space]
     [Header("Events")] 
@@ -41,7 +41,6 @@ namespace ua.org.gdg.devfest
     {
       if (!Interactable) return;
       
-      Debug.Log("OnBeginDrag raised");
       _onBeginDrag.Raise();
     }
 
@@ -88,7 +87,6 @@ namespace ua.org.gdg.devfest
       }
 
       _hoverPrefab.SetActive(false);
-      Debug.Log("OnEndDrag raised");
       _onEndDrag.Raise();
     }
 
@@ -125,7 +123,7 @@ namespace ua.org.gdg.devfest
     {
       for (var i = 0; i < hits.Length; i++)
       {
-        if (hits[i].collider.gameObject.name.Equals("Environment"))
+        if (hits[i].collider.gameObject.name.StartsWith("Environment"))
         {
           return i;
         }
@@ -150,7 +148,6 @@ namespace ua.org.gdg.devfest
 
     private Vector3 GetQuadCentre(GameObject quad)
     {
-      var offsetY = 0.05f;
       var meshVerts = quad.GetComponent<MeshFilter>().mesh.vertices;
       var vertRealWorldPositions = new Vector3[meshVerts.Length];
 
@@ -160,9 +157,14 @@ namespace ua.org.gdg.devfest
       }
 
       var midPoint = Vector3.Slerp(vertRealWorldPositions[0], vertRealWorldPositions[1], 0.5f);
-      midPoint.y = offsetY;
+      midPoint.y += GetOffset();
       
       return midPoint;
+    }
+
+    private float GetOffset()
+    {
+      return -0.005f;
     }
     
     //---------------------------------------------------------------------

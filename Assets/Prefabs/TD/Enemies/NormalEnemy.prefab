@@ -632,7 +632,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1300070677741926}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -2.182, y: 0, z: 1.565}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4428375688060828}
@@ -909,8 +909,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 243ce20cbde5e69488fc5af6b5183b40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentNode: {fileID: 0}
   _navMeshAgent: {fileID: 195180005319807430}
+  _extraRotationSpeed: 5
 --- !u!114 &114385205466099618
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -944,7 +944,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9734df76e8c87c84ab9a9bc8be7e2f78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _offset: 1.4
+  _offset: 0.2
   _hpBarPrefab: {fileID: 1280261314441224, guid: 77d4d66c2254ba24e995e7838fd27c6c,
     type: 2}
   _happyIconPrefab: {fileID: 1994424553329664, guid: eee006e3e34520742afa24bd75055272,
@@ -1066,10 +1066,10 @@ NavMeshAgent:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1300070677741926}
   m_Enabled: 1
-  m_AgentTypeID: 0
+  m_AgentTypeID: -334000983
   m_Radius: 0.05
-  m_Speed: 1.2
-  m_Acceleration: 6
+  m_Speed: 1.5
+  m_Acceleration: 24
   avoidancePriority: 50
   m_AngularSpeed: 90
   m_StoppingDistance: 0
@@ -1088,7 +1088,7 @@ ParticleSystem:
   m_GameObject: {fileID: 1849145870592384}
   serializedVersion: 5
   lengthInSec: 1
-  simulationSpeed: 2
+  simulationSpeed: 1.75
   stopAction: 0
   looping: 0
   prewarm: 0
@@ -1212,7 +1212,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1.3
+      scalar: 0.35
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -1328,7 +1328,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.05
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -1650,7 +1650,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.1
+      scalar: 0.05
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -1704,7 +1704,7 @@ ParticleSystem:
     serializedVersion: 5
     enabled: 1
     type: 4
-    angle: 24.790333
+    angle: 18.700098
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
@@ -1734,7 +1734,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.104939006
+      value: 0.06833428
       mode: 0
       spread: 0
       speed:
