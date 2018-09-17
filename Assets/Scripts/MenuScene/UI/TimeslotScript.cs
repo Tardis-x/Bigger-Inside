@@ -6,6 +6,9 @@ namespace ua.org.gdg.devfest
 {
   public class TimeslotScript : MonoBehaviour
   {
+    private const int ITEM_HEIGHT_W_O_SPEAKER = 520;
+    private const int ITEM_HEIGHT_W_SPEAKER = 700;
+    
     //---------------------------------------------------------------------
     // Editor
     //---------------------------------------------------------------------
@@ -41,8 +44,9 @@ namespace ua.org.gdg.devfest
       {
         var item = _speechPrefab.GetInstance(speech);
         item.transform.SetParent(instance.transform);
-        (item.transform as RectTransform).sizeDelta = new Vector2(width, item.General ? 330 : 510);
-        tsHeight += item.General ? 330 : 510;
+        (item.transform as RectTransform).sizeDelta = new Vector2(width, item.General ?
+          ITEM_HEIGHT_W_O_SPEAKER : ITEM_HEIGHT_W_SPEAKER);
+        tsHeight += item.General ? ITEM_HEIGHT_W_O_SPEAKER : ITEM_HEIGHT_W_SPEAKER;
         instance.Empty = false;
       }
       

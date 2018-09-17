@@ -1962,6 +1962,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1990485167801456, guid: 7943b5fd4f4853b40baae47d223b7a4a, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7943b5fd4f4853b40baae47d223b7a4a, type: 2}
   m_IsPrefabAsset: 0
@@ -4749,11 +4753,6 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 114235045253844320, guid: efaac9368f2571345b40fa0fcb9884fe,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1176905099}
     - target: {fileID: 114830532610383268, guid: efaac9368f2571345b40fa0fcb9884fe,
         type: 2}
       propertyPath: _descriptionPanel
@@ -4764,6 +4763,20 @@ Prefab:
       propertyPath: _canvas
       value: 
       objectReference: {fileID: 1032293547}
+    - target: {fileID: 114235045253844320, guid: efaac9368f2571345b40fa0fcb9884fe,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1176905099}
+    - target: {fileID: 1697266675860168, guid: efaac9368f2571345b40fa0fcb9884fe, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224994977607725226, guid: efaac9368f2571345b40fa0fcb9884fe,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: -1620
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efaac9368f2571345b40fa0fcb9884fe, type: 2}
   m_IsPrefabAsset: 0

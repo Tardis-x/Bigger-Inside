@@ -30,6 +30,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] private RawImage _speakerPhoto;
     [SerializeField] private Image _speakerPhotoCircle;
     [SerializeField] private Text _timespanText;
+    [SerializeField] private Text _complexityText;
 
     //---------------------------------------------------------------------
     // Properties
@@ -60,6 +61,7 @@ namespace ua.org.gdg.devfest
       if (model.Speaker != null) instance.SetSpeakerData(model.Speaker);
 
       instance._description = model.Description;
+      instance._complexityText.text = model.Description.Complexity ?? "";
       instance.SetTag(model.Tag);
 
       return instance;
