@@ -3544,7 +3544,6 @@ GameObject:
   - component: {fileID: 1046727952}
   - component: {fileID: 1046727954}
   - component: {fileID: 1046727955}
-  - component: {fileID: 1046727956}
   - component: {fileID: 1046727957}
   m_Layer: 0
   m_Name: Manager
@@ -3630,34 +3629,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1046727952}
         m_MethodName: OnTrackingFound
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
---- !u!114 &1046727956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1046727951}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3318b37b5a34577429583f0b3833dd78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: f2156674dc5d5254c8a4378a23b7b0ed, type: 2}
-  Response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1046727952}
-        m_MethodName: GoToMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6491,8 +6462,8 @@ MonoBehaviour:
   mDataSetPath: Vuforia/Bigger-Inside.xml
   mAspectRatio: 1.512555
   mImageTargetType: 0
-  mWidth: 0.2
-  mHeight: 0.302511
+  mWidth: 2.9990911
+  mHeight: 4.53629
 --- !u!4 &1964602103
 Transform:
   m_ObjectHideFlags: 0
