@@ -101,7 +101,7 @@ namespace ua.org.gdg.devfest
     {
       LoadImage(speaker.PhotoUrl, _speakerPhotoImage);
       _speakerNameText.text = speaker.Name;
-      _speakerCompanyCountryText.text = speaker.Company + ", " + speaker.Country;
+      _speakerCompanyCountryText.text = speaker.Company + " / " + speaker.Country;
     }
 
     private void ShowTag(bool value)

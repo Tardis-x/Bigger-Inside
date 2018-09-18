@@ -6,8 +6,8 @@ namespace ua.org.gdg.devfest
 {
   public class TimeslotScript : MonoBehaviour
   {
-    private const int ITEM_HEIGHT_W_O_SPEAKER = 520;
-    private const int ITEM_HEIGHT_W_SPEAKER = 700;
+    private const int ITEM_HEIGHT_W_O_SPEAKER = 475;
+    private const int ITEM_HEIGHT_W_SPEAKER = 600;
     
     //---------------------------------------------------------------------
     // Editor

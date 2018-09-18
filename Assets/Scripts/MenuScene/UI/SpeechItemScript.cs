@@ -17,6 +17,7 @@ namespace ua.org.gdg.devfest
     private string LOGO_BASE_PATH;
     private const int DESCRIPTION_HEIGHT_W_O_SPEAKER = 330;
     private const int DESCRIPTION_HEIGHT_W_SPEAKER = 510;
+    private const int NAME_TEXT_LINE_HEIGHT = 65;
 
     //---------------------------------------------------------------------
     // Editor
@@ -61,7 +62,8 @@ namespace ua.org.gdg.devfest
       if (model.Speaker != null) instance.SetSpeakerData(model.Speaker);
 
       instance._description = model.Description;
-      instance._complexityText.text = model.Description.Complexity ?? "";
+      instance.SetComplexityText(model.Description.Complexity ?? "");
+      instance.Invoke("SetComplexityTextPosition", .1f);
       instance.SetTag(model.Tag);
 
       return instance;
@@ -98,9 +100,21 @@ namespace ua.org.gdg.devfest
       LoadImage(_model.Speaker.PhotoUrl, _speakerPhoto);
     }
 
+    private void SetComplexityText(string complexity)
+    {
+      _complexityText.text = complexity;
+    }
+
+    private void SetComplexityTextPosition()
+    {
+      var linesCount = _nameText.cachedTextGenerator.lines.Count;
+      _complexityText.GetComponent<RectTransform>().anchoredPosition = new Vector2(50, 
+        -70 - NAME_TEXT_LINE_HEIGHT * linesCount);
+    }
+
     private void SetSpeakerCompanyCountry(string company, string country)
     {
-      _speakerCompanyCountryText.text = company + ", " + country;
+      _speakerCompanyCountryText.text = company + " / " + country;
     }
 
     private void SetSpeakerName(string speakerNameText)
