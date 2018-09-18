@@ -20,6 +20,8 @@ public class QuestUI : MonoBehaviour
 	[SerializeField] Button _proceedButton;
 	[SerializeField] Button _scanPhotoMarkerButton;
 	[SerializeField] UserAvatarManager _avatarManager;
+	[SerializeField] Camera _mainCamera;
+	[SerializeField] Camera _arCamera;
 
 	public Image infoPanelSwordImage;
 	public Image infoPanelSelfieImage;
@@ -322,17 +324,25 @@ public class QuestUI : MonoBehaviour
 
 	public void OnAndroidBackButtonClicked()
 	{
-		if (_infoPanel.activeSelf || _userScorePanel.activeSelf)
+		if (_mainCamera.gameObject.activeSelf)
 		{
-			OnMainMenuButtonClicked();
+			if (_infoPanel.activeSelf || _userScorePanel.activeSelf)
+			{
+				OnMainMenuButtonClicked();
+			}
+			else if (_leaderBoardPanel.activeSelf)
+			{
+				OnBackFromLeaderBoardButtonClicked();
+			}
+			else
+			{
+				OnBackButtonClicked();
+			}
 		}
-		else if (_leaderBoardPanel.activeSelf)
+		else if (_arCamera.gameObject.activeSelf)
 		{
-			OnBackFromLeaderBoardButtonClicked();
-		}
-		else
-		{
-			OnBackButtonClicked();
+			_arCamera.gameObject.SetActive(false);
+			_mainCamera.gameObject.SetActive(true);
 		}
 	}
 
