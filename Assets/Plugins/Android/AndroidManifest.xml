@@ -34,6 +34,9 @@
         <meta-data android:name="im.getsocial.sdk.RuntimeVersion" android:value="2018.2.8f1" />
         <meta-data android:name="im.getsocial.sdk.Runtime" android:value="UNITY" />
         <meta-data android:name="im.getsocial.sdk.AppId" android:value="MI99maK87Rs" />
+        <meta-data
+                android:name="im.getsocial.sdk.NotificationIcon"
+                android:resource="@drawable/ic_notification" />
         <activity android:name="com.unity3d.player.UnityPlayerActivity" android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
