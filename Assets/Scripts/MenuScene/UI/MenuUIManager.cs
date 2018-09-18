@@ -24,6 +24,7 @@ namespace ua.org.gdg.devfest
 
     public void ShowSignInPanel()
     {
+      _userPopUp.InMenu = false;
       _signInPanel.SetActive(true);
       _menuPanel.SetActive(false);
       _schedulePanel.DisablePanel();
@@ -31,7 +32,8 @@ namespace ua.org.gdg.devfest
 
     public void ShowMenu()
     {
-      if (_userPopUp.Active) _userPopUp.Hide();
+      _userPopUp.InMenu = true;
+      if (_userPopUp.Active) _userPopUp.HideSignout();
       if (_scenesManager.SceneToGo != String.Empty) return;
       _signInPanel.SetActive(false);
       _descriptionPanel.SetActive(false);
@@ -41,6 +43,7 @@ namespace ua.org.gdg.devfest
 
     public void OnBackToMenuButtonClick()
     {
+      _userPopUp.InMenu = true;
       _scenesManager.ResetSceneToGo();
       _signInPanel.SetActive(false);
       _descriptionPanel.SetActive(false);
@@ -50,6 +53,7 @@ namespace ua.org.gdg.devfest
 
     public void ShowSchedule()
     {
+      _userPopUp.InMenu = false;
       _menuPanel.SetActive(false);
       _schedulePanel.EnablePanel(CurrentDay);
     }
@@ -65,9 +69,9 @@ namespace ua.org.gdg.devfest
       CurrentDay = day;
     }
 
-    public void OnMenuObjectClicked()
+    public void OnLogout()
     {
-      if (_userPopUp.Active) _userPopUp.Hide();
+      if (_userPopUp.Active) _userPopUp.HideSignout();
     }
 
     public void OpenTermsAndServicesURL()
