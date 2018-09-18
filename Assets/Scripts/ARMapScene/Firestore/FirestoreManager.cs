@@ -80,6 +80,13 @@ namespace ua.org.gdg.devfest
 
     private List<TimeslotModel> ComposeFullSchedule(int day)
     {
+      if (_schedule == null)
+      {
+        _scheduleRequest = new WWW(SCHEDULE_URL);
+        StartCoroutine(OnScheduleResponse(_scheduleRequest));
+        return null;
+      }
+      
       var schedule = new List<TimeslotModel>();
 
       foreach (var ts in _schedule.Days[day - 1].Timeslots)
