@@ -183,7 +183,7 @@ namespace ua.org.gdg.devfest
     {
       string details = date + ", " + startTime + " - " + endTime + "\n" + hall;
 
-      if(complexity != "") details += "\nContent level: " + complexity;
+      if(!string.IsNullOrEmpty(complexity)) details += "\nContent level: " + complexity;
 
       return details;
     }
