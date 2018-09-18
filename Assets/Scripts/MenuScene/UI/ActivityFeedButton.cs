@@ -22,7 +22,7 @@ namespace ua.org.gdg.devfest
       if (!IsUserAuthorized()) return; 
 
       GetSocialUi.CreateGlobalActivityFeedView()
-        .SetWindowTitle("GDG News")
+        .SetWindowTitle("News feed")
         .SetTagClickListener(OnTagClick)
         .Show();
     }
