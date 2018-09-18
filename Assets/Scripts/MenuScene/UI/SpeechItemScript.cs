@@ -15,9 +15,10 @@ namespace ua.org.gdg.devfest
     private const string DESIGN_TAG_COLOR = "#EC407B";
     private const string GENERAL_TAG_COLOR = "#9E9E9E";
     private string LOGO_BASE_PATH;
-    private const int DESCRIPTION_HEIGHT_W_O_SPEAKER = 330;
-    private const int DESCRIPTION_HEIGHT_W_SPEAKER = 510;
+    private const int DESCRIPTION_HEIGHT_W_O_SPEAKER = 300;
+    private const int DESCRIPTION_HEIGHT_W_SPEAKER = 600;
     private const int NAME_TEXT_LINE_HEIGHT = 65;
+    private const int TIMESPAN_TEXT_GENERAL_POS = -200;
 
     //---------------------------------------------------------------------
     // Editor
@@ -87,6 +88,12 @@ namespace ua.org.gdg.devfest
 
     private void SetGeneralSpeechItem(bool value)
     {
+      if(value)
+      {
+        _timespanText.GetComponent<RectTransform>().anchoredPosition = new Vector2(50, 
+        TIMESPAN_TEXT_GENERAL_POS);
+      }
+      
       var rect = GetComponent<RectTransform>();
       rect.sizeDelta =
         new Vector2(0, value ? DESCRIPTION_HEIGHT_W_O_SPEAKER : DESCRIPTION_HEIGHT_W_SPEAKER);
