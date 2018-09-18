@@ -65,8 +65,13 @@ namespace ua.org.gdg.devfest
 			if (_particleEffects != null)
 			{
 				_particleEffects.Play();
+				GetComponent<MeshRenderer>().enabled = false;
+				Destroy(gameObject, 1.1f);
 			}
-			Destroy(gameObject, 1.1f);
+			else
+			{
+				Destroy(gameObject);
+			}
 		}
 		
 		//---------------------------------------------------------------------

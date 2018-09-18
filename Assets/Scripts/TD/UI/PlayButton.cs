@@ -8,8 +8,10 @@ namespace ua.org.gdg.devfest
 		// Editor
 		//---------------------------------------------------------------------
 
+		[SerializeField] private Canvas _canvas;
 		[SerializeField] private TutorialPanelScript _tutorialPanel;
 		[SerializeField] private GameEvent _gameStart;
+		[SerializeField] private InstanceGameEvent _prepareSpawnPoints;
 
 		//---------------------------------------------------------------------
 		// Messages
@@ -21,6 +23,7 @@ namespace ua.org.gdg.devfest
 
 			if (tutorShowState)
 			{
+				_prepareSpawnPoints.Raise(_canvas.gameObject);
 				_gameStart.Raise();
 			}
 			else
