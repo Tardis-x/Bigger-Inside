@@ -1,5 +1,4 @@
 using Firebase.Auth;
-using GetSocialSdk.Core;
 using GetSocialSdk.Ui;
 using UnityEngine;
 
