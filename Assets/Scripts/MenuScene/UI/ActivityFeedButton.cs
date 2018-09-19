@@ -33,7 +33,7 @@ namespace ua.org.gdg.devfest
     private void OnTagClick(string tagName)
     {
       GetSocialUi.CreateGlobalActivityFeedView()
-        .SetWindowTitle(tagName)
+        .SetWindowTitle("#" + tagName)
         .SetFilterByTags(tagName)
         .Show();
     }

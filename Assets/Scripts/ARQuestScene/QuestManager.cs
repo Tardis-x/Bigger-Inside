@@ -119,7 +119,6 @@ public class QuestManager : MonoBehaviour
 				//Check if Quest is activated
 				CheckIfQuestIsActivated();
 				ReadRiddleDataFromQuestProgress();
-				//StartCoroutine(LoadUserImageFromUrl());
 				UpdateUserScoreInLeaderBoard(false);
 			});
 	}
