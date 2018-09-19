@@ -147,7 +147,7 @@ namespace ua.org.gdg.devfest
       
       Debug.Log(gameObject.name + " taken " + dmg + " damage from " + projectile.Type + " projectile. HP left: " + HP);
       
-      if (HP <= 0) Fed();
+      if (HP <= 1) Fed();
     }
 
     public void SetSpeed(float speed)

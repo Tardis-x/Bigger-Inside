@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP:
     UseConstant: 1
-    ConstantValue: 120
+    ConstantValue: 100
     Variable: {fileID: 0}
   Money:
     UseConstant: 1
@@ -32,14 +32,4 @@ MonoBehaviour:
     ConstantValue: 15
     Variable: {fileID: 0}
   Resistances:
-    ResistancesList:
-    - Type: {fileID: 11400000, guid: bd39eacc145138b4cb9b131f9ec9317f, type: 2}
-      Amount:
-        UseConstant: 0
-        ConstantValue: 60
-        Variable: {fileID: 11400000, guid: d4cec5126e7e56a40bebf969715a7a15, type: 2}
-    - Type: {fileID: 11400000, guid: 230549c519f9cb7498a7a89790a6a04c, type: 2}
-      Amount:
-        UseConstant: 0
-        ConstantValue: 60
-        Variable: {fileID: 11400000, guid: dc77414d66af56740abf2192926933f9, type: 2}
+    ResistancesList: []
