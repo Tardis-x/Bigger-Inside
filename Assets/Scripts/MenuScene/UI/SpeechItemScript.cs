@@ -231,6 +231,8 @@ namespace ua.org.gdg.devfest
 
       if (!File.Exists(filePath)) return false;
 
+     if(new FileInfo(filePath).Length < 1) return false;
+      
       var fileData = File.ReadAllBytes(filePath);
       SetImageTexture(image, fileData);
       return true;

@@ -34,7 +34,7 @@ namespace ua.org.gdg.devfest
 
     private void Awake()
     {
-      LOGO_BASE_PATH = Application.persistentDataPath + "Graphics/Logo";
+      LOGO_BASE_PATH = Application.persistentDataPath + "Graphics/";
     }
 
     private void Update()

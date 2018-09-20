@@ -5,6 +5,8 @@ namespace ua.org.gdg.devfest
 {
   public class DragAndDropTower : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
   {
+    private const int OFFSET = 200;
+    
     //---------------------------------------------------------------------
     // Editor
     //---------------------------------------------------------------------
@@ -48,7 +50,7 @@ namespace ua.org.gdg.devfest
     {
       if (!Interactable) return;
       
-      var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+      var ray = Camera.main.ScreenPointToRay(GetMousePositionWithOffset(new Vector3(0, OFFSET, 0)));
       var hits = Physics.RaycastAll(ray, 50f);
 
       if (hits != null && hits.Length > 0)
@@ -94,7 +96,11 @@ namespace ua.org.gdg.devfest
     // Helpers
     //---------------------------------------------------------------------
 
-
+    private Vector3 GetMousePositionWithOffset(Vector3 offset)
+    {
+      return Input.mousePosition + offset;
+    }
+    
     private void ChangeMaterialColor(bool value)
     {
       var meshRenderers = _hoverPrefab.GetComponentsInChildren<MeshRenderer>();
