@@ -62,10 +62,15 @@ namespace ua.org.gdg.devfest
 
     public void ProfileButtonOnClick()
     {
-      if (FirebaseAuth.DefaultInstance.CurrentUser == null) _signInRequest.Raise();
+      if(!InMenu) return;
+
+      if (FirebaseAuth.DefaultInstance.CurrentUser == null)
+      {
+        _signInRequest.Raise();
+      }
       else
       {
-        if (InMenu) Toggle(!Active);
+        Toggle(!Active);
       }
     }
 
