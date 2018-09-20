@@ -14,7 +14,8 @@ namespace ua.org.gdg.devfest
     // Editor
     //---------------------------------------------------------------------
 
-    [Header("UI")] [SerializeField] private Text _startTimeHoursText;
+    [Header("UI")]
+    [SerializeField] private Text _startTimeHoursText;
     [SerializeField] private Text _startTimeMinutesText;
 
     [Space] [Header("Prefabs")] [SerializeField]
@@ -24,7 +25,7 @@ namespace ua.org.gdg.devfest
     // Internal
     //---------------------------------------------------------------------
 
-    public bool _inViewport = true;
+    public bool _inViewport;
 
     //---------------------------------------------------------------------
     // Properties

@@ -49,6 +49,12 @@ namespace ua.org.gdg.devfest
       LOGO_BASE_PATH = Application.persistentDataPath + "Graphics/";
     }
 
+    private void OnEnable()
+    {
+      if(_model != null && !_imageLoaded && _model.Speaker != null) 
+        LoadImage(_model.Speaker.PhotoUrl, _speakerPhoto);
+    }
+
     //---------------------------------------------------------------------
     // Public
     //---------------------------------------------------------------------
@@ -81,6 +87,7 @@ namespace ua.org.gdg.devfest
 
     private ScheduleItemDescriptionUiModel _description;
     private SpeechItemModel _model;
+    private bool _imageLoaded;
 
     //---------------------------------------------------------------------
     // Helpers
@@ -199,7 +206,11 @@ namespace ua.org.gdg.devfest
     {
       var filePath = GetFilePathFromUrl(logoUrl);
 
-      if (LoadFromFile(filePath, image)) return;
+      if (LoadFromFile(filePath, image))
+      {
+        _imageLoaded = true;
+        return;
+      }
 
       var req = new WWW(logoUrl);
       StartCoroutine(OnResponse(req, filePath, image));
@@ -211,6 +222,7 @@ namespace ua.org.gdg.devfest
       
       SetImageTexture(image, req.bytes);
       SaveLogoToFile(filePath, req.bytes);
+      _imageLoaded = true;
     }
 
     private bool LoadFromFile(string fileName, RawImage image)
