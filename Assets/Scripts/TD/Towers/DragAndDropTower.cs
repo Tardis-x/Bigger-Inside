@@ -5,8 +5,6 @@ namespace ua.org.gdg.devfest
 {
   public class DragAndDropTower : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
   {
-    private const int OFFSET = 200;
-    
     //---------------------------------------------------------------------
     // Editor
     //---------------------------------------------------------------------
@@ -14,9 +12,9 @@ namespace ua.org.gdg.devfest
     [SerializeField] private GameObject _towerPrefab;
     [SerializeField] private float _ghostTowerScaleFactor;
 
-    [Space]
-    [Header("Events")] 
-    [SerializeField] private GameEvent _onBeginDrag;
+    [Space] [Header("Events")] [SerializeField]
+    private GameEvent _onBeginDrag;
+
     [SerializeField] private GameEvent _onEndDrag;
     [SerializeField] private IntGameEvent _moneyChangedForAmount;
 
@@ -26,6 +24,8 @@ namespace ua.org.gdg.devfest
 
     private GameObject _hoverPrefab;
     private GameObject _activeSlot;
+    private float _offset = 200;
+    private float _raycastDistance = 10;
 
     //---------------------------------------------------------------------
     // Messages
@@ -42,15 +42,16 @@ namespace ua.org.gdg.devfest
     void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
     {
       if (!Interactable) return;
-      
+
       _onBeginDrag.Raise();
     }
 
     public void OnDrag(PointerEventData eventData)
     {
       if (!Interactable) return;
-      
-      var ray = Camera.main.ScreenPointToRay(GetMousePositionWithOffset(new Vector3(0, OFFSET, 0)));
+
+      var ray = Camera.main.ScreenPointToRay(
+        GetMousePositionWithOffset(new Vector3(0, _offset /(_raycastDistance > 1 ? _raycastDistance : 1), 0)));
       var hits = Physics.RaycastAll(ray, 50f);
 
       if (hits != null && hits.Length > 0)
@@ -75,7 +76,7 @@ namespace ua.org.gdg.devfest
     public void OnEndDrag(PointerEventData eventData)
     {
       if (!Interactable) return;
-      
+
       if (_activeSlot != null)
       {
         var quadCentre = GetQuadCentre(_activeSlot);
@@ -83,7 +84,7 @@ namespace ua.org.gdg.devfest
         tower.GetComponent<CapsuleCollider>().enabled = true;
         tower.GetComponent<TowerScript>().Slot = _activeSlot;
         var aoeTower = tower.GetComponent<AOETowerScript>();
-        if(aoeTower != null) aoeTower.SetAOEVisible(true);
+        if (aoeTower != null) aoeTower.SetAOEVisible(true);
         _activeSlot.SetActive(false);
         _moneyChangedForAmount.Raise(-_towerPrefab.GetComponent<TowerScript>().Cost);
       }
@@ -100,11 +101,11 @@ namespace ua.org.gdg.devfest
     {
       return Input.mousePosition + offset;
     }
-    
+
     private void ChangeMaterialColor(bool value)
     {
       var meshRenderers = _hoverPrefab.GetComponentsInChildren<MeshRenderer>();
-      
+
       for (var i = 0; i < meshRenderers.Length; i++)
       {
         meshRenderers[i].material.color = value ? Color.green : Color.red;
@@ -117,6 +118,7 @@ namespace ua.org.gdg.devfest
       if (terrainCollderQuadIndex != -1)
       {
         _hoverPrefab.transform.position = hits[terrainCollderQuadIndex].point;
+        _raycastDistance = hits[terrainCollderQuadIndex].distance;
         _hoverPrefab.SetActive(true);
       }
       else
@@ -164,7 +166,7 @@ namespace ua.org.gdg.devfest
 
       var midPoint = Vector3.Slerp(vertRealWorldPositions[0], vertRealWorldPositions[1], 0.5f);
       midPoint.y += GetOffset();
-      
+
       return midPoint;
     }
 
@@ -172,11 +174,11 @@ namespace ua.org.gdg.devfest
     {
       return -0.005f;
     }
-    
+
     //---------------------------------------------------------------------
     // Properties
     //---------------------------------------------------------------------
-    
+
     public bool Interactable { get; set; }
   }
 }
