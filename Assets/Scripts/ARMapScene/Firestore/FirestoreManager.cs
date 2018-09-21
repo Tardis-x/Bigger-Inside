@@ -10,8 +10,7 @@ namespace ua.org.gdg.devfest
   public class FirestoreManager : Singleton<FirestoreManager>
   {
     //URLs
-    private const string SCHEDULE_URL =
-      "https://firestore.googleapis.com/v1beta1/projects/hoverboard-v2-dev/databases/(default)/documents/generatedSchedule";
+    private const string SCHEDULE_URL = Credentials.FIREBASE_URL;
 
     //---------------------------------------------------------------------
     // Messages

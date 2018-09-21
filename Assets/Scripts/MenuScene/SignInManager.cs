@@ -18,10 +18,6 @@ namespace ua.org.gdg.devfest
     [SerializeField] private GameEvent _signIn;
     [SerializeField] private GameEvent _signInFinished;
 
-    [Header("SignIn")] 
-    [SerializeField]
-    private string _webClientId;
-
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
@@ -100,7 +96,7 @@ namespace ua.org.gdg.devfest
 
       GoogleSignIn.Configuration = new GoogleSignInConfiguration
       {
-        WebClientId = _webClientId,
+        WebClientId = Credentials.WEB_CLIENT_ID,
         RequestIdToken = true,
         UseGameSignIn = false
       };
