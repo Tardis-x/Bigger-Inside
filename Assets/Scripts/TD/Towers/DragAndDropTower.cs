@@ -5,6 +5,9 @@ namespace ua.org.gdg.devfest
 {
   public class DragAndDropTower : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
   {
+    private const int MAX_OFFSET = 200;
+    private const int MIN_OFFSET = 150;
+  
     //---------------------------------------------------------------------
     // Editor
     //---------------------------------------------------------------------
@@ -50,8 +53,7 @@ namespace ua.org.gdg.devfest
     {
       if (!Interactable) return;
 
-      var ray = Camera.main.ScreenPointToRay(
-        GetMousePositionWithOffset(new Vector3(0, _offset /(_raycastDistance > 1 ? _raycastDistance : 1), 0)));
+      var ray = Camera.main.ScreenPointToRay(GetMousePositionWithOffset());
       var hits = Physics.RaycastAll(ray, 50f);
 
       if (hits != null && hits.Length > 0)
@@ -97,9 +99,10 @@ namespace ua.org.gdg.devfest
     // Helpers
     //---------------------------------------------------------------------
 
-    private Vector3 GetMousePositionWithOffset(Vector3 offset)
+    private Vector3 GetMousePositionWithOffset()
     {
-      return Input.mousePosition + offset;
+      var offset = Mathf.Clamp(_offset / _raycastDistance, MIN_OFFSET, MAX_OFFSET);
+      return Input.mousePosition + new Vector3(0, offset, 0);
     }
 
     private void ChangeMaterialColor(bool value)
