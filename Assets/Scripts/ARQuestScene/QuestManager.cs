@@ -29,7 +29,7 @@ public class QuestManager : MonoBehaviour
 	void Awake()
 	{
 		// Set up the Editor before calling into the realtime database.
-		FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://hoverboard-firebase.firebaseio.com/");
+		FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://hoverboard-firebase.firebaseio.com/Quest");
 		Debug.Log("QuestManager.Awake.URL");
 		// obtain reference to object that represents quest UI
 		UiReferenceInitialization();
