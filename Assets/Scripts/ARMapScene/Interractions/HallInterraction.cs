@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace ua.org.gdg.devfest
 {
-	public class HallInterraction : InteractableObject
+	public class HallInterraction : InteractableObject, IPointerClickHandler
 	{
 		//---------------------------------------------------------------------
 		// Editor
@@ -34,6 +35,11 @@ namespace ua.org.gdg.devfest
 		public override void Disable()
 		{
 			_highlightRenderer.material.mainTexture = _defaultTexture;
+		}
+		
+		public void OnPointerClick(PointerEventData eventData)
+		{
+			Interact();
 		}
 		
 		//---------------------------------------------------------------------
