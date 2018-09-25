@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,7 +26,8 @@ namespace ua.org.gdg.devfest
     // Internal
     //---------------------------------------------------------------------
 
-    public bool _inViewport;
+    private bool _inViewport;
+    private List<SpeechItemModel> _speeches;
 
     //---------------------------------------------------------------------
     // Properties
@@ -55,8 +57,12 @@ namespace ua.org.gdg.devfest
 
       var tsHeight = 170;
 
+      _speeches = new List<SpeechItemModel>();
+      
       foreach (var speech in speeches)
       {
+        _speeches.Add(speech);
+        
         var item = _speechPrefab.GetInstance(speech);
         item.transform.SetParent(instance.transform);
         (item.transform as RectTransform).sizeDelta =
@@ -69,6 +75,19 @@ namespace ua.org.gdg.devfest
       instance.Invoke("TurnOffLayoutGroup", .1f);
 
       return instance;
+    }
+
+    public TimeslotScript GetInstance(List<SpeechItemModel> speeches, string startTime, float width, string[] tags)
+    {
+
+      var speechesDebug = new List<SpeechItemModel>();
+
+      foreach (var s in speeches)
+      {
+        if(tags.Contains(s.Tag)) speechesDebug.Add(s);
+      }
+      
+      return GetInstance(speechesDebug, startTime, width);
     }
 
     //---------------------------------------------------------------------

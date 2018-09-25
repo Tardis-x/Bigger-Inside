@@ -15,8 +15,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] private RectTransform _contentContainer;
     [SerializeField] private TimeslotScript _timeslot;
     [SerializeField] private GameEvent _showMenu;
-    [SerializeField] private GameObject _day1Underscore;
-    [SerializeField] private GameObject _day2Underscore;
+    [SerializeField] private Animator _underscore;
     [SerializeField] private RectTransform _canvas;
     [SerializeField] private Text _hallName;
 
@@ -25,6 +24,9 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     private float _contentWidth;
+    private List<TimeslotModel> _timeslots;
+    private List<string> _tags = new List<string>();
+    private bool _tagsPanelOpen;
 
     //---------------------------------------------------------------------
     // Properties
@@ -49,6 +51,20 @@ namespace ua.org.gdg.devfest
     // Public
     //---------------------------------------------------------------------
 
+    public void IncludeTag(string tag)
+    {
+      if (!_tags.Contains(tag))
+      {
+        _tags.Add(tag);
+      }
+      else
+      {
+        _tags.Remove(tag);
+      }
+      
+      FilterByTags(_tags.ToArray());
+    }
+    
     public void DisablePanel()
     {
       Active = false;
@@ -64,8 +80,7 @@ namespace ua.org.gdg.devfest
 
     public void SetButtonsUnderscore(int day)
     {
-      _day1Underscore.SetActive(day == 1);
-      _day2Underscore.SetActive(day == 2);
+      _underscore.SetBool("Day1", day == 1);
     }
 
     public void SetContent(int day)
@@ -73,10 +88,14 @@ namespace ua.org.gdg.devfest
       List<TimeslotModel> listContent;
       if (!FirestoreManager.Instance.RequestFullSchedule(day, out listContent)) return;
 
+      _timeslots = new List<TimeslotModel>();
+      
       foreach (var item in listContent)
       {
         var contentItem = _timeslot.GetInstance(item.Items, item.StartTime, _canvas.rect.width);
 
+        _timeslots.Add(item);
+        
         if (!contentItem.Empty) AddContentItem(contentItem);
         else Destroy(contentItem.gameObject);
       }
@@ -87,10 +106,14 @@ namespace ua.org.gdg.devfest
       List<TimeslotModel> listContent;
       if (!FirestoreManager.Instance.RequestFullSchedule(day, hall, out listContent)) return;
 
+      _timeslots = new List<TimeslotModel>();
+      
       foreach (var item in listContent)
       {
         var contentItem = _timeslot.GetInstance(item.Items, item.StartTime, _canvas.rect.width);
 
+        _timeslots.Add(item);
+        
         if (!contentItem.Empty) AddContentItem(contentItem);
         else Destroy(contentItem.gameObject);
       }
@@ -105,6 +128,7 @@ namespace ua.org.gdg.devfest
       ClearContent();
       SetContent(day);
       _hallName.text = "Schedule";
+      FilterByTags(_tags.ToArray());
     }
 
     public void EnablePanel(int day, string hall)
@@ -116,6 +140,7 @@ namespace ua.org.gdg.devfest
       ClearContent();
       SetContent(day, hall);
       _hallName.text = hall;
+      FilterByTags(_tags.ToArray());
     }
 
     public void ClosePanelDelayed()
@@ -128,11 +153,37 @@ namespace ua.org.gdg.devfest
       Active = false;
       gameObject.SetActive(false);
     }
+
+    public void ShowTags()
+    {
+      _tagsPanelOpen = !_tagsPanelOpen;
+
+      if (_tagsPanelOpen) return;
+      
+      _tags.Clear();
+      FilterByTags(_tags.ToArray());
+    }
     
     //---------------------------------------------------------------------
     // Helpers
     //---------------------------------------------------------------------
 
+    private void FilterByTags(string[] tags)
+    {
+      if(_timeslots == null) return;
+      
+      ClearContent();
+      
+      foreach (var ts in _timeslots)
+      {
+        var contentItem = tags.Length == 0 ? _timeslot.GetInstance(ts.Items, ts.StartTime, _canvas.rect.width) : 
+          _timeslot.GetInstance(ts.Items, ts.StartTime, _canvas.rect.width, tags);
+        
+        if (!contentItem.Empty) AddContentItem(contentItem);
+        else Destroy(contentItem.gameObject);
+      }
+    }
+    
     private void ClearContent()
     {
       var items = _contentContainer.GetComponentsInChildren<RectTransform>().Where(x => x.parent == _contentContainer);
