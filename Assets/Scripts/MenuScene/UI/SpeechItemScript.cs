@@ -39,6 +39,10 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     public bool General { get; private set; }
+    public string Tag
+    {
+      get { return _model.Tag; }
+    }
 
     //---------------------------------------------------------------------
     // Messages

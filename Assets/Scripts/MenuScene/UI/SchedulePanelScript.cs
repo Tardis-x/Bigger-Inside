@@ -25,7 +25,7 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     private float _contentWidth;
-    private List<TimeslotModel> _timeslots;
+    private List<TimeslotScript> _timeslots;
     private List<string> _tags = new List<string>();
     private bool _tagsPanelOpen;
 
@@ -89,16 +89,18 @@ namespace ua.org.gdg.devfest
       List<TimeslotModel> listContent;
       if (!FirestoreManager.Instance.RequestFullSchedule(day, out listContent)) return;
 
-      _timeslots = new List<TimeslotModel>();
+      _timeslots = new List<TimeslotScript>();
       
       foreach (var item in listContent)
       {
-       // var contentItem = _timeslot.GetInstance(item.Items, item.StartTime, _canvas.rect.width);
+        var contentItem = _timeslot.GetInstance(item.Items, item.StartTime, _canvas.rect.width);
 
-        _timeslots.Add(item);
-        
-       // if (!contentItem.Empty) AddContentItem(contentItem);
-       // else Destroy(contentItem.gameObject);
+        if (!contentItem.Empty)
+        {
+          AddContentItem(contentItem);
+          _timeslots.Add(contentItem);
+        }
+        else Destroy(contentItem.gameObject);
       }
     }
 
@@ -107,16 +109,18 @@ namespace ua.org.gdg.devfest
       List<TimeslotModel> listContent;
       if (!FirestoreManager.Instance.RequestFullSchedule(day, hall, out listContent)) return;
 
-      _timeslots = new List<TimeslotModel>();
+      _timeslots = new List<TimeslotScript>();
       
       foreach (var item in listContent)
       {
-        //var contentItem = _timeslot.GetInstance(item.Items, item.StartTime, _canvas.rect.width);
+        var contentItem = _timeslot.GetInstance(item.Items, item.StartTime, _canvas.rect.width);
 
-        _timeslots.Add(item);
-        
-        //if (!contentItem.Empty) AddContentItem(contentItem);
-        //else Destroy(contentItem.gameObject);
+        if (!contentItem.Empty)
+        {
+          AddContentItem(contentItem);
+          _timeslots.Add(contentItem);
+        }
+        else Destroy(contentItem.gameObject);
       }
     }
 
@@ -125,9 +129,9 @@ namespace ua.org.gdg.devfest
       gameObject.SetActive(true);
       Active = true;
       SetButtonsUnderscore(day);
-      StartCoroutine(EnableCoroutine(day));
       GetComponentInChildren<ScrollRect>().verticalNormalizedPosition = 1;
       _hallName.text = "Schedule";
+      StartCoroutine(EnableCoroutine(day));
     }
 
     public void EnablePanel(int day, string hall)
@@ -135,9 +139,9 @@ namespace ua.org.gdg.devfest
       gameObject.SetActive(true);
       Active = true;
       SetButtonsUnderscore(day);
-      StartCoroutine(EnableCoroutine(day, hall));
       GetComponentInChildren<ScrollRect>().verticalNormalizedPosition = 1;
       _hallName.text = hall;
+      StartCoroutine(EnableCoroutine(day, hall));
     }
 
     public void ClosePanelDelayed()
@@ -177,7 +181,6 @@ namespace ua.org.gdg.devfest
     {
       ClearContent();
       SetContent(day, hall);
-
       FilterByTags(_tags.ToArray());
       yield return null;
     }
@@ -186,16 +189,12 @@ namespace ua.org.gdg.devfest
     {
       if(_timeslots == null) return;
       
-      ClearContent();
-      
       foreach (var ts in _timeslots)
       {
-        var contentItem = tags.Length == 0 ? _timeslot.GetInstance(ts.Items, ts.StartTime, _canvas.rect.width) : 
-          _timeslot.GetInstance(ts.Items, ts.StartTime, _canvas.rect.width, tags);
-        
-        if (!contentItem.Empty) AddContentItem(contentItem);
-        else Destroy(contentItem.gameObject);
+        ts.SetTags(tags);
       }
+      
+      GetComponentInChildren<ScrollRect>().verticalNormalizedPosition = 1;
     }
     
     private void ClearContent()
