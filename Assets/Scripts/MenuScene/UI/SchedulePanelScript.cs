@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -92,12 +93,12 @@ namespace ua.org.gdg.devfest
       
       foreach (var item in listContent)
       {
-        var contentItem = _timeslot.GetInstance(item.Items, item.StartTime, _canvas.rect.width);
+       // var contentItem = _timeslot.GetInstance(item.Items, item.StartTime, _canvas.rect.width);
 
         _timeslots.Add(item);
         
-        if (!contentItem.Empty) AddContentItem(contentItem);
-        else Destroy(contentItem.gameObject);
+       // if (!contentItem.Empty) AddContentItem(contentItem);
+       // else Destroy(contentItem.gameObject);
       }
     }
 
@@ -110,37 +111,33 @@ namespace ua.org.gdg.devfest
       
       foreach (var item in listContent)
       {
-        var contentItem = _timeslot.GetInstance(item.Items, item.StartTime, _canvas.rect.width);
+        //var contentItem = _timeslot.GetInstance(item.Items, item.StartTime, _canvas.rect.width);
 
         _timeslots.Add(item);
         
-        if (!contentItem.Empty) AddContentItem(contentItem);
-        else Destroy(contentItem.gameObject);
+        //if (!contentItem.Empty) AddContentItem(contentItem);
+        //else Destroy(contentItem.gameObject);
       }
     }
 
     public void EnablePanel(int day)
     {
       gameObject.SetActive(true);
-      SetButtonsUnderscore(day);
-      GetComponentInChildren<ScrollRect>().verticalNormalizedPosition = 1;
       Active = true;
-      ClearContent();
-      SetContent(day);
+      SetButtonsUnderscore(day);
+      StartCoroutine(EnableCoroutine(day));
+      GetComponentInChildren<ScrollRect>().verticalNormalizedPosition = 1;
       _hallName.text = "Schedule";
-      FilterByTags(_tags.ToArray());
     }
 
     public void EnablePanel(int day, string hall)
     {
       gameObject.SetActive(true);
-      SetButtonsUnderscore(day);
-      GetComponentInChildren<ScrollRect>().verticalNormalizedPosition = 1;
       Active = true;
-      ClearContent();
-      SetContent(day, hall);
+      SetButtonsUnderscore(day);
+      StartCoroutine(EnableCoroutine(day, hall));
+      GetComponentInChildren<ScrollRect>().verticalNormalizedPosition = 1;
       _hallName.text = hall;
-      FilterByTags(_tags.ToArray());
     }
 
     public void ClosePanelDelayed()
@@ -158,7 +155,7 @@ namespace ua.org.gdg.devfest
     {
       _tagsPanelOpen = !_tagsPanelOpen;
 
-      if (_tagsPanelOpen) return;
+      if (_tagsPanelOpen || _tags.Count == 0) return;
       
       _tags.Clear();
       FilterByTags(_tags.ToArray());
@@ -168,6 +165,23 @@ namespace ua.org.gdg.devfest
     // Helpers
     //---------------------------------------------------------------------
 
+    private IEnumerator EnableCoroutine(int day)
+    {
+      ClearContent();
+      SetContent(day);
+      FilterByTags(_tags.ToArray());
+      yield return null;
+    }
+    
+    private IEnumerator EnableCoroutine(int day, string hall)
+    {
+      ClearContent();
+      SetContent(day, hall);
+
+      FilterByTags(_tags.ToArray());
+      yield return null;
+    }
+    
     private void FilterByTags(string[] tags)
     {
       if(_timeslots == null) return;
