@@ -350,10 +350,10 @@ public class QuestManager : MonoBehaviour
 
 	void GetLeaderboardDataFromFirebase(bool showSpinner = true)
 	{
-		var spinner = AGProgressDialog.CreateSpinnerDialog("Please wait", "Updating Leaderboard...", AGDialogTheme.Dark);
 		if (showSpinner)
 		{
 #if UNITY_ANDROID
+			var spinner = AGProgressDialog.CreateSpinnerDialog("Please wait", "Updating Leaderboard...", AGDialogTheme.Dark);
 			spinner.Show();
 #endif
 		}

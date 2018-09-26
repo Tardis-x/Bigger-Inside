@@ -12,6 +12,8 @@ namespace ua.org.gdg.devfest {
                 var context = activity.Call<AndroidJavaObject>("getApplicationContext");
             
                 return context;
+            #elif UNITY_IOS
+                return null;
             #endif
         }
 
@@ -26,6 +28,8 @@ namespace ua.org.gdg.devfest {
                 var isUnsupported = availability.Call<bool>("isUnsupported");
             
                 return !isUnsupported;
+            #elif UNITY_IOS
+                return true;
             #endif
         }
     }
