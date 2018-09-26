@@ -5,6 +5,15 @@ namespace ua.org.gdg.devfest
   [RequireComponent(typeof(AudioSource))]
   public class BackgroundMusicManager : MonoBehaviour
   {
+    
+    //---------------------------------------------------------------------
+    // Editor
+    //---------------------------------------------------------------------
+
+    [Header("Audio Clips")]
+    [SerializeField] private AudioClip _menuMusic;
+    [SerializeField] private AudioClip _gameMusic;
+    
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
@@ -24,14 +33,14 @@ namespace ua.org.gdg.devfest
     // Public
     //---------------------------------------------------------------------
 
-    public void Play(AudioClip audioClip)
-    { 
-      Stop();
+    public void PlayMenuMusic()
+    {
+      Play(_menuMusic);
+    }
 
-      if (audioClip == null) return;
-      
-      _audioSource.clip = audioClip;
-      _audioSource.Play();
+    public void PlayGameMusic()
+    {
+      Play(_gameMusic);
     }
 
     public void Pause()
@@ -47,6 +56,16 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     // Helpers
     //---------------------------------------------------------------------
+    
+    private void Play(AudioClip audioClip)
+    { 
+      Stop();
+
+      if (audioClip == null) return;
+      
+      _audioSource.clip = audioClip;
+      _audioSource.Play();
+    }
     
     private void Stop()
     {

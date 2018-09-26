@@ -39,6 +39,7 @@ namespace ua.org.gdg.devfest
 
     [Header("Submanagers")] 
     [SerializeField] private UIManager _uiManager;
+    [SerializeField] private AudioManager _audioManager;
 
     [Space]
     [Header("Events")] 
@@ -105,6 +106,8 @@ namespace ua.org.gdg.devfest
       SubtractStar();
       SubtractBrain();
       AskQuestion();
+      
+      HandleWrongActionAudio();
     }
 
     public void OnTrackingLost()
@@ -139,16 +142,32 @@ namespace ua.org.gdg.devfest
 
     public void Answer()
     {
-      if(!_currentQuestion.Value.IsGood) SubtractBrain();
-      else _score.RuntimeValue++;
+      if (!_currentQuestion.Value.IsGood)
+      {
+        SubtractBrain();
+        HandleWrongActionAudio();
+      }
+      else
+      {
+        _audioManager.PlayRightAction();
+        _score.RuntimeValue++;
+      }
       
       AskQuestion();
     }
 
     public void Hit()
     {
-      if(_currentQuestion.Value.IsGood) SubtractStar();
-      else _score.RuntimeValue++;
+      if (_currentQuestion.Value.IsGood)
+      {
+        SubtractStar();
+        HandleWrongActionAudio();
+      }
+      else
+      {
+        _audioManager.PlayRightAction();
+        _score.RuntimeValue++;
+      }
       
       if(_starsCount.RuntimeValue <= 0) return;
       
@@ -206,6 +225,12 @@ namespace ua.org.gdg.devfest
     {
       var index = new Random().Next(_questions.Length);
       return _questions[index];
+    }
+    
+    private void HandleWrongActionAudio()
+    {
+      if (GameActive)
+        _audioManager.PlayWrongAction();
     }
 
     private void GameOver()
