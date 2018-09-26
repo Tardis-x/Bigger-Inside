@@ -229,7 +229,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-1516
+  m_Name: pb_Mesh-270546
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -1305,7 +1305,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-1514
+  m_Name: pb_Mesh-270544
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -2147,7 +2147,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -16, y: 0}
+  m_AnchoredPosition: {x: -16.000061, y: 0}
   m_SizeDelta: {x: -32, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1166279682
@@ -3298,7 +3298,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -16, y: -154}
+  m_AnchoredPosition: {x: -16.000061, y: -154}
   m_SizeDelta: {x: -32, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1741321526
@@ -3556,7 +3556,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-1518
+  m_Name: pb_Mesh-270548
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -4048,6 +4048,39 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: DisablePanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 224940554176229510, guid: efaac9368f2571345b40fa0fcb9884fe,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224940554176229510, guid: efaac9368f2571345b40fa0fcb9884fe,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1697266675860168, guid: efaac9368f2571345b40fa0fcb9884fe, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224994977607725226, guid: efaac9368f2571345b40fa0fcb9884fe,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: -1620
+      objectReference: {fileID: 0}
+    - target: {fileID: 224994977607725226, guid: efaac9368f2571345b40fa0fcb9884fe,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.00012207031
+      objectReference: {fileID: 0}
+    - target: {fileID: 224940554176229510, guid: efaac9368f2571345b40fa0fcb9884fe,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0.000000059604645
+      objectReference: {fileID: 0}
+    - target: {fileID: 1650090423021248, guid: efaac9368f2571345b40fa0fcb9884fe, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efaac9368f2571345b40fa0fcb9884fe, type: 2}

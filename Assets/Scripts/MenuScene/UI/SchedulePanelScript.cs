@@ -18,7 +18,6 @@ namespace ua.org.gdg.devfest
     [SerializeField] private TimeslotScript _timeslot;
     [SerializeField] private GameEvent _showMenu;
     [SerializeField] private Animator _underscore;
-    [SerializeField] private Animator _header;
     [SerializeField] private RectTransform _canvas;
     [SerializeField] private Text _hallName;
     [SerializeField] private GameEvent _dismissLoading;
@@ -49,6 +48,7 @@ namespace ua.org.gdg.devfest
       
       DisablePanelWithDelay();
       _showMenu.Raise();
+      _dismissLoading.Raise();
     }
 
     //---------------------------------------------------------------------
@@ -165,7 +165,12 @@ namespace ua.org.gdg.devfest
       var timeslots = day == 1 ? _day1 : _day2;
 
       List<TimeslotModel> listContent;
-      if (!FirestoreManager.Instance.RequestFullSchedule(day, out listContent) && timeslots == null) yield return null;
+      
+      while (true)
+      {
+        yield return new WaitForSeconds(.01f);
+        if(FirestoreManager.Instance.RequestFullSchedule(day, out listContent)) break;
+      }
 
       timeslots = new List<TimeslotScript>();
 
@@ -195,8 +200,13 @@ namespace ua.org.gdg.devfest
       var timeslots = day == 1 ? _day1 : _day2;
 
       List<TimeslotModel> listContent;
-      if (!FirestoreManager.Instance.RequestFullSchedule(day, hall, out listContent)) yield return null;
-
+      
+      while (true)
+      {
+        yield return new WaitForSeconds(.01f);
+        if (FirestoreManager.Instance.RequestFullSchedule(day, hall, out listContent)) break;
+      }
+      
       timeslots = new List<TimeslotScript>();
 
       foreach (var item in listContent)

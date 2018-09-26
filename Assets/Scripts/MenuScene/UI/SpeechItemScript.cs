@@ -17,7 +17,6 @@ namespace ua.org.gdg.devfest
     private string LOGO_BASE_PATH;
     private const int DESCRIPTION_HEIGHT_W_O_SPEAKER = 300;
     private const int DESCRIPTION_HEIGHT_W_SPEAKER = 600;
-    private const int NAME_TEXT_LINE_HEIGHT = 65;
     private const int TIMESPAN_TEXT_GENERAL_POS = -200;
 
     //---------------------------------------------------------------------
@@ -189,10 +188,15 @@ namespace ua.org.gdg.devfest
           _description.TagColor = DESIGN_TAG_COLOR;
           SetTagTextAndBorderColor(DESIGN_TAG_COLOR);
           break;
-        default:
+        case "General":
           _description.TagColor = GENERAL_TAG_COLOR;
           SetTagTextAndBorderColor(GENERAL_TAG_COLOR);
           SetSpeakerImageVisible(false);
+          break;
+        default:
+          _description.TagColor = "#FFFFFF";
+          SetTagTextAndBorderColor("#FFFFFF");
+          _model.Tag = "Other";
           break;
       }
     }

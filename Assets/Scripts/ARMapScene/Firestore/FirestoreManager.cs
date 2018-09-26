@@ -4,6 +4,7 @@ using UnityEngine;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Text;
+using UnityEngine.UI;
 
 namespace ua.org.gdg.devfest
 {
@@ -11,6 +12,7 @@ namespace ua.org.gdg.devfest
   {
     //URLs
     private const string SCHEDULE_URL = Credentials.FIREBASE_URL;
+    [SerializeField] private Text _text;
 
     //---------------------------------------------------------------------
     // Messages
@@ -25,20 +27,6 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     // Public
     //---------------------------------------------------------------------
-
-    public bool RequestFullSchedule(out List<TimeslotModel> day1, out List<TimeslotModel> day2)
-    {
-      if (!_scheduleParsed)
-      {
-        day1 = null;
-        day2 = null;
-        return false;
-      }
-
-      day1 = ComposeFullSchedule(1);
-      day2 = ComposeFullSchedule(2);
-      return true;
-    }
     
     public bool RequestFullSchedule(int day, out List<TimeslotModel> schedule)
     {
@@ -86,9 +74,10 @@ namespace ua.org.gdg.devfest
     {
       yield return req;
 
-      JsonSchedule schedule = JsonConvert.DeserializeObject<JsonSchedule>(req.text);
+      var schedule = JsonConvert.DeserializeObject<JsonSchedule>(req.text);
       _schedule = FirestoreHelper.ParseSchedule(schedule);
       _scheduleParsed = true;
+      _text.text = "Done";
     }
 
     private List<TimeslotModel> ComposeFullSchedule(int day)

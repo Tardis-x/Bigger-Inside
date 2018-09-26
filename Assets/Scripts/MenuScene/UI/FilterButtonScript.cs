@@ -7,7 +7,8 @@ public class FilterButtonScript : MonoBehaviour
   // Editor
   //---------------------------------------------------------------------
 
-  [SerializeField] private Color _tagColor;
+  [SerializeField] private Color _activeColor;
+  [SerializeField] private Color _inactiveColor;
   [SerializeField] private Image _buttonImage;
   [SerializeField] private Sprite _borderSprite;
   [SerializeField] private Sprite _fillSprite;
@@ -27,13 +28,15 @@ public class FilterButtonScript : MonoBehaviour
   {
     if (_filled)
     {
-      _buttonText.color = _tagColor;
+      _buttonText.color = _inactiveColor;
+      _buttonImage.color = _inactiveColor;
       _buttonImage.sprite = _borderSprite;
     }
     else
     {
       _buttonText.color = Color.white;
       _buttonImage.sprite = _fillSprite;
+      _buttonImage.color = _activeColor;
     }
 
     _filled = !_filled;
@@ -41,8 +44,9 @@ public class FilterButtonScript : MonoBehaviour
 
   public void Reset()
   {
-    _buttonText.color = _tagColor;
+    _buttonText.color = _inactiveColor;
     _buttonImage.sprite = _borderSprite;
+    _buttonImage.color = _inactiveColor;
     _filled = false;
   }
 }
