@@ -15,7 +15,6 @@ namespace ua.org.gdg.devfest
     [SerializeField] private AudioClip _answerClip;
     [SerializeField] private AudioClip _dieClip;
     [SerializeField] private AudioClip _crowdClip;
-    [SerializeField] private AudioClip _crowdOnDieClip;
     [SerializeField] private AudioClip _rightActionClip;
     [SerializeField] private AudioClip _wrongActionClip;
     [SerializeField] private AudioClip _gameOverClip;
@@ -52,7 +51,6 @@ namespace ua.org.gdg.devfest
     public void PlayDie()
     {
       Play(_dieClip, 1.3f);
-      Play(_crowdOnDieClip, 0.5f);
     }
   
     public void PlayTomatoThrow()
