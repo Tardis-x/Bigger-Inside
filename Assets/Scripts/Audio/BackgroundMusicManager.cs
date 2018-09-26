@@ -1,71 +1,60 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace ua.org.gdg.devfest
 {
   [RequireComponent(typeof(AudioSource))]
-  public class BoxingGloveScript : MonoBehaviour
+  public class BackgroundMusicManager : MonoBehaviour
   {
-
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
-
-    private Animator _animator;
+    
     private AudioSource _audioSource;
-
-    private readonly Vector3 _offset = new Vector3
-    {
-      x = -.1356f,
-      y = -.1020f,
-      z = -.2250f
-    };
-
+    
     //---------------------------------------------------------------------
     // Messages
     //---------------------------------------------------------------------
 
-    private void Start()
+    private void Awake()
     {
       _audioSource = GetComponent<AudioSource>();
-      _animator = GetComponentInChildren<Animator>();
     }
 
     //---------------------------------------------------------------------
     // Public
     //---------------------------------------------------------------------
 
-    public void HitObject(Transform obj)
-    {
-      PrepareToHitObject(obj);
-      Hit();
+    public void Play(AudioClip audioClip)
+    { 
+      Stop();
+
+      if (audioClip == null) return;
+      
+      _audioSource.clip = audioClip;
+      _audioSource.Play();
     }
 
-
-    public void Appear()
+    public void Pause()
     {
-      gameObject.SetActive(true);
+      _audioSource.Pause();
     }
 
-    public void Disappear()
+    public void Resume()
     {
-      gameObject.SetActive(false);
+      _audioSource.Play();
     }
-
+    
     //---------------------------------------------------------------------
     // Helpers
     //---------------------------------------------------------------------
-
-    private void Hit()
+    
+    private void Stop()
     {
-      _animator.SetTrigger("Hit");
-      _audioSource.PlayDelayed(0.18f);
+      if (_audioSource.isPlaying)
+      {
+        _audioSource.Stop();
+      }
     }
-
-    private void PrepareToHitObject(Transform obj)
-    {
-      transform.SetPositionAndRotation(obj.position, transform.rotation);
-      transform.localPosition += _offset;
-      Appear();
-    }
+    
   }
 }
