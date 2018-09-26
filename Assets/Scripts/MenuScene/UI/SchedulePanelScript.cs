@@ -18,6 +18,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] private TimeslotScript _timeslot;
     [SerializeField] private GameEvent _showMenu;
     [SerializeField] private Animator _underscore;
+    [SerializeField] private Animator _header;
     [SerializeField] private RectTransform _canvas;
     [SerializeField] private Text _hallName;
     [SerializeField] private GameEvent _dismissLoading;
@@ -30,6 +31,7 @@ namespace ua.org.gdg.devfest
     private List<TimeslotScript> _day1, _day2;
     private List<string> _tags = new List<string>();
     private bool _tagsPanelOpen;
+    private int _currentDay;
 
     //---------------------------------------------------------------------
     // Properties

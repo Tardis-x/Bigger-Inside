@@ -28,7 +28,8 @@ namespace ua.org.gdg.devfest
 			if (!PanelManager.Instance.SchedulePanelNew.Active)
 			{
 				PanelManager.Instance.CurrentHall = _hall;
-				PanelManager.Instance.SchedulePanelNew.EnablePanel(_day, _hall);
+				PanelManager.Instance.SchedulePanelNew.EnablePanel(2, _hall);
+				PanelManager.Instance.SchedulePanelNew.EnablePanel(1, _hall);
 			}
 		}
 
