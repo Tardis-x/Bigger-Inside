@@ -26,10 +26,12 @@ public class QuestManager : MonoBehaviour
 	int _timesCompleted;
 	public Sprite[] riddleImages;
 
+	const string QuestFolderName = "Quest/users";
+
 	void Awake()
 	{
 		// Set up the Editor before calling into the realtime database.
-		FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://hoverboard-firebase.firebaseio.com/Quest");
+		FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://hoverboard-firebase.firebaseio.com");
 		Debug.Log("QuestManager.Awake.URL");
 		// obtain reference to object that represents quest UI
 		UiReferenceInitialization();
@@ -51,13 +53,13 @@ public class QuestManager : MonoBehaviour
 		spinner.Show();
 #endif
 		_questUi.FadeQuestScreenIn();
-		firebaseData.database.Child("users").Child(firebaseData.currentUserUserId).GetValueAsync().ContinueWith(
+		firebaseData.database.Child(QuestFolderName).Child(firebaseData.currentUserUserId).GetValueAsync().ContinueWith(
 			readTask =>
 			{
 				if (readTask.Result == null)
 				{
 					var json = JsonConvert.SerializeObject(QuestProgress);
-					firebaseData.database.Child("users").Child(firebaseData.currentUserUserId)
+					firebaseData.database.Child(QuestFolderName).Child(firebaseData.currentUserUserId)
 						.SetRawJsonValueAsync(json).ContinueWith(writeTask =>
 						{
 							if (writeTask.IsFaulted)
@@ -197,11 +199,11 @@ public class QuestManager : MonoBehaviour
 			_timesCompleted++;
 			// update VR progress data in database
 			childUpdates["GlobalQuestData/VRGame"] = _timesCompleted;
-			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/VrGameData/Score"] =
+			childUpdates[QuestFolderName + "/" + firebaseData.auth.CurrentUser.DisplayName + "/VrGameData/Score"] =
 				QuestProgress.VrGameData.Score;
-			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/VrGameData/GameScore"] = score;
-			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/VrGameData/State"] = true;
-			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/globalScore"] =
+			childUpdates[QuestFolderName + "/" + firebaseData.auth.CurrentUser.DisplayName + "/VrGameData/GameScore"] = score;
+			childUpdates[QuestFolderName + "/" + firebaseData.auth.CurrentUser.DisplayName + "/VrGameData/State"] = true;
+			childUpdates[QuestFolderName + "/" + firebaseData.auth.CurrentUser.DisplayName + "/globalScore"] =
 				QuestProgress.globalScore;
 			firebaseData.database.UpdateChildrenAsync(childUpdates).ContinueWith(task1 =>
 			{
@@ -245,10 +247,10 @@ public class QuestManager : MonoBehaviour
 			_timesCompleted++;
 
 			childUpdates["GlobalQuestData/Social"] = _timesCompleted;
-			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/PhotoData/Score"] =
+			childUpdates[QuestFolderName + "/" + firebaseData.auth.CurrentUser.DisplayName + "/PhotoData/Score"] =
 				QuestProgress.PhotoData.Score;
-			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/PhotoData/State"] = true;
-			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/globalScore"] =
+			childUpdates[QuestFolderName + "/" + firebaseData.auth.CurrentUser.DisplayName + "/PhotoData/State"] = true;
+			childUpdates[QuestFolderName + "/" + firebaseData.auth.CurrentUser.DisplayName + "/globalScore"] =
 				QuestProgress.globalScore;
 
 			firebaseData.database.UpdateChildrenAsync(childUpdates).ContinueWith(task1 =>
@@ -289,14 +291,12 @@ public class QuestManager : MonoBehaviour
 			QuestProgress.RiddlesData[riddleKey].isCompleted = true;
 
 			childUpdates["GlobalQuestData/" + riddleKey] = _timesCompleted;
-			childUpdates[
-					"users/" + firebaseData.auth.CurrentUser.DisplayName + "/RiddlesData/" + riddleKey +
-					"/isCompleted"] =
-				true;
-			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/RiddlesData/" + riddleKey + "/score"]
+			childUpdates[QuestFolderName + "/" + firebaseData.auth.CurrentUser.DisplayName + "/RiddlesData/" + riddleKey +
+					"/isCompleted"] = true;
+			childUpdates[QuestFolderName + "/" + firebaseData.auth.CurrentUser.DisplayName + "/RiddlesData/" + riddleKey + "/score"]
 				=
 				QuestProgress.RiddlesData[riddleKey].score;
-			childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/globalScore"] =
+			childUpdates[QuestFolderName + "/" + firebaseData.auth.CurrentUser.DisplayName + "/globalScore"] =
 				QuestProgress.globalScore;
 			firebaseData.database.UpdateChildrenAsync(childUpdates).ContinueWith(task1 =>
 			{
@@ -329,7 +329,7 @@ public class QuestManager : MonoBehaviour
 		QuestProgress.allRiddlesCompleted = true;
 		var riddlesScore = QuestProgress.globalScore - QuestProgress.PhotoData.Score - QuestProgress.VrGameData.Score;
 
-		childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/allRiddlesCompleted"] = true;
+		childUpdates[QuestFolderName + "/" + firebaseData.auth.CurrentUser.DisplayName + "/allRiddlesCompleted"] = true;
 		firebaseData.database.UpdateChildrenAsync(childUpdates).ContinueWith(task =>
 		{
 			if (task.IsCompleted)
@@ -436,33 +436,6 @@ public class QuestManager : MonoBehaviour
 			.SetRawJsonValueAsync(json);
 	}
 
-	public void CheckInPhoto(QuestPhotoController photoController)
-	{
-		var childUpdates = new Dictionary<string, object>();
-
-		childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/PhotoData/imageURLSpeaker"] =
-			QuestProgress.PhotoData.ImgUrlSpeaker;
-
-		childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/PhotoData/imageURLFriend"] =
-			QuestProgress.PhotoData.ImgUrlFriend;
-
-		firebaseData.database.UpdateChildrenAsync(childUpdates).ContinueWith(task =>
-		{
-			if (task.IsCompleted)
-			{
-			}
-			else if (task.IsFaulted)
-			{
-				Debug.LogError("QuestManager: Failed to update quest data in firebase realtime database!");
-				Debug.LogError("Error message: " + task.Exception.Message);
-			}
-			else if (task.IsCanceled)
-			{
-				Debug.LogError("QuestManager: Cancel updating quest data in firebase realtime database!");
-			}
-		});
-	}
-
 	public void CheckIfQuestIsActivated()
 	{
 		firebaseData.database.Child("GlobalQuestData/QuestActivation").GetValueAsync().ContinueWith(task =>
@@ -502,7 +475,7 @@ public class QuestManager : MonoBehaviour
 		//Refresh the info panel
 		_questUi.OnChangeInfoButtonClicked();
 
-		childUpdates["users/" + firebaseData.auth.CurrentUser.DisplayName + "/isGoogleColorsCompleted"] = true;
+		childUpdates[QuestFolderName + "/" + firebaseData.auth.CurrentUser.DisplayName + "/isGoogleColorsCompleted"] = true;
 
 		firebaseData.database.UpdateChildrenAsync(childUpdates).ContinueWith(task1 =>
 		{
