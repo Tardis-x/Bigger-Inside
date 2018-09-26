@@ -78,7 +78,6 @@ namespace ua.org.gdg.devfest
     public void ShowSignout()
     {
       Active = _buttonCanvasGroup.interactable = true;
-      _buttonCanvasGroup.blocksRaycasts = true;
       _hideLogoutButton.SetActive(true);
       _startAlpha = 0.0f;
       _targetAlpha = 1.0f;
@@ -90,7 +89,6 @@ namespace ua.org.gdg.devfest
     public void HideSignout()
     {
       Active = _buttonCanvasGroup.interactable = false;
-      _buttonCanvasGroup.blocksRaycasts = false;
       _hideLogoutButton.SetActive(false);
       _startAlpha = 1.0f;
       _targetAlpha = 0.0f;

@@ -27,7 +27,7 @@ namespace ua.org.gdg.devfest
     // Internal
     //---------------------------------------------------------------------
 
-    private bool _inViewport;
+    public bool _inViewport;
     private List<SpeechItemScript> _speeches;
     private string[] _tags;
 
@@ -68,6 +68,7 @@ namespace ua.org.gdg.devfest
         (item.transform as RectTransform).sizeDelta =
           new Vector2(width, item.General ? ITEM_HEIGHT_W_O_SPEAKER : ITEM_HEIGHT_W_SPEAKER);
         tsHeight += item.General ? ITEM_HEIGHT_W_O_SPEAKER : ITEM_HEIGHT_W_SPEAKER;
+        item.gameObject.SetActive(false);
         instance.Empty = false;
         instance._speeches.Add(item);
       }
@@ -101,10 +102,12 @@ namespace ua.org.gdg.devfest
           empty = false;
           s.gameObject.SetActive(true);
           tsHeight += s.Tag == "General" ? ITEM_HEIGHT_W_O_SPEAKER : ITEM_HEIGHT_W_SPEAKER;
+          s.SetComplexityTextPosition();
         }
         else
         {
           s.gameObject.SetActive(false);
+          s.SetComplexityTextPosition();
         }
       }
       
@@ -129,6 +132,7 @@ namespace ua.org.gdg.devfest
       if (_inViewport == isInViewport) return;
       
       _inViewport = isInViewport;
+      
       SetChildrenActive();
     }
 
@@ -145,7 +149,7 @@ namespace ua.org.gdg.devfest
 
     private void SetChildrenActive()
     {
-      if (_tags.Length == 0)
+      if (_tags == null || _tags.Length == 0)
       {
         EnableAll();
         
@@ -154,7 +158,9 @@ namespace ua.org.gdg.devfest
       
       foreach (var s in _speeches)
       {
-        s.gameObject.SetActive(_tags.Contains(s.Tag));  
+        s.gameObject.SetActive(_tags.Contains(s.Tag) && _inViewport);
+        s.SetComplexityTextPosition();
+        if (!s.ImageLoaded) s.LoadSpeakerPhoto();
       }
     }
 
@@ -164,8 +170,10 @@ namespace ua.org.gdg.devfest
       
       foreach (var s in _speeches)
       {
-        s.gameObject.SetActive(true);  
+        s.gameObject.SetActive(_inViewport);  
+        s.SetComplexityTextPosition();
         tsHeight += s.Tag == "General" ? ITEM_HEIGHT_W_O_SPEAKER : ITEM_HEIGHT_W_SPEAKER;
+        if (!s.ImageLoaded) s.LoadSpeakerPhoto();
       }
       
       (transform as RectTransform).sizeDelta = new Vector2(0, tsHeight);

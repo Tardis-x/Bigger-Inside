@@ -26,6 +26,20 @@ namespace ua.org.gdg.devfest
     // Public
     //---------------------------------------------------------------------
 
+    public bool RequestFullSchedule(out List<TimeslotModel> day1, out List<TimeslotModel> day2)
+    {
+      if (!_scheduleParsed)
+      {
+        day1 = null;
+        day2 = null;
+        return false;
+      }
+
+      day1 = ComposeFullSchedule(1);
+      day2 = ComposeFullSchedule(2);
+      return true;
+    }
+    
     public bool RequestFullSchedule(int day, out List<TimeslotModel> schedule)
     {
       if (!_scheduleParsed)

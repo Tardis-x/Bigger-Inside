@@ -1425,7 +1425,7 @@ CanvasGroup:
   m_Enabled: 1
   m_Alpha: 0
   m_Interactable: 0
-  m_BlocksRaycasts: 0
+  m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
 --- !u!1 &600983222
 GameObject:
@@ -1827,6 +1827,17 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11400000, guid: 40c42025a40387142974b26943a8ed60, type: 2}
+        m_MethodName: Raise
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 11400000, guid: b41392c0742a41a4aa7230d632b5fd80, type: 2}
         m_MethodName: Raise
         m_Mode: 1
         m_Arguments:
@@ -3094,7 +3105,8 @@ MonoBehaviour:
   _schedulePanel: {fileID: 561165241}
   _scenesManager: {fileID: 1176905110}
   _userPopUp: {fileID: 39339437}
-  CurrentDay: 1
+  _showLoading: {fileID: 11400000, guid: b41392c0742a41a4aa7230d632b5fd80, type: 2}
+  _dismissLoading: {fileID: 11400000, guid: 8ab526a6ee2cc6d48b100bcde7a2b8b4, type: 2}
 --- !u!114 &1176905100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4534,6 +4546,41 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
       value: Close
       objectReference: {fileID: 0}
+    - target: {fileID: 224940554176229510, guid: efaac9368f2571345b40fa0fcb9884fe,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224940554176229510, guid: efaac9368f2571345b40fa0fcb9884fe,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1697266675860168, guid: efaac9368f2571345b40fa0fcb9884fe, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224994977607725226, guid: efaac9368f2571345b40fa0fcb9884fe,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: -1620
+      objectReference: {fileID: 0}
+    - target: {fileID: 224994977607725226, guid: efaac9368f2571345b40fa0fcb9884fe,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224940554176229510, guid: efaac9368f2571345b40fa0fcb9884fe,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114830532610383268, guid: efaac9368f2571345b40fa0fcb9884fe,
+        type: 2}
+      propertyPath: _dismissLoading
+      value: 
+      objectReference: {fileID: 11400000, guid: 8ab526a6ee2cc6d48b100bcde7a2b8b4,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efaac9368f2571345b40fa0fcb9884fe, type: 2}
   m_IsPrefabAsset: 0
