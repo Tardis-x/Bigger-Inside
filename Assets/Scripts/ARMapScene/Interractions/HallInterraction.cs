@@ -9,8 +9,6 @@ namespace ua.org.gdg.devfest
 		// Editor
 		//---------------------------------------------------------------------
 
-		[SerializeField] private Renderer _highlightRenderer;
-		[SerializeField] private Texture _defaultTexture;
 		[SerializeField] private string _hall;
 		
 		//---------------------------------------------------------------------
@@ -35,7 +33,7 @@ namespace ua.org.gdg.devfest
 
 		public override void Disable()
 		{
-			_highlightRenderer.material.mainTexture = _defaultTexture;
+			
 		}
 		
 		public void OnPointerClick(PointerEventData eventData)
