@@ -176,28 +176,37 @@ namespace ua.org.gdg.devfest
       {
         yield return new WaitForSeconds(.01f);
         if(FirestoreManager.Instance.RequestFullSchedule(day, out listContent)) break;
-      }
-
-      timeslots = new List<TimeslotScript>();
-
-      foreach (var item in listContent)
-      {
-        var contentItem = _timeslot.GetInstance(item.Items, item.StartTime, _canvas.rect.width);
         
-        if (!contentItem.Empty)
+        if (FirestoreManager.Instance.Error)
         {
-          AddContentItem(contentItem);
-          timeslots.Add(contentItem);
+          _dismissLoading.Raise();
+          break;
         }
-        else Destroy(contentItem.gameObject);
-        
-        yield return new WaitForSeconds(.01f);
       }
 
-      SaveDaysTimeslots(day, timeslots);
-      FilterByDay(day);
-      _dismissLoading.Raise();
-      
+      if (!FirestoreManager.Instance.Error)
+      {
+        timeslots = new List<TimeslotScript>();
+
+        foreach (var item in listContent)
+        {
+          var contentItem = _timeslot.GetInstance(item.Items, item.StartTime, _canvas.rect.width);
+
+          if (!contentItem.Empty)
+          {
+            AddContentItem(contentItem);
+            timeslots.Add(contentItem);
+          }
+          else Destroy(contentItem.gameObject);
+
+          //yield return new WaitForSeconds(.01f);
+        }
+
+        SaveDaysTimeslots(day, timeslots);
+        FilterByDay(day);
+        _dismissLoading.Raise();
+      }
+
       yield return null;
     }
 
@@ -211,28 +220,37 @@ namespace ua.org.gdg.devfest
       {
         yield return new WaitForSeconds(.01f);
         if (FirestoreManager.Instance.RequestFullSchedule(day, hall, out listContent)) break;
-      }
-      
-      timeslots = new List<TimeslotScript>();
-
-      foreach (var item in listContent)
-      {
-        var contentItem = _timeslot.GetInstance(item.Items, item.StartTime, _canvas.rect.width);
-
-        if (!contentItem.Empty)
-        {
-          AddContentItem(contentItem);
-          timeslots.Add(contentItem);
-        }
-        else Destroy(contentItem.gameObject);
         
-        yield return new WaitForSeconds(.01f);
+        if (FirestoreManager.Instance.Error)
+        {
+          _dismissLoading.Raise();
+          break;
+        }
       }
 
-      SaveDaysTimeslots(day, timeslots);
-      FilterByDay(day);
-      _dismissLoading.Raise();
-      
+      if (!FirestoreManager.Instance.Error)
+      {
+        timeslots = new List<TimeslotScript>();
+
+        foreach (var item in listContent)
+        {
+          var contentItem = _timeslot.GetInstance(item.Items, item.StartTime, _canvas.rect.width);
+
+          if (!contentItem.Empty)
+          {
+            AddContentItem(contentItem);
+            timeslots.Add(contentItem);
+          }
+          else Destroy(contentItem.gameObject);
+
+          //yield return new WaitForSeconds(.01f);
+        }
+
+        SaveDaysTimeslots(day, timeslots);
+        FilterByDay(day);
+        _dismissLoading.Raise();
+      }
+
       yield return null;
     }
 

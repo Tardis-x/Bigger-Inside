@@ -1837,17 +1837,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 11400000, guid: b41392c0742a41a4aa7230d632b5fd80, type: 2}
-        m_MethodName: Raise
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &763157597
@@ -2847,10 +2836,10 @@ RectTransform:
   m_Father: {fileID: 1032293547}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 100}
+  m_AnchoredPosition: {x: -50, y: 0}
+  m_SizeDelta: {x: -100, y: 100}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1047020183
 MonoBehaviour:
@@ -2873,10 +2862,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: de8fdaf98fcbf274ebb49f7197aa6b85, type: 3}
-    m_FontSize: 32
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 2
     m_MaxSize: 40
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -4673,6 +4662,12 @@ Prefab:
       propertyPath: _canvas
       value: 
       objectReference: {fileID: 1032293547}
+    - target: {fileID: 114830532610383268, guid: efaac9368f2571345b40fa0fcb9884fe,
+        type: 2}
+      propertyPath: _showLoading
+      value: 
+      objectReference: {fileID: 11400000, guid: b41392c0742a41a4aa7230d632b5fd80,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efaac9368f2571345b40fa0fcb9884fe, type: 2}
   m_IsPrefabAsset: 0
@@ -4692,6 +4687,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91734df6a10cf644ea60dc6f2af16e24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _text: {fileID: 0}
 --- !u!1 &1967039532
 GameObject:
   m_ObjectHideFlags: 0

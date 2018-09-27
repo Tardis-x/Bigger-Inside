@@ -58,7 +58,6 @@ namespace ua.org.gdg.devfest
 
     //Requests
     private WWW _scheduleRequest;
-    
 
     //Data
     private Schedule _schedule;
@@ -67,6 +66,12 @@ namespace ua.org.gdg.devfest
     private List<TimeslotModel> _fullSchedule;
     private bool _scheduleParsed;
     private bool _requestAnswered;
+    
+    //---------------------------------------------------------------------
+    // Properties
+    //---------------------------------------------------------------------
+
+    public bool Error { get; private set; }
 
     //---------------------------------------------------------------------
     // Helpers
@@ -76,11 +81,19 @@ namespace ua.org.gdg.devfest
     {
       yield return req;
 
-      _requestAnswered = true;
-
-      var schedule = JsonConvert.DeserializeObject<JsonSchedule>(req.text);
-      _schedule = FirestoreHelper.ParseSchedule(schedule);
-      _scheduleParsed = true;
+      if (!string.IsNullOrEmpty(req.error))
+      {
+        Utils.ShowMessage("No internet connection");
+        Error = true;
+      }
+      else
+      {
+        Error = false;
+        _requestAnswered = true;
+        var schedule = JsonConvert.DeserializeObject<JsonSchedule>(req.text);
+        _schedule = FirestoreHelper.ParseSchedule(schedule);
+        _scheduleParsed = true;
+      }
     }
 
     private List<TimeslotModel> ComposeFullSchedule(int day)
