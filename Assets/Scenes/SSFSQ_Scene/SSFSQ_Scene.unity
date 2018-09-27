@@ -1110,6 +1110,33 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
+--- !u!21 &449604869
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 'SSFSQ_Target_scaledMaterial
+
+    47604'
+  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 3fe6e572678e44b584ad4c059af8ce5c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 0.82089555, g: 0.82089555, b: 0.82089555, a: 1}
 --- !u!1 &454416306
 GameObject:
   m_ObjectHideFlags: 0
@@ -1947,33 +1974,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 763144791}
   m_Mesh: {fileID: 4300010, guid: 451803afb4c8cc941b2db2ef852c8502, type: 3}
---- !u!21 &831070731
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 'SSFSQ_Target_scaledMaterial
-
-    19626'
-  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 5
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 3fe6e572678e44b584ad4c059af8ce5c, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats: []
-    m_Colors:
-    - _Color: {r: 0.82089555, g: 0.82089555, b: 0.82089555, a: 1}
 --- !u!1 &833855958
 GameObject:
   m_ObjectHideFlags: 0
@@ -2016,7 +2016,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 831070731}
+  - {fileID: 449604869}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3828,7 +3828,7 @@ MonoBehaviour:
   _starsCount: {fileID: 11400000, guid: c3aeef1eed1df6b428386930d2069f67, type: 2}
   _currentQuestion: {fileID: 11400000, guid: 7954f15677ea9724dadf1626fd55cb02, type: 2}
   _uiManager: {fileID: 1158121468}
-  _audioManager: {fileID: 150743507}
+  _ssfsqAudioManager: {fileID: 0}
   _onGameOver: {fileID: 11400000, guid: 93a255c37338e054b9b61b4cdab7bee8, type: 2}
   _onNewQuestion: {fileID: 11400000, guid: 29abb88088ae9a44da9da78aadbec4bb, type: 2}
   _timeForAnswer: 5
