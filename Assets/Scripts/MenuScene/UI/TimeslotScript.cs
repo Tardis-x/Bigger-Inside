@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +18,7 @@ namespace ua.org.gdg.devfest
     [Header("UI")]
     [SerializeField] private Text _startTimeHoursText;
     [SerializeField] private Text _startTimeMinutesText;
+    [SerializeField] private GameObject _timeTextPlaceholder;
 
     [Space] [Header("Prefabs")] [SerializeField]
     private SpeechItemScript _speechPrefab;
@@ -26,6 +28,8 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     public bool _inViewport;
+    private List<SpeechItemScript> _speeches;
+    private string[] _tags;
 
     //---------------------------------------------------------------------
     // Properties
@@ -55,6 +59,8 @@ namespace ua.org.gdg.devfest
 
       var tsHeight = 170;
 
+      instance._speeches = new List<SpeechItemScript>();
+      
       foreach (var speech in speeches)
       {
         var item = _speechPrefab.GetInstance(speech);
@@ -62,13 +68,51 @@ namespace ua.org.gdg.devfest
         (item.transform as RectTransform).sizeDelta =
           new Vector2(width, item.General ? ITEM_HEIGHT_W_O_SPEAKER : ITEM_HEIGHT_W_SPEAKER);
         tsHeight += item.General ? ITEM_HEIGHT_W_O_SPEAKER : ITEM_HEIGHT_W_SPEAKER;
+        item.gameObject.SetActive(false);
         instance.Empty = false;
+        instance._speeches.Add(item);
       }
 
       (instance.transform as RectTransform).sizeDelta = new Vector2(0, tsHeight);
-      instance.Invoke("TurnOffLayoutGroup", .1f);
 
       return instance;
+    }
+
+    public void SetTags(string[] tags)
+    {
+      if (_speeches == null) return;
+
+      _tags = tags;
+
+      if (tags.Length == 0)
+      {
+        EnableAll();
+        
+        return;
+      }
+
+      bool empty = true;
+      
+      var tsHeight = 170;
+      
+      foreach (var s in _speeches)
+      {
+        if (tags.Contains(s.Tag))
+        {
+          empty = false;
+          s.gameObject.SetActive(true);
+          tsHeight += s.Tag == "General" ? ITEM_HEIGHT_W_O_SPEAKER : ITEM_HEIGHT_W_SPEAKER;
+          s.SetComplexityTextPosition();
+        }
+        else
+        {
+          s.gameObject.SetActive(false);
+          s.SetComplexityTextPosition();
+        }
+      }
+      
+      (transform as RectTransform).sizeDelta = new Vector2(0, empty ? 0 : tsHeight);
+      _timeTextPlaceholder.SetActive(!empty);
     }
 
     //---------------------------------------------------------------------
@@ -81,11 +125,6 @@ namespace ua.org.gdg.devfest
       _startTimeMinutesText.text = startTimeText.Split(':')[1];
     }
 
-    private void TurnOffLayoutGroup()
-    {
-      GetComponent<VerticalLayoutGroup>().enabled = false;
-    }
-
     private void UpdateChildren()
     {
       var isInViewport = IsInViewport();
@@ -93,7 +132,8 @@ namespace ua.org.gdg.devfest
       if (_inViewport == isInViewport) return;
       
       _inViewport = isInViewport;
-      SetChildrenActive(_inViewport);
+      
+      SetChildrenActive();
     }
 
     private bool IsInViewport()
@@ -107,12 +147,37 @@ namespace ua.org.gdg.devfest
              && current.rect.height - current.anchoredPosition.y > parent.anchoredPosition.y;
     }
 
-    private void SetChildrenActive(bool value)
+    private void SetChildrenActive()
     {
-      foreach (Transform child in transform)
+      if (_tags == null || _tags.Length == 0)
       {
-        child.gameObject.SetActive(value);
+        EnableAll();
+        
+        return;
       }
+      
+      foreach (var s in _speeches)
+      {
+        s.gameObject.SetActive(_tags.Contains(s.Tag) && _inViewport);
+        s.SetComplexityTextPosition();
+        if (!s.ImageLoaded) s.LoadSpeakerPhoto();
+      }
+    }
+
+    private void EnableAll()
+    {
+      var tsHeight = 170;
+      
+      foreach (var s in _speeches)
+      {
+        s.gameObject.SetActive(_inViewport);  
+        s.SetComplexityTextPosition();
+        tsHeight += s.Tag == "General" ? ITEM_HEIGHT_W_O_SPEAKER : ITEM_HEIGHT_W_SPEAKER;
+        if (!s.ImageLoaded) s.LoadSpeakerPhoto();
+      }
+      
+      (transform as RectTransform).sizeDelta = new Vector2(0, tsHeight);
+      _timeTextPlaceholder.SetActive(true);
     }
   }
 }

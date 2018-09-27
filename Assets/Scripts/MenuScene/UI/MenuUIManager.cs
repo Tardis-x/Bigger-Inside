@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace ua.org.gdg.devfest
@@ -17,17 +18,23 @@ namespace ua.org.gdg.devfest
     [SerializeField] private UserPopUp _userPopUp;
 
     //---------------------------------------------------------------------
-    // Public
+    // Messages
     //---------------------------------------------------------------------
 
-    public int CurrentDay = 1;
+    private void Awake()
+    {
+      Application.targetFrameRate = 60;
+    }
+
+    //---------------------------------------------------------------------
+    // Public
+    //---------------------------------------------------------------------
 
     public void ShowSignInPanel()
     {
       _userPopUp.InMenu = false;
       _signInPanel.SetActive(true);
       _menuPanel.SetActive(false);
-      _schedulePanel.DisablePanel();
     }
 
     public void ShowMenu()
@@ -55,18 +62,15 @@ namespace ua.org.gdg.devfest
     {
       _userPopUp.InMenu = false;
       _menuPanel.SetActive(false);
-      _schedulePanel.EnablePanel(CurrentDay);
+      _schedulePanel.gameObject.SetActive(true);
+      _schedulePanel.EnablePanel(2);
+      _schedulePanel.EnablePanel(1);
     }
 
     public void ShowSpeechDescription(GameObject speech)
     {
       _descriptionPanel.SetActive(true);
       _descriptionPanel.SetData(speech.GetComponent<SpeechItemScript>().GetDescription());
-    }
-
-    public void SetCurrentDay(int day)
-    {
-      CurrentDay = day;
     }
 
     public void OnLogout()

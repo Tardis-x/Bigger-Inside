@@ -17,6 +17,8 @@ namespace ua.org.gdg.devfest
     [SerializeField] private GameEvent _showMenu;
     [SerializeField] private GameEvent _signIn;
     [SerializeField] private GameEvent _signInFinished;
+    [SerializeField] private GameEvent _showLoading;
+    [SerializeField] private GameEvent _dismissLoading;
 
     //---------------------------------------------------------------------
     // Internal
@@ -24,7 +26,6 @@ namespace ua.org.gdg.devfest
 
     private GoogleSignInConfiguration configuration;
     private FirebaseAuth _auth;
-    private ProgressDialogSpinner _signInSpinner;
 
     //---------------------------------------------------------------------
     // Properties
@@ -109,8 +110,7 @@ namespace ua.org.gdg.devfest
         var token = AccessToken.CurrentAccessToken.TokenString;
         var credential = FacebookAuthProvider.GetCredential(token);
 
-        _signInSpinner = new ProgressDialogSpinner("Please wait", "Signing in...");
-        _signInSpinner.Show();
+        _showLoading.Raise();
 
         _auth.SignInWithCredentialAsync(credential).ContinueWith(OnFacebookAuthenticationFinished);
       }
@@ -123,7 +123,7 @@ namespace ua.org.gdg.devfest
     private void OnFacebookAuthenticationFinished(Task<FirebaseUser> task)
     {
       var signInCompleted = new TaskCompletionSource<FirebaseUser>();
-      _signInSpinner.Dismiss();
+      _dismissLoading.Raise();
 
       if (task.IsCanceled)
       {
@@ -156,8 +156,7 @@ namespace ua.org.gdg.devfest
       {
         var credential = GoogleAuthProvider.GetCredential(task.Result.IdToken, null);
 
-        _signInSpinner = new ProgressDialogSpinner("Please wait", "Signing in...");
-        _signInSpinner.Show();
+        _showLoading.Raise();
 
         _auth.SignInWithCredentialAsync(credential).ContinueWith(OnSignInWithCredentialsFinished);
       }
@@ -166,7 +165,7 @@ namespace ua.org.gdg.devfest
     private void OnSignInWithCredentialsFinished(Task<FirebaseUser> authTask)
     {
       var signInCompleted = new TaskCompletionSource<FirebaseUser>();
-      _signInSpinner.Dismiss();
+      _dismissLoading.Raise();
 
       if (authTask.IsCanceled)
       {

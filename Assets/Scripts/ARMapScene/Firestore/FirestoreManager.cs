@@ -16,8 +16,11 @@ namespace ua.org.gdg.devfest
     // Messages
     //---------------------------------------------------------------------
 
-    private void Start()
+    private void OnEnable()
     {
+      if (_requestAnswered) return;
+
+      Error = false;
       _scheduleRequest = new WWW(SCHEDULE_URL);
       StartCoroutine(OnScheduleResponse(_scheduleRequest));
     }
@@ -25,7 +28,7 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     // Public
     //---------------------------------------------------------------------
-
+    
     public bool RequestFullSchedule(int day, out List<TimeslotModel> schedule)
     {
       if (!_scheduleParsed)
@@ -55,7 +58,7 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     //Requests
-    private WWW _scheduleRequest, _sessionRequest, _speakerRequest;
+    private WWW _scheduleRequest;
 
     //Data
     private Schedule _schedule;
@@ -63,6 +66,13 @@ namespace ua.org.gdg.devfest
     private Dictionary<string, Speaker> _speakers;
     private List<TimeslotModel> _fullSchedule;
     private bool _scheduleParsed;
+    private bool _requestAnswered;
+    
+    //---------------------------------------------------------------------
+    // Properties
+    //---------------------------------------------------------------------
+
+    public bool Error { get; private set; }
 
     //---------------------------------------------------------------------
     // Helpers
@@ -72,9 +82,19 @@ namespace ua.org.gdg.devfest
     {
       yield return req;
 
-      JsonSchedule schedule = JsonConvert.DeserializeObject<JsonSchedule>(req.text);
-      _schedule = FirestoreHelper.ParseSchedule(schedule);
-      _scheduleParsed = true;
+      if (!string.IsNullOrEmpty(req.error))
+      {
+        Utils.ShowMessage("No internet connection");
+        Error = true;
+      }
+      else
+      {
+        Error = false;
+        _requestAnswered = true;
+        var schedule = JsonConvert.DeserializeObject<JsonSchedule>(req.text);
+        _schedule = FirestoreHelper.ParseSchedule(schedule);
+        _scheduleParsed = true;
+      }
     }
 
     private List<TimeslotModel> ComposeFullSchedule(int day)

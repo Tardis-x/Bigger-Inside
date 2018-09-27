@@ -17,7 +17,6 @@ namespace ua.org.gdg.devfest
     private string LOGO_BASE_PATH;
     private const int DESCRIPTION_HEIGHT_W_O_SPEAKER = 300;
     private const int DESCRIPTION_HEIGHT_W_SPEAKER = 600;
-    private const int NAME_TEXT_LINE_HEIGHT = 65;
     private const int TIMESPAN_TEXT_GENERAL_POS = -200;
 
     //---------------------------------------------------------------------
@@ -39,6 +38,12 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     public bool General { get; private set; }
+    public string Tag
+    {
+      get { return _model.Tag; }
+    }
+    
+    public bool ImageLoaded { get; private set; }
 
     //---------------------------------------------------------------------
     // Messages
@@ -47,12 +52,6 @@ namespace ua.org.gdg.devfest
     private void Awake()
     {
       LOGO_BASE_PATH = Application.persistentDataPath + "Graphics/";
-    }
-
-    private void OnEnable()
-    {
-      if(_model != null && !_imageLoaded && _model.Speaker != null) 
-        LoadImage(_model.Speaker.PhotoUrl, _speakerPhoto);
     }
 
     //---------------------------------------------------------------------
@@ -70,15 +69,29 @@ namespace ua.org.gdg.devfest
 
       instance._description = model.Description;
       instance.SetComplexityText(model.Description.Complexity ?? "");
-      instance.Invoke("SetComplexityTextPosition", .1f);
       instance.SetTag(model.Tag);
-
+      instance.SetComplexityTextPosition();
+      instance.gameObject.SetActive(false);
+      
       return instance;
     }
 
     public ScheduleItemDescriptionUiModel GetDescription()
     {
       return _description;
+    }
+    
+    public void SetComplexityTextPosition()
+    {
+      _complexityText.GetComponent<RectTransform>().anchoredPosition = new Vector2(50, 
+        -70 - _nameText.preferredHeight);
+    }
+
+    public void LoadSpeakerPhoto()
+    {
+      if(_model.Speaker == null) return;
+      
+      LoadImage(_model.Speaker.PhotoUrl, _speakerPhoto);
     }
 
     //---------------------------------------------------------------------
@@ -87,7 +100,6 @@ namespace ua.org.gdg.devfest
 
     private ScheduleItemDescriptionUiModel _description;
     private SpeechItemModel _model;
-    private bool _imageLoaded;
 
     //---------------------------------------------------------------------
     // Helpers
@@ -111,19 +123,11 @@ namespace ua.org.gdg.devfest
     {
       SetSpeakerCompanyCountry(speaker.Company, speaker.Country);
       SetSpeakerName(speaker.Name);
-      LoadImage(_model.Speaker.PhotoUrl, _speakerPhoto);
     }
 
     private void SetComplexityText(string complexity)
     {
       _complexityText.text = complexity;
-    }
-
-    private void SetComplexityTextPosition()
-    {
-      var linesCount = _nameText.cachedTextGenerator.lines.Count;
-      _complexityText.GetComponent<RectTransform>().anchoredPosition = new Vector2(50, 
-        -70 - NAME_TEXT_LINE_HEIGHT * linesCount);
     }
 
     private void SetSpeakerCompanyCountry(string company, string country)
@@ -184,10 +188,15 @@ namespace ua.org.gdg.devfest
           _description.TagColor = DESIGN_TAG_COLOR;
           SetTagTextAndBorderColor(DESIGN_TAG_COLOR);
           break;
-        default:
+        case "General":
           _description.TagColor = GENERAL_TAG_COLOR;
           SetTagTextAndBorderColor(GENERAL_TAG_COLOR);
           SetSpeakerImageVisible(false);
+          break;
+        default:
+          _description.TagColor = "#FFFFFF";
+          SetTagTextAndBorderColor("#FFFFFF");
+          _model.Tag = "Other";
           break;
       }
     }
@@ -208,12 +217,12 @@ namespace ua.org.gdg.devfest
 
       if (LoadFromFile(filePath, image))
       {
-        _imageLoaded = true;
+        ImageLoaded = true;
         return;
       }
 
       var req = new WWW(logoUrl);
-      StartCoroutine(OnResponse(req, filePath, image));
+      if(gameObject.activeSelf) StartCoroutine(OnResponse(req, filePath, image));
     }
 
     private IEnumerator OnResponse(WWW req, string filePath, RawImage image)
@@ -222,7 +231,7 @@ namespace ua.org.gdg.devfest
       
       SetImageTexture(image, req.bytes);
       SaveLogoToFile(filePath, req.bytes);
-      _imageLoaded = true;
+      ImageLoaded = true;
     }
 
     private bool LoadFromFile(string fileName, RawImage image)
