@@ -3146,7 +3146,6 @@ GameObject:
   - component: {fileID: 1176905095}
   - component: {fileID: 1176905099}
   - component: {fileID: 1176905110}
-  - component: {fileID: 1176905101}
   - component: {fileID: 1176905105}
   - component: {fileID: 1176905098}
   - component: {fileID: 1176905106}
@@ -3309,8 +3308,6 @@ MonoBehaviour:
   _schedulePanel: {fileID: 561165241}
   _scenesManager: {fileID: 1176905110}
   _userPopUp: {fileID: 39339437}
-  _showLoading: {fileID: 11400000, guid: b41392c0742a41a4aa7230d632b5fd80, type: 2}
-  _dismissLoading: {fileID: 11400000, guid: 8ab526a6ee2cc6d48b100bcde7a2b8b4, type: 2}
 --- !u!114 &1176905100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3350,18 +3347,6 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &1176905101
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1176905092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91734df6a10cf644ea60dc6f2af16e24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _text: {fileID: 1047020183}
 --- !u!114 &1176905102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4691,6 +4676,22 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efaac9368f2571345b40fa0fcb9884fe, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1 &1845589506 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1697266675860168, guid: efaac9368f2571345b40fa0fcb9884fe,
+    type: 2}
+  m_PrefabInternal: {fileID: 1845589505}
+--- !u!114 &1845589507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1845589506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91734df6a10cf644ea60dc6f2af16e24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1967039532
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,6 +20,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] private Animator _underscore;
     [SerializeField] private RectTransform _canvas;
     [SerializeField] private Text _hallName;
+    [SerializeField] private GameEvent _showLoading;
     [SerializeField] private GameEvent _dismissLoading;
 
     //---------------------------------------------------------------------
@@ -49,6 +50,11 @@ namespace ua.org.gdg.devfest
       DisablePanelWithDelay();
       _showMenu.Raise();
       _dismissLoading.Raise();
+    }
+
+    private void OnEnable()
+    {
+      _showLoading.Raise();
     }
 
     //---------------------------------------------------------------------

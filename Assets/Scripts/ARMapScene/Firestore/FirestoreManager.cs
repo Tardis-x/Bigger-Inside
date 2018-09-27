@@ -4,7 +4,6 @@ using UnityEngine;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Text;
-using UnityEngine.UI;
 
 namespace ua.org.gdg.devfest
 {
@@ -12,14 +11,15 @@ namespace ua.org.gdg.devfest
   {
     //URLs
     private const string SCHEDULE_URL = Credentials.FIREBASE_URL;
-    [SerializeField] private Text _text;
 
     //---------------------------------------------------------------------
     // Messages
     //---------------------------------------------------------------------
 
-    private void Start()
+    private void OnEnable()
     {
+      if (_requestAnswered) return;
+      
       _scheduleRequest = new WWW(SCHEDULE_URL);
       StartCoroutine(OnScheduleResponse(_scheduleRequest));
     }
@@ -57,7 +57,8 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     //Requests
-    private WWW _scheduleRequest, _sessionRequest, _speakerRequest;
+    private WWW _scheduleRequest;
+    
 
     //Data
     private Schedule _schedule;
@@ -65,6 +66,7 @@ namespace ua.org.gdg.devfest
     private Dictionary<string, Speaker> _speakers;
     private List<TimeslotModel> _fullSchedule;
     private bool _scheduleParsed;
+    private bool _requestAnswered;
 
     //---------------------------------------------------------------------
     // Helpers
@@ -74,10 +76,11 @@ namespace ua.org.gdg.devfest
     {
       yield return req;
 
+      _requestAnswered = true;
+
       var schedule = JsonConvert.DeserializeObject<JsonSchedule>(req.text);
       _schedule = FirestoreHelper.ParseSchedule(schedule);
       _scheduleParsed = true;
-      _text.text = "Done";
     }
 
     private List<TimeslotModel> ComposeFullSchedule(int day)
