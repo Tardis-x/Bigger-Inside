@@ -19,7 +19,8 @@ namespace ua.org.gdg.devfest
     private void OnEnable()
     {
       if (_requestAnswered) return;
-      
+
+      Error = false;
       _scheduleRequest = new WWW(SCHEDULE_URL);
       StartCoroutine(OnScheduleResponse(_scheduleRequest));
     }

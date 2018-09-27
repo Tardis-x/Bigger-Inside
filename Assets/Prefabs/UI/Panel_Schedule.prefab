@@ -478,6 +478,7 @@ GameObject:
   - component: {fileID: 114708973255997182}
   - component: {fileID: 223545014995577584}
   - component: {fileID: 114350386608183696}
+  - component: {fileID: 114266157183083724}
   m_Layer: 5
   m_Name: Panel_Schedule
   m_TagString: Untagged
@@ -1127,6 +1128,17 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114266157183083724
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1697266675860168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91734df6a10cf644ea60dc6f2af16e24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114284633643233270
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2060,9 +2072,9 @@ MonoBehaviour:
     type: 2}
   _showMenu: {fileID: 11400000, guid: f2156674dc5d5254c8a4378a23b7b0ed, type: 2}
   _underscore: {fileID: 95599213048058240}
-  _header: {fileID: 0}
   _canvas: {fileID: 0}
   _hallName: {fileID: 114511128473586330}
+  _showLoading: {fileID: 11400000, guid: b41392c0742a41a4aa7230d632b5fd80, type: 2}
   _dismissLoading: {fileID: 11400000, guid: 8ab526a6ee2cc6d48b100bcde7a2b8b4, type: 2}
 --- !u!114 &114852968923773350
 MonoBehaviour:
