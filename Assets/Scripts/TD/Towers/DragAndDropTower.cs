@@ -15,11 +15,12 @@ namespace ua.org.gdg.devfest
     [SerializeField] private GameObject _towerPrefab;
     [SerializeField] private float _ghostTowerScaleFactor;
 
-    [Space] [Header("Events")] [SerializeField]
-    private GameEvent _onBeginDrag;
-
+    [Space] 
+    [Header("Events")] 
+    [SerializeField] private GameEvent _onBeginDrag;
     [SerializeField] private GameEvent _onEndDrag;
     [SerializeField] private IntGameEvent _moneyChangedForAmount;
+    [SerializeField] private IntGameEvent _audioGameEvent;
 
     //---------------------------------------------------------------------
     // Internal
@@ -89,6 +90,7 @@ namespace ua.org.gdg.devfest
         if (aoeTower != null) aoeTower.SetAOEVisible(true);
         _activeSlot.SetActive(false);
         _moneyChangedForAmount.Raise(-_towerPrefab.GetComponent<TowerScript>().Cost);
+        _audioGameEvent.Raise((int) Sound.BuyTower);
       }
 
       _hoverPrefab.SetActive(false);

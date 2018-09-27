@@ -32,36 +32,48 @@ namespace ua.org.gdg.devfest
     {
       if (!IsInteractable) return;
 
-      Touch touch = new Touch();
-
-      try
-      {
-        touch = Input.GetTouch(0);
-      }
-      catch
-      {
-        return;
-      }
-
-      if (touch.phase == TouchPhase.Began) _fingerMoved = false;
-
-      if (touch.phase == TouchPhase.Moved) _fingerMoved = true;
-
-      if (touch.phase == TouchPhase.Ended && !_fingerMoved)
-      {
-        var ray = Camera.main.ScreenPointToRay(touch.position);
-        RaycastHit hit = new RaycastHit();
-
-        if (Physics.Raycast(ray, out hit, 100, _clicableObjects, QueryTriggerInteraction.Ignore))
+      #if UNITY_EDITOR
+        if (Input.GetMouseButtonDown(0))
         {
-          InteractableObject obj = hit.transform.gameObject.GetComponent<InteractableObject>();
+          HandleObjectClick(Input.mousePosition);
+        }
+      #else
+        Touch touch = new Touch();
+  
+        try
+        {
+          touch = Input.GetTouch(0);
+        }
+        catch
+        {
+          return;
+        }
+  
+        if (touch.phase == TouchPhase.Began) _fingerMoved = false;
+  
+        if (touch.phase == TouchPhase.Moved) _fingerMoved = true;
+  
+        if (touch.phase == TouchPhase.Ended && !_fingerMoved)
+        {
+          HandleObjectClick(touch.position);
+        }
+      #endif
+    }
 
-          if (obj != null)
-          {
-            if (_lastInteracted != null) _lastInteracted.Disable();
-            _lastInteracted = obj;
-            obj.Interact();
-          }
+    private void HandleObjectClick(Vector3 position)
+    {
+      var ray = Camera.main.ScreenPointToRay(position);
+      RaycastHit hit = new RaycastHit();
+
+      if (Physics.Raycast(ray, out hit, 100, _clicableObjects, QueryTriggerInteraction.Ignore))
+      {
+        InteractableObject obj = hit.transform.gameObject.GetComponent<InteractableObject>();
+
+        if (obj != null)
+        {
+          if (_lastInteracted != null) _lastInteracted.Disable();
+          _lastInteracted = obj;
+          obj.Interact();
         }
       }
     }

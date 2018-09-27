@@ -27,6 +27,7 @@ namespace ua.org.gdg.devfest
     [Header("Events")]
     [SerializeField] private InstanceGameEvent _dieEvent;
     [SerializeField] private InstanceGameEvent _onCreepDisappeared;
+    [SerializeField] private IntGameEvent _audioEvent;
     
     //---------------------------------------------------------------------
     // Internal
@@ -34,6 +35,110 @@ namespace ua.org.gdg.devfest
 
     private const int DEAD_ENEMIES_LAYER = 11;
     private float _maxHP;
+
+    //---------------------------------------------------------------------
+    // Properties
+    //---------------------------------------------------------------------
+
+    public int HP { get; private set; }
+
+    public int Money { get; private set; }
+
+    public bool Happy { get; private set; }
+    
+    public float Speed
+    {
+      get { return _enemy.MoveSpeed; }
+    }
+
+    public Enemy Type
+    {
+      get { return _enemy; }
+    }
+    
+    //---------------------------------------------------------------------
+    // Messages
+    //---------------------------------------------------------------------
+
+    private void Awake()
+    {
+      HP = _enemy.HP.Value;
+      _maxHP = _enemy.HP.Value;
+      Money = _enemy.Money.Value;
+      Happy = false;
+      _agent.SetSpeed(_enemy.MoveSpeed.Value);
+    }
+
+    private void OnDestroy()
+    {
+      _onCreepDisappeared.Raise(gameObject);
+    }
+
+    //---------------------------------------------------------------------
+    // Public
+    //---------------------------------------------------------------------
+
+    public void LevelUp()
+    {
+      HP += _enemy.HPPerLevel;
+      Money += _enemy.MoneyPerLevel;
+      _maxHP += _enemy.HPPerLevel;
+    }
+
+    public EnemyScript GetInstance(int level, Transform position, Node startDestinationNode, Node happyExitNode)
+    {
+      var instance = Instantiate(this, position.position, position.rotation, position.parent);
+      instance.HP += _enemy.HPPerLevel.Value * level;
+      instance.Money += _enemy.MoneyPerLevel.Value * level;
+      instance._agent.Initialize(startDestinationNode);
+      instance._agent.HappyExitNode = happyExitNode;
+      return instance;
+    }
+
+    public void GetShot(ProjectileScript projectile)
+    {
+      var dmg = projectile.Damage;
+      var resist = _enemy.Resistances.ResistancesList.FirstOrDefault(x => x.Type == projectile.Type);
+      
+      if (resist != null) dmg *= CalculateDamageCoefficient(resist.Amount);
+      
+      HP -= (int) Mathf.Round(dmg);
+      
+      UpdateHPBar();
+      _audioEvent.Raise((int) Sound.Eat);
+      
+      if (HP <= 1) Fed();
+    }
+
+    public void SetSpeed(float speed)
+    {
+      _agent.SetSpeed(speed);
+      if(speed < _enemy.MoveSpeed) _slowEffect.Play();
+      else _slowEffect.Stop();
+    }
+    
+    public void Disappear()
+    {
+      gameObject.layer = DEAD_ENEMIES_LAYER;
+      
+      _animator.SetTrigger("Idle");
+      
+      if(Happy) _coinsParticleSystem.Play();
+
+      if (_renderer == null)
+      {
+        Destroy(gameObject, 1.1f);
+        return;
+      }
+			
+      ChangeMaterialToFade();
+			
+      var meshColor = _renderer.material.color;
+      var invisibleColor = meshColor;
+      invisibleColor.a = 0;
+
+      StartCoroutine(LerpMeshRendererColor(_renderer, 1.5f, meshColor, invisibleColor));
+    }
 
     //---------------------------------------------------------------------
     // Heplers
@@ -94,110 +199,7 @@ namespace ua.org.gdg.devfest
     {
       Destroy(gameObject);
     }
-  
 
-    //---------------------------------------------------------------------
-    // Messages
-    //---------------------------------------------------------------------
 
-    private void Awake()
-    {
-      HP = _enemy.HP.Value;
-      _maxHP = _enemy.HP.Value;
-      Money = _enemy.Money.Value;
-      Happy = false;
-      _agent.SetSpeed(_enemy.MoveSpeed.Value);
-    }
-
-    private void OnDestroy()
-    {
-      _onCreepDisappeared.Raise(gameObject);
-    }
-
-    //---------------------------------------------------------------------
-    // Public
-    //---------------------------------------------------------------------
-
-    public void LevelUp()
-    {
-      HP += _enemy.HPPerLevel;
-      Money += _enemy.MoneyPerLevel;
-      _maxHP += _enemy.HPPerLevel;
-    }
-
-    public EnemyScript GetInstance(int level, Transform position, Node startDestinationNode, Node happyExitNode)
-    {
-      var instance = Instantiate(this, position.position, position.rotation, position.parent);
-      instance.HP += _enemy.HPPerLevel.Value * level;
-      instance.Money += _enemy.MoneyPerLevel.Value * level;
-      instance._agent.Initialize(startDestinationNode);
-      instance._agent.HappyExitNode = happyExitNode;
-      return instance;
-    }
-
-    public void GetShot(ProjectileScript projectile)
-    {
-      float dmg = projectile.Damage;
-      var resist = _enemy.Resistances.ResistancesList.FirstOrDefault(x => x.Type == projectile.Type);
-      
-      if (resist != null) dmg *= CalculateDamageCoefficient(resist.Amount);
-      
-      HP -= (int) Mathf.Round(dmg);
-      UpdateHPBar();
-      
-      Debug.Log(gameObject.name + " taken " + dmg + " damage from " + projectile.Type + " projectile. HP left: " + HP);
-      
-      if (HP <= 1) Fed();
-    }
-
-    public void SetSpeed(float speed)
-    {
-      _agent.SetSpeed(speed);
-      if(speed < _enemy.MoveSpeed) _slowEffect.Play();
-      else _slowEffect.Stop();
-    }
-    
-    public void Disappear()
-    {
-      gameObject.layer = DEAD_ENEMIES_LAYER;
-      
-      _animator.SetTrigger("Idle");
-      
-      if(Happy) _coinsParticleSystem.Play();
-
-      if (_renderer == null)
-      {
-        Destroy(gameObject, 1.1f);
-        return;
-      }
-			
-      ChangeMaterialToFade();
-			
-      var meshColor = _renderer.material.color;
-      var invisibleColor = meshColor;
-      invisibleColor.a = 0;
-
-      StartCoroutine(LerpMeshRendererColor(_renderer, 1.5f, meshColor, invisibleColor));
-    }
-
-    //---------------------------------------------------------------------
-    // Properties
-    //---------------------------------------------------------------------
-
-    public int HP { get; private set; }
-
-    public int Money { get; private set; }
-
-    public bool Happy { get; private set; }
-    
-    public float Speed
-    {
-      get { return _enemy.MoveSpeed; }
-    }
-
-    public Enemy Type
-    {
-      get { return _enemy; }
-    }
   }
 }

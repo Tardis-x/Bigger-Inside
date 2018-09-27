@@ -39,7 +39,7 @@ namespace ua.org.gdg.devfest
 
     [Header("Submanagers")] 
     [SerializeField] private UIManager _uiManager;
-    [SerializeField] private AudioManager _audioManager;
+    [SerializeField] private SSFSQAudioManager _ssfsqAudioManager;
 
     [Space]
     [Header("Events")] 
@@ -149,7 +149,7 @@ namespace ua.org.gdg.devfest
       }
       else
       {
-        _audioManager.PlayRightAction();
+        _ssfsqAudioManager.PlayRightAction();
         _score.RuntimeValue++;
       }
       
@@ -165,7 +165,7 @@ namespace ua.org.gdg.devfest
       }
       else
       {
-        _audioManager.PlayRightAction();
+        _ssfsqAudioManager.PlayRightAction();
         _score.RuntimeValue++;
       }
       
@@ -230,7 +230,7 @@ namespace ua.org.gdg.devfest
     private void HandleWrongActionAudio()
     {
       if (GameActive)
-        _audioManager.PlayWrongAction();
+        _ssfsqAudioManager.PlayWrongAction();
     }
 
     private void GameOver()

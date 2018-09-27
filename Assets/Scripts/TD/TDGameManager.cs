@@ -27,7 +27,10 @@ namespace ua.org.gdg.devfest
     [SerializeField] private IntReference _money;
     [SerializeField] private IntReference _score;
     [SerializeField] private IntReference _enemiesLeft;
-    
+
+    [Space] 
+    [Header("Audio Manager")] 
+    [SerializeField] private TDAudioManager _audioManager;
     
     //---------------------------------------------------------------------
     // Events
@@ -68,6 +71,7 @@ namespace ua.org.gdg.devfest
       {
         _score.Value += 1;
         _money.Value += creepEnemyScript.Money;
+        _audioManager.PlayCoins();
       }
       else
       {

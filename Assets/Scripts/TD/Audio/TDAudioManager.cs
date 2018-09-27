@@ -1,23 +1,25 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace ua.org.gdg.devfest
 {
   [RequireComponent(typeof(AudioSource))]
-  public class AudioManager : MonoBehaviour
+  public class TDAudioManager : MonoBehaviour
   {
     
     //---------------------------------------------------------------------
     // Editor
     //---------------------------------------------------------------------
 
-    [Header("Audio Clips")]
-    [SerializeField] private AudioClip _shutUpClip;
-    [SerializeField] private AudioClip _answerClip;
-    [SerializeField] private AudioClip _dieClip;
-    [SerializeField] private AudioClip _crowdClip;
-    [SerializeField] private AudioClip _rightActionClip;
-    [SerializeField] private AudioClip _wrongActionClip;
+    [Header("Audio Clips")] 
+    [SerializeField] private AudioClip _coinsClip;
+    [SerializeField] private AudioClip _hallUnlockClip;
     [SerializeField] private AudioClip _gameOverClip;
+    [SerializeField] private AudioClip _buyTowerClip;
+    [SerializeField] private AudioClip _upgradeTowerClip;
+    [SerializeField] private AudioClip _sellTowerClip;
+    [SerializeField] private List<AudioClip> _eatClipList;
     
     //---------------------------------------------------------------------
     // Internal
@@ -38,48 +40,49 @@ namespace ua.org.gdg.devfest
     // Public
     //---------------------------------------------------------------------
 
-    public void PlayShutUp()
+    public void PlayCoins()
     {
-      Play(_shutUpClip, 0.7f);
+      Play(_coinsClip, 0.3f);
     }
     
-    public void PlayAnswerDelayed()
+    public void PlayHallUnlock()
     {
-      Invoke("PlayAnswer", 0.2f);
-    }
-
-    public void PlayDie()
-    {
-      Play(_dieClip, 1.3f);
-    }
-  
-    public void PlayTomatoThrow()
-    {
-      Play(_crowdClip, 0.5f);
-    }
-
-    public void PlayRightAction()
-    {
-      Play(_rightActionClip, 0.8f);
-    }
-
-    public void PlayWrongAction()
-    {
-      Play(_wrongActionClip, 0.8f);
-    }
-
+      Play(_hallUnlockClip);
+    }    
+    
     public void PlayGameOver()
     {
-      Play(_gameOverClip, 1.3f);
+      Play(_gameOverClip);
     }
-    
+
+    public void PlayAudioClipData(int soundNumber)
+    {
+      switch ((Sound) soundNumber)
+      {
+        case Sound.BuyTower:
+          Play(_buyTowerClip);
+          break;
+        case Sound.UpgradeTower:
+          Play(_upgradeTowerClip);
+          break;
+        case Sound.SellTower:
+          Play(_sellTowerClip);
+          break;
+        case Sound.Eat:
+          PlayRandomEatClip();
+          break;
+      }
+    }
+
     //---------------------------------------------------------------------
     // Helpers
     //---------------------------------------------------------------------
 
-    private void PlayAnswer()
+    private void PlayRandomEatClip()
     {
-      Play(_answerClip, 1.2f);
+      var position = Random.Range(0, _eatClipList.Count - 1);
+      var volume = Random.Range(0.6f, 1f);
+      Play(_eatClipList[position], volume);
     }
     
     private void Play(AudioClip audioClip, float volume = 1f)
@@ -87,6 +90,6 @@ namespace ua.org.gdg.devfest
       if (audioClip == null) return;
       
       _audioSource.PlayOneShot(audioClip, volume);
-    }   
+    }  
   }
 }
