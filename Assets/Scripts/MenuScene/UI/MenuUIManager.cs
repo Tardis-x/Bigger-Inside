@@ -16,8 +16,15 @@ namespace ua.org.gdg.devfest
     [SerializeField] private SchedulePanelScript _schedulePanel;
     [SerializeField] private ScenesManager _scenesManager;
     [SerializeField] private UserPopUp _userPopUp;
-    [SerializeField] private GameEvent _showLoading;
-    [SerializeField] private GameEvent _dismissLoading;
+
+    //---------------------------------------------------------------------
+    // Messages
+    //---------------------------------------------------------------------
+
+    private void Awake()
+    {
+      Application.targetFrameRate = 60;
+    }
 
     //---------------------------------------------------------------------
     // Public
