@@ -6,6 +6,7 @@ using Firebase;
 using Firebase.Database;
 using Firebase.Unity.Editor;
 using Newtonsoft.Json;
+using ua.org.gdg.devfest;
 using UnityEngine;
 
 public class QuestManager : MonoBehaviour
@@ -25,6 +26,9 @@ public class QuestManager : MonoBehaviour
 	public bool isQuestActivated;
 	int _timesCompleted;
 	public Sprite[] riddleImages;
+
+	[SerializeField] private GameEvent _showLoading;
+	[SerializeField] private GameEvent _dismissLoading;
 
 	const string QuestFolderName = "Quest/users";
 
@@ -48,10 +52,8 @@ public class QuestManager : MonoBehaviour
 	{
 		Debug.Log("QuestManager.Start");
 
-#if UNITY_ANDROID
-		var spinner = AGProgressDialog.CreateSpinnerDialog("Please wait", "Updating Quest Data...", AGDialogTheme.Dark);
-		spinner.Show();
-#endif
+		_showLoading.Raise();
+		
 		_questUi.FadeQuestScreenIn();
 		firebaseData.database.Child(QuestFolderName).Child(firebaseData.currentUserUserId).GetValueAsync().ContinueWith(
 			readTask =>
@@ -73,9 +75,8 @@ public class QuestManager : MonoBehaviour
 								Debug.Log("QuestManager: Default quest data was successfully set up!");
 								_questUi.FadeScreenOut();
 							}
-#if UNITY_ANDROID
-							spinner.Dismiss();
-#endif
+							
+							_dismissLoading.Raise();
 							Debug.Log("Default info screen");
 							_questUi.ShowInfoPanel("Welcome to the DevFest Quest Adventure!",
 								"It's a Quest, where you will have to complete different tasks related to the conference and Google technologies knowledge.\n\nNote: accomplish all tasks as fast as possible to win a greater award!",
@@ -113,9 +114,7 @@ public class QuestManager : MonoBehaviour
 								0);
 						}
 					}
-#if UNITY_ANDROID
-					spinner.Dismiss();
-#endif
+					_dismissLoading.Raise();
 				}
 
 				//Check if Quest is activated
@@ -381,9 +380,7 @@ public class QuestManager : MonoBehaviour
 
 						if (showSpinner)
 						{
-							#if UNITY_ANDROID
-                            spinner.Dismiss();
-                            #endif
+							_showLoading.Raise();
 						}
 					});
 			}
@@ -406,9 +403,7 @@ public class QuestManager : MonoBehaviour
 
 				if (showSpinner)
 				{
-#if UNITY_ANDROID
-					spinner.Dismiss();
-#endif
+					_dismissLoading.Raise();
 				}
 			}
 		});
