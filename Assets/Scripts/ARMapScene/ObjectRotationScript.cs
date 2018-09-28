@@ -1,12 +1,11 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace ua.org.gdg.devfest
 {
-	public class ObjectRotationScript : MonoBehaviour
-	{
-		//---------------------------------------------------------------------
+  public class ObjectRotationScript : MonoBehaviour
+  {
+    //---------------------------------------------------------------------
     // Editor
     //---------------------------------------------------------------------
 
@@ -17,6 +16,8 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     private float _time;
+    private float _startRotationY = 0;
+    private float _endRotationY = 360;
 
     //---------------------------------------------------------------------
     // Messages
@@ -24,9 +25,13 @@ namespace ua.org.gdg.devfest
 
     private void Start()
     {
-	    StartCoroutine(FadeCoroutine());
+//      var rotationOffset = Random.value * 360;
+//      _startRotationY = rotationOffset;
+//      _endRotationY = 360 + rotationOffset;
+      
+      StartCoroutine(FadeCoroutine());
     }
-    
+
     //---------------------------------------------------------------------
     // Helpers
     //---------------------------------------------------------------------
@@ -36,15 +41,15 @@ namespace ua.org.gdg.devfest
       while (true)
       {
         _time += Time.deltaTime;
-	      
-	      if (_time > _rotationTime) _time -= _rotationTime;
 
-	      var rotation = transform.localEulerAngles;
-	      rotation.y = Mathf.Lerp(0, 360, _time / _rotationTime);
-	      transform.localEulerAngles = rotation;
-        
+        if (_time > _rotationTime) _time -= _rotationTime;
+
+        var rotation = transform.localEulerAngles;
+        rotation.y = Mathf.Lerp(_startRotationY, _endRotationY, _time / _rotationTime);
+        transform.localEulerAngles = rotation;
+
         yield return new WaitForSeconds(.01f);
       }
     }
-	}
+  }
 }
