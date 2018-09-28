@@ -11,6 +11,11 @@ namespace ua.org.gdg.devfest
 		[SerializeField] private Projectile _projectile;
 		[SerializeField] private ParticleSystem _particleEffects;
 		
+		[Space]
+		[Header("Event")]
+		[SerializeField] protected IntGameEvent AudioEvent;
+		[SerializeField] protected Sound SoundType;
+		
 		//---------------------------------------------------------------------
 		// Messages
 		//---------------------------------------------------------------------
@@ -47,6 +52,7 @@ namespace ua.org.gdg.devfest
 			if (enemy == Target)
 			{
 				Target.GetShot(this);
+				AudioEvent.Raise((int) Sound.Eat);
 				SelfDestroy();
 				return true;
 			}

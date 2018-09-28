@@ -27,7 +27,6 @@ namespace ua.org.gdg.devfest
     [Header("Events")]
     [SerializeField] private InstanceGameEvent _dieEvent;
     [SerializeField] private InstanceGameEvent _onCreepDisappeared;
-    [SerializeField] private IntGameEvent _audioEvent;
     
     //---------------------------------------------------------------------
     // Internal
@@ -105,7 +104,6 @@ namespace ua.org.gdg.devfest
       HP -= (int) Mathf.Round(dmg);
       
       UpdateHPBar();
-      _audioEvent.Raise((int) Sound.Eat);
       
       if (HP <= 1) Fed();
     }

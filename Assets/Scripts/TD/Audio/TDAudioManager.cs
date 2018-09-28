@@ -13,13 +13,15 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     [Header("Audio Clips")] 
-    [SerializeField] private AudioClip _coinsClip;
     [SerializeField] private AudioClip _hallUnlockClip;
     [SerializeField] private AudioClip _gameOverClip;
     [SerializeField] private AudioClip _buyTowerClip;
     [SerializeField] private AudioClip _upgradeTowerClip;
     [SerializeField] private AudioClip _sellTowerClip;
+    [SerializeField] private AudioClip _visitorFedClip;
+    [SerializeField] private AudioClip _visitorLeftClip;
     [SerializeField] private List<AudioClip> _eatClipList;
+    [SerializeField] private List<AudioClip> _drinkClipList;
     
     //---------------------------------------------------------------------
     // Internal
@@ -40,11 +42,6 @@ namespace ua.org.gdg.devfest
     // Public
     //---------------------------------------------------------------------
 
-    public void PlayCoins()
-    {
-      Play(_coinsClip, 0.3f);
-    }
-    
     public void PlayHallUnlock()
     {
       Play(_hallUnlockClip);
@@ -53,6 +50,16 @@ namespace ua.org.gdg.devfest
     public void PlayGameOver()
     {
       Play(_gameOverClip);
+    }   
+    
+    public void PlayVisitorFed()
+    {
+      Play(_visitorFedClip, 0.6f);
+    }    
+    
+    public void PlayVisitorLeft()
+    {
+      Play(_visitorLeftClip, 0.6f);
     }
 
     public void PlayAudioClipData(int soundNumber)
@@ -69,7 +76,10 @@ namespace ua.org.gdg.devfest
           Play(_sellTowerClip);
           break;
         case Sound.Eat:
-          PlayRandomEatClip();
+          PlayRandomClip(_eatClipList);
+          break;
+        case Sound.Drink:
+          PlayRandomClip(_drinkClipList);
           break;
       }
     }
@@ -78,11 +88,11 @@ namespace ua.org.gdg.devfest
     // Helpers
     //---------------------------------------------------------------------
 
-    private void PlayRandomEatClip()
+    private void PlayRandomClip(List<AudioClip> audioClipList)
     {
-      var position = Random.Range(0, _eatClipList.Count - 1);
+      var position = Random.Range(0, audioClipList.Count - 1);
       var volume = Random.Range(0.6f, 1f);
-      Play(_eatClipList[position], volume);
+      Play(audioClipList[position], volume);
     }
     
     private void Play(AudioClip audioClip, float volume = 1f)

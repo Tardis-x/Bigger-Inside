@@ -71,11 +71,12 @@ namespace ua.org.gdg.devfest
       {
         _score.Value += 1;
         _money.Value += creepEnemyScript.Money;
-        _audioManager.PlayCoins();
+        _audioManager.PlayVisitorFed();
       }
       else
       {
         _enemiesLeft.Value -= 1;
+        _audioManager.PlayVisitorLeft();
       }
       
       if(_enemiesLeft == 0) _gameOver.Raise();

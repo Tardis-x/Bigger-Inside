@@ -2129,18 +2129,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8f361f7b103bdd4ba3663c2edb382dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _coinsClip: {fileID: 8300000, guid: 49683046ae738b04392f2f548454501a, type: 3}
-  _hallUnlockClip: {fileID: 8300000, guid: 6141b91426f4ca141a5ea81f0697c451, type: 3}
+  _hallUnlockClip: {fileID: 8300000, guid: b0b6f7ecc4d002747a99d870e7683e26, type: 3}
   _gameOverClip: {fileID: 8300000, guid: 6518181d7f622c24282d3d347320050f, type: 3}
   _buyTowerClip: {fileID: 8300000, guid: 9104d46d9bf211c4c86f51474d238c13, type: 3}
-  _upgradeTowerClip: {fileID: 8300000, guid: 49bd67f9461384c4f9d84ec61e41b015, type: 3}
+  _upgradeTowerClip: {fileID: 8300000, guid: cee09d8b353d39246b49949931d871b4, type: 3}
   _sellTowerClip: {fileID: 8300000, guid: 49683046ae738b04392f2f548454501a, type: 3}
+  _visitorFedClip: {fileID: 8300000, guid: 5db853e20c4981141a472d12376d13ba, type: 3}
+  _visitorLeftClip: {fileID: 8300000, guid: 6679308b5a02693488c3514d3d8617d7, type: 3}
   _eatClipList:
   - {fileID: 8300000, guid: ac36b3559a4388243bd8840ce71876d6, type: 3}
   - {fileID: 8300000, guid: 6ba54a867608553499564627237c18e9, type: 3}
-  - {fileID: 8300000, guid: 949b2914cc5335c45a5182899844d403, type: 3}
   - {fileID: 8300000, guid: 4396169579e081a4b99bd994ccdfc79e, type: 3}
+  - {fileID: 8300000, guid: df9f2f883af0d424b896c420678a60ee, type: 3}
+  _drinkClipList:
+  - {fileID: 8300000, guid: 949b2914cc5335c45a5182899844d403, type: 3}
   - {fileID: 8300000, guid: a37101d34587e9b40a315af11be34399, type: 3}
+  - {fileID: 8300000, guid: 84db1185e58f0954e9177ebf8821f23f, type: 3}
 --- !u!82 &1543687400
 AudioSource:
   m_ObjectHideFlags: 0
