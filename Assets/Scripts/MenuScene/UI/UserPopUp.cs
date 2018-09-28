@@ -1,7 +1,5 @@
 ﻿using System.Collections;
-using System.Xml;
 using UnityEngine;
-using UnityEngine.UI;
 using Firebase.Auth;
 
 namespace ua.org.gdg.devfest
@@ -109,6 +107,7 @@ namespace ua.org.gdg.devfest
       _time = 0;
       StartCoroutine(FadeCoroutine());
       if (value) StartCoroutine(SizeCoroutine());
+      _buttonTransform.gameObject.SetActive(value);
     }
 
     private IEnumerator FadeCoroutine()

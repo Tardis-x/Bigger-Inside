@@ -12,22 +12,14 @@ namespace ua.org.gdg.devfest
 
     [SerializeField] private SignInManager _signInManager;
     [SerializeField] private GameEvent _showSignIn;
+    [SerializeField] private GameEvent _showLoading;
+    [SerializeField] private GameEvent _dismissLoading;
 
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
 
     private ProgressDialogSpinner _progressDialogSpinner;
-
-
-    //---------------------------------------------------------------------
-    // Messages
-    //---------------------------------------------------------------------
-
-    private void OnDestroy()
-    {
-      DismissLoadingDialog();
-    }
 
     //---------------------------------------------------------------------
     // Events
@@ -83,20 +75,7 @@ namespace ua.org.gdg.devfest
 
     private void ShowLoading()
     {
-      Debug.Log("Showing Loading Dialog");
-      if (_progressDialogSpinner != null) DismissLoadingDialog();
-
-      _progressDialogSpinner = new ProgressDialogSpinner("Loading", "Please wait...");
-      _progressDialogSpinner.Show();
-    }
-
-    private void DismissLoadingDialog()
-    {
-      Debug.Log("Dismissing loading dialog");
-      if (_progressDialogSpinner == null) return;
-
-      _progressDialogSpinner.Dismiss();
-      _progressDialogSpinner = null;
+      _showLoading.Raise();
     }
   }
 }
