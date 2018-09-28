@@ -1,67 +1,71 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class BoxingGloveScript : MonoBehaviour 
+namespace ua.org.gdg.devfest
 {
-  //---------------------------------------------------------------------
-  // Editor
-  //---------------------------------------------------------------------
-  
-  [SerializeField] private Transform _transform;
-  
-  //---------------------------------------------------------------------
-  // Messages
-  //---------------------------------------------------------------------
-
-  private void Start()
+  [RequireComponent(typeof(AudioSource))]
+  public class BoxingGloveScript : MonoBehaviour
   {
-    _animator = GetComponentInChildren<Animator>();
-  }
 
-  //---------------------------------------------------------------------
-  // Internal
-  //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    // Internal
+    //---------------------------------------------------------------------
 
-  private Animator _animator;
+    private Animator _animator;
+    private AudioSource _audioSource;
 
-  private readonly Vector3 _offset = new Vector3
-  {
-    x = -.1356f,
-    y = -.1020f,
-    z = -.2250f
-  };
-  
-  private void Hit()
-  {
-    _animator.SetTrigger("Hit");
-  }
+    private readonly Vector3 _offset = new Vector3
+    {
+      x = -.1356f,
+      y = -.1020f,
+      z = -.2250f
+    };
 
-  private void PrepareToHitObject(Transform obj)
-  {
-    _transform.SetPositionAndRotation(obj.position, _transform.rotation);
-    _transform.localPosition += _offset;
-    Appear();
-  }
-  
-  //---------------------------------------------------------------------
-  // Public
-  //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    // Messages
+    //---------------------------------------------------------------------
 
-  public void HitObject(Transform obj)
-  {
-    PrepareToHitObject(obj);
-    Hit();
-  }
- 
+    private void Start()
+    {
+      _audioSource = GetComponent<AudioSource>();
+      _animator = GetComponentInChildren<Animator>();
+    }
 
-  public void Appear()
-  {
-    gameObject.SetActive(true);
-  }
+    //---------------------------------------------------------------------
+    // Public
+    //---------------------------------------------------------------------
 
-  public void Disappear()
-  {
-    gameObject.SetActive(false);
+    public void HitObject(Transform obj)
+    {
+      PrepareToHitObject(obj);
+      Hit();
+    }
+
+
+    public void Appear()
+    {
+      gameObject.SetActive(true);
+    }
+
+    public void Disappear()
+    {
+      gameObject.SetActive(false);
+    }
+
+    //---------------------------------------------------------------------
+    // Helpers
+    //---------------------------------------------------------------------
+
+    private void Hit()
+    {
+      _animator.SetTrigger("Hit");
+      _audioSource.PlayDelayed(0.18f);
+    }
+
+    private void PrepareToHitObject(Transform obj)
+    {
+      transform.SetPositionAndRotation(obj.position, transform.rotation);
+      transform.localPosition += _offset;
+      Appear();
+    }
   }
 }

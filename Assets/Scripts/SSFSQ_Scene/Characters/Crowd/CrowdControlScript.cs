@@ -14,6 +14,11 @@ namespace ua.org.gdg.devfest
 		[Header("Game Objects")]
 		[SerializeField] private BoxingGloveScript _boxingGlove;
 		
+		[Space]
+		[Header("Events")]
+		[SerializeField] private GameEvent _onStartTomatoesThrowing;
+		[SerializeField] private GameEvent _onStopTomatoesThrowing;
+		
 		//---------------------------------------------------------------------
 		// Internal
 		//---------------------------------------------------------------------
@@ -78,6 +83,8 @@ namespace ua.org.gdg.devfest
 			{
 				character.StartThrowing();
 			}
+
+			_onStartTomatoesThrowing.Raise();
 		}
 		
 		public void StopThrowing()
@@ -86,6 +93,7 @@ namespace ua.org.gdg.devfest
 			{
 				character.StopThrowing();
 			}
+			_onStopTomatoesThrowing.Raise();
 		}
 
 		public void StartBeingScared()

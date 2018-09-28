@@ -14,6 +14,7 @@ namespace ua.org.gdg.devfest
 		[Header("Events")]
 		[SerializeField] private GameEvent _towerDeselected;
 		[SerializeField] private IntGameEvent _moneyEvent;
+		[SerializeField] private IntGameEvent _audioEvent;
 
 		[Space]
 		[Header("UI")]
@@ -47,8 +48,12 @@ namespace ua.org.gdg.devfest
 		public void OnUpgradeButtonClick()
 		{
 			if (!_canUpgrade) return;
-			
-			if(SelectedTower.LevelUp()) _moneyEvent.Raise(-SelectedTower.UpgradeCost);
+
+			if (SelectedTower.LevelUp())
+			{
+				_audioEvent.Raise((int) Sound.UpgradeTower);
+				_moneyEvent.Raise(-SelectedTower.UpgradeCost);
+			}
 		}
 
 		public void OnrSellButtonClick()
@@ -57,6 +62,7 @@ namespace ua.org.gdg.devfest
 			SelectedTower.Disable();
 			SelectedTower.Sell();
 			SelectedTower = null;
+			_audioEvent.Raise((int) Sound.SellTower);
 			_towerDeselected.Raise();
 		}
 

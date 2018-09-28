@@ -55,6 +55,8 @@ namespace ua.org.gdg.devfest
       if (enemy == null) return false;
 			
       enemy.GetShot(this);
+      AudioEvent.Raise((int) SoundType);
+      
       SelfDestroy();
       return true;
     }

@@ -10,6 +10,11 @@ namespace ua.org.gdg.devfest
 		//---------------------------------------------------------------------
 
 		[SerializeField] private GameObject _AOEMesh;
+				
+		[Space]
+		[Header("Event")]
+		[SerializeField] private IntGameEvent _audioEvent;
+		[SerializeField] private Sound _soundType;
 		
 		//---------------------------------------------------------------------
 		// Internal
@@ -85,6 +90,7 @@ namespace ua.org.gdg.devfest
 					{
 						TargetsInRange[i].GetShot(Projectile);
 					}
+					_audioEvent.Raise((int) _soundType);
 					
 					yield return new WaitForSeconds(Cooldown);
 				}

@@ -97,21 +97,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d41d9e873cb41554385796a71494336f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114845107461893770
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b3f0ecddb6514e4fa9a90b323f3e4e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _onStartTomatoesThrowing: {fileID: 11400000, guid: 6f425ba6273b1b54aa1ce7fa8b10d53e,
-    type: 2}
-  _onStopTomatoesThrowing: {fileID: 11400000, guid: af1fac204174cb6418ebaa12d1b0be5b,
-    type: 2}
 --- !u!1101 &1101010699731454064
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -752,8 +737,7 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101983383677082292}
-  m_StateMachineBehaviours:
-  - {fileID: 114845107461893770}
+  m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
