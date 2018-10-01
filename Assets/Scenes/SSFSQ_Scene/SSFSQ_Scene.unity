@@ -228,7 +228,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 79186636}
   m_LocalRotation: {x: -0.71061915, y: -0, z: -0, w: 0.703577}
-  m_LocalPosition: {x: -0.1847998, y: 0.29, z: -0.41779968}
+  m_LocalPosition: {x: 0.055, y: 0.29, z: -0.525}
   m_LocalScale: {x: 0.02, y: 0.020000009, z: 0.020000009}
   m_Children:
   - {fileID: 763144792}
@@ -1507,6 +1507,33 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224860198649366714, guid: bd10dcf64479a3e4889efddd9ee88d43,
     type: 2}
   m_PrefabInternal: {fileID: 594744147}
+--- !u!21 &600869680
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 'target_ssfsqMaterial
+
+    96908'
+  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 79d213bb49fd45cabb258f5907e5314f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 0.82089555, g: 0.82089555, b: 0.82089555, a: 1}
 --- !u!1001 &636037486
 Prefab:
   m_ObjectHideFlags: 0
@@ -1870,33 +1897,6 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!21 &681701009
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 'target_ssfsqMaterial
-
-    82084'
-  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 5
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 79d213bb49fd45cabb258f5907e5314f, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats: []
-    m_Colors:
-    - _Color: {r: 0.82089555, g: 0.82089555, b: 0.82089555, a: 1}
 --- !u!1 &763144791
 GameObject:
   m_ObjectHideFlags: 0
@@ -2016,7 +2016,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 681701009}
+  - {fileID: 600869680}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2601,7 +2601,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1241564774}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.37679446, y: 0.001000023, z: -0.26082766}
+  m_LocalPosition: {x: -0.26500043, y: 0.001000023, z: -0.28099978}
   m_LocalScale: {x: 0.2, y: 1, z: 0.2}
   m_Children: []
   m_Father: {fileID: 833855964}
@@ -2667,7 +2667,7 @@ MonoBehaviour:
     e00: 6
     e01: 0
     e02: 0
-    e03: 506.69617
+    e03: 510.05
     e10: 0
     e11: 30
     e12: 0
@@ -2675,7 +2675,7 @@ MonoBehaviour:
     e20: 0
     e21: 0
     e22: 6
-    e23: -526.22485
+    e23: -526.83
     e30: 0
     e31: 0
     e32: 0
@@ -3496,7 +3496,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1665490021}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.17191163, y: 0.001000023, z: -0.2579712}
+  m_LocalPosition: {x: 0, y: 0.001000023, z: -0.281}
   m_LocalScale: {x: 0.2, y: 1, z: 0.2}
   m_Children: []
   m_Father: {fileID: 833855964}
@@ -3578,7 +3578,7 @@ MonoBehaviour:
     e00: 6
     e01: 0
     e02: 0
-    e03: 512.84265
+    e03: 518
     e10: 0
     e11: 30
     e12: 0
@@ -3586,7 +3586,7 @@ MonoBehaviour:
     e20: 0
     e21: 0
     e22: 6
-    e23: -526.13916
+    e23: -526.83
     e30: 0
     e31: 0
     e32: 0
@@ -4198,7 +4198,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1900831084}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.03499756, y: 0.001000023, z: -0.25228274}
+  m_LocalPosition: {x: 0.26500043, y: 0.001000023, z: -0.28099978}
   m_LocalScale: {x: 0.2, y: 1, z: 0.2}
   m_Children: []
   m_Father: {fileID: 833855964}
@@ -4264,7 +4264,7 @@ MonoBehaviour:
     e00: 6
     e01: 0
     e02: 0
-    e03: 519.0499
+    e03: 525.95
     e10: 0
     e11: 30
     e12: 0
@@ -4272,7 +4272,7 @@ MonoBehaviour:
     e20: 0
     e21: 0
     e22: 6
-    e23: -525.9685
+    e23: -526.83
     e30: 0
     e31: 0
     e32: 0
