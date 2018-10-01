@@ -90,7 +90,7 @@ namespace ua.org.gdg.devfest
 
         private static Notification NewItem(string title, string text)
         {
-            var createdAt = DateTime.Now.Subtract(TimeSpan.FromMinutes(Random.RandomRange(0, 3600)));
+            var createdAt = DateTime.Now.Subtract(TimeSpan.FromMinutes(Random.Range(0, 3600)));
             return new Notification()
             {
                 Action = Notification.Type.Custom,

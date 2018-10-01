@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ua.org.gdg.devfest
 {
-  public class FirestoreManager : Singleton<FirestoreManager>
+  public class FirestoreManager : PersistentSingleton<FirestoreManager>
   {
     //URLs
     private const string SCHEDULE_URL = Credentials.FIREBASE_URL;
