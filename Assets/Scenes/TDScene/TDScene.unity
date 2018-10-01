@@ -440,33 +440,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!21 &339410628
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 'target_towerdefenceMaterial
-
-    81698'
-  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 5
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 2800000, guid: edbd943cfa7b485c9e4fd28eb03c4d61, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats: []
-    m_Colors:
-    - _Color: {r: 0.82089555, g: 0.82089555, b: 0.82089555, a: 1}
 --- !u!1 &498212543
 GameObject:
   m_ObjectHideFlags: 0
@@ -495,6 +468,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!21 &633425420
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 'target_towerdefenceMaterial
+
+    49650'
+  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: edbd943cfa7b485c9e4fd28eb03c4d61, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 0.82089555, g: 0.82089555, b: 0.82089555, a: 1}
 --- !u!1001 &853223723
 Prefab:
   m_ObjectHideFlags: 0
@@ -2009,14 +2009,14 @@ MonoBehaviour:
   _visitorFedClip: {fileID: 8300000, guid: 5db853e20c4981141a472d12376d13ba, type: 3}
   _visitorLeftClip: {fileID: 8300000, guid: 6679308b5a02693488c3514d3d8617d7, type: 3}
   _eatClipList:
-  - {fileID: 8300000, guid: ac36b3559a4388243bd8840ce71876d6, type: 3}
-  - {fileID: 8300000, guid: 6ba54a867608553499564627237c18e9, type: 3}
-  - {fileID: 8300000, guid: 4396169579e081a4b99bd994ccdfc79e, type: 3}
-  - {fileID: 8300000, guid: df9f2f883af0d424b896c420678a60ee, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _drinkClipList:
-  - {fileID: 8300000, guid: 949b2914cc5335c45a5182899844d403, type: 3}
-  - {fileID: 8300000, guid: a37101d34587e9b40a315af11be34399, type: 3}
-  - {fileID: 8300000, guid: 84db1185e58f0954e9177ebf8821f23f, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!82 &1543687400
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2406,7 +2406,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 339410628}
+  - {fileID: 633425420}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2467,8 +2467,8 @@ MonoBehaviour:
   mDataSetPath: Vuforia/Bigger-Inside.xml
   mAspectRatio: 1
   mImageTargetType: 0
-  mWidth: 30
-  mHeight: 30
+  mWidth: 1
+  mHeight: 1
 --- !u!4 &1964602103
 Transform:
   m_ObjectHideFlags: 0
@@ -2477,7 +2477,7 @@ Transform:
   m_GameObject: {fileID: 1964602097}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 50.3, y: 0, z: -84.9}
-  m_LocalScale: {x: 30, y: 30, z: 30}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 12
