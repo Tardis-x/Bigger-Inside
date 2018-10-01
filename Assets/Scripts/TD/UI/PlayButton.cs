@@ -19,15 +19,15 @@ namespace ua.org.gdg.devfest
 		{
 			var tutorShowState = PlayerPrefsHandler.GetTutorState();
 
-			if (tutorShowState)
-			{
-				_gameStart.Raise();
-			}
-			else
-			{
+//			if (tutorShowState)
+//			{
+//				_gameStart.Raise();
+//			}
+//			else
+//			{
 				gameObject.SetActive(false);
 				_tutorialPanel.ShowPanel(true);
-			}
+//			}
 		}
 	}
 }
