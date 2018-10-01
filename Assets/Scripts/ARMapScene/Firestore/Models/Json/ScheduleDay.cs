@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace ua.org.gdg.devfest
 {
+  [Serializable]
   public class ScheduleDay
   {
     //---------------------------------------------------------------------

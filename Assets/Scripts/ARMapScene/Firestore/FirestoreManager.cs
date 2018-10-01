@@ -7,10 +7,28 @@ using System.Text;
 
 namespace ua.org.gdg.devfest
 {
-  public class FirestoreManager : PersistentSingleton<FirestoreManager>
+  public class FirestoreManager : Singleton<FirestoreManager>
   {
-    //URLs
-    private const string SCHEDULE_URL = Credentials.FIREBASE_URL;
+    //---------------------------------------------------------------------
+    // Internal
+    //---------------------------------------------------------------------
+
+    private WWW _scheduleRequest;
+    
+    private Dictionary<int, SessionItem> _sessions;
+    private Dictionary<string, Speaker> _speakers;
+    
+    private List<TimeslotModel> _fullSchedule;
+    private Schedule _schedule;
+    
+    private bool _scheduleParsed;
+    
+    //---------------------------------------------------------------------
+    // Properties
+    //---------------------------------------------------------------------
+
+    public bool Error { get; private set; }
+
 
     //---------------------------------------------------------------------
     // Messages
@@ -18,10 +36,10 @@ namespace ua.org.gdg.devfest
 
     private void OnEnable()
     {
-      if (_requestAnswered) return;
+      if (_scheduleParsed) return;
 
       Error = false;
-      _scheduleRequest = new WWW(SCHEDULE_URL);
+      _scheduleRequest = new WWW(Credentials.FIREBASE_URL);
       StartCoroutine(OnScheduleResponse(_scheduleRequest));
     }
 
@@ -54,27 +72,6 @@ namespace ua.org.gdg.devfest
     }
 
     //---------------------------------------------------------------------
-    // Internal
-    //---------------------------------------------------------------------
-
-    //Requests
-    private WWW _scheduleRequest;
-
-    //Data
-    private Schedule _schedule;
-    private Dictionary<int, SessionItem> _sessions;
-    private Dictionary<string, Speaker> _speakers;
-    private List<TimeslotModel> _fullSchedule;
-    private bool _scheduleParsed;
-    private bool _requestAnswered;
-    
-    //---------------------------------------------------------------------
-    // Properties
-    //---------------------------------------------------------------------
-
-    public bool Error { get; private set; }
-
-    //---------------------------------------------------------------------
     // Helpers
     //---------------------------------------------------------------------
 
@@ -84,24 +81,50 @@ namespace ua.org.gdg.devfest
 
       if (!string.IsNullOrEmpty(req.error))
       {
-        Utils.ShowMessage("No internet connection");
-        Error = true;
+        HandleRequestError();
       }
       else
       {
-        Error = false;
-        _requestAnswered = true;
         var schedule = JsonConvert.DeserializeObject<JsonSchedule>(req.text);
+        
         _schedule = FirestoreHelper.ParseSchedule(schedule);
-        _scheduleParsed = true;
+        FirestoreCache.SaveSchedule(_schedule);
+        
+        OnScheduleExist();
       }
+    }
+
+    private void HandleRequestError()
+    {
+      var isScheduleCached = GetScheduleFromCache();
+
+      if (isScheduleCached) return;
+      
+      Utils.ShowMessage("No internet connection");
+      Error = true;
+    }
+
+    private bool GetScheduleFromCache()
+    {
+      _schedule = FirestoreCache.GetSchedule();
+
+      if (_schedule == null) return false;
+      
+      OnScheduleExist();
+      return true;
+    }
+
+    private void OnScheduleExist()
+    {
+      Error = false;
+      _scheduleParsed = true;
     }
 
     private List<TimeslotModel> ComposeFullSchedule(int day)
     {
       if (_schedule == null)
       {
-        _scheduleRequest = new WWW(SCHEDULE_URL);
+        _scheduleRequest = new WWW(Credentials.FIREBASE_URL);
         StartCoroutine(OnScheduleResponse(_scheduleRequest));
         return null;
       }

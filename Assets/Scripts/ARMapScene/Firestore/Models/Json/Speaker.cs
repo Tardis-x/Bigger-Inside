@@ -1,5 +1,8 @@
-﻿namespace ua.org.gdg.devfest
+﻿using System;
+
+namespace ua.org.gdg.devfest
 {
+  [Serializable]
   public class Speaker
   {
     public string Id { get; set; }

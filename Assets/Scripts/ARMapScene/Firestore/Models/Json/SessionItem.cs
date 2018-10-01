@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ua.org.gdg.devfest
 {
+  [Serializable]
   public class SessionItem
   {
     public string Id { get; set; }
