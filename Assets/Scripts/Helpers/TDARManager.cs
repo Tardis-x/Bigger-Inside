@@ -76,11 +76,11 @@ namespace ua.org.gdg.devfest
     {
       if (hitTestResult == null)
       {
-        ShowHint(true);
+        ShowHint("Aim phone at horizontal plane");
         return;
       }
       
-      ShowHint(false);
+      ShowHint("Tap anywhere on plane");
     }
     
     //---------------------------------------------------------------------
@@ -107,5 +107,11 @@ namespace ua.org.gdg.devfest
     {
       _hint.gameObject.SetActive(value);
     }
+
+	  private void ShowHint(string hintText)
+	  {
+	    _hint.gameObject.SetActive(true);
+	    _hint.text = hintText;
+	  }
 	}
 }
