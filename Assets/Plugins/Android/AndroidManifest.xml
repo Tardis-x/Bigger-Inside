@@ -28,7 +28,7 @@
         <provider android:name="im.getsocial.sdk.AutoInitSdkContentProvider" android:authorities="ua.org.gdg.devfest2018.AutoInitSdkContentProvider" android:exported="false" android:enabled="true" />
         <meta-data android:name="im.getsocial.sdk.UiConfigurationFile" android:value="getsocial-dfua/ui-config.json" />
         <meta-data android:name="im.getsocial.sdk.AutoInitSdk" android:value="true" />
-        <meta-data android:name="im.getsocial.sdk.ShowNotificationInForeground" android:value="false" />
+        <meta-data android:name="im.getsocial.sdk.ShowNotificationInForeground" android:value="true" />
         <meta-data android:name="im.getsocial.sdk.AutoRegisterForPush" android:value="true" />
         <meta-data android:name="im.getsocial.sdk.WrapperVersion" android:value="6.20.6" />
         <meta-data android:name="im.getsocial.sdk.RuntimeVersion" android:value="2018.2.10f1" />

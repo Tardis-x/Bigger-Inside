@@ -121,14 +121,14 @@ namespace GetSocialSdk.Core
             }
         }
         
-        public string Id { get; private set; }
-        public Type Action { get; private set; }
-        public bool WasRead { get; private set; }
-        public NotificationTypes NotificationType { get; private set; }
-        public long CreatedAt { get; private set; }
-        public string Title { get; private set; }
-        public string Text { get; private set; }
-        public Dictionary<string, string> ActionData { get; private set; }
+        public string Id { get; set; }
+        public Type Action { get; set; }
+        public bool WasRead { get; set; }
+        public NotificationTypes NotificationType { get; set; }
+        public long CreatedAt { get; set; }
+        public string Title { get; set; }
+        public string Text { get; set; }
+        public Dictionary<string, string> ActionData { get; set; }
 
         public override string ToString()
         {
