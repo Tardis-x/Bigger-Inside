@@ -351,10 +351,7 @@ public class QuestManager : MonoBehaviour
 	{
 		if (showSpinner)
 		{
-#if UNITY_ANDROID
-			var spinner = AGProgressDialog.CreateSpinnerDialog("Please wait", "Updating Leaderboard...", AGDialogTheme.Dark);
-			spinner.Show();
-#endif
+			_showLoading.Raise();
 		}
 
 		//Try to get data from firebase
@@ -377,10 +374,10 @@ public class QuestManager : MonoBehaviour
 						{
 							Debug.Log("QuestManager: Default leaderboard data was successfully set up!");
 						}
-
+						
 						if (showSpinner)
 						{
-							_showLoading.Raise();
+							_dismissLoading.Raise();
 						}
 					});
 			}
