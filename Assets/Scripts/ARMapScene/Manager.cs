@@ -23,6 +23,9 @@ namespace ua.org.gdg.devfest
 		[Header("Cameras")]
 		[SerializeField] private Camera _arCamera;
 		[SerializeField] private Camera _mainCamera;
+
+		[Space] 
+		[SerializeField] private GameObject _navigationTargets;
 		
 		//---------------------------------------------------------------------
 		// Events
@@ -89,6 +92,8 @@ namespace ua.org.gdg.devfest
 			
 			_arCamera.gameObject.SetActive(true);
 			_mainCamera.gameObject.SetActive(false);
+
+			_navigationTargets.SetActive(true);
 		}
 		
 		private void EnableObjectClick()
