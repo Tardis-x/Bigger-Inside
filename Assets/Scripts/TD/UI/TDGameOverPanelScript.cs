@@ -18,7 +18,7 @@ namespace ua.org.gdg.devfest
 
 		public void ShowPanel(int score)
 		{
-			_scoreText.text = score.ToString();
+			_scoreText.text = "You have fed " + score + "attendees";
 			gameObject.SetActive(true);
 		}
 

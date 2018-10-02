@@ -105,7 +105,7 @@ namespace ua.org.gdg.devfest
       HideStats();
       GameOn = false;
       _gameOverPanel.NeedToPressRestart = true;
-      _backToMenuButton.gameObject.SetActive(true);
+      _backToMenuButton.gameObject.SetActive(false);
     }
     
     //---------------------------------------------------------------------
