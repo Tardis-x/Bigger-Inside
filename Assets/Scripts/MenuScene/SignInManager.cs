@@ -53,7 +53,9 @@ namespace ua.org.gdg.devfest
       {
         FB.ActivateApp();
       }
-
+      
+      if(_auth.CurrentUser != null && GetSocial.User.IsAnonymous) GetSocialSignIn();
+      
       SetGetSocialNameAndAvatar();
     }
 
