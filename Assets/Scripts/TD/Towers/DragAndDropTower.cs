@@ -54,7 +54,7 @@ namespace ua.org.gdg.devfest
     {
       if (!Interactable) return;
 
-      var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+      var ray = Camera.main.ScreenPointToRay(GetMousePositionWithOffset());
       var hits = Physics.RaycastAll(ray, 50f);
 
       if (hits != null && hits.Length > 0)
@@ -100,6 +100,12 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     // Helpers
     //---------------------------------------------------------------------
+    
+    private Vector3 GetMousePositionWithOffset()
+    {
+      var offset = Mathf.Clamp(_offset / _raycastDistance, MIN_OFFSET, MAX_OFFSET);
+      return Input.mousePosition + new Vector3(0, offset, 0);
+    }
 
     private void ChangeMaterialColor(bool value)
     {
