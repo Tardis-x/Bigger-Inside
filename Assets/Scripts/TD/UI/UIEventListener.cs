@@ -118,7 +118,7 @@ namespace ua.org.gdg.devfest
       _towerPanel.gameObject.SetActive(true);
       _playButton.gameObject.SetActive(false);
       _gameOverPanel.HidePanel();
-      _backToMenuButton.gameObject.SetActive(false);
+      _backToMenuButton.gameObject.SetActive(true);
     }
 
     private void ShowStats()
