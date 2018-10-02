@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ua.org.gdg.devfest
 {
@@ -8,7 +9,7 @@ namespace ua.org.gdg.devfest
 		// Editor
 		//---------------------------------------------------------------------
 
-		[SerializeField] private TutorialPanelScript _tutorialPanel;
+		[FormerlySerializedAs("_tutorialPanel")] [SerializeField] private TDTutorialPanelScript _tdTutorialPanel;
 		[SerializeField] private GameEvent _gameStart;
 
 		//---------------------------------------------------------------------
@@ -17,7 +18,7 @@ namespace ua.org.gdg.devfest
 
 		public void OnClick()
 		{
-			var tutorShowState = PlayerPrefsHandler.GetTutorState();
+			var tutorShowState = PlayerPrefsHandler.GetTutorStateTD();
 
 			if (tutorShowState)
 			{
@@ -26,7 +27,7 @@ namespace ua.org.gdg.devfest
 			else
 			{
 				gameObject.SetActive(false);
-				_tutorialPanel.ShowPanel(true);
+				_tdTutorialPanel.ShowPanel(true);
 			}
 		}
 	}

@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using Vuforia;
 
 namespace ua.org.gdg.devfest
 {
@@ -19,6 +18,8 @@ namespace ua.org.gdg.devfest
     [Space]
     [Header("Overlay UI")] 
     [SerializeField] private HealthTimePanelScript _healthTimePanel;
+
+    [SerializeField] private GameObject _tutorialPanel;
     [SerializeField] private ARCorePanelScript _arCorePanel;
     [SerializeField] private Text _hintText;
 
@@ -89,6 +90,11 @@ namespace ua.org.gdg.devfest
     public void OnTrackingFound()
     {
       ShowARCorePanel(ARCoreHelper.CheckArCoreSupport());
+    }
+
+    public void OnShowTutorial()
+    {
+      _tutorialPanel.SetActive(true);
     }
 
     //-----------------------------------------------

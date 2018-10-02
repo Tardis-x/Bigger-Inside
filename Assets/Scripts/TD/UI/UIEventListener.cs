@@ -1,7 +1,4 @@
-﻿using System.Runtime.Serialization.Formatters;
-using UnityEditor;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace ua.org.gdg.devfest
@@ -23,7 +20,7 @@ namespace ua.org.gdg.devfest
     [SerializeField] private TowerUpgradePanelScript _upgradePanel;
     [SerializeField] private RectTransform _towerPanel;
     [SerializeField] private HallUnlockPanelScript _hallUnlockPanel;
-    [SerializeField] private TutorialPanelScript _tutorialPanel;
+    [SerializeField] private TDTutorialPanelScript _tdTutorialPanel;
     [SerializeField] private TDGameOverPanelScript _gameOverPanel;
 
     [Space]
@@ -46,7 +43,7 @@ namespace ua.org.gdg.devfest
 
     public void OnPlayButtonClick()
     {
-      _tutorialPanel.ShowPanel(true);
+      _tdTutorialPanel.ShowPanel(true);
       _playButton.gameObject.SetActive(false);
     }
     

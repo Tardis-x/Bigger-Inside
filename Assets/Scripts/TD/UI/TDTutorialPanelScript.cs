@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace ua.org.gdg.devfest
 {
-	public class TutorialPanelScript : MonoBehaviour
+	public class TDTutorialPanelScript : MonoBehaviour
 	{
 		//---------------------------------------------------------------------
 		// Editor
@@ -47,7 +47,7 @@ namespace ua.org.gdg.devfest
 			_enemyTip.SetActive(false);
 			_veganTipNextButton.onClick.RemoveAllListeners();
 			_veganTipNextButton.onClick.AddListener(VeganTipButtonOnClick);
-			PlayerPrefsHandler.SetTutorState(true);
+			PlayerPrefsHandler.SetTutorStateTD(true);
 		}
 
 		public void ShowPanel(bool value)
