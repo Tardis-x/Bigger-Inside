@@ -7,8 +7,8 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
     // Editor
     //---------------------------------------------------------------------
-    [Header("Events")] 
-    [SerializeField] private GameEvent _onCountdownStart;
+    [Header("Events")] [SerializeField] private GameEvent _onCountdownStart;
+
     [SerializeField] private GameEvent _showTutorial;
     //---------------------------------------------------------------------
     // Public
@@ -16,16 +16,7 @@ namespace ua.org.gdg.devfest
 
     public override void OnClick()
     {
-      var tutorShowState = PlayerPrefsHandler.GetTutorStateSSFSQ();
-
-      if (tutorShowState)
-      {
-        _onCountdownStart.Raise();
-      }
-      else
-      {
-        _showTutorial.Raise();
-      }
+      _showTutorial.Raise();
     }
   }
 }

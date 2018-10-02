@@ -3,32 +3,25 @@ using UnityEngine.Serialization;
 
 namespace ua.org.gdg.devfest
 {
-	public class PlayButton : MonoBehaviour
-	{
-		//---------------------------------------------------------------------
-		// Editor
-		//---------------------------------------------------------------------
+  public class PlayButton : MonoBehaviour
+  {
+    //---------------------------------------------------------------------
+    // Editor
+    //---------------------------------------------------------------------
 
-		[FormerlySerializedAs("_tutorialPanel")] [SerializeField] private TDTutorialPanelScript _tdTutorialPanel;
-		[SerializeField] private GameEvent _gameStart;
+    [FormerlySerializedAs("_tutorialPanel")] [SerializeField]
+    private TDTutorialPanelScript _tdTutorialPanel;
 
-		//---------------------------------------------------------------------
-		// Messages
-		//---------------------------------------------------------------------
+    [SerializeField] private GameEvent _gameStart;
 
-		public void OnClick()
-		{
-			var tutorShowState = PlayerPrefsHandler.GetTutorStateTD();
+    //---------------------------------------------------------------------
+    // Messages
+    //---------------------------------------------------------------------
 
-			if (tutorShowState)
-			{
-				_gameStart.Raise();
-			}
-			else
-			{
-				gameObject.SetActive(false);
-				_tdTutorialPanel.ShowPanel(true);
-			}
-		}
-	}
+    public void OnClick()
+    {
+      gameObject.SetActive(false);
+      _tdTutorialPanel.ShowPanel(true);
+    }
+  }
 }
