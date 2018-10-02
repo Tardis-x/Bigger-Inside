@@ -11,12 +11,21 @@ namespace ua.org.gdg.devfest
 		[SerializeField] public SchedulePanelScript SchedulePanelNew;
 		[SerializeField] public DescriptionPanelScript SpeechDescriptionPanelNew;
 		[SerializeField] public InfoCoinNamePanel InfoCoinNamePanel;
+		[SerializeField] public InfoCoinSchedulePanel InfoCoinSchedulePanel;
 
 		//---------------------------------------------------------------------
 		// Public
 		//---------------------------------------------------------------------
 		
 		public string CurrentHall;
+
+		public void ShowSchedulePanel(string hall)
+		{
+			ClearAll();
+			CurrentHall = hall;
+			SchedulePanelNew.EnablePanel(2, hall);
+			SchedulePanelNew.EnablePanel(1, hall);
+		}
 		
 		public void ShowSpeechDescription(GameObject speech)
 		{
@@ -31,10 +40,18 @@ namespace ua.org.gdg.devfest
 			       SpeechDescriptionPanelNew.gameObject.activeSelf;
 		}
 
+		// Coins Panels
+		
 		public void ShowCoinNamePanel(string coinName)
 		{
 			ClearAll();
 			InfoCoinNamePanel.OpenPanel(coinName);
+		}
+
+		public void ShowCoinSchedulePanel(string hallName)
+		{
+			ClearAll();
+			InfoCoinSchedulePanel.OpenPanel(hallName);
 		}
 
 		//---------------------------------------------------------------------
@@ -44,6 +61,7 @@ namespace ua.org.gdg.devfest
 		private void ClearAll()
 		{
 			InfoCoinNamePanel.gameObject.SetActive(false);
+			InfoCoinSchedulePanel.gameObject.SetActive(false);
 		}
 	}
 }

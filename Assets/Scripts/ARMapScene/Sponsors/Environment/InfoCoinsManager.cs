@@ -26,7 +26,7 @@ namespace ua.org.gdg.devfest
 
       if (infoCoin.HasSchedule)
       {
-        
+        PanelManager.Instance.ShowCoinSchedulePanel(infoCoin.Name);
       }
       else
       {
