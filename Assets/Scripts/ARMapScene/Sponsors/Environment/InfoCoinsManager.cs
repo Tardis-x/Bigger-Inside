@@ -23,6 +23,15 @@ namespace ua.org.gdg.devfest
     public void OnCoinSelected(InfoCoin infoCoin)
     {
       UpdateSelection(infoCoin);
+
+      if (infoCoin.HasSchedule)
+      {
+        
+      }
+      else
+      {
+        PanelManager.Instance.ShowCoinNamePanel(infoCoin.Name);
+      }
     }
     
     //---------------------------------------------------------------------

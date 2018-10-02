@@ -10,6 +10,10 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     [SerializeField] private InfoCoinsManager _infoCoinsManager;
+
+    [Space]
+    [Header("Values")] 
+    [SerializeField] private string _name; 
     [SerializeField] private bool _hasSchedule;
     
     //---------------------------------------------------------------------
@@ -19,6 +23,11 @@ namespace ua.org.gdg.devfest
     public bool HasSchedule
     {
       get { return _hasSchedule; }
+    }
+
+    public string Name
+    {
+      get { return _name; }
     }
 
     //---------------------------------------------------------------------
