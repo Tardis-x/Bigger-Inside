@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace ua.org.gdg.devfest
 {
-	public class TutorialPanelScript : MonoBehaviour
+	public class TDTutorialPanelScript : MonoBehaviour
 	{
 		//---------------------------------------------------------------------
 		// Editor
@@ -11,8 +12,10 @@ namespace ua.org.gdg.devfest
 		[Header("UI")]
 		[SerializeField] private GameObject _towersTip;
 		[SerializeField] private GameObject _enemyTip;
-		[SerializeField] private GameObject _veganTip1;
-		[SerializeField] private GameObject _veganTip2;
+		[SerializeField] private GameObject _veganTip;
+		[SerializeField] private Button _veganTipNextButton;
+		[SerializeField] private Text _veganTipNextButtonText;
+		[SerializeField] private GameEvent _gameStart;
 		
 		//---------------------------------------------------------------------
 		// Public
@@ -22,38 +25,42 @@ namespace ua.org.gdg.devfest
 		{
 			_towersTip.SetActive(true);
 			_enemyTip.SetActive(false);
-			_veganTip1.SetActive(false);
-			_veganTip2.SetActive(false);
+			_veganTip.SetActive(false);
 		}
 
 		public void ShowEnemyTip()
 		{
 			_towersTip.SetActive(false);
 			_enemyTip.SetActive(true);
-			_veganTip1.SetActive(false);
-			_veganTip2.SetActive(false);
+			_veganTip.SetActive(false);
 		}
 
 		public void ShowVeganTip1()
 		{
 			_towersTip.SetActive(false);
 			_enemyTip.SetActive(false);
-			_veganTip1.SetActive(true);
-			_veganTip2.SetActive(false);
+			_veganTip.SetActive(true);
 		}
 		
 		public void ShowVeganTip2()
 		{
 			_towersTip.SetActive(false);
 			_enemyTip.SetActive(false);
-			_veganTip1.SetActive(false);
-			_veganTip2.SetActive(true);
-			PlayerPrefsHandler.SetTutorState(true);
+			_veganTipNextButton.onClick.RemoveAllListeners();
+			_veganTipNextButton.onClick.AddListener(VeganTipButtonOnClick);
+			_veganTipNextButtonText.text = "PLAY";
 		}
 
 		public void ShowPanel(bool value)
 		{
 			gameObject.SetActive(value);
+		}
+
+		public void VeganTipButtonOnClick()
+		{
+		  _gameStart.Raise();
+			PlayerPrefsHandler.SetTutorStateTD(true);
+			ShowPanel(false);
 		}
 	}
 }
