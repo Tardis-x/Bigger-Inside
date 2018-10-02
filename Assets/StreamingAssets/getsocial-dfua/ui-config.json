@@ -8,14 +8,14 @@
     "assets-base-path": "getsocial-dfua",
     "elements": {
         "window": {
-            "width": 440,
+            "width": 320,
             "height": 640,
             "bg-color": "0xFF131A20",
             "tint-color": "0xFF131A20",
-            "animation-style": "fade-and-scale"
+            "animation-style": "fade"
         },
         "header": {
-            "height": 48,
+            "height": 44,
             "bg-color": "0xFF131A20",
             "padding-top": 4,
             "padding-bottom": 0
@@ -27,7 +27,7 @@
             "width": 37,
             "height": 42,
             "margin-left": 0,
-            "margin-top": 4,
+            "margin-top": 2,
             "bg-image-normal": "back-button.bg-image-normal.png",
             "bg-image-pressed": "back-button.bg-image-pressed.png"
         },
@@ -35,12 +35,12 @@
             "width": 37,
             "height": 42,
             "margin-right": 0,
-            "margin-top": 4,
+            "margin-top": 2,
             "bg-image-normal": "close-button.bg-image-normal.png",
             "bg-image-pressed": "close-button.bg-image-pressed.png"
         },
         "content": {
-            "margin-top": 48,
+            "margin-top": 44,
             "margin-left": 0,
             "margin-right": 0,
             "margin-bottom": 0,

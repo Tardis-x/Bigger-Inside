@@ -11,34 +11,31 @@ namespace ua.org.gdg.devfest
 {
     public class NotificationsManager : MonoBehaviour
     {
+        private const string ClearedNotifications = "cleared_notifications";
+        
         [SerializeField] private GameObject _listItemPrefab;
         [SerializeField] private GameObject _notificationsList;
         [SerializeField] private GameObject _emptyPlaceholder;
         [SerializeField] private GameObject _errorPlaceholder;
         [SerializeField] private Button _clearButton;
+        
+        [SerializeField] private GameEvent _showLoading;
+        [SerializeField] private GameEvent _dismissLoading;
 
-        private readonly List<Notification> _notifications = new List<Notification>();
+        private readonly HashSet<string> _notifications = new HashSet<string>();
+        private readonly HashSet<string> _clearedNotifications = new HashSet<string>();
 
         #region lifecycle methods
 
         void OnEnable()
         {
+            var clearedNotificationIdsStr = PlayerPrefs.GetString(ClearedNotifications, "");
+            foreach (var id in clearedNotificationIdsStr.Split(','))
+            {
+                _clearedNotifications.Add(id);
+            }
+            
             UpdateNotificationsWindow();
-
-//            var notifications = new List<Notification>();
-//
-//            for (int i = 0; i < 30; i++)
-//            {
-//                notifications.Add(NewItem("Title " + i, "Text Text Text Text\nText Text Text Text \nText Text Text Text \nText Text Text Text ".Substring(0, Random.RandomRange(10, 75))));
-//            }
-//
-//            if (notifications.Count == 0)
-//            {
-//                DisableClearButton();
-//                ShowEmptyListPlaceholder();
-//            }
-//
-//            PopulateList(notifications);
         }
 
         void Update()
@@ -52,14 +49,12 @@ namespace ua.org.gdg.devfest
 
         public void ClearNotifications()
         {
-            var ids = _notifications.Select(notification => notification.Id).ToList();
-
             // call it before the API to make UI responsive
             InitUiElements(0, false);
 
-            GetSocial.User.SetNotificationsRead(ids, true,
-                onSuccess: () => { Debug.Log("Cleared notifications"); },
-                onError: error => { Debug.LogError(error.Message); });
+            _clearedNotifications.UnionWith(_notifications);
+            var serializedIds = _clearedNotifications.Aggregate((accumulated, next) => accumulated + "," + next);
+            PlayerPrefs.SetString(ClearedNotifications, serializedIds);
         }
 
         #endregion
@@ -68,22 +63,40 @@ namespace ua.org.gdg.devfest
 
         private void UpdateNotificationsWindow()
         {
-            InitUiElements(0, false);
+            InitUiElements(-1, false);
+            _showLoading.Raise();
 
-            NotificationsQuery query = NotificationsQuery.Unread();
+            var query = NotificationsQuery.ReadAndUnread().OfTypes(
+                Notification.NotificationTypes.Comment,
+                Notification.NotificationTypes.Direct,
+                Notification.NotificationTypes.MentionInActivity,
+                Notification.NotificationTypes.MentionInComment,
+                Notification.NotificationTypes.ReplyToComment,
+                Notification.NotificationTypes.Targeting);
+            
             GetSocial.User.GetNotifications(query,
                 onSuccess: notifications =>
                 {
+//            var notifications = new List<Notification>();
+//            for (int i = 0; i < 20; i++)
+//            {
+//                notifications.Add(NewItem("Title " + i, "text"));
+//            }
+            
+                    var notificaiotnsToShow = notifications.FindAll(notification => !_clearedNotifications.Contains(notification.Id));
+                        
                     _notifications.Clear();
-                    _notifications.AddRange(notifications);
+                    _notifications.UnionWith(notificaiotnsToShow.Select(notification => notification.Id));
 
-                    InitUiElements(notifications.Count, false);
-                    PopulateList(notifications);
+                    _dismissLoading.Raise();
+                    InitUiElements(notificaiotnsToShow.Count, false);
+                    PopulateList(notificaiotnsToShow);
                 },
                 onError: error =>
                 {
                     Debug.LogError(error.Message);
 
+                    _dismissLoading.Raise();
                     InitUiElements(0, true);
                 });
         }
@@ -119,15 +132,14 @@ namespace ua.org.gdg.devfest
                 GameObject card = Instantiate(_listItemPrefab);
                 card.transform.SetParent(_notificationsList.transform, false);
 
-                card.GetComponent<NotificationListItem>().Init(notifications[i].Title, notifications[i].Text,
-                    notifications[i].CreatedAt);
+                card.GetComponent<NotificationListItem>().Init(notifications[i]);
             }
         }
 
         private void InitUiElements(int notificationsCount, bool isError)
         {
             _clearButton.gameObject.SetActive(!isError && (notificationsCount > 0));
-            _emptyPlaceholder.SetActive(!isError && (notificationsCount <= 0));
+            _emptyPlaceholder.SetActive(!isError && (notificationsCount == 0));
             _errorPlaceholder.SetActive(isError);
 
             if (isError || (notificationsCount <= 0))

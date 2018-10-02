@@ -13,8 +13,16 @@ namespace ua.org.gdg.devfest
         {
             _unreadBackgoundImage.gameObject.SetActive(false);
 
+            var notificationsCountQuery = NotificationsCountQuery.Unread().OfTypes(
+                Notification.NotificationTypes.Comment,
+                Notification.NotificationTypes.Direct,
+                Notification.NotificationTypes.MentionInActivity,
+                Notification.NotificationTypes.MentionInComment,
+                Notification.NotificationTypes.ReplyToComment,
+                Notification.NotificationTypes.Targeting);
+            
             GetSocial.User.GetNotificationsCount(
-                query: NotificationsCountQuery.Unread(),
+                query: notificationsCountQuery,
                 onSuccess: count =>
                 {
                     _countText.text = count > 99 ? "99+" : count.ToString();
