@@ -18,6 +18,15 @@ namespace ua.org.gdg.devfest
     public void OnCoinGroupSelected(InfoCoinGroup infoCoinGroup)
     {
       UpdateSelection(infoCoinGroup);
+
+      if (infoCoinGroup.HasSponsors)
+      {
+        
+      }
+      else
+      {
+        PanelManager.Instance.ShowCoinNamePanel("Partners Area");
+      }
     }
     
     public void OnCoinSelected(InfoCoin infoCoin)
