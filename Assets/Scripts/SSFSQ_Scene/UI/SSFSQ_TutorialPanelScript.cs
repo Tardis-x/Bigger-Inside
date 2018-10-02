@@ -18,6 +18,7 @@ namespace ua.org.gdg.devfest
     private Button _whackCardNextButton;
 
     [SerializeField] private Button _answerCardNextButton;
+    [SerializeField] private Text _answerNextButtonText;
 
     [Space] [Header("Events")] [SerializeField]
     private GameEvent _startCountdown;
@@ -54,7 +55,7 @@ namespace ua.org.gdg.devfest
     {
       _answerCardNextButton.onClick.RemoveAllListeners();
       _answerCardNextButton.onClick.AddListener(DisablePanel);
-      PlayerPrefsHandler.SetTutorStateSSFSQ(true);
+      _answerNextButtonText.text = "PLAY";
     }
 
     //---------------------------------------------------------------------
@@ -64,6 +65,7 @@ namespace ua.org.gdg.devfest
     public void DisablePanel()
     {
       _startCountdown.Raise();
+      PlayerPrefsHandler.SetTutorStateSSFSQ(true);
       gameObject.SetActive(false);
     }
   }

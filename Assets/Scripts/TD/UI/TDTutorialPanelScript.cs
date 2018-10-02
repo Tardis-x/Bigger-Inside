@@ -14,6 +14,7 @@ namespace ua.org.gdg.devfest
 		[SerializeField] private GameObject _enemyTip;
 		[SerializeField] private GameObject _veganTip;
 		[SerializeField] private Button _veganTipNextButton;
+		[SerializeField] private Text _veganTipNextButtonText;
 		[SerializeField] private GameEvent _gameStart;
 		
 		//---------------------------------------------------------------------
@@ -47,7 +48,7 @@ namespace ua.org.gdg.devfest
 			_enemyTip.SetActive(false);
 			_veganTipNextButton.onClick.RemoveAllListeners();
 			_veganTipNextButton.onClick.AddListener(VeganTipButtonOnClick);
-			PlayerPrefsHandler.SetTutorStateTD(true);
+			_veganTipNextButtonText.text = "PLAY";
 		}
 
 		public void ShowPanel(bool value)
@@ -58,6 +59,7 @@ namespace ua.org.gdg.devfest
 		public void VeganTipButtonOnClick()
 		{
 		  _gameStart.Raise();
+			PlayerPrefsHandler.SetTutorStateTD(true);
 			ShowPanel(false);
 		}
 	}

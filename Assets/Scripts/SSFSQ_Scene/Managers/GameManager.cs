@@ -251,6 +251,8 @@ namespace ua.org.gdg.devfest
     
     private void PauseGame()
     {
+      if(!GameActive) return;
+      
       Time.timeScale = 0;
     }
 
