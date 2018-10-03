@@ -122,7 +122,7 @@ namespace ua.org.gdg.devfest
       }
       else
       {
-        Utils.ShowMessage("Oops! Something went wrong, try again later.");
+        Utils.ShowMessage("Facebook SignIn faulted");
       }
     }
 
@@ -138,7 +138,7 @@ namespace ua.org.gdg.devfest
       else if (task.IsFaulted)
       {
         signInCompleted.SetException(task.Exception);
-        Utils.ShowMessage("Oops! Something went wrong, try again later.");
+        Utils.ShowMessage("Firebase SignIn faulted");
       }
       else
       {
@@ -203,12 +203,12 @@ namespace ua.org.gdg.devfest
       var authIdentity = AuthIdentity.CreateCustomIdentity(user.ProviderId, user.UserId, token);
 
       GetSocial.User.AddAuthIdentity(authIdentity, SetGetSocialNameAndAvatar,
-        error => { Utils.ShowMessage("Oops! Something went wrong, try again later.");},
+        error => { Utils.ShowMessage("GetSocial SignIn faulted");},
         conflict =>
         {
           GetSocial.User.SwitchUser(authIdentity,
             SetGetSocialNameAndAvatar,
-            error => {Utils.ShowMessage("Oops! Something went wrong, try again later.");});
+            error => {Utils.ShowMessage("GetSocial SignIn faulted");});
         });
     }
 
@@ -227,14 +227,14 @@ namespace ua.org.gdg.devfest
     {
       GetSocial.User.SetDisplayName(name,
         () => {},
-        error => { Utils.ShowMessage("Oops! Something went wrong, try again later.");});
+        error => { Utils.ShowMessage("Couldn't update your GetSocial username");});
     }
 
     private void SetGetSocialAvatar(string url)
     {
       GetSocial.User.SetAvatarUrl(url,
         () => {},
-        error => {Utils.ShowMessage("Oops! Something went wrong, try again later.");});
+        error => {Utils.ShowMessage("Couldn't update your GetSocial avatar");});
     }
 
     private void SignInFinished()
