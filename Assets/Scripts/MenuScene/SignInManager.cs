@@ -20,6 +20,10 @@ namespace ua.org.gdg.devfest
     [SerializeField] private GameEvent _showLoading;
     [SerializeField] private GameEvent _dismissLoading;
 
+    [Space]
+    [Header("UI")]
+    [SerializeField] private NotificationsBadgeManager _notificationsBadge;
+
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
@@ -216,6 +220,7 @@ namespace ua.org.gdg.devfest
       
       SetGetSocialUsername(user.DisplayName);
       SetGetSocialAvatar(GetHigherResProfilePic(user.PhotoUrl.OriginalString));
+      _notificationsBadge.OnSignInFinished();
     }
 
     private void SetGetSocialUsername(string name)
