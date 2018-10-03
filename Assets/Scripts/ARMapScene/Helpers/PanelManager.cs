@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace ua.org.gdg.devfest
 {
@@ -8,17 +9,31 @@ namespace ua.org.gdg.devfest
 		// Editor
 		//---------------------------------------------------------------------
 		
+		[Header("Panels")]
 		[SerializeField] public SchedulePanelScript SchedulePanelNew;
 		[SerializeField] public DescriptionPanelScript SpeechDescriptionPanelNew;
+		
+		[SerializeField] private InfoCoinNamePanel _infoCoinNamePanel;
+		[SerializeField] private InfoCoinSchedulePanel _infoCoinSchedulePanel;
+		[SerializeField] private InfoCoinGroupPanel _infoCoinGroupPanel;
 
 		//---------------------------------------------------------------------
 		// Public
 		//---------------------------------------------------------------------
 		
 		public string CurrentHall;
+
+		public void ShowSchedulePanel(string hall)
+		{
+			ClearAll();
+			CurrentHall = hall;
+			SchedulePanelNew.EnablePanel(2, hall);
+			SchedulePanelNew.EnablePanel(1, hall);
+		}
 		
 		public void ShowSpeechDescription(GameObject speech)
 		{
+			ClearAll();
 			SpeechDescriptionPanelNew.SetActive(true);
 			SpeechDescriptionPanelNew.SetData(speech.GetComponent<SpeechItemScript>().GetDescription());
 		}
@@ -27,6 +42,33 @@ namespace ua.org.gdg.devfest
 		{
 			return SchedulePanelNew.gameObject.activeSelf ||
 			       SpeechDescriptionPanelNew.gameObject.activeSelf;
+		}
+
+		// Coins Panels
+		
+		public void ShowCoinNamePanel(string coinName)
+		{
+			ClearAll();
+			_infoCoinNamePanel.OpenPanel(coinName);
+		}
+
+		public void ShowCoinSchedulePanel(string hallName)
+		{
+			ClearAll();
+			_infoCoinSchedulePanel.OpenPanel(hallName);
+		}
+
+		public void ShowInfoCoinGroupPanel(List<SponsorModel> sponsorModelList)
+		{
+			ClearAll();
+			_infoCoinGroupPanel.OpenPanel(sponsorModelList);
+		}
+
+		public void ClearAll()
+		{
+			_infoCoinNamePanel.gameObject.SetActive(false);
+			_infoCoinSchedulePanel.gameObject.SetActive(false);
+			_infoCoinGroupPanel.gameObject.SetActive(false);
 		}
 	}
 }
