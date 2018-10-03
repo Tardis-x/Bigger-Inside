@@ -229,7 +229,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-4048
+  m_Name: pb_Mesh-145712
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -758,7 +758,7 @@ RectTransform:
   - {fileID: 1129363170}
   - {fileID: 1612570325}
   m_Father: {fileID: 415622056}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -917,7 +917,6 @@ RectTransform:
   m_Children:
   - {fileID: 12127464}
   - {fileID: 1534192184}
-  - {fileID: 1196260828}
   - {fileID: 329958343}
   - {fileID: 975043097}
   - {fileID: 1261064766}
@@ -1127,7 +1126,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-4046
+  m_Name: pb_Mesh-145710
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -1563,7 +1562,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &977705813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2057,81 +2056,6 @@ MonoBehaviour:
   _clicableObjects:
     serializedVersion: 2
     m_Bits: 0
---- !u!1 &1196260827
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1196260828}
-  - component: {fileID: 1196260830}
-  - component: {fileID: 1196260829}
-  m_Layer: 5
-  m_Name: HintText
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &1196260828
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1196260827}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 415622056}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -279, y: 41}
-  m_SizeDelta: {x: 530, y: 47.700012}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1196260829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1196260827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
-    m_FontStyle: 0
-    m_BestFit: 1
-    m_MinSize: 10
-    m_MaxSize: 58
-    m_Alignment: 8
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: Scanning geometry
---- !u!222 &1196260830
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1196260827}
-  m_CullTransparentMesh: 0
 --- !u!1 &1260296908
 GameObject:
   m_ObjectHideFlags: 0
@@ -2462,7 +2386,7 @@ Prefab:
     - target: {fileID: 224824733310242096, guid: 457721ef443be1649a7d2229e750c4d5,
         type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 224824733310242096, guid: 457721ef443be1649a7d2229e750c4d5,
         type: 2}
@@ -2514,27 +2438,6 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 1983694659942138, guid: 457721ef443be1649a7d2229e750c4d5, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114281824121224380, guid: 457721ef443be1649a7d2229e750c4d5,
-        type: 2}
-      propertyPath: m_Text
-      value: Find this image and aim phone camera at it
-      objectReference: {fileID: 0}
-    - target: {fileID: 114246522832390938, guid: 457721ef443be1649a7d2229e750c4d5,
-        type: 2}
-      propertyPath: Event
-      value: 
-      objectReference: {fileID: 11400000, guid: 69917b4695d9d434398010d9f65a0301,
-        type: 2}
-    - target: {fileID: 114113094559724050, guid: 457721ef443be1649a7d2229e750c4d5,
-        type: 2}
-      propertyPath: Event
-      value: 
-      objectReference: {fileID: 11400000, guid: 808af3116451a9a42a00d583f05a0abb,
-        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 457721ef443be1649a7d2229e750c4d5, type: 2}
   m_IsPrefabAsset: 0
@@ -2543,6 +2446,12 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224824733310242096, guid: 457721ef443be1649a7d2229e750c4d5,
     type: 2}
   m_PrefabInternal: {fileID: 1327113787}
+--- !u!114 &1327113789 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114644928003983232, guid: 457721ef443be1649a7d2229e750c4d5,
+    type: 2}
+  m_PrefabInternal: {fileID: 1327113787}
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!43 &1357862767
 Mesh:
   m_ObjectHideFlags: 0
@@ -3175,7 +3084,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-4050
+  m_Name: pb_Mesh-145714
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -3489,7 +3398,7 @@ MonoBehaviour:
   _imageTargetPrefabPath: ARMap/Environment
   _imageTarget: {fileID: 1964602097}
   _planeFinder: {fileID: 48566465}
-  _hint: {fileID: 1196260829}
+  _hint: {fileID: 1327113789}
 --- !u!114 &2004378686
 MonoBehaviour:
   m_ObjectHideFlags: 0
