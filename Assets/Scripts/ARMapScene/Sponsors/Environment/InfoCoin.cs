@@ -35,7 +35,7 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     public virtual void Select()
-    {
+    {  
       _infoCoinsManager.OnCoinSelected(this);
     }
 

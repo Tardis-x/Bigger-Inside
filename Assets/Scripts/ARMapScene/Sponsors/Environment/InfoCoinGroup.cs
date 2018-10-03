@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace ua.org.gdg.devfest
@@ -19,15 +20,18 @@ namespace ua.org.gdg.devfest
     // Internal
     //---------------------------------------------------------------------
 
-    private Animator _animator;
+    private readonly List<SponsorModel> _sponsorWithNameList = new List<SponsorModel>();
     
+    private Animator _animator;
+    private bool _isSelected;
+
     //---------------------------------------------------------------------
     // Property
     //---------------------------------------------------------------------
 
-    public bool HasSponsors
+    public List<SponsorModel> SponsorWithNameList
     {
-      get { return _sponsorGroup.SponsorModels.Count > 0; }
+      get { return _sponsorWithNameList; }
     }
 
     //---------------------------------------------------------------------
@@ -45,6 +49,11 @@ namespace ua.org.gdg.devfest
 
     public void Select()
     {
+      if (_isSelected) return;
+      
+      _isSelected = true;
+      
+      HandleSponsorNames();
       HandleCoinElements();
       
       _infoCoinsManager.OnCoinGroupSelected(this);
@@ -55,6 +64,10 @@ namespace ua.org.gdg.devfest
 
     public void Deselect()
     {
+      if (!_isSelected) return;
+      
+      _isSelected = false;
+      
       _animator.SetTrigger("Close");
       _animator.ResetTrigger("Open");
     }
@@ -63,6 +76,19 @@ namespace ua.org.gdg.devfest
     // Helpers
     //---------------------------------------------------------------------
 
+    private void HandleSponsorNames()
+    {
+      _sponsorWithNameList.Clear();
+
+      foreach (var sponsorModel in _sponsorGroup.SponsorModels)
+      {
+        if (!string.IsNullOrEmpty(sponsorModel.Name))
+        {
+          _sponsorWithNameList.Add(sponsorModel);
+        } 
+      }
+    }
+    
     private void HandleCoinElements()
     {
       foreach (var infoCoinElement in _infoCoinElements)
@@ -77,9 +103,9 @@ namespace ua.org.gdg.devfest
     {
       var hasSponsorData = false;
       
-      foreach (var sponsorModel in _sponsorGroup.SponsorModels)
+      foreach (var sponsorModel in _sponsorWithNameList)
       {
-        if (sponsorModel.Id.Equals(infoCoinElement.SponsorId) && !string.IsNullOrEmpty(sponsorModel.Name))
+        if (sponsorModel.Id.Equals(infoCoinElement.SponsorId))
         {
           hasSponsorData = true;
           break;

@@ -19,13 +19,13 @@ namespace ua.org.gdg.devfest
     {
       UpdateSelection(infoCoinGroup);
 
-      if (infoCoinGroup.HasSponsors)
+      if (infoCoinGroup.SponsorWithNameList.Count == 0)
       {
-        
+        PanelManager.Instance.ShowCoinNamePanel("Partners Area"); 
       }
       else
       {
-        PanelManager.Instance.ShowCoinNamePanel("Partners Area");
+        PanelManager.Instance.ShowInfoCoinGroupPanel(infoCoinGroup.SponsorWithNameList);
       }
     }
     

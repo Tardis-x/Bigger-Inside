@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace ua.org.gdg.devfest
 {
@@ -12,6 +13,7 @@ namespace ua.org.gdg.devfest
 		[SerializeField] public DescriptionPanelScript SpeechDescriptionPanelNew;
 		[SerializeField] public InfoCoinNamePanel InfoCoinNamePanel;
 		[SerializeField] public InfoCoinSchedulePanel InfoCoinSchedulePanel;
+		[SerializeField] public InfoCoinGroupPanel InfoCoinGroupPanel;
 
 		//---------------------------------------------------------------------
 		// Public
@@ -54,6 +56,12 @@ namespace ua.org.gdg.devfest
 			InfoCoinSchedulePanel.OpenPanel(hallName);
 		}
 
+		public void ShowInfoCoinGroupPanel(List<SponsorModel> sponsorModelList)
+		{
+			ClearAll();
+			InfoCoinGroupPanel.OpenPanel(sponsorModelList);
+		}
+
 		//---------------------------------------------------------------------
 		// Helpers
 		//---------------------------------------------------------------------
@@ -62,6 +70,7 @@ namespace ua.org.gdg.devfest
 		{
 			InfoCoinNamePanel.gameObject.SetActive(false);
 			InfoCoinSchedulePanel.gameObject.SetActive(false);
+			InfoCoinGroupPanel.gameObject.SetActive(false);
 		}
 	}
 }
