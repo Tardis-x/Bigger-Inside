@@ -15,7 +15,22 @@ namespace ua.org.gdg.devfest
     [Header("Values")] 
     [SerializeField] private string _name; 
     [SerializeField] private bool _hasSchedule;
+
+    //---------------------------------------------------------------------
+    // Internal
+    //---------------------------------------------------------------------
     
+    private Animator _selectionAnimator;
+
+    //---------------------------------------------------------------------
+    // Messages
+    //---------------------------------------------------------------------
+    
+    private void Awake()
+    {
+      _selectionAnimator = GetComponent<Animator>();
+    }
+
     //---------------------------------------------------------------------
     // Property
     //---------------------------------------------------------------------
@@ -37,10 +52,12 @@ namespace ua.org.gdg.devfest
     public virtual void Select()
     {  
       _infoCoinsManager.OnCoinSelected(this);
+      _selectionAnimator.SetBool("IsSelected", true);
     }
 
     public virtual void Deselect()
     {
+      _selectionAnimator.SetBool("IsSelected", false);
     }
   }
 }

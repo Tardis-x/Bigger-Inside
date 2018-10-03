@@ -25,7 +25,6 @@ namespace ua.org.gdg.devfest
 
 		public void ShowSchedulePanel(string hall)
 		{
-			ClearAll();
 			CurrentHall = hall;
 			SchedulePanelNew.EnablePanel(2, hall);
 			SchedulePanelNew.EnablePanel(1, hall);
@@ -33,7 +32,6 @@ namespace ua.org.gdg.devfest
 		
 		public void ShowSpeechDescription(GameObject speech)
 		{
-			ClearAll();
 			SpeechDescriptionPanelNew.SetActive(true);
 			SpeechDescriptionPanelNew.SetData(speech.GetComponent<SpeechItemScript>().GetDescription());
 		}

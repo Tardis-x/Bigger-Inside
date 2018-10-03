@@ -14,12 +14,19 @@ namespace ua.org.gdg.devfest
     [SerializeField] private Image _logo;
 
     //---------------------------------------------------------------------
+    // Property
+    //---------------------------------------------------------------------
+    
+    public SponsorModel SponsorModel { get; set; }
+    
+    //---------------------------------------------------------------------
     // Public
     //---------------------------------------------------------------------
 
     public void SetSponsorModel(SponsorModel sponsorModel)
     {
       _sponsorName.text = sponsorModel.Name;
+      SponsorModel = sponsorModel;
     }
     
     public void SetSponsorLogo(SponsorLogo sponsorLogo)
