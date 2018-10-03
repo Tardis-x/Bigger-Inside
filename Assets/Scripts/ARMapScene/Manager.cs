@@ -93,7 +93,10 @@ namespace ua.org.gdg.devfest
 			_arCamera.gameObject.SetActive(true);
 			_mainCamera.gameObject.SetActive(false);
 
-			_navigationTargets.SetActive(true);
+			if (_navigationTargets != null)
+			{
+				_navigationTargets.SetActive(true);
+			}
 		}
 		
 		private void EnableObjectClick()
