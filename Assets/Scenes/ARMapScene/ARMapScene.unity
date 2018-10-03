@@ -377,12 +377,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224488794021769892, guid: 2f447c1fe049771429c1ea630e8e8377,
     type: 2}
   m_PrefabInternal: {fileID: 66200724}
---- !u!114 &48652531 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114895426182394850, guid: 2f447c1fe049771429c1ea630e8e8377,
-    type: 2}
-  m_PrefabInternal: {fileID: 66200724}
-  m_Script: {fileID: 11500000, guid: 5a039ec75026426fa32f3a4df27057dd, type: 3}
 --- !u!1001 &66200724
 Prefab:
   m_ObjectHideFlags: 0
@@ -721,12 +715,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224303825650287234, guid: e68f92443b9927146a9307af19c6a9d9,
     type: 2}
   m_PrefabInternal: {fileID: 670369042}
---- !u!114 &345520292 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114417272943601704, guid: e68f92443b9927146a9307af19c6a9d9,
-    type: 2}
-  m_PrefabInternal: {fileID: 670369042}
-  m_Script: {fileID: 11500000, guid: fdc75cee30a04d6a91f6cdb9090be53c, type: 3}
 --- !u!1 &355201932
 GameObject:
   m_ObjectHideFlags: 0
@@ -736,6 +724,7 @@ GameObject:
   m_Component:
   - component: {fileID: 355201934}
   - component: {fileID: 355201933}
+  - component: {fileID: 355201935}
   m_Layer: 0
   m_Name: PanelManager
   m_TagString: Untagged
@@ -756,9 +745,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SchedulePanelNew: {fileID: 975043102}
   SpeechDescriptionPanelNew: {fileID: 1261064765}
-  InfoCoinNamePanel: {fileID: 48652531}
-  InfoCoinSchedulePanel: {fileID: 345520292}
-  InfoCoinGroupPanel: {fileID: 2078520606}
+  _infoCoinNamePanel: {fileID: 0}
+  _infoCoinSchedulePanel: {fileID: 0}
+  _infoCoinGroupPanel: {fileID: 0}
   CurrentHall: 
 --- !u!4 &355201934
 Transform:
@@ -773,6 +762,34 @@ Transform:
   m_Father: {fileID: 1046727953}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &355201935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 355201932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3318b37b5a34577429583f0b3833dd78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 69917b4695d9d434398010d9f65a0301, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 355201933}
+        m_MethodName: ClearAll
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &415622052
 GameObject:
   m_ObjectHideFlags: 0
@@ -2646,6 +2663,34 @@ Mesh:
   m_MeshMetrics[0]: 1
   m_MeshMetrics[1]: 1
   m_MeshOptimized: 0
+--- !u!1 &1452726966
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1452726967}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1452726967
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1452726966}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -508.27747, y: 398.61298, z: -19.391352}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1483603335
 GameObject:
   m_ObjectHideFlags: 0
@@ -3322,12 +3367,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224328824479251068, guid: 3f852f70840f0c047ab966514454d35b,
     type: 2}
   m_PrefabInternal: {fileID: 1636400204}
---- !u!114 &2078520606 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114132940429159818, guid: 3f852f70840f0c047ab966514454d35b,
-    type: 2}
-  m_PrefabInternal: {fileID: 1636400204}
-  m_Script: {fileID: 11500000, guid: 0b0f65f89b084f968d30169542d92a75, type: 3}
 --- !u!1001 &2129931873
 Prefab:
   m_ObjectHideFlags: 0

@@ -42,6 +42,12 @@ namespace ua.org.gdg.devfest
         PanelManager.Instance.ShowCoinNamePanel(infoCoin.Name);
       }
     }
+
+    public void DeselectLastItem()
+    {
+      if (_lastSelected != null) _lastSelected.Deselect();
+      _lastSelected = null;
+    }
     
     //---------------------------------------------------------------------
     // Helpers

@@ -9,11 +9,13 @@ namespace ua.org.gdg.devfest
 		// Editor
 		//---------------------------------------------------------------------
 		
+		[Header("Panels")]
 		[SerializeField] public SchedulePanelScript SchedulePanelNew;
 		[SerializeField] public DescriptionPanelScript SpeechDescriptionPanelNew;
-		[SerializeField] public InfoCoinNamePanel InfoCoinNamePanel;
-		[SerializeField] public InfoCoinSchedulePanel InfoCoinSchedulePanel;
-		[SerializeField] public InfoCoinGroupPanel InfoCoinGroupPanel;
+		
+		[SerializeField] private InfoCoinNamePanel _infoCoinNamePanel;
+		[SerializeField] private InfoCoinSchedulePanel _infoCoinSchedulePanel;
+		[SerializeField] private InfoCoinGroupPanel _infoCoinGroupPanel;
 
 		//---------------------------------------------------------------------
 		// Public
@@ -47,30 +49,26 @@ namespace ua.org.gdg.devfest
 		public void ShowCoinNamePanel(string coinName)
 		{
 			ClearAll();
-			InfoCoinNamePanel.OpenPanel(coinName);
+			_infoCoinNamePanel.OpenPanel(coinName);
 		}
 
 		public void ShowCoinSchedulePanel(string hallName)
 		{
 			ClearAll();
-			InfoCoinSchedulePanel.OpenPanel(hallName);
+			_infoCoinSchedulePanel.OpenPanel(hallName);
 		}
 
 		public void ShowInfoCoinGroupPanel(List<SponsorModel> sponsorModelList)
 		{
 			ClearAll();
-			InfoCoinGroupPanel.OpenPanel(sponsorModelList);
+			_infoCoinGroupPanel.OpenPanel(sponsorModelList);
 		}
 
-		//---------------------------------------------------------------------
-		// Helpers
-		//---------------------------------------------------------------------
-		
-		private void ClearAll()
+		public void ClearAll()
 		{
-			InfoCoinNamePanel.gameObject.SetActive(false);
-			InfoCoinSchedulePanel.gameObject.SetActive(false);
-			InfoCoinGroupPanel.gameObject.SetActive(false);
+			_infoCoinNamePanel.gameObject.SetActive(false);
+			_infoCoinSchedulePanel.gameObject.SetActive(false);
+			_infoCoinGroupPanel.gameObject.SetActive(false);
 		}
 	}
 }
