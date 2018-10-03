@@ -122,7 +122,7 @@ namespace ua.org.gdg.devfest
       }
       else
       {
-        Utils.ShowMessage("Facebook SignIn faulted");
+        Utils.ShowMessage("Login Failed");
       }
     }
 
@@ -138,7 +138,7 @@ namespace ua.org.gdg.devfest
       else if (task.IsFaulted)
       {
         signInCompleted.SetException(task.Exception);
-        Utils.ShowMessage("Firebase SignIn faulted");
+        Utils.ShowMessage("Login Failed");
       }
       else
       {
@@ -153,7 +153,7 @@ namespace ua.org.gdg.devfest
     {
       if (task.IsFaulted)
       {
-        Utils.ShowMessage("GoogleSignIn faulted");
+        Utils.ShowMessage("Login Failed");
       }
       else if (task.IsCanceled)
       {
@@ -179,7 +179,7 @@ namespace ua.org.gdg.devfest
       }
       else if (authTask.IsFaulted)
       {
-        Utils.ShowMessage("Firebase SignIn faulted");
+        Utils.ShowMessage("Login Failed");
         signInCompleted.SetException(authTask.Exception);
       }
       else
@@ -203,12 +203,12 @@ namespace ua.org.gdg.devfest
       var authIdentity = AuthIdentity.CreateCustomIdentity(user.ProviderId, user.UserId, token);
 
       GetSocial.User.AddAuthIdentity(authIdentity, SetGetSocialNameAndAvatar,
-        error => { Utils.ShowMessage("GetSocial SignIn faulted");},
+        error => { Utils.ShowMessage("News Feed Login Failed");},
         conflict =>
         {
           GetSocial.User.SwitchUser(authIdentity,
             SetGetSocialNameAndAvatar,
-            error => {Utils.ShowMessage("GetSocial SignIn faulted");});
+            error => {Utils.ShowMessage("News Feed Login Failed");});
         });
     }
 
@@ -227,14 +227,14 @@ namespace ua.org.gdg.devfest
     {
       GetSocial.User.SetDisplayName(name,
         () => {},
-        error => { Utils.ShowMessage("Couldn't update your GetSocial username");});
+        error => { Utils.ShowMessage("Couldn't Update Your News Feed Username");});
     }
 
     private void SetGetSocialAvatar(string url)
     {
       GetSocial.User.SetAvatarUrl(url,
         () => {},
-        error => {Utils.ShowMessage("Couldn't update your GetSocial avatar");});
+        error => {Utils.ShowMessage("Couldn't Update Your News Feed Avatar");});
     }
 
     private void SignInFinished()
