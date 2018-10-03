@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -228,7 +228,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 79186636}
   m_LocalRotation: {x: -0.71061915, y: -0, z: -0, w: 0.703577}
-  m_LocalPosition: {x: -0.1847998, y: 0.29, z: -0.41779968}
+  m_LocalPosition: {x: -0.012888193, y: 0.29, z: -0.446828}
   m_LocalScale: {x: 0.02, y: 0.020000009, z: 0.020000009}
   m_Children:
   - {fileID: 763144792}
@@ -2454,7 +2454,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 1458995474}
+  - {fileID: 1451863405}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3351,7 +3351,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1241564774}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.37679443, y: 0.0009999847, z: -0.26082763}
+  m_LocalPosition: {x: -0.26, y: 0.0009999847, z: -0.28985596}
   m_LocalScale: {x: 0.2, y: 1, z: 0.2}
   m_Children: []
   m_Father: {fileID: 833855964}
@@ -3417,7 +3417,7 @@ MonoBehaviour:
     e00: 10
     e01: 0
     e02: 0
-    e03: 499.16028
+    e03: 505
     e10: 0
     e11: 50
     e12: 0
@@ -3425,7 +3425,7 @@ MonoBehaviour:
     e20: 0
     e21: 0
     e22: 10
-    e23: -531.4414
+    e23: -532.8928
     e30: 0
     e31: 0
     e32: 0
@@ -3849,7 +3849,7 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1356473720}
   m_CullTransparentMesh: 0
---- !u!21 &1458995474
+--- !u!21 &1451863405
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
@@ -3857,7 +3857,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: 'target_ssfsqMaterial
 
-    134710'
+    98166'
   m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
@@ -4207,7 +4207,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1665490021}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.17191161, y: 0.0009999847, z: -0.2579712}
+  m_LocalPosition: {x: 0, y: 0.0009999847, z: -0.287}
   m_LocalScale: {x: 0.2, y: 1, z: 0.2}
   m_Children: []
   m_Father: {fileID: 833855964}
@@ -4289,7 +4289,7 @@ MonoBehaviour:
     e00: 10
     e01: 0
     e02: 0
-    e03: 509.40442
+    e03: 518
     e10: 0
     e11: 50
     e12: 0
@@ -4297,7 +4297,7 @@ MonoBehaviour:
     e20: 0
     e21: 0
     e22: 10
-    e23: -531.2986
+    e23: -532.75
     e30: 0
     e31: 0
     e32: 0
@@ -5381,7 +5381,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1900831084}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.034997556, y: 0.0009999847, z: -0.2522827}
+  m_LocalPosition: {x: 0.26, y: 0.0009999847, z: -0.28131104}
   m_LocalScale: {x: 0.2, y: 1, z: 0.2}
   m_Children: []
   m_Father: {fileID: 833855964}
@@ -5447,7 +5447,7 @@ MonoBehaviour:
     e00: 10
     e01: 0
     e02: 0
-    e03: 519.7499
+    e03: 531
     e10: 0
     e11: 50
     e12: 0
@@ -5455,7 +5455,7 @@ MonoBehaviour:
     e20: 0
     e21: 0
     e22: 10
-    e23: -531.01416
+    e23: -532.4656
     e30: 0
     e31: 0
     e32: 0
