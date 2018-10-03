@@ -3480,6 +3480,7 @@ MonoBehaviour:
   _signInFinished: {fileID: 11400000, guid: fca2f201e2263674b8b427fc4ee0d265, type: 2}
   _showLoading: {fileID: 11400000, guid: b41392c0742a41a4aa7230d632b5fd80, type: 2}
   _dismissLoading: {fileID: 11400000, guid: 8ab526a6ee2cc6d48b100bcde7a2b8b4, type: 2}
+  _notificationsBadge: {fileID: 1408834405}
 --- !u!4 &1176905094
 Transform:
   m_ObjectHideFlags: 0
@@ -4679,6 +4680,7 @@ GameObject:
   - component: {fileID: 1408834403}
   - component: {fileID: 1408834402}
   - component: {fileID: 1408834405}
+  - component: {fileID: 1408834406}
   m_Layer: 5
   m_Name: Button_Notifications
   m_TagString: Untagged
@@ -4804,7 +4806,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _countText: {fileID: 935733602}
-  _unreadBackgoundImage: {fileID: 424553441}
+  _unreadBackgroundImage: {fileID: 424553441}
+--- !u!114 &1408834406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1408834400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3318b37b5a34577429583f0b3833dd78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: bd815b26dccc52b42bff3100e6c8f010, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1408834405}
+        m_MethodName: OnSignOutRequest
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &1410463227
 GameObject:
   m_ObjectHideFlags: 0
@@ -5518,6 +5548,20 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1176905099}
+    - target: {fileID: 1214104636928344, guid: f00381032ed8648d691d0f2089cfc3e2, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224823168750411350, guid: f00381032ed8648d691d0f2089cfc3e2,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: -1772.2001
+      objectReference: {fileID: 0}
+    - target: {fileID: 224823168750411350, guid: f00381032ed8648d691d0f2089cfc3e2,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f00381032ed8648d691d0f2089cfc3e2, type: 2}
   m_IsPrefabAsset: 0
