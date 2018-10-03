@@ -55,6 +55,13 @@ namespace ua.org.gdg.devfest
             _clearedNotifications.UnionWith(_notifications);
             var serializedIds = _clearedNotifications.Aggregate((accumulated, next) => accumulated + "," + next);
             PlayerPrefs.SetString(ClearedNotifications, serializedIds);
+
+            GetSocial.User.SetNotificationsRead(
+                notificationsIds: _notifications.ToList(),
+                isRead: true,
+                onSuccess: () => Debug.Log("Marked all notifications as read"),
+                onError: error => Debug.LogError("Failed to mark notifications as read, error: " + error.Message)
+            );
         }
 
         #endregion
