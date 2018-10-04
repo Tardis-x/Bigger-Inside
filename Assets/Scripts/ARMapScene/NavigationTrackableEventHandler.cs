@@ -24,11 +24,16 @@ namespace ua.org.gdg.devfest
 
 		protected override void OnTrackingFound()
 		{
+			if (_environment != null) return;
+			
 			var prefab = Resources.Load<GameObject>(_prefabPath);
 			_environment = Instantiate(prefab, transform);
 
 			var navigationResolver = _environment.GetComponent<NavigationResolver>();
-			navigationResolver.SetupNavigationTarget(_position);
+			if (navigationResolver != null)
+			{
+				navigationResolver.SetupNavigationTarget(_position);
+			}
 		}
 
 		protected override void OnTrackingLost()
