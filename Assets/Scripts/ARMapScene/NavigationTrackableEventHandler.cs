@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Vuforia;
 
 namespace ua.org.gdg.devfest
 {
@@ -22,6 +23,7 @@ namespace ua.org.gdg.devfest
 		//---------------------------------------------------------------------
 
 		private GameObject _environment;
+		private PositionalDeviceTracker _positionalDeviceTracker;
 
 		//---------------------------------------------------------------------
 		// Messages
@@ -30,15 +32,10 @@ namespace ua.org.gdg.devfest
 		protected override void OnTrackingFound()
 		{
 			if (_environment != null) return;
-			
-			var prefab = Resources.Load<GameObject>(_prefabPath);
-			_environment = Instantiate(prefab, transform);
 
-			var navigationResolver = _environment.GetComponent<NavigationResolver>();
-			if (navigationResolver != null)
-			{
-				navigationResolver.SetupNavigationTarget(_position);
-			}
+			InstantiateEnvironment();
+			ResolveNavigation(_position);
+			EnableDeviceTracker(false);
 			
 			_trackableFound.Raise();
 		}
@@ -51,6 +48,44 @@ namespace ua.org.gdg.devfest
 			}
 			
 			_trackableLost.Raise();
+			
+			EnableDeviceTracker(true);
+		}
+		
+		//---------------------------------------------------------------------
+		// Internal
+		//---------------------------------------------------------------------
+
+		private void InstantiateEnvironment()
+		{
+			var prefab = Resources.Load<GameObject>(_prefabPath);
+			_environment = Instantiate(prefab, transform);
+		}
+
+		private void ResolveNavigation(NavigationTargets position)
+		{
+			var navigationResolver = _environment.GetComponent<NavigationResolver>();
+			if (navigationResolver != null)
+			{
+				navigationResolver.SetupNavigationTarget(position);
+			}
+		}
+
+		private void EnableDeviceTracker(bool value)
+		{
+			if (_positionalDeviceTracker == null)
+			{
+				_positionalDeviceTracker = TrackerManager.Instance.GetTracker<PositionalDeviceTracker>();
+			}
+
+			if (value)
+			{
+				_positionalDeviceTracker.Start();
+			}
+			else
+			{
+				_positionalDeviceTracker.Stop();
+			}
 		}
 	}
 }
