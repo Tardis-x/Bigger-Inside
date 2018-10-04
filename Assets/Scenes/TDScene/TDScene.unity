@@ -1994,7 +1994,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1983694659942138, guid: 457721ef443be1649a7d2229e750c4d5, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114387525493692498, guid: 457721ef443be1649a7d2229e750c4d5,
         type: 2}
@@ -7181,14 +7181,14 @@ MonoBehaviour:
   _visitorFedClip: {fileID: 8300000, guid: 5db853e20c4981141a472d12376d13ba, type: 3}
   _visitorLeftClip: {fileID: 8300000, guid: 6679308b5a02693488c3514d3d8617d7, type: 3}
   _eatClipList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: ac36b3559a4388243bd8840ce71876d6, type: 3}
+  - {fileID: 8300000, guid: 6ba54a867608553499564627237c18e9, type: 3}
+  - {fileID: 8300000, guid: 4396169579e081a4b99bd994ccdfc79e, type: 3}
+  - {fileID: 8300000, guid: df9f2f883af0d424b896c420678a60ee, type: 3}
   _drinkClipList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 949b2914cc5335c45a5182899844d403, type: 3}
+  - {fileID: 8300000, guid: a37101d34587e9b40a315af11be34399, type: 3}
+  - {fileID: 8300000, guid: 84db1185e58f0954e9177ebf8821f23f, type: 3}
 --- !u!82 &1543687400
 AudioSource:
   m_ObjectHideFlags: 0
