@@ -18,8 +18,6 @@ namespace ua.org.gdg.devfest
 
 		protected override void OnTrackingLost()
 		{
-			Debug.Log(string.Format("{0}: OnTrackingFound", gameObject.name));
-			
 			base.OnTrackingLost();
 			
 			if (_onTrackingLost == null) return;
