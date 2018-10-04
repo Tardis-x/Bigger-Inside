@@ -959,10 +959,10 @@ RectTransform:
   - {fileID: 1842356046}
   - {fileID: 233328359}
   - {fileID: 1928200151}
+  - {fileID: 1327113788}
   - {fileID: 975043097}
   - {fileID: 1261064766}
   - {fileID: 683342145}
-  - {fileID: 1327113788}
   m_Father: {fileID: 977705817}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1162,33 +1162,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 527951165}
   m_CullTransparentMesh: 0
---- !u!21 &568948511
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 'target_ssfsqMaterial
-
-    43498'
-  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 5
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 44ab35341d544336a0181cdbf1e0ad07, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats: []
-    m_Colors:
-    - _Color: {r: 0.82089555, g: 0.82089555, b: 0.82089555, a: 1}
 --- !u!1 &623494269
 GameObject:
   m_ObjectHideFlags: 0
@@ -1319,7 +1292,7 @@ MonoBehaviour:
   Pagination: {fileID: 0}
   PrevButton: {fileID: 1752234893}
   NextButton: {fileID: 1253141325}
-  transitionSpeed: 15
+  transitionSpeed: 10
   UseFastSwipe: 1
   FastSwipeThreshold: 100
   SwipeVelocityThreshold: 100
@@ -1329,6 +1302,21 @@ MonoBehaviour:
   RestartOnEnable: 0
   UseParentTransform: 0
   ChildObjects: []
+  m_OnSelectionChangeStartEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.Extensions.ScrollSnapBase+SelectionChangeStartEvent,
+      Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_OnSelectionPageChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.Extensions.ScrollSnapBase+SelectionPageChangedEvent,
+      Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_OnSelectionChangeEndEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.Extensions.ScrollSnapBase+SelectionChangeEndEvent,
+      Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &633439906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1346,7 +1334,7 @@ MonoBehaviour:
   m_Vertical: 0
   m_MovementType: 1
   m_Elasticity: 0.1
-  m_Inertia: 0
+  m_Inertia: 1
   m_DecelerationRate: 0.135
   m_ScrollSensitivity: 1
   m_Viewport: {fileID: 0}
@@ -1485,7 +1473,7 @@ Prefab:
     - target: {fileID: 224509137713538498, guid: 271ba4c0e69012c4d848cd7b6ed72afb,
         type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 224509137713538498, guid: 271ba4c0e69012c4d848cd7b6ed72afb,
         type: 2}
@@ -1824,6 +1812,33 @@ Mesh:
   m_MeshMetrics[0]: 1
   m_MeshMetrics[1]: 1
   m_MeshOptimized: 0
+--- !u!21 &832523646
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 'target_ssfsqMaterial
+
+    20488'
+  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 44ab35341d544336a0181cdbf1e0ad07, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 0.82089555, g: 0.82089555, b: 0.82089555, a: 1}
 --- !u!1 &849955048
 GameObject:
   m_ObjectHideFlags: 0
@@ -2933,7 +2948,7 @@ Prefab:
     - target: {fileID: 224269813546157398, guid: 7943b5fd4f4853b40baae47d223b7a4a,
         type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 224269813546157398, guid: 7943b5fd4f4853b40baae47d223b7a4a,
         type: 2}
@@ -3123,7 +3138,7 @@ Prefab:
     - target: {fileID: 224824733310242096, guid: 457721ef443be1649a7d2229e750c4d5,
         type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 224824733310242096, guid: 457721ef443be1649a7d2229e750c4d5,
         type: 2}
@@ -3781,7 +3796,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 568948511}
+  - {fileID: 832523646}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4078,7 +4093,7 @@ Prefab:
     - target: {fileID: 224864688033343994, guid: efaac9368f2571345b40fa0fcb9884fe,
         type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 224864688033343994, guid: efaac9368f2571345b40fa0fcb9884fe,
         type: 2}

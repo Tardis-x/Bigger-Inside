@@ -18,5 +18,34 @@ namespace ua.org.gdg.devfest
     {
       get { return _sponsorId; }
     }
+    
+    //---------------------------------------------------------------------
+    // Internal
+    //---------------------------------------------------------------------
+    
+    private Animator _selectionAnimator;
+
+    //---------------------------------------------------------------------
+    // Messages
+    //---------------------------------------------------------------------
+    
+    private void Awake()
+    {
+      _selectionAnimator = GetComponent<Animator>();
+    }
+    
+    //---------------------------------------------------------------------
+    // Public
+    //---------------------------------------------------------------------
+
+    public void Select()
+    {  
+      _selectionAnimator.SetBool("IsSelected", true);
+    }
+
+    public void Deselect()
+    {
+      _selectionAnimator.SetBool("IsSelected", false);
+    }
   }
 }

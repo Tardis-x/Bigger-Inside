@@ -29,22 +29,25 @@ namespace ua.org.gdg.devfest
     
     private readonly List<SponsorItem> _sponsorItems = new List<SponsorItem>();
     
+    private InfoCoinGroup _activeInfoCoinGroup;
+
     //---------------------------------------------------------------------
     // Messages
     //---------------------------------------------------------------------
 
     private void Start()
     {
-      _horizontalScrollSnap.OnSelectionChangeEndEvent.AddListener(OnScrollSnapPositionChanged);
+      _horizontalScrollSnap.OnSelectionPageChangedEvent.AddListener(OnScrollSnapPositionChanged);
     }
 
     //---------------------------------------------------------------------
     // Public
     //---------------------------------------------------------------------
 
-    public void OpenPanel(List<SponsorModel> sponsorModelList)
+    public void OpenPanel(InfoCoinGroup infoCoinGroup)
     {
-      GenerateSponsorItems(sponsorModelList);
+      _activeInfoCoinGroup = infoCoinGroup;
+      GenerateSponsorItems(_activeInfoCoinGroup.SponsorWithNameList);
       gameObject.SetActive(true);
     }
     
@@ -66,19 +69,10 @@ namespace ua.org.gdg.devfest
           
         _sponsorItems.Add(sponsorItem);
       }
-    }
 
-    private void UpdateSponsorItemLogo(SponsorItem sponsorItem, SponsorModel sponsorModel)
-    {
-      foreach (var sponsorLogo in _sponsorLogoData.SponsorLogos)
-      {
-        if (!string.Equals(sponsorModel.Name, sponsorLogo.Name)) continue;
-        
-        sponsorItem.SetSponsorLogo(sponsorLogo);
-        return;
-      }
+      SelectFirstSponsorItem();
     }
-
+    
     private void ClearList()
     {
       if (_sponsorItems.Count == 0) return;
@@ -93,9 +87,30 @@ namespace ua.org.gdg.devfest
       
       _sponsorItems.Clear();
     }
+
+
+    private void UpdateSponsorItemLogo(SponsorItem sponsorItem, SponsorModel sponsorModel)
+    {
+      foreach (var sponsorLogo in _sponsorLogoData.SponsorLogos)
+      {
+        if (!string.Equals(sponsorModel.Name, sponsorLogo.Name)) continue;
+        
+        sponsorItem.SetSponsorLogo(sponsorLogo);
+        return;
+      }
+    }
+    
+    private void SelectFirstSponsorItem()
+    {
+      if (_sponsorItems.Count > 0)
+      {
+        OnScrollSnapPositionChanged(0);
+      }
+    }
     
     private void OnScrollSnapPositionChanged(int position)
     {
+      _activeInfoCoinGroup.OnSponsorSelected(_sponsorItems[position].SponsorModel.Id);
     }
   }
 }

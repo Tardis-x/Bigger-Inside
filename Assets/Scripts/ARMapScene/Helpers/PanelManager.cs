@@ -56,10 +56,10 @@ namespace ua.org.gdg.devfest
 			_infoCoinSchedulePanel.OpenPanel(hallName);
 		}
 
-		public void ShowInfoCoinGroupPanel(List<SponsorModel> sponsorModelList)
+		public void ShowInfoCoinGroupPanel(InfoCoinGroup infoCoinGroup)
 		{
 			ClearAll();
-			_infoCoinGroupPanel.OpenPanel(sponsorModelList);
+			_infoCoinGroupPanel.OpenPanel(infoCoinGroup);
 		}
 
 		public void ClearAll()

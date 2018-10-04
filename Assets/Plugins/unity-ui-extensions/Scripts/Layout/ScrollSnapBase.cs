@@ -3,10 +3,8 @@
 /// Updated by ddreaper - removed dependency on a custom ScrollRect script. Now implements drag interfaces and standard Scroll Rect.
 
 using System;
-using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace UnityEngine.UI.Extensions
 {
@@ -110,17 +108,17 @@ namespace UnityEngine.UI.Extensions
         [Tooltip("Scroll Snap children. (optional)\nEither place objects in the scene as children OR\nPrefabs in this array, NOT BOTH")]
         public GameObject[] ChildObjects;
 
-//        [SerializeField]
+        [SerializeField]
         [Tooltip("Event fires when a user starts to change the selection")]
         private SelectionChangeStartEvent m_OnSelectionChangeStartEvent = new SelectionChangeStartEvent();
         public SelectionChangeStartEvent OnSelectionChangeStartEvent { get { return m_OnSelectionChangeStartEvent; } set { m_OnSelectionChangeStartEvent = value; } }
 
-//        [SerializeField]
+        [SerializeField]
         [Tooltip("Event fires as the page changes, while dragging or jumping")]
         private SelectionPageChangedEvent m_OnSelectionPageChangedEvent = new SelectionPageChangedEvent();
         public SelectionPageChangedEvent OnSelectionPageChangedEvent { get { return m_OnSelectionPageChangedEvent; } set { m_OnSelectionPageChangedEvent = value; } }
 
-//        [SerializeField]
+        [SerializeField]
         [Tooltip("Event fires when the page settles after a user has dragged")]
         private SelectionChangeEndEvent m_OnSelectionChangeEndEvent = new SelectionChangeEndEvent();
         public SelectionChangeEndEvent OnSelectionChangeEndEvent { get { return m_OnSelectionChangeEndEvent; } set { m_OnSelectionChangeEndEvent = value; } }

@@ -25,7 +25,7 @@ namespace ua.org.gdg.devfest
       }
       else
       {
-        PanelManager.Instance.ShowInfoCoinGroupPanel(infoCoinGroup.SponsorWithNameList);
+        PanelManager.Instance.ShowInfoCoinGroupPanel(infoCoinGroup);
       }
     }
     

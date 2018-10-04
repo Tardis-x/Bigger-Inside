@@ -24,6 +24,7 @@ namespace ua.org.gdg.devfest
     
     private Animator _animator;
     private bool _isSelected;
+    private InfoCoinElement _lastSelectedElement;
 
     //---------------------------------------------------------------------
     // Property
@@ -68,10 +69,23 @@ namespace ua.org.gdg.devfest
       
       _isSelected = false;
       
+      DeselectActiveElement();
+      
       _animator.SetTrigger("Close");
       _animator.ResetTrigger("Open");
     }
     
+    public void OnSponsorSelected(string sponsorId)
+    {
+      foreach (var infoCoinElement in _infoCoinElements)
+      {
+        if (string.Equals(infoCoinElement.SponsorId, sponsorId))
+        {
+          UpdateSelection(infoCoinElement);
+        }
+      }
+    }
+
     //---------------------------------------------------------------------
     // Helpers
     //---------------------------------------------------------------------
@@ -113,6 +127,20 @@ namespace ua.org.gdg.devfest
       }
 
       return hasSponsorData;
+    }
+    
+    private void UpdateSelection(InfoCoinElement infoCoinElement)
+    {
+      DeselectActiveElement();
+
+      infoCoinElement.Select();
+      _lastSelectedElement = infoCoinElement;
+    }
+    
+    private void DeselectActiveElement()
+    {
+      if (_lastSelectedElement != null) _lastSelectedElement.Deselect();
+      _lastSelectedElement = null;
     }
   }
 }
