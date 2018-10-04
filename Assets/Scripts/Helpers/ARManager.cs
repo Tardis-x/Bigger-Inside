@@ -38,6 +38,7 @@ namespace ua.org.gdg.devfest
 
     public void OnTrackingLost()
     {
+      _hint.text = "Aim camera at horizontal surface";
       ShowHint(_arCoreSupport);
       _planeFinder.SetActive(_arCoreSupport);
     }
@@ -78,10 +79,11 @@ namespace ua.org.gdg.devfest
       if (hitTestResult == null)
       {
         ShowHint(true);
+        _hint.text = "Aim camera at horizontal surface";
         return;
       }
-      
-      ShowHint(false);
+
+      _hint.text = "Tap on surface";
     }
     
     //---------------------------------------------------------------------
