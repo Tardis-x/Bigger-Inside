@@ -20,6 +20,10 @@ namespace ua.org.gdg.devfest
     [SerializeField] private GameEvent _showLoading;
     [SerializeField] private GameEvent _dismissLoading;
 
+    [Space]
+    [Header("UI")]
+    [SerializeField] private NotificationsBadgeManager _notificationsBadge;
+
     //---------------------------------------------------------------------
     // Internal
     //---------------------------------------------------------------------
@@ -118,7 +122,7 @@ namespace ua.org.gdg.devfest
       }
       else
       {
-        Utils.ShowMessage("Oops! Something went wrong, try again later.");
+        Utils.ShowMessage("Login Failed");
       }
     }
 
@@ -134,7 +138,7 @@ namespace ua.org.gdg.devfest
       else if (task.IsFaulted)
       {
         signInCompleted.SetException(task.Exception);
-        Utils.ShowMessage("Oops! Something went wrong, try again later.");
+        Utils.ShowMessage("Login Failed");
       }
       else
       {
@@ -149,7 +153,7 @@ namespace ua.org.gdg.devfest
     {
       if (task.IsFaulted)
       {
-        Utils.ShowMessage("GoogleSignIn faulted");
+        Utils.ShowMessage("Login Failed");
       }
       else if (task.IsCanceled)
       {
@@ -175,7 +179,7 @@ namespace ua.org.gdg.devfest
       }
       else if (authTask.IsFaulted)
       {
-        Utils.ShowMessage("Firebase SignIn faulted");
+        Utils.ShowMessage("Login Failed");
         signInCompleted.SetException(authTask.Exception);
       }
       else
@@ -199,12 +203,12 @@ namespace ua.org.gdg.devfest
       var authIdentity = AuthIdentity.CreateCustomIdentity(user.ProviderId, user.UserId, token);
 
       GetSocial.User.AddAuthIdentity(authIdentity, SetGetSocialNameAndAvatar,
-        error => { Utils.ShowMessage("Oops! Something went wrong, try again later.");},
+        error => { Utils.ShowMessage("News Feed Login Failed");},
         conflict =>
         {
           GetSocial.User.SwitchUser(authIdentity,
             SetGetSocialNameAndAvatar,
-            error => {Utils.ShowMessage("Oops! Something went wrong, try again later.");});
+            error => {Utils.ShowMessage("News Feed Login Failed");});
         });
     }
 
@@ -216,20 +220,21 @@ namespace ua.org.gdg.devfest
       
       SetGetSocialUsername(user.DisplayName);
       SetGetSocialAvatar(GetHigherResProfilePic(user.PhotoUrl.OriginalString));
+      _notificationsBadge.OnSignInFinished();
     }
 
     private void SetGetSocialUsername(string name)
     {
       GetSocial.User.SetDisplayName(name,
         () => {},
-        error => { Utils.ShowMessage("Oops! Something went wrong, try again later.");});
+        error => { Utils.ShowMessage("Couldn't Update Your News Feed Username");});
     }
 
     private void SetGetSocialAvatar(string url)
     {
       GetSocial.User.SetAvatarUrl(url,
         () => {},
-        error => {Utils.ShowMessage("Oops! Something went wrong, try again later.");});
+        error => {Utils.ShowMessage("Couldn't Update Your News Feed Avatar");});
     }
 
     private void SignInFinished()
