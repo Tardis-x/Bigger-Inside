@@ -11,7 +11,8 @@ namespace ua.org.gdg.devfest
     
     [Header("Markers")] 
     [SerializeField] private GameObject _wcMarker;
-    [SerializeField] private GameObject _hallMarker;
+    [SerializeField] private GameObject _pressWallMarker;
+    [SerializeField] private GameObject _partnersZoneMarker;
 
     //---------------------------------------------------------------------
     // Public
@@ -24,8 +25,11 @@ namespace ua.org.gdg.devfest
           case NavigationTargets.WC:
             _wcMarker.SetActive(true);
             break;
-          case NavigationTargets.Hall:
-            _hallMarker.SetActive(true);
+          case NavigationTargets.PartnersZone:
+            _pressWallMarker.SetActive(true);
+            break;
+          case NavigationTargets.PressWall:
+            _partnersZoneMarker.SetActive(true);
             break;
       }
     }

@@ -24,7 +24,6 @@ GameObject:
   - component: {fileID: 23831216685540788}
   - component: {fileID: 33348593606359794}
   - component: {fileID: 114208486955547482}
-  - component: {fileID: 114092279517913468}
   m_Layer: 0
   m_Name: NavigationTarget
   m_TagString: Untagged
@@ -39,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1947992481532626}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.17825776, y: -0.11058498, z: -0.01485011}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -106,19 +105,6 @@ MonoBehaviour:
   mImageTargetType: 0
   mWidth: 1
   mHeight: 1
---- !u!114 &114092279517913468
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1947992481532626}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76fa7a7536f82674dbe83ee8533bddae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _onTrackingFound: {fileID: 11400000, guid: 808af3116451a9a42a00d583f05a0abb, type: 2}
-  _onTrackingLost: {fileID: 11400000, guid: 69917b4695d9d434398010d9f65a0301, type: 2}
 --- !u!114 &114161188881138814
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -141,5 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76aa1a32be4a9bf4e8814a14de4c416d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _trackableFound: {fileID: 11400000, guid: 808af3116451a9a42a00d583f05a0abb, type: 2}
+  _trackableLost: {fileID: 11400000, guid: 69917b4695d9d434398010d9f65a0301, type: 2}
   _prefabPath: ARMap/Environment
   _position: 0

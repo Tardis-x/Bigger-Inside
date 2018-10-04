@@ -9,6 +9,11 @@ namespace ua.org.gdg.devfest
 		// Editor
 		//---------------------------------------------------------------------
 
+		[Header("Events")]
+		[SerializeField] private GameEvent _trackableFound;
+		[SerializeField] private GameEvent _trackableLost;
+		
+		[Space]
 		[SerializeField] private string _prefabPath;
 		[SerializeField] private NavigationTargets _position;
 
@@ -34,6 +39,8 @@ namespace ua.org.gdg.devfest
 			{
 				navigationResolver.SetupNavigationTarget(_position);
 			}
+			
+			_trackableFound.Raise();
 		}
 
 		protected override void OnTrackingLost()
@@ -42,6 +49,8 @@ namespace ua.org.gdg.devfest
 			{
 				Destroy(_environment);
 			}
+			
+			_trackableLost.Raise();
 		}
 	}
 }
