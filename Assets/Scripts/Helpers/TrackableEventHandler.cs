@@ -11,10 +11,23 @@ namespace ua.org.gdg.devfest
 
 		[SerializeField] private GameEvent _onTrackingFound;
 		[SerializeField] private GameEvent _onTrackingLost;
+		
+		//---------------------------------------------------------------------
+		// Internal
+		//---------------------------------------------------------------------
+
+		private bool _arCoreSupport;
 
 		//---------------------------------------------------------------------
 		// Messages
 		//---------------------------------------------------------------------
+
+		protected override void Start()
+		{
+			base.Start();
+			
+			_arCoreSupport = ARCoreHelper.CheckArCoreSupport();
+		}
 
 		protected override void OnTrackingLost()
 		{
@@ -22,7 +35,7 @@ namespace ua.org.gdg.devfest
 			
 			if (_onTrackingLost == null) return;
 
-			if (ARCoreHelper.CheckArCoreSupport())
+			if (_arCoreSupport)
 			{
 				if(!IsDeviceTrackerActive()) return;
 			}

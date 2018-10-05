@@ -23,16 +23,53 @@ namespace ua.org.gdg.devfest
       switch (navigationTarget)
       {
           case NavigationTargets.WC:
-            _wcMarker.SetActive(true);
+            SetActiveWcMarker();
             break;
           case NavigationTargets.PartnersZone:
-            _pressWallMarker.SetActive(true);
+            SetActivePartnersZoneMarker();
             break;
           case NavigationTargets.PressWall:
-            _partnersZoneMarker.SetActive(true);
+            SetActivePressWallMarker();
+            break;
+          case NavigationTargets.None:
+            DeactivateMarkers();
+            break;
+          default:
+            DeactivateMarkers();
             break;
       }
     }
+    
+    //---------------------------------------------------------------------
+    // Internal
+    //---------------------------------------------------------------------
 
+    private void SetActiveWcMarker()
+    {
+      _wcMarker.SetActive(true);
+      _pressWallMarker.SetActive(false);
+      _partnersZoneMarker.SetActive(false);
+    }
+
+    private void SetActivePressWallMarker()
+    {
+      _wcMarker.SetActive(false);
+      _pressWallMarker.SetActive(true);
+      _partnersZoneMarker.SetActive(false);
+    }
+
+    private void SetActivePartnersZoneMarker()
+    {
+      _wcMarker.SetActive(false);
+      _pressWallMarker.SetActive(false);
+      _partnersZoneMarker.SetActive(true);
+    }
+
+    private void DeactivateMarkers()
+    {
+      _wcMarker.SetActive(false);
+      _pressWallMarker.SetActive(false);
+      _partnersZoneMarker.SetActive(false);
+    }
   }
 }

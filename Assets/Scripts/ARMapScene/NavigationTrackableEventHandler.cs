@@ -15,8 +15,9 @@ namespace ua.org.gdg.devfest
 		[SerializeField] private GameEvent _trackableLost;
 		
 		[Space]
-		[SerializeField] private string _prefabPath;
 		[SerializeField] private NavigationTargets _position;
+		[SerializeField] private ARManager _arManager;
+		[SerializeField] private string _prefabPath;
 
 		//---------------------------------------------------------------------
 		// Internal
@@ -24,16 +25,23 @@ namespace ua.org.gdg.devfest
 
 		private GameObject _environment;
 		private PositionalDeviceTracker _positionalDeviceTracker;
+		private bool _arCoreSupport;
 
 		//---------------------------------------------------------------------
 		// Messages
 		//---------------------------------------------------------------------
 
+		protected override void Start()
+		{
+			base.Start();
+
+			_arCoreSupport = ARCoreHelper.CheckArCoreSupport();
+		}
+
 		protected override void OnTrackingFound()
 		{
-			if (_environment != null) return;
-
-			InstantiateEnvironment();
+			MoveEnvironment();
+			EnableEnvironment(true);
 			ResolveNavigation(_position);
 			EnableDeviceTracker(false);
 			
@@ -42,13 +50,8 @@ namespace ua.org.gdg.devfest
 
 		protected override void OnTrackingLost()
 		{
-			if (_environment != null)
-			{
-				Destroy(_environment);
-			}
-			
 			_trackableLost.Raise();
-			
+			EnableEnvironment(false);
 			EnableDeviceTracker(true);
 		}
 		
@@ -56,10 +59,23 @@ namespace ua.org.gdg.devfest
 		// Internal
 		//---------------------------------------------------------------------
 
-		private void InstantiateEnvironment()
+		private void MoveEnvironment()
+		{
+			if (_environment == null)
+			{
+				_environment = _arManager.Environment != null ? _arManager.Environment : InstantiateEnvironment();
+			}
+
+			_environment.transform.SetParent(transform, false);
+		}
+
+		private GameObject InstantiateEnvironment()
 		{
 			var prefab = Resources.Load<GameObject>(_prefabPath);
-			_environment = Instantiate(prefab, transform);
+			var environment = Instantiate(prefab, transform);
+			_arManager.Environment = environment;
+			
+			return environment;
 		}
 
 		private void ResolveNavigation(NavigationTargets position)
@@ -73,6 +89,8 @@ namespace ua.org.gdg.devfest
 
 		private void EnableDeviceTracker(bool value)
 		{
+			if (!_arCoreSupport) return;
+			
 			if (_positionalDeviceTracker == null)
 			{
 				_positionalDeviceTracker = TrackerManager.Instance.GetTracker<PositionalDeviceTracker>();
@@ -86,6 +104,13 @@ namespace ua.org.gdg.devfest
 			{
 				_positionalDeviceTracker.Stop();
 			}
+		}
+
+		private void EnableEnvironment(bool value)
+		{
+			if (_environment == null) return;
+			
+			_environment.SetActive(value);
 		}
 	}
 }
