@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ua.org.gdg.devfest
 {
@@ -16,6 +15,19 @@ namespace ua.org.gdg.devfest
 		[SerializeField] private InfoCoinNamePanel _infoCoinNamePanel;
 		[SerializeField] private InfoCoinSchedulePanel _infoCoinSchedulePanel;
 		[SerializeField] private InfoCoinGroupPanel _infoCoinGroupPanel;
+		[SerializeField] private GameObject _tutorialPanel;
+
+		//---------------------------------------------------------------------
+		// Messages
+		//---------------------------------------------------------------------
+
+		private void Start()
+		{
+			if (PlayerPrefsHandler.GetTutorStateARMap()) return;
+			
+			_tutorialPanel.SetActive(true);
+			PlayerPrefsHandler.SetTutorStateARMap(true);
+		}
 
 		//---------------------------------------------------------------------
 		// Public
