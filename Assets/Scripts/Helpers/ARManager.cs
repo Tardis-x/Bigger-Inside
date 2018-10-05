@@ -33,6 +33,12 @@ namespace ua.org.gdg.devfest
     private bool _arCoreSupport;
     
     //---------------------------------------------------------------------
+    // Properties
+    //---------------------------------------------------------------------
+    
+    public GameObject Environment { get; set; }
+    
+    //---------------------------------------------------------------------
     // Events
     //---------------------------------------------------------------------
 
@@ -112,7 +118,7 @@ namespace ua.org.gdg.devfest
       
       if (!arCoreSupport)
       {
-        Instantiate(_imageTargetEnvironment, _imageTarget.transform);
+        Environment = Instantiate(_imageTargetEnvironment, _imageTarget.transform);
       }
     }
     

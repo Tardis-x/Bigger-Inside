@@ -2,7 +2,9 @@
 {
   public enum NavigationTargets
   {
-    WC = 0,
-    Hall = 1
+    None = 0,
+    WC = 1,
+    PressWall = 2,
+    PartnersZone = 3
   }
 }

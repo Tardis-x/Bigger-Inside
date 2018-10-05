@@ -11,7 +11,8 @@ namespace ua.org.gdg.devfest
     
     [Header("Markers")] 
     [SerializeField] private GameObject _wcMarker;
-    [SerializeField] private GameObject _hallMarker;
+    [SerializeField] private GameObject _pressWallMarker;
+    [SerializeField] private GameObject _partnersZoneMarker;
 
     //---------------------------------------------------------------------
     // Public
@@ -22,13 +23,53 @@ namespace ua.org.gdg.devfest
       switch (navigationTarget)
       {
           case NavigationTargets.WC:
-            _wcMarker.SetActive(true);
+            SetActiveWcMarker();
             break;
-          case NavigationTargets.Hall:
-            _hallMarker.SetActive(true);
+          case NavigationTargets.PartnersZone:
+            SetActivePartnersZoneMarker();
+            break;
+          case NavigationTargets.PressWall:
+            SetActivePressWallMarker();
+            break;
+          case NavigationTargets.None:
+            DeactivateMarkers();
+            break;
+          default:
+            DeactivateMarkers();
             break;
       }
     }
+    
+    //---------------------------------------------------------------------
+    // Internal
+    //---------------------------------------------------------------------
 
+    private void SetActiveWcMarker()
+    {
+      _wcMarker.SetActive(true);
+      _pressWallMarker.SetActive(false);
+      _partnersZoneMarker.SetActive(false);
+    }
+
+    private void SetActivePressWallMarker()
+    {
+      _wcMarker.SetActive(false);
+      _pressWallMarker.SetActive(true);
+      _partnersZoneMarker.SetActive(false);
+    }
+
+    private void SetActivePartnersZoneMarker()
+    {
+      _wcMarker.SetActive(false);
+      _pressWallMarker.SetActive(false);
+      _partnersZoneMarker.SetActive(true);
+    }
+
+    private void DeactivateMarkers()
+    {
+      _wcMarker.SetActive(false);
+      _pressWallMarker.SetActive(false);
+      _partnersZoneMarker.SetActive(false);
+    }
   }
 }
