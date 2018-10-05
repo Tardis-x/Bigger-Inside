@@ -11,8 +11,8 @@ using Vuforia;
 
 /// <summary>
 /// A custom handler that implements the ITrackableEventHandler interface.
-/// 
-/// Changes made to this file could be overwritten when upgrading the Vuforia version. 
+///
+/// Changes made to this file could be overwritten when upgrading the Vuforia version.
 /// When implementing custom event handler behavior, consider inheriting from this class instead.
 /// </summary>
 public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandler
@@ -20,6 +20,8 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
     #region PROTECTED_MEMBER_VARIABLES
 
     protected TrackableBehaviour mTrackableBehaviour;
+    protected TrackableBehaviour.Status m_PreviousStatus;
+    protected TrackableBehaviour.Status m_NewStatus;
 
     #endregion // PROTECTED_MEMBER_VARIABLES
 
@@ -50,6 +52,9 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
         TrackableBehaviour.Status previousStatus,
         TrackableBehaviour.Status newStatus)
     {
+        m_PreviousStatus = previousStatus;
+        m_NewStatus = newStatus;
+
         if (newStatus == TrackableBehaviour.Status.DETECTED ||
             newStatus == TrackableBehaviour.Status.TRACKED ||
             newStatus == TrackableBehaviour.Status.EXTENDED_TRACKED)
