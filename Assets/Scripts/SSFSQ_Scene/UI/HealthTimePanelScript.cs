@@ -120,8 +120,7 @@ namespace ua.org.gdg.devfest
     {
       for (int i = 0; i < count; i++)
       {
-        var star = Instantiate(_starPrefab);
-        star.SetParent(_starsContainer);
+        Instantiate(_starPrefab, _starsContainer);
       }
     }
 
@@ -135,8 +134,7 @@ namespace ua.org.gdg.devfest
     {
       for (int i = 0; i < count; i++)
       {
-        var brain = Instantiate(_brainPrefab);
-        brain.SetParent(_brainsContainer);
+        Instantiate(_brainPrefab, _brainsContainer);
       }
     }
 
