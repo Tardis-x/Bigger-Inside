@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: -1631628248, guid: bab6fa851cf5a1a4bba3cec5f191cb8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mTrackableName: target_ssfsq
+  mTrackableName: ARMap_Navigation_3
   mPreserveChildSize: 0
   mInitializedInEditor: 1
   mDataSetPath: Vuforia/Bigger-Inside.xml
@@ -129,5 +129,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _trackableFound: {fileID: 11400000, guid: 808af3116451a9a42a00d583f05a0abb, type: 2}
   _trackableLost: {fileID: 11400000, guid: 69917b4695d9d434398010d9f65a0301, type: 2}
+  _position: 3
+  _arManager: {fileID: 0}
   _prefabPath: ARMap/Environment
-  _position: 0
