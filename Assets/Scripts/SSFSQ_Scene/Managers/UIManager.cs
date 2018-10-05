@@ -21,7 +21,6 @@ namespace ua.org.gdg.devfest
 
     [SerializeField] private GameObject _tutorialPanel;
     [SerializeField] private ARCorePanelScript _arCorePanel;
-    [SerializeField] private Text _hintText;
 
     [Space] 
     [Header("Virtual Buttons")] 
