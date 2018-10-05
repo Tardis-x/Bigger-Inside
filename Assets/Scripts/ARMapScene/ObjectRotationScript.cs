@@ -23,20 +23,21 @@ namespace ua.org.gdg.devfest
     // Messages
     //---------------------------------------------------------------------
 
-    private void Start()
+    private void OnEnable()
+    { 
+      StartCoroutine(RotationCoroutine());
+    }
+
+    private void OnDisable()
     {
-//      var rotationOffset = Random.value * 360;
-//      _startRotationY = rotationOffset;
-//      _endRotationY = 360 + rotationOffset;
-      
-      StartCoroutine(FadeCoroutine());
+      StopAllCoroutines();
     }
 
     //---------------------------------------------------------------------
     // Helpers
     //---------------------------------------------------------------------
 
-    private IEnumerator FadeCoroutine()
+    private IEnumerator RotationCoroutine()
     {
       while (true)
       {
