@@ -41,7 +41,8 @@ namespace ua.org.gdg.devfest
 
 		public void OnTrackableFound()
 		{
-			ShowTipPanel(false);
+			_arTip.SetActive(false);
+			_vuforiaTip.SetActive(false);
 		}
 		
 		//---------------------------------------------------------------------
