@@ -43,7 +43,6 @@ namespace ua.org.gdg.devfest
     private void Start()
     {
       ButtonsToPauseMode();
-      ResetUI();
     }
 
     public void OnContentPlaced(GameObject environment)
