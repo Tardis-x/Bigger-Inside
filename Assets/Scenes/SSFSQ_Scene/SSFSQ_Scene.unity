@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -228,7 +228,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 79186636}
   m_LocalRotation: {x: -0.71061915, y: -0, z: -0, w: 0.703577}
-  m_LocalPosition: {x: -0.1847998, y: 0.29, z: -0.41779968}
+  m_LocalPosition: {x: 0.043, y: 0.29, z: -0.41779968}
   m_LocalScale: {x: 0.02, y: 0.020000009, z: 0.020000009}
   m_Children:
   - {fileID: 763144792}
@@ -828,6 +828,33 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!21 &170767826
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 'target_ssfsqMaterial
+
+    31348'
+  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: eb7201d4154b4ab0b51503cda28efa37, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 0.82089555, g: 0.82089555, b: 0.82089555, a: 1}
 --- !u!1 &206643478
 GameObject:
   m_ObjectHideFlags: 0
@@ -2454,7 +2481,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 1249885432}
+  - {fileID: 170767826}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2515,8 +2542,8 @@ MonoBehaviour:
   mDataSetPath: Vuforia/Bigger-Inside.xml
   mAspectRatio: 1
   mImageTargetType: 0
-  mWidth: 1
-  mHeight: 1
+  mWidth: 50
+  mHeight: 50
 --- !u!4 &833855964
 Transform:
   m_ObjectHideFlags: 0
@@ -2525,7 +2552,7 @@ Transform:
   m_GameObject: {fileID: 833855958}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 518, y: 22, z: -518.4}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 50, y: 50, z: 50}
   m_Children:
   - {fileID: 1665490022}
   - {fileID: 1241564775}
@@ -3351,7 +3378,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1241564774}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.37677002, y: 0.0009994507, z: -0.26080322}
+  m_LocalPosition: {x: -0.27299988, y: 0.0009999847, z: -0.27400023}
   m_LocalScale: {x: 0.2, y: 1, z: 0.2}
   m_Children: []
   m_Father: {fileID: 833855964}
@@ -3414,18 +3441,18 @@ MonoBehaviour:
   mSensitivity: 0
   mHasUpdatedPose: 1
   mPrevTransform:
-    e00: 0.2
+    e00: 10
     e01: 0
     e02: 0
-    e03: 517.6232
+    e03: 504.35
     e10: 0
-    e11: 1
+    e11: 50
     e12: 0
-    e13: 22.001
+    e13: 22.05
     e20: 0
     e21: 0
-    e22: 0.2
-    e23: -518.6608
+    e22: 10
+    e23: -532.10004
     e30: 0
     e31: 0
     e32: 0
@@ -3557,33 +3584,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!21 &1249885432
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 'target_ssfsqMaterial
-
-    102594'
-  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 5
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 5e448e37c4644a3883aa64e270b7505c, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats: []
-    m_Colors:
-    - _Color: {r: 0.82089555, g: 0.82089555, b: 0.82089555, a: 1}
 --- !u!1 &1265187536
 GameObject:
   m_ObjectHideFlags: 0
@@ -4207,7 +4207,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1665490021}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.17193604, y: 0.0009994507, z: -0.2579956}
+  m_LocalPosition: {x: 0, y: 0.0009999847, z: -0.27400023}
   m_LocalScale: {x: 0.2, y: 1, z: 0.2}
   m_Children: []
   m_Father: {fileID: 833855964}
@@ -4286,18 +4286,18 @@ MonoBehaviour:
   mSensitivity: 0
   mHasUpdatedPose: 1
   mPrevTransform:
-    e00: 0.2
+    e00: 10
     e01: 0
     e02: 0
-    e03: 517.82806
+    e03: 518
     e10: 0
-    e11: 1
+    e11: 50
     e12: 0
-    e13: 22.001
+    e13: 22.05
     e20: 0
     e21: 0
-    e22: 0.2
-    e23: -518.658
+    e22: 10
+    e23: -532.10004
     e30: 0
     e31: 0
     e32: 0
@@ -5385,7 +5385,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1900831084}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.034973145, y: 0.0009994507, z: -0.2522583}
+  m_LocalPosition: {x: 0.26999998, y: 0.0009999847, z: -0.27400023}
   m_LocalScale: {x: 0.2, y: 1, z: 0.2}
   m_Children: []
   m_Father: {fileID: 833855964}
@@ -5448,18 +5448,18 @@ MonoBehaviour:
   mSensitivity: 0
   mHasUpdatedPose: 1
   mPrevTransform:
-    e00: 0.2
+    e00: 10
     e01: 0
     e02: 0
-    e03: 518.035
+    e03: 531.5
     e10: 0
-    e11: 1
+    e11: 50
     e12: 0
-    e13: 22.001
+    e13: 22.05
     e20: 0
     e21: 0
-    e22: 0.2
-    e23: -518.6523
+    e22: 10
+    e23: -532.10004
     e30: 0
     e31: 0
     e32: 0
