@@ -18,6 +18,11 @@ namespace ua.org.gdg.devfest
       {
         IsGood = false,
         Text = "Bad question"
+      },
+      new QuestionModel
+      {
+        IsGood = false,
+        Text = "Is there any difference between '===' and '='?"
       }
     };
     
