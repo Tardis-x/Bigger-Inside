@@ -9,22 +9,7 @@ namespace ua.org.gdg.devfest
     private PlayerChoice _playerChoice;
     
     //Questions
-    private readonly QuestionModel[] _questions = {new QuestionModel
-      {
-        IsGood = true,
-        Text = "Good question"
-      }, 
-      new QuestionModel
-      {
-        IsGood = false,
-        Text = "Bad question"
-      },
-      new QuestionModel
-      {
-        IsGood = false,
-        Text = "Is there any difference between '===' and '='?"
-      }
-    };
+    private QuestionModel[] _questions;
     
     //---------------------------------------------------------------------
     // Property
@@ -70,6 +55,11 @@ namespace ua.org.gdg.devfest
     private void OnDestroy()
     {
       Time.timeScale = 1;
+    }
+
+    private void Start()
+    {
+      _questions = Questions.QuestionsList;
     }
 
     //---------------------------------------------------------------------
