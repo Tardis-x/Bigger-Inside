@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 namespace ua.org.gdg.devfest
 {
@@ -23,10 +20,14 @@ namespace ua.org.gdg.devfest
 		//---------------------------------------------------------------------
 		// Messages
 		//---------------------------------------------------------------------
-		
+
+		private void Awake()
+		{
+			_arCoreSupport = ARCoreHelper.CheckArCoreSupport();			
+		}
+
 		private void Start()
 		{
-			_arCoreSupport = ARCoreHelper.CheckArCoreSupport();
 			ShowTipPanel(true);
 		}
 		
