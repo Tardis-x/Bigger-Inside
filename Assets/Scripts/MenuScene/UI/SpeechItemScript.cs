@@ -20,7 +20,8 @@ namespace ua.org.gdg.devfest
     // Editor
     //---------------------------------------------------------------------
 
-    [Header("UI")] [SerializeField] private Text _speakerCompanyCountryText;
+    [Header("UI")]
+    [SerializeField] private Text _speakerCompanyCountryText;
     [SerializeField] private Text _speakerNameText;
     [SerializeField] private Text _nameText;
     [SerializeField] private Text _tagText;
@@ -29,6 +30,13 @@ namespace ua.org.gdg.devfest
     [SerializeField] private Image _speakerPhotoCircle;
     [SerializeField] private Text _timespanText;
     [SerializeField] private Text _complexityText;
+    
+    [Space]
+    [Header("Speaker 2")]
+    [SerializeField] private GameObject _speakerData2;
+    [SerializeField] private Text _speakerCompanyCountryText2;
+    [SerializeField] private Text _speakerNameText2;
+    [SerializeField] private RawImage _speakerPhoto2;
 
     //---------------------------------------------------------------------
     // Properties
@@ -39,8 +47,23 @@ namespace ua.org.gdg.devfest
     {
       get { return _model.Tag; }
     }
-    
-    public bool ImageLoaded { get; private set; }
+
+    public bool ImageLoaded
+    {
+      get { return _model.Speakers.Length < 2 ? _image1Loaded : _image1Loaded && _image2Loaded; }
+      private set
+      {
+        if (!_image1Loaded)
+          _image1Loaded = value;
+        else _image2Loaded = value;
+      }
+    }
+
+    //---------------------------------------------------------------------
+    // Internal
+    //---------------------------------------------------------------------
+
+    private bool _image1Loaded, _image2Loaded;
 
     //---------------------------------------------------------------------
     // Messages
@@ -62,7 +85,7 @@ namespace ua.org.gdg.devfest
       instance.SetName(model.Title);
       instance._timespanText.text = model.Timespan;
 
-      if (model.Speaker != null) instance.SetSpeakerData(model.Speaker);
+      if (model.Speakers != null) instance.SetSpeakerData(model.Speakers);
 
       instance._description = model.Description;
       instance.SetComplexityText(model.Description.Complexity ?? "");
@@ -79,9 +102,13 @@ namespace ua.org.gdg.devfest
 
     public void LoadSpeakerPhoto()
     {
-      if(_model.Speaker == null) return;
+      if(_model.Speakers == null) return;
       
-      LoadImage(_model.Speaker.PhotoUrl, _speakerPhoto);
+      LoadImage(_model.Speakers[0].PhotoUrl, _speakerPhoto);
+      
+      if(_model.Speakers.Length < 2) return;
+      
+      LoadImage(_model.Speakers[1].PhotoUrl, _speakerPhoto2);
     }
 
     //---------------------------------------------------------------------
@@ -100,10 +127,19 @@ namespace ua.org.gdg.devfest
       _tagBorder.gameObject.SetActive(!value);
     }
 
-    private void SetSpeakerData(Speaker speaker)
+    private void SetSpeakerData(Speaker[] speakers)
     {
-      SetSpeakerCompanyCountry(speaker.Company, speaker.Country);
-      SetSpeakerName(speaker.Name);
+      if (speakers.Length < 2)
+      {
+        SetSpeakerCompanyCountry(speakers[0].Company, speakers[0].Country);
+        SetSpeakerName(speakers[0].Name);
+      }
+      else
+      {
+        _speakerData2.SetActive(true);
+        SetSpeakerCompanyCountry(speakers[0].Company, speakers[0].Country, speakers[1].Company, speakers[1].Country);
+        SetSpeakerName(speakers[0].Name, speakers[1].Name);
+      }
     }
 
     private void SetComplexityText(string complexity)
@@ -117,10 +153,22 @@ namespace ua.org.gdg.devfest
     {
       _speakerCompanyCountryText.text = company + " / " + country;
     }
+    
+    private void SetSpeakerCompanyCountry(string company, string country, string company2, string country2)
+    {
+      _speakerCompanyCountryText.text = company + " / " + country;
+      _speakerCompanyCountryText2.text = company2 + " / " + country2;
+    }
 
     private void SetSpeakerName(string speakerNameText)
     {
       _speakerNameText.text = speakerNameText;
+    }
+    
+    private void SetSpeakerName(string speakerNameText, string speakerNameText2)
+    {
+      _speakerNameText.text = speakerNameText;
+      _speakerNameText2.text = speakerNameText2;
     }
 
     private void SetName(string nameText)

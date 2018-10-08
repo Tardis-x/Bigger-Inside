@@ -3,7 +3,7 @@
   public class SpeechItemModel
   {
     public ScheduleItemDescriptionUiModel Description;
-    public Speaker Speaker;
+    public Speaker[] Speakers;
     public string Title;
     public string Tag;
     public string Timespan;

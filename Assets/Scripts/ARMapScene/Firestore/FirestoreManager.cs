@@ -139,14 +139,14 @@ namespace ua.org.gdg.devfest
           
           let speaker = item.Speakers != null ?
             item.Speakers.Count > 0 ? 
-              item.Speakers[0] : null : null
+              item.Speakers : null : null
           
           select new SpeechItemModel
           {
             Timespan = GetTimespanText(item.Duration.Hours, item.Duration.Minutes),
             Tag = item.Tag,
             Title = item.Title,
-            Speaker = speaker,
+            Speakers = speaker == null ? null : speaker.ToArray(),
             Description = new ScheduleItemDescriptionUiModel
             {
               EndTime = item.EndTime,
@@ -154,7 +154,7 @@ namespace ua.org.gdg.devfest
               Tag = item.Tag,
               Description = item.Description,
               Title = item.Title,
-              Speaker = speaker,
+              Speakers = speaker == null ? null : speaker.ToArray(),
               Complexity = item.Complexity,
               Hall = item.Hall,
               Language = item.Language,
@@ -185,14 +185,14 @@ namespace ua.org.gdg.devfest
           
         let speaker = item.Speakers != null ?
           item.Speakers.Count > 0 ? 
-            item.Speakers[0] : null : null
+            item.Speakers : null : null
           
         select new SpeechItemModel
         {
           Timespan = GetTimespanText(item.Duration.Hours, item.Duration.Minutes),
           Tag = item.Tag,
           Title = item.Title,
-          Speaker = speaker,
+          Speakers = speaker == null ? null : speaker.ToArray(),
           Description = new ScheduleItemDescriptionUiModel
           {
             EndTime = item.EndTime,
@@ -200,7 +200,7 @@ namespace ua.org.gdg.devfest
             Tag = item.Tag,
             Description = item.Description,
             Title = item.Title,
-            Speaker = speaker,
+            Speakers = speaker == null ? null : speaker.ToArray(),
             Complexity = item.Complexity,
             Hall = item.Hall,
             Language = item.Language,

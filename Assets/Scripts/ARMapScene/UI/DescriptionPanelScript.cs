@@ -21,7 +21,13 @@ namespace ua.org.gdg.devfest
     [SerializeField] private Text _speakerNameText;
     [SerializeField] private Text _speakerCompanyCountryText;
     [SerializeField] private RectTransform _speakerInfoGroup;
-    
+
+    [Space] 
+    [Header("Speaker 2")]
+    [SerializeField] private GameObject _speaker2;
+    [SerializeField] private Text _speakerNameText2;
+    [SerializeField] private Text _speakerCompanyCountryText2;
+    [SerializeField] private RawImage _speakerPhotoImage2;
     //---------------------------------------------------------------------
     // Properties
     //---------------------------------------------------------------------
@@ -62,9 +68,9 @@ namespace ua.org.gdg.devfest
 
     public void SetData(ScheduleItemDescriptionUiModel model)
     {
-      if (model.Speaker != null)
+      if (model.Speakers != null)
       {
-        SetSpeakerData(model.Speaker);
+        SetSpeakerData(model.Speakers);
         ShowSpeakerData(true);
       }
       else
@@ -97,11 +103,18 @@ namespace ua.org.gdg.devfest
       _speakerInfoGroup.gameObject.SetActive(value);
     }
 
-    private void SetSpeakerData(Speaker speaker)
+    private void SetSpeakerData(Speaker[] speakers)
     {
-      LoadImage(speaker.PhotoUrl, _speakerPhotoImage);
-      _speakerNameText.text = speaker.Name;
-      _speakerCompanyCountryText.text = speaker.Company + " / " + speaker.Country;
+      LoadImage(speakers[0].PhotoUrl, _speakerPhotoImage);
+      _speakerNameText.text = speakers[0].Name;
+      _speakerCompanyCountryText.text = speakers[0].Company + " / " + speakers[0].Country;
+
+      if (speakers.Length < 2) return;
+      
+      _speaker2.SetActive(true);
+      LoadImage(speakers[1].PhotoUrl, _speakerPhotoImage2);
+      _speakerNameText2.text = speakers[1].Name;
+      _speakerCompanyCountryText2.text = speakers[1].Company + " / " + speakers[1].Country;
     }
 
     private void ShowTag(bool value)

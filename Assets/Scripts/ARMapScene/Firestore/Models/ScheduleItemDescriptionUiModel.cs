@@ -12,7 +12,6 @@
     public string Tag { get; set; }
     public string Description { get; set; }
     public string TagColor { get; set; }
-    public string ImageUrl { get; set; }
-    public Speaker Speaker { get; set; }
+    public Speaker[] Speakers { get; set; }
   }
 }
