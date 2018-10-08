@@ -42,6 +42,11 @@ namespace ua.org.gdg.devfest
       if (Input.GetKeyDown(KeyCode.Escape)) SetActive(false);
     }
 
+    private void OnDisable()
+    {
+      Destroy(_speakerPhotoImage.texture);
+    }
+
     //---------------------------------------------------------------------
     // Public
     //---------------------------------------------------------------------
