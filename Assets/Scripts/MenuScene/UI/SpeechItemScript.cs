@@ -37,6 +37,10 @@ namespace ua.org.gdg.devfest
     [SerializeField] private Text _speakerCompanyCountryText2;
     [SerializeField] private Text _speakerNameText2;
     [SerializeField] private RawImage _speakerPhoto2;
+    
+    [Space]
+    [Header("Tag 2")]
+    [SerializeField] private GameObject _tag2;
 
     //---------------------------------------------------------------------
     // Properties
@@ -100,6 +104,7 @@ namespace ua.org.gdg.devfest
       instance._description = model.Description;
       instance.SetComplexityText(model.Description.Complexity ?? "");
       instance.SetTag(model.MainTag);
+      if(model.Tags != null) instance._tag2.SetActive(model.Tags.Length > 1);
       instance.gameObject.SetActive(false);
       
       return instance;

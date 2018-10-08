@@ -28,6 +28,10 @@ namespace ua.org.gdg.devfest
     [SerializeField] private Text _speakerNameText2;
     [SerializeField] private Text _speakerCompanyCountryText2;
     [SerializeField] private RawImage _speakerPhotoImage2;
+    
+    [Space] 
+    [Header("Tag 2")]
+    [SerializeField] private GameObject _tag2;
     //---------------------------------------------------------------------
     // Properties
     //---------------------------------------------------------------------
@@ -84,7 +88,7 @@ namespace ua.org.gdg.devfest
         model.Language, model.Complexity);
       _tagText.text = model.MainTag;
       SetTagColor(model.TagColor);
-      ShowTag(model.MainTag != "General");
+      ShowTag(model.MainTag != "General", model.Tags != null && model.Tags.Length > 1);
     }
 
     public void OnBackButtonClick()
@@ -117,9 +121,10 @@ namespace ua.org.gdg.devfest
       _speakerCompanyCountryText2.text = speakers[1].Company + " / " + speakers[1].Country;
     }
 
-    private void ShowTag(bool value)
+    private void ShowTag(bool tag1, bool tag2)
     {
-      _tagBorder.gameObject.SetActive(value);
+      _tag2.SetActive(tag2);
+      _tagBorder.gameObject.SetActive(tag1);
     }
 
     private void SetTagColor(string color)
