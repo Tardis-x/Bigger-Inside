@@ -15,15 +15,13 @@ namespace ua.org.gdg.devfest
     private const string DESIGN_TAG_COLOR = "#EC407B";
     private const string GENERAL_TAG_COLOR = "#9E9E9E";
     private string LOGO_BASE_PATH;
-    private const int DESCRIPTION_HEIGHT_W_O_SPEAKER = 300;
-    private const int DESCRIPTION_HEIGHT_W_SPEAKER = 600;
-    private const int TIMESPAN_TEXT_GENERAL_POS = -200;
 
     //---------------------------------------------------------------------
     // Editor
     //---------------------------------------------------------------------
 
-    [Header("UI")] [SerializeField] private Text _speakerCompanyCountryText;
+    [Header("UI")]
+    [SerializeField] private Text _speakerCompanyCountryText;
     [SerializeField] private Text _speakerNameText;
     [SerializeField] private Text _nameText;
     [SerializeField] private Text _tagText;
@@ -32,18 +30,54 @@ namespace ua.org.gdg.devfest
     [SerializeField] private Image _speakerPhotoCircle;
     [SerializeField] private Text _timespanText;
     [SerializeField] private Text _complexityText;
+    
+    [Space]
+    [Header("Speaker 2")]
+    [SerializeField] private GameObject _speakerData2;
+    [SerializeField] private Text _speakerCompanyCountryText2;
+    [SerializeField] private Text _speakerNameText2;
+    [SerializeField] private RawImage _speakerPhoto2;
+    
+    [Space]
+    [Header("Tag 2")]
+    [SerializeField] private GameObject _tag2;
 
     //---------------------------------------------------------------------
     // Properties
     //---------------------------------------------------------------------
 
     public bool General { get; private set; }
-    public string Tag
-    {
-      get { return _model.Tag; }
-    }
     
-    public bool ImageLoaded { get; private set; }
+    public string MainTag
+    {
+      get { return _model.MainTag; }
+    }
+
+    public string[] Tags
+    {
+      get { return _model.Tags; }
+    }
+
+    public bool ImageLoaded
+    {
+      get
+      {
+        if(_model.Speakers == null) return false;
+        return _model.Speakers.Length < 2 ? _image1Loaded : _image1Loaded && _image2Loaded;
+      }
+      private set
+      {
+        if (!_image1Loaded)
+          _image1Loaded = value;
+        else _image2Loaded = value;
+      }
+    }
+
+    //---------------------------------------------------------------------
+    // Internal
+    //---------------------------------------------------------------------
+
+    private bool _image1Loaded, _image2Loaded;
 
     //---------------------------------------------------------------------
     // Messages
@@ -65,12 +99,12 @@ namespace ua.org.gdg.devfest
       instance.SetName(model.Title);
       instance._timespanText.text = model.Timespan;
 
-      if (model.Speaker != null) instance.SetSpeakerData(model.Speaker);
+      if (model.Speakers != null) instance.SetSpeakerData(model.Speakers);
 
       instance._description = model.Description;
       instance.SetComplexityText(model.Description.Complexity ?? "");
-      instance.SetTag(model.Tag);
-      instance.SetComplexityTextPosition();
+      instance.SetTag(model.MainTag);
+      if(model.Tags != null) instance._tag2.SetActive(model.Tags.Length > 1);
       instance.gameObject.SetActive(false);
       
       return instance;
@@ -80,18 +114,16 @@ namespace ua.org.gdg.devfest
     {
       return _description;
     }
-    
-    public void SetComplexityTextPosition()
-    {
-      _complexityText.GetComponent<RectTransform>().anchoredPosition = new Vector2(50, 
-        -70 - _nameText.preferredHeight);
-    }
 
     public void LoadSpeakerPhoto()
     {
-      if(_model.Speaker == null) return;
+      if(_model.Speakers == null) return;
       
-      LoadImage(_model.Speaker.PhotoUrl, _speakerPhoto);
+      LoadImage(_model.Speakers[0].PhotoUrl, _speakerPhoto);
+      
+      if(_model.Speakers.Length < 2) return;
+      
+      LoadImage(_model.Speakers[1].PhotoUrl, _speakerPhoto2);
     }
 
     //---------------------------------------------------------------------
@@ -107,26 +139,28 @@ namespace ua.org.gdg.devfest
 
     private void SetGeneralSpeechItem(bool value)
     {
-      if(value)
-      {
-        _timespanText.GetComponent<RectTransform>().anchoredPosition = new Vector2(50, 
-        TIMESPAN_TEXT_GENERAL_POS);
-      }
-      
-      var rect = GetComponent<RectTransform>();
-      rect.sizeDelta =
-        new Vector2(0, value ? DESCRIPTION_HEIGHT_W_O_SPEAKER : DESCRIPTION_HEIGHT_W_SPEAKER);
       _tagBorder.gameObject.SetActive(!value);
     }
 
-    private void SetSpeakerData(Speaker speaker)
+    private void SetSpeakerData(Speaker[] speakers)
     {
-      SetSpeakerCompanyCountry(speaker.Company, speaker.Country);
-      SetSpeakerName(speaker.Name);
+      if (speakers.Length < 2)
+      {
+        SetSpeakerCompanyCountry(speakers[0].Company, speakers[0].Country);
+        SetSpeakerName(speakers[0].Name);
+      }
+      else
+      {
+        _speakerData2.SetActive(true);
+        SetSpeakerCompanyCountry(speakers[0].Company, speakers[0].Country, speakers[1].Company, speakers[1].Country);
+        SetSpeakerName(speakers[0].Name, speakers[1].Name);
+      }
     }
 
     private void SetComplexityText(string complexity)
     {
+      if(_complexityText == null) return;
+      
       _complexityText.text = complexity;
     }
 
@@ -134,19 +168,33 @@ namespace ua.org.gdg.devfest
     {
       _speakerCompanyCountryText.text = company + " / " + country;
     }
+    
+    private void SetSpeakerCompanyCountry(string company, string country, string company2, string country2)
+    {
+      _speakerCompanyCountryText.text = company + " / " + country;
+      _speakerCompanyCountryText2.text = company2 + " / " + country2;
+    }
 
     private void SetSpeakerName(string speakerNameText)
     {
       _speakerNameText.text = speakerNameText;
     }
+    
+    private void SetSpeakerName(string speakerNameText, string speakerNameText2)
+    {
+      _speakerNameText.text = speakerNameText;
+      _speakerNameText2.text = speakerNameText2;
+    }
 
     private void SetName(string nameText)
     {
-      _nameText.text = nameText;
+      _nameText.text = nameText + "\n";
     }
 
     private void SetTag(string speechTag)
     {
+      if(_tagText == null) return;
+      
       SetTagText(speechTag);
       SetTagImageColor(speechTag);
       SetGeneralSpeechItem(speechTag == "General");
@@ -196,7 +244,7 @@ namespace ua.org.gdg.devfest
         default:
           _description.TagColor = "#FFFFFF";
           SetTagTextAndBorderColor("#FFFFFF");
-          _model.Tag = "Other";
+          _model.MainTag = "Other";
           break;
       }
     }

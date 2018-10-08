@@ -155,6 +155,9 @@ MonoBehaviour:
   _timeTextPlaceholder: {fileID: 1339796276523000}
   _speechPrefab: {fileID: 114178115842869542, guid: 91cbaa032f2757c4d85da0dbeafd0689,
     type: 2}
+  _speechPrefabGeneral: {fileID: 114603709674602040, guid: 662eea46235e3e24ab88a3975ebf5d8b,
+    type: 2}
+  _inViewport: 0
 --- !u!114 &114954684765181268
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -170,7 +173,7 @@ MonoBehaviour:
     m_Left: 0
     m_Right: 0
     m_Top: 0
-    m_Bottom: 0
+    m_Bottom: 15
   m_ChildAlignment: 0
   m_Spacing: 0
   m_ChildForceExpandWidth: 1

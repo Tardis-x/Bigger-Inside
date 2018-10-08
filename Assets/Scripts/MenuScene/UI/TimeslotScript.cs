@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +8,7 @@ namespace ua.org.gdg.devfest
 {
   public class TimeslotScript : MonoBehaviour
   {
-    private const int ITEM_HEIGHT_W_O_SPEAKER = 300;
+    private const int ITEM_HEIGHT_W_O_SPEAKER = 275;
     private const int ITEM_HEIGHT_W_SPEAKER = 600;
     private const int VIEWPORT_HEIGHT = 1620;
 
@@ -15,13 +16,14 @@ namespace ua.org.gdg.devfest
     // Editor
     //---------------------------------------------------------------------
 
-    [Header("UI")]
-    [SerializeField] private Text _startTimeHoursText;
+    [Header("UI")] [SerializeField] private Text _startTimeHoursText;
     [SerializeField] private Text _startTimeMinutesText;
     [SerializeField] private GameObject _timeTextPlaceholder;
 
     [Space] [Header("Prefabs")] [SerializeField]
     private SpeechItemScript _speechPrefab;
+
+    [SerializeField] private SpeechItemScript _speechPrefabGeneral;
 
     //---------------------------------------------------------------------
     // Internal
@@ -60,17 +62,31 @@ namespace ua.org.gdg.devfest
       var tsHeight = 170;
 
       instance._speeches = new List<SpeechItemScript>();
-      
+
       foreach (var speech in speeches)
       {
-        var item = _speechPrefab.GetInstance(speech);
-        item.transform.SetParent(instance.transform);
-        (item.transform as RectTransform).sizeDelta =
-          new Vector2(width, item.General ? ITEM_HEIGHT_W_O_SPEAKER : ITEM_HEIGHT_W_SPEAKER);
-        tsHeight += item.General ? ITEM_HEIGHT_W_O_SPEAKER : ITEM_HEIGHT_W_SPEAKER;
-        item.gameObject.SetActive(false);
-        instance.Empty = false;
-        instance._speeches.Add(item);
+        if (speech.MainTag != "General")
+        {
+          var item = _speechPrefab.GetInstance(speech);
+          item.transform.SetParent(instance.transform);
+          (item.transform as RectTransform).sizeDelta =
+            new Vector2(width, ITEM_HEIGHT_W_SPEAKER);
+          tsHeight += ITEM_HEIGHT_W_SPEAKER;
+          item.gameObject.SetActive(false);
+          instance.Empty = false;
+          instance._speeches.Add(item);
+        }
+        else
+        {
+          var item = _speechPrefabGeneral.GetInstance(speech);
+          item.transform.SetParent(instance.transform);
+          (item.transform as RectTransform).sizeDelta =
+            new Vector2(width, ITEM_HEIGHT_W_O_SPEAKER);
+          tsHeight += ITEM_HEIGHT_W_O_SPEAKER;
+          item.gameObject.SetActive(false);
+          instance.Empty = false;
+          instance._speeches.Add(item);
+        }
       }
 
       (instance.transform as RectTransform).sizeDelta = new Vector2(0, tsHeight);
@@ -87,30 +103,35 @@ namespace ua.org.gdg.devfest
       if (tags.Length == 0)
       {
         EnableAll();
-        
+
         return;
       }
 
       bool empty = true;
-      
+
       var tsHeight = 170;
-      
+
       foreach (var s in _speeches)
       {
-        if (tags.Contains(s.Tag))
+        var stags = new List<string>();
+
+        if (s.Tags != null)
+        {
+          stags = s.Tags.Intersect(_tags).ToList();
+        }
+
+        if (tags.Contains(s.MainTag) || stags.Any())
         {
           empty = false;
           s.gameObject.SetActive(true);
-          tsHeight += s.Tag == "General" ? ITEM_HEIGHT_W_O_SPEAKER : ITEM_HEIGHT_W_SPEAKER;
-          s.SetComplexityTextPosition();
+          tsHeight += s.MainTag == "General" ? ITEM_HEIGHT_W_O_SPEAKER : ITEM_HEIGHT_W_SPEAKER;
         }
         else
         {
           s.gameObject.SetActive(false);
-          s.SetComplexityTextPosition();
         }
       }
-      
+
       (transform as RectTransform).sizeDelta = new Vector2(0, empty ? 0 : tsHeight);
       _timeTextPlaceholder.SetActive(!empty);
     }
@@ -130,9 +151,9 @@ namespace ua.org.gdg.devfest
       var isInViewport = IsInViewport();
 
       if (_inViewport == isInViewport) return;
-      
+
       _inViewport = isInViewport;
-      
+
       SetChildrenActive();
     }
 
@@ -152,14 +173,22 @@ namespace ua.org.gdg.devfest
       if (_tags == null || _tags.Length == 0)
       {
         EnableAll();
-        
+
         return;
       }
-      
+
       foreach (var s in _speeches)
       {
-        s.gameObject.SetActive(_tags.Contains(s.Tag) && _inViewport);
-        s.SetComplexityTextPosition();
+        if (s.Tags != null)
+        {
+          var tags = s.Tags.Intersect(_tags);
+          s.gameObject.SetActive((_tags.Contains(s.MainTag) || tags.Any()) && _inViewport);
+        }
+        else
+        {
+          s.gameObject.SetActive(_tags.Contains(s.MainTag) && _inViewport);
+        }
+
         if (!s.ImageLoaded) s.LoadSpeakerPhoto();
       }
     }
@@ -167,15 +196,14 @@ namespace ua.org.gdg.devfest
     private void EnableAll()
     {
       var tsHeight = 170;
-      
+
       foreach (var s in _speeches)
       {
-        s.gameObject.SetActive(_inViewport);  
-        s.SetComplexityTextPosition();
-        tsHeight += s.Tag == "General" ? ITEM_HEIGHT_W_O_SPEAKER : ITEM_HEIGHT_W_SPEAKER;
+        s.gameObject.SetActive(_inViewport);
+        tsHeight += s.MainTag == "General" ? ITEM_HEIGHT_W_O_SPEAKER : ITEM_HEIGHT_W_SPEAKER;
         if (!s.ImageLoaded) s.LoadSpeakerPhoto();
       }
-      
+
       (transform as RectTransform).sizeDelta = new Vector2(0, tsHeight);
       _timeTextPlaceholder.SetActive(true);
     }

@@ -8,7 +8,7 @@ namespace ua.org.gdg.devfest
   {
     public string Id { get; set; }
     public string Title { get; set; }
-    public string Tag { get; set; }
+    public string[] Tags { get; set; }
     public List<Speaker> Speakers { get; set; }
     public string Description { get; set; }
     public string Complexity { get; set; }
