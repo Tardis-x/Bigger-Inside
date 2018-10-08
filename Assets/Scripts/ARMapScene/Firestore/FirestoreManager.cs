@@ -193,6 +193,7 @@ namespace ua.org.gdg.devfest
         {
           Timespan = GetTimespanText(item.Duration.Hours, item.Duration.Minutes),
           MainTag = item.Tags == null ? "General" : item.Tags[0],
+          Tags = item.Tags,
           Title = item.Title,
           Speakers = speaker == null ? null : speaker.ToArray(),
           Description = new ScheduleItemDescriptionUiModel
@@ -200,6 +201,7 @@ namespace ua.org.gdg.devfest
             EndTime = item.EndTime,
             StartTime = item.StartTime,
             MainTag = item.Tags == null ? "General" : item.Tags[0],
+            Tags = item.Tags,
             Description = item.Description,
             Title = item.Title,
             Speakers = speaker == null ? null : speaker.ToArray(),

@@ -117,10 +117,10 @@ namespace ua.org.gdg.devfest
       LoadImage(speakers[0].PhotoUrl, _speakerPhotoImage);
       _speakerNameText.text = speakers[0].Name;
       _speakerCompanyCountryText.text = speakers[0].Company + " / " + speakers[0].Country;
-
+      _speaker2.SetActive(speakers.Length > 1);
+      
       if (speakers.Length < 2) return;
       
-      _speaker2.SetActive(true);
       LoadImage(speakers[1].PhotoUrl, _speakerPhotoImage2);
       _speakerNameText2.text = speakers[1].Name;
       _speakerCompanyCountryText2.text = speakers[1].Company + " / " + speakers[1].Country;
