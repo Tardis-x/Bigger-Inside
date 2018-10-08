@@ -43,14 +43,24 @@ namespace ua.org.gdg.devfest
     //---------------------------------------------------------------------
 
     public bool General { get; private set; }
-    public string Tag
+    
+    public string MainTag
     {
-      get { return _model.Tag; }
+      get { return _model.MainTag; }
+    }
+
+    public string[] Tags
+    {
+      get { return _model.Tags; }
     }
 
     public bool ImageLoaded
     {
-      get { return _model.Speakers.Length < 2 ? _image1Loaded : _image1Loaded && _image2Loaded; }
+      get
+      {
+        if(_model.Speakers == null) return false;
+        return _model.Speakers.Length < 2 ? _image1Loaded : _image1Loaded && _image2Loaded;
+      }
       private set
       {
         if (!_image1Loaded)
@@ -89,7 +99,7 @@ namespace ua.org.gdg.devfest
 
       instance._description = model.Description;
       instance.SetComplexityText(model.Description.Complexity ?? "");
-      instance.SetTag(model.Tag);
+      instance.SetTag(model.MainTag);
       instance.gameObject.SetActive(false);
       
       return instance;
@@ -173,7 +183,7 @@ namespace ua.org.gdg.devfest
 
     private void SetName(string nameText)
     {
-      _nameText.text = nameText;
+      _nameText.text = nameText + "\n";
     }
 
     private void SetTag(string speechTag)
@@ -229,7 +239,7 @@ namespace ua.org.gdg.devfest
         default:
           _description.TagColor = "#FFFFFF";
           SetTagTextAndBorderColor("#FFFFFF");
-          _model.Tag = "Other";
+          _model.MainTag = "Other";
           break;
       }
     }

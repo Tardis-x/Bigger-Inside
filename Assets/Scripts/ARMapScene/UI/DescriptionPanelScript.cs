@@ -82,9 +82,9 @@ namespace ua.org.gdg.devfest
       _descriptionText.text = model.Description;
       _detailsText.text = ComposeDetailsText(model.DateReadable, model.StartTime, model.EndTime, model.Hall,
         model.Language, model.Complexity);
-      _tagText.text = model.Tag;
+      _tagText.text = model.MainTag;
       SetTagColor(model.TagColor);
-      ShowTag(model.Tag != "General");
+      ShowTag(model.MainTag != "General");
     }
 
     public void OnBackButtonClick()

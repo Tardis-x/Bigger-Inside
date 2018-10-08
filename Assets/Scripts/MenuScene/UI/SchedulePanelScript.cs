@@ -1,7 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -66,10 +64,20 @@ namespace ua.org.gdg.devfest
       if (!_tags.Contains(tag))
       {
         _tags.Add(tag);
+        if (tag == "Other")
+        {
+          _tags.Add("Workshop");
+          _tags.Add("General");
+        }
       }
       else
       {
         _tags.Remove(tag);
+        if (tag == "Other")
+        {
+          _tags.Remove("Workshop");
+          _tags.Remove("General");
+        }
       }
 
       FilterByTags(_tags.ToArray());
@@ -198,8 +206,6 @@ namespace ua.org.gdg.devfest
             timeslots.Add(contentItem);
           }
           else Destroy(contentItem.gameObject);
-
-          //yield return new WaitForSeconds(.01f);
         }
 
         SaveDaysTimeslots(day, timeslots);
@@ -242,8 +248,6 @@ namespace ua.org.gdg.devfest
             timeslots.Add(contentItem);
           }
           else Destroy(contentItem.gameObject);
-
-          //yield return new WaitForSeconds(.01f);
         }
 
         SaveDaysTimeslots(day, timeslots);

@@ -144,14 +144,16 @@ namespace ua.org.gdg.devfest
           select new SpeechItemModel
           {
             Timespan = GetTimespanText(item.Duration.Hours, item.Duration.Minutes),
-            Tag = item.Tag,
+            MainTag = item.Tags == null ? "General" : item.Tags[0],
+            Tags = item.Tags,
             Title = item.Title,
             Speakers = speaker == null ? null : speaker.ToArray(),
             Description = new ScheduleItemDescriptionUiModel
             {
               EndTime = item.EndTime,
               StartTime = item.StartTime,
-              Tag = item.Tag,
+              MainTag = item.Tags == null ? "General" : item.Tags[0],
+              Tags = item.Tags,
               Description = item.Description,
               Title = item.Title,
               Speakers = speaker == null ? null : speaker.ToArray(),
@@ -190,14 +192,14 @@ namespace ua.org.gdg.devfest
         select new SpeechItemModel
         {
           Timespan = GetTimespanText(item.Duration.Hours, item.Duration.Minutes),
-          Tag = item.Tag,
+          MainTag = item.Tags == null ? "General" : item.Tags[0],
           Title = item.Title,
           Speakers = speaker == null ? null : speaker.ToArray(),
           Description = new ScheduleItemDescriptionUiModel
           {
             EndTime = item.EndTime,
             StartTime = item.StartTime,
-            Tag = item.Tag,
+            MainTag = item.Tags == null ? "General" : item.Tags[0],
             Description = item.Description,
             Title = item.Title,
             Speakers = speaker == null ? null : speaker.ToArray(),

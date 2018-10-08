@@ -9,7 +9,7 @@ namespace ua.org.gdg.devfest
     public StringValue title;
     public StringValue startTime;
     public StringValue endTime;
-    public StringValue mainTag;
+    public JsonTag tags;
     public StringValue dateReadable;
     public StringValue description;
     public StringValue language;

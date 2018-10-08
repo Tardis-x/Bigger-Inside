@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace ua.org.gdg.devfest
@@ -64,8 +65,8 @@ namespace ua.org.gdg.devfest
             @"\p{Cs}|[\u2600-\u27ff]", "●").Replace("●●", "●") : null,
         Title = jSession.mapValue.fields.title != null ?
           jSession.mapValue.fields.title.stringValue : null,
-        Tag = jSession.mapValue.fields.mainTag != null ?
-          jSession.mapValue.fields.mainTag.stringValue : null,
+        Tags = jSession.mapValue.fields.tags != null ?
+          jSession.mapValue.fields.tags.arrayValue.values.Select(x => x.stringValue).ToArray() : null,
         Complexity = jSession.mapValue.fields.complexity != null ? 
           jSession.mapValue.fields.complexity.stringValue : null,
         Language = jSession.mapValue.fields.language != null ? 
