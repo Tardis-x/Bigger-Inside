@@ -85,7 +85,7 @@ namespace ua.org.gdg.devfest
 
     private void Awake()
     {
-      LOGO_BASE_PATH = Application.persistentDataPath + "Graphics/";
+      LOGO_BASE_PATH = Application.persistentDataPath + Path.DirectorySeparatorChar + "Graphics/";
     }
 
     //---------------------------------------------------------------------
