@@ -201,21 +201,6 @@ namespace ua.org.gdg.devfest
       new QuestionModel
       {
         IsGood = false,
-        Text = ""
-      },
-      new QuestionModel
-      {
-        IsGood = false,
-        Text = ""
-      },
-      new QuestionModel
-      {
-        IsGood = false,
-        Text = ""
-      },
-      new QuestionModel
-      {
-        IsGood = false,
         Text = "The same thing in PHP would've worked faster!"
       },
       new QuestionModel
