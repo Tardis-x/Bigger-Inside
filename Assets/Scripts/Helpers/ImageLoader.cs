@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,7 +16,7 @@ namespace ua.org.gdg.devfest
 
     private void Awake()
     {
-      LOGO_BASE_PATH = Application.persistentDataPath + "Graphics/";
+      LOGO_BASE_PATH = Application.persistentDataPath + Path.DirectorySeparatorChar + "Graphics/";
     }
 
     //---------------------------------------------------------------------
