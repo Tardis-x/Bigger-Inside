@@ -62,10 +62,10 @@ namespace ua.org.gdg.devfest
 			_infoCoinNamePanel.OpenPanel(coinName);
 		}
 
-		public void ShowCoinSchedulePanel(string hallName)
+		public void ShowCoinSchedulePanel(string hallName, string buttonName)
 		{
 			ClearAll();
-			_infoCoinSchedulePanel.OpenPanel(hallName);
+			_infoCoinSchedulePanel.OpenPanel(hallName, buttonName);
 		}
 
 		public void ShowInfoCoinGroupPanel(InfoCoinGroup infoCoinGroup)

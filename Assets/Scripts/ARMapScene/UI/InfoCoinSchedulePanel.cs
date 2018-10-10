@@ -22,10 +22,10 @@ namespace ua.org.gdg.devfest
     // Public
     //---------------------------------------------------------------------
     
-    public void OpenPanel(string hall)
+    public void OpenPanel(string hall, string buttonName)
     {
       _hallName = hall;
-      _buttonText.text = string.Format("Schedule ({0})", hall); 
+      _buttonText.text = string.Format("Schedule ({0})", buttonName); 
       
       gameObject.SetActive(true);
     }

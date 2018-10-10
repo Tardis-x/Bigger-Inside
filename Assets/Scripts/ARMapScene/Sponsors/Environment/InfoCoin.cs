@@ -14,6 +14,7 @@ namespace ua.org.gdg.devfest
     [Space]
     [Header("Values")] 
     [SerializeField] private string _name; 
+    [SerializeField] private string _buttonName; 
     [SerializeField] private bool _hasSchedule;
 
     //---------------------------------------------------------------------
@@ -43,6 +44,11 @@ namespace ua.org.gdg.devfest
     public string Name
     {
       get { return _name; }
+    }
+    
+    public string ButtonName
+    {
+      get { return _buttonName; }
     }
 
     //---------------------------------------------------------------------
